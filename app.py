@@ -7,6 +7,7 @@ from io import BytesIO
 st.set_page_config(page_title="Prerak Estimator Admin", layout="wide")
 
 # 2. Session State Setup
+# 2. Session State Setup (Yo bhag lai matra update garnuhos)
 if 'company_info' not in st.session_state:
     st.session_state.company_info = {
         "name": "Prerak Multipurpose Company Pvt. Ltd.",
