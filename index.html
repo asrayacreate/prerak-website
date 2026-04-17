@@ -1,327 +1,224 @@
 <!DOCTYPE html>
 <html lang="ne">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRERAK CRM - Claude x Masterpiece v4</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Syne:wght@700;800&family=Tiro+Devanagari+Sanskrit&display=swap" rel="stylesheet">
-<style>
-/* १. प्रिमियम रङ र थिमहरू */
-:root {
-  --bg: #030305; --panel: rgba(17, 17, 26, 0.85); --border: rgba(255, 255, 255, 0.08);
-  --accent: #ff5f1f; --accent-glow: rgba(255, 95, 31, 0.4);
-  --green: #22c55e; --text: #ffffff; --muted: #94a3b8;
-  --grad: linear-gradient(135deg, #ff5f1f 0%, #ff2e00 100%);
-}
-
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; overflow-x: hidden; }
-
-/* ब्याकग्राउन्ड ग्लो (Background Glow) */
-.bg-glow { position: fixed; top: -10%; left: -10%; width: 120%; height: 120%; background: radial-gradient(circle at 50% 0%, rgba(255, 95, 31, 0.1) 0%, transparent 60%); z-index: -1; pointer-events: none; }
-
-/* २. साइडबार (Sidebar Navigation) */
-#sidebar { 
-    width: 280px; background: var(--panel); border-right: 1px solid var(--border); 
-    backdrop-filter: blur(20px); display: flex; flex-direction: column; height: 100vh; position: fixed; left: 0; top: 0; z-index: 100; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.logo-box { padding: 35px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.logo-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: #fff; letter-spacing: -1px; }
-.logo-title span { color: var(--accent); }
-
-nav { flex: 1; padding: 25px 15px; display: flex; flex-direction: column; gap: 8px; }
-.nav-item { 
-    display: flex; align-items: center; gap: 15px; padding: 16px 20px; 
-    border-radius: 16px; color: var(--muted); cursor: pointer; transition: all 0.3s ease; 
-    font-weight: 500; font-size: 0.95rem;
-}
-.nav-item:hover { background: rgba(255, 255, 255, 0.03); color: #fff; }
-.nav-item.active { background: var(--grad); color: white; font-weight: 700; box-shadow: 0 8px 20px var(--accent-glow); transform: translateY(-2px); }
-
-/* ३. मुख्य इन्टरफेस (Main Workspace) */
-#main { margin-left: 280px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; width: calc(100% - 280px); transition: margin 0.3s ease; }
-.top-nav { 
-    padding: 25px 40px; background: rgba(3, 3, 5, 0.7); backdrop-filter: blur(15px); 
-    position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--border); 
-    display: flex; justify-content: space-between; align-items: center;
-}
-.page-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; }
-.mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-
-/* ४. पेज ट्रान्जिसन (Smooth Page Load) */
-.page { display: none; padding: 40px; animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.page.active { display: block; }
-@keyframes slideIn { from { opacity: 0; transform: translateY(20px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-/* ५. कार्ड र स्ट्याट्स (Premium UI Components) */
-.card { background: var(--panel); border: 1px solid var(--border); border-radius: 24px; padding: 30px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-.stat-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 20px; padding: 25px; transition: 0.3s; }
-.stat-box:hover { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); }
-.stat-val { font-size: 3.5rem; font-weight: 800; color: var(--accent); margin-top: 10px; line-height: 1; font-family: 'Syne', sans-serif; }
-
-/* ६. टेबल र इनपुट (Tables & Forms) */
-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 10px; }
-th { text-align: left; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; padding: 10px 20px; letter-spacing: 1px; }
-td { padding: 20px; background: rgba(255,255,255,0.02); font-size: 0.95rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: 0.2s; }
-td:first-child { border-left: 1px solid var(--border); border-radius: 16px 0 0 16px; }
-td:last-child { border-right: 1px solid var(--border); border-radius: 0 16px 16px 0; }
-tr:hover td { background: rgba(255,255,255,0.04); }
-
-input { width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 16px; color: white; margin-top: 8px; font-size: 1rem; transition: 0.3s; font-family: 'Plus Jakarta Sans', sans-serif; }
-input:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.06); box-shadow: 0 0 0 4px rgba(255,95,31,0.1); }
-
-/* ७. बटनहरू (Buttons) */
-.btn { padding: 14px 28px; border-radius: 14px; border: none; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
-.btn-primary { background: var(--grad); color: white; box-shadow: 0 4px 15px var(--accent-glow); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--accent-glow); }
-.btn-wa { background: #25D366; color: white; padding: 10px 20px; border-radius: 10px; font-size: 0.85rem; }
-.btn-wa:hover { background: #1da851; transform: translateY(-2px); }
-
-/* टोस्ट म्यासेज (Notifications) */
-#toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px); background: white; color: black; padding: 16px 32px; border-radius: 50px; font-weight: 700; box-shadow: 0 15px 40px rgba(0,0,0,0.4); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; opacity: 0; }
-#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-/* मोबाइल रेस्पोन्सिभ (Mobile View Fixes) */
-@media (max-width: 900px) {
-    #sidebar { transform: translateX(-100%); }
-    #main { margin-left: 0; width: 100%; }
-    .top-nav { padding: 20px; }
-    .page { padding: 20px; }
-    .mobile-menu-btn { display: block; }
-    /* जब मेनु खुल्छ */
-    body.menu-open #sidebar { transform: translateX(0); box-shadow: 20px 0 50px rgba(0,0,0,0.5); }
-    body.menu-open #main { filter: blur(5px); opacity: 0.5; pointer-events: none; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prerak OS Pro | All-in-One Business Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&family=Orbitron:wght@700&display=swap');
+        body { font-family: 'Mukta', sans-serif; background: #f4f7f9; }
+        .logo-font { font-family: 'Orbitron', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .tab-active { background: #1e3a8a; color: white !important; font-weight: 800; border-radius: 15px; }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+        input, select, textarea { transition: all 0.2s; border: 1px solid #e2e8f0; }
+        input:focus { border-color: #1e3a8a !important; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+    </style>
 </head>
-<body>
+<body class="pb-24">
 
-<div class="bg-glow"></div>
-
-<aside id="sidebar">
-  <div class="logo-box">
-    <div class="logo-title">PRERAK<span>.</span></div>
-    <button class="mobile-menu-btn" onclick="toggleMenu()" style="display: none;">✕</button>
-  </div>
-  <nav>
-    <div class="nav-item active" onclick="navigate('dash', this)">
-        <span style="font-size: 1.2rem;">📊</span> ड्यासबोर्ड
-    </div>
-    <div class="nav-item" onclick="navigate('cust', this)">
-        <span style="font-size: 1.2rem;">👥</span> ग्राहक सूची
-    </div>
-    <div class="nav-item" onclick="navigate('add', this)">
-        <span style="font-size: 1.2rem;">✨</span> नयाँ थप्नुहोस्
-    </div>
-    <div class="nav-item" onclick="navigate('tasks', this)">
-        <span style="font-size: 1.2rem;">👷‍♂️</span> स्टाफ टास्क
-    </div>
-  </nav>
-  <div style="padding: 20px; text-align: center; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.75rem;">
-    Powered by AI & Claude Logic
-  </div>
-</aside>
-
-<main id="main">
-  <div class="top-nav">
-    <div style="display: flex; align-items: center; gap: 15px;">
-        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
-        <h3 id="page-title" class="page-title">ड्यासबोर्ड</h3>
-    </div>
-    <div style="text-align: right;">
-        <span id="date-display" style="color: var(--muted); font-weight: 500; font-size: 0.9rem;">आजको दिन</span>
-    </div>
-  </div>
-
-  <div class="page active" id="page-dash">
-    <div class="stat-grid">
-      <div class="stat-box">
-        <p style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">कुल दर्ता भएका ग्राहक</p>
-        <div id="stat-total" class="stat-val">0</div>
-      </div>
-      <div class="stat-box">
-        <p style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">आज थपिएका (Today)</p>
-        <div id="stat-today" class="stat-val" style="color: #fff;">0</div>
-      </div>
-      <div class="stat-box">
-        <p style="color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">बाँकी काम (Pending Tasks)</p>
-        <div id="stat-tasks" class="stat-val" style="color: var(--green);">0</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="page" id="page-cust">
-    <div class="card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-          <h2 style="font-family: 'Syne';">ग्राहक विवरण</h2>
-          <button class="btn btn-primary" style="padding: 10px 20px; font-size: 0.85rem;" onclick="navigate('add', document.querySelectorAll('.nav-item')[2])">+ नयाँ थप्नुहोस्</button>
-      </div>
-      <input type="text" id="search" oninput="renderCustomers()" placeholder="नाम वा फोन नम्बरबाट खोज्नुहोस्...">
-      <div style="overflow-x: auto;">
-        <table>
-          <thead><tr><th>पुरा नाम</th><th>सम्पर्क नम्बर</th><th>दर्ता मिति</th><th>एक्सन</th></tr></thead>
-          <tbody id="cust-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="page" id="page-add">
-    <div class="card" style="max-width: 600px; margin: auto;">
-      <h2 style="margin-bottom: 30px; font-family: 'Syne'; font-size: 1.8rem;">नयाँ ग्राहक दर्ता</h2>
-      <div style="margin-bottom: 20px;">
-          <label style="color: var(--muted); font-size: 0.85rem; font-weight: 600;">ग्राहकको पुरा नाम *</label>
-          <input type="text" id="c-name" placeholder="उदा: राम बहादुर श्रेष्ठ">
-      </div>
-      <div style="margin-bottom: 30px;">
-          <label style="color: var(--muted); font-size: 0.85rem; font-weight: 600;">फोन नम्बर *</label>
-          <input type="tel" id="c-phone" placeholder="98XXXXXXXX">
-      </div>
-      <button class="btn btn-primary" onclick="addCustomer()" style="width: 100%; font-size: 1.1rem; padding: 18px;">सुरक्षित गर्नुहोस् ➔</button>
-    </div>
-  </div>
-
-  <div class="page" id="page-tasks">
-    <div class="card" style="max-width: 800px; margin: auto;">
-        <h2 style="margin-bottom: 25px; font-family: 'Syne';">👷‍♂️ स्टाफ टास्क म्यानेजर</h2>
-        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-            <input type="text" id="task-input" placeholder="नयाँ काम लेख्नुहोस् (उदा: साइट भिजिट जाने)..." style="flex: 1; margin-top: 0;">
-            <button class="btn btn-primary" onclick="addTask()">+ थप्नुहोस्</button>
+    <header class="bg-blue-900 text-white p-4 sticky top-0 z-50 flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 bg-white text-blue-900 rounded-xl flex items-center justify-center shadow-inner">
+                <i class="fas fa-hammer text-xl"></i>
+            </div>
+            <div>
+                <h1 class="logo-font text-lg leading-none tracking-tighter">PRERAK OS</h1>
+                <p class="text-[9px] uppercase font-bold opacity-70 tracking-widest">Construction & Interior v3.1</p>
+            </div>
         </div>
-        <div id="task-list" style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;"></div>
+        <button onclick="downloadBackup()" class="bg-blue-800 p-2 px-3 rounded-lg text-xs font-bold border border-blue-700 hover:bg-blue-700">
+            <i class="fas fa-cloud-download-alt mr-1"></i> BACKUP
+        </button>
+    </header>
+
+    <nav class="bg-white border-b sticky top-[72px] z-40 flex p-2 gap-1 overflow-x-auto shadow-sm">
+        <button onclick="switchTab('crm')" id="btn-crm" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500 tab-active">CRM (ग्राहक)</button>
+        <button onclick="switchTab('accounting')" id="btn-accounting" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Accounting</button>
+        <button onclick="switchTab('staff')" id="btn-staff" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Staff Log</button>
+        <button onclick="switchTab('rate')" id="btn-rate" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Rates</button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-4 space-y-6">
+
+        <section id="sec-crm" class="space-y-4">
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-gray-100">
+                <h3 class="text-xs font-black text-gray-400 uppercase mb-4 flex items-center gap-2"><i class="fas fa-user-plus text-blue-900"></i> New Customer Inquiry</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input type="text" id="crm_name" placeholder="ग्राहकको नाम" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
+                    <input type="number" id="crm_phone" placeholder="मोबाइल नम्बर" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
+                    <input type="text" id="crm_addr" placeholder="ठेगाना" class="p-3 bg-gray-50 rounded-xl outline-none text-sm md:col-span-2">
+                    <select id="crm_status" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold text-blue-800">
+                        <option value="New">નयाँ Inquiry</option>
+                        <option value="Pending">पर्खाइमा (Pending)</option>
+                        <option value="Closed">काम सुरु (Closed)</option>
+                    </select>
+                    <button onclick="saveCRM()" class="bg-blue-900 text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition">CRM मा थप्नुहोस्</button>
+                </div>
+            </div>
+            <div id="crm_list" class="space-y-3"></div>
+        </section>
+
+        <section id="sec-accounting" class="hidden space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-blue-900 p-5 rounded-3xl shadow-lg text-white">
+                    <p class="text-[10px] font-bold opacity-70 uppercase">कुल कारोबार</p>
+                    <h2 id="totalRev" class="text-2xl font-black mt-1 tracking-tighter text-white">रू ०</h2>
+                </div>
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 text-blue-900">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">सम्पन्न काम</p>
+                    <h2 id="totalProj" class="text-2xl font-black mt-1 leading-none">०</h2>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl p-6 card-shadow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <input type="text" id="acc_name" placeholder="ग्राहक / बिलिङ विवरण" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
+                    <input type="number" id="acc_amount" placeholder="रकम (रू)" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-black text-blue-900">
+                    <button onclick="saveAccounting()" class="md:col-span-2 bg-blue-900 text-white font-bold py-3 rounded-xl shadow-lg">Save Transaction</button>
+                </div>
+            </div>
+            <div id="acc_list" class="space-y-2"></div>
+        </section>
+
+        <section id="sec-staff" class="hidden space-y-4">
+            <div class="bg-white rounded-3xl p-6 card-shadow border border-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+                    <input type="text" id="stf_name" placeholder="स्टाफको नाम" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
+                    <input type="text" id="stf_site" placeholder="काम गरेको साइट" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold text-blue-700">
+                    <textarea id="stf_task" placeholder="कामको छोटो विवरण..." class="p-3 bg-gray-50 rounded-xl outline-none text-sm md:col-span-2 h-20"></textarea>
+                    <button onclick="saveStaff()" class="md:col-span-2 bg-green-700 text-white font-bold py-3 rounded-xl shadow-lg">Update Staff Report</button>
+                </div>
+            </div>
+            <div id="stf_list" class="space-y-3"></div>
+        </section>
+
+        <section id="sec-rate" class="hidden grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
+                <h4 class="text-[10px] font-bold text-gray-400 uppercase">UPVC झ्याल</h4>
+                <p class="text-xl font-black text-blue-900">रू ९५० / Sq.Ft</p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
+                <h4 class="text-[10px] font-bold text-gray-400 uppercase">WPC फ्रेम</h4>
+                <p class="text-xl font-black text-blue-900">रू १,२०० / Pc</p>
+            </div>
+            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
+                <h4 class="text-[10px] font-bold text-gray-400 uppercase">AAC ब्लक</h4>
+                <p class="text-xl font-black text-blue-900">रू १,१०० / Cubic</p>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="md:hidden fixed bottom-6 left-6 right-6 h-16 glass rounded-full shadow-2xl border border-white flex justify-around items-center px-6 z-50">
+        <button onclick="switchTab('crm')" class="text-blue-900"><i class="fas fa-users"></i></button>
+        <button onclick="switchTab('accounting')" class="text-blue-900"><i class="fas fa-calculator"></i></button>
+        <button onclick="switchTab('staff')" class="text-blue-900"><i class="fas fa-tasks"></i></button>
+        <button onclick="switchTab('rate')" class="text-blue-900"><i class="fas fa-tags"></i></button>
     </div>
-  </div>
-</main>
 
-<div id="toast">✅ सफलता!</div>
+    <script>
+        let accDb = JSON.parse(localStorage.getItem('prerak_acc_v3')) || [];
+        let crmDb = JSON.parse(localStorage.getItem('prerak_crm_v3')) || [];
+        let stfDb = JSON.parse(localStorage.getItem('prerak_stf_v3')) || [];
 
-<script>
-// Data Initialization
-let customers = JSON.parse(localStorage.getItem('prerak_v4_cust') || '[]');
-let tasks = JSON.parse(localStorage.getItem('prerak_v4_tasks') || '[]');
+        function switchTab(tab) {
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('nav > button').forEach(b => b.classList.remove('tab-active'));
+            document.getElementById('sec-' + tab).classList.remove('hidden');
+            document.getElementById('btn-' + tab).classList.add('tab-active');
+            renderAll();
+        }
 
-// Utility Functions
-function save() { 
-    localStorage.setItem('prerak_v4_cust', JSON.stringify(customers)); 
-    localStorage.setItem('prerak_v4_tasks', JSON.stringify(tasks)); 
-}
+        function saveAccounting() {
+            const name = document.getElementById('acc_name').value;
+            const amount = document.getElementById('acc_amount').value;
+            if(!name || !amount) return alert("नाम र रकम भर्नुहोस्!");
+            accDb.unshift({ id: Date.now(), name, amount, date: new Date().toLocaleDateString('ne-NP') });
+            localStorage.setItem('prerak_acc_v3', JSON.stringify(accDb));
+            document.getElementById('acc_name').value = '';
+            document.getElementById('acc_amount').value = '';
+            renderAll();
+        }
 
-function showToast(m) { 
-    const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); 
-    setTimeout(() => t.classList.remove('show'), 3000); 
-}
+        function saveCRM() {
+            const name = document.getElementById('crm_name').value;
+            const phone = document.getElementById('crm_phone').value;
+            const status = document.getElementById('crm_status').value;
+            const addr = document.getElementById('crm_addr').value;
+            if(!name || !phone) return alert("विवरण पूरा भर्नुहोस्!");
+            crmDb.unshift({ id: Date.now(), name, phone, status, addr, date: new Date().toLocaleDateString('ne-NP') });
+            localStorage.setItem('prerak_crm_v3', JSON.stringify(crmDb));
+            document.getElementById('crm_name').value = '';
+            document.getElementById('crm_phone').value = '';
+            renderAll();
+        }
 
-// Mobile Menu Toggle
-function toggleMenu() {
-    document.body.classList.toggle('menu-open');
-}
+        function saveStaff() {
+            const name = document.getElementById('stf_name').value;
+            const site = document.getElementById('stf_site').value;
+            const task = document.getElementById('stf_task').value;
+            if(!name || !site) return alert("स्टाफ र साइट चाहिन्छ!");
+            stfDb.unshift({ id: Date.now(), name, site, task, time: new Date().toLocaleTimeString('ne-NP') });
+            localStorage.setItem('prerak_stf_v3', JSON.stringify(stfDb));
+            document.getElementById('stf_name').value = '';
+            document.getElementById('stf_site').value = '';
+            document.getElementById('stf_task').value = '';
+            renderAll();
+        }
 
-// Navigation Logic
-function navigate(page, el) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    if(el) el.classList.add('active');
-    
-    // Update Header Title
-    let title = "ड्यासबोर्ड";
-    if(page === 'cust') title = "ग्राहक सूची";
-    if(page === 'add') title = "नयाँ दर्ता";
-    if(page === 'tasks') title = "स्टाफ टास्क";
-    document.getElementById('page-title').textContent = title;
-    
-    // Close mobile menu if open
-    document.body.classList.remove('menu-open');
-    
-    // Render specific logic
-    if(page === 'dash') updateDash();
-    if(page === 'cust') renderCustomers();
-    if(page === 'tasks') renderTasks();
-}
+        function deleteItem(type, id) {
+            if(!confirm('के हटाउन चाहनुहुन्छ?')) return;
+            if(type==='acc') accDb = accDb.filter(i => i.id !== id);
+            if(type==='crm') crmDb = crmDb.filter(i => i.id !== id);
+            if(type==='stf') stfDb = stfDb.filter(i => i.id !== id);
+            localStorage.setItem('prerak_acc_v3', JSON.stringify(accDb));
+            localStorage.setItem('prerak_crm_v3', JSON.stringify(crmDb));
+            localStorage.setItem('prerak_stf_v3', JSON.stringify(stfDb));
+            renderAll();
+        }
 
-// Add Customer Logic
-function addCustomer() {
-    const n = document.getElementById('c-name').value.trim();
-    const p = document.getElementById('c-phone').value.trim();
-    if(!n || !p) return showToast('कृपया नाम र फोन भर्नुहोस्!');
-    
-    const today = new Date().toLocaleDateString('ne-NP'); // Simple Nepali Date representation
-    customers.unshift({ id: Date.now(), name: n, phone: p, date: today }); // Add to top
-    save(); 
-    showToast('✅ ग्राहक दर्ता सफल भयो!');
-    
-    document.getElementById('c-name').value = ''; 
-    document.getElementById('c-phone').value = '';
-    navigate('cust', document.querySelectorAll('.nav-item')[1]);
-}
+        function renderAll() {
+            // Stats
+            const total = accDb.reduce((s, i) => s + parseFloat(i.amount), 0);
+            document.getElementById('totalRev').innerText = `रू ${total.toLocaleString()}`;
+            document.getElementById('totalProj').innerText = accDb.length;
 
-// Render Customers Logic
-function renderCustomers() {
-    const q = document.getElementById('search').value.toLowerCase();
-    const list = customers.filter(c => c.name.toLowerCase().includes(q) || c.phone.includes(q));
-    
-    document.getElementById('cust-body').innerHTML = list.map(c => `
-        <tr>
-            <td><b style="font-size:1.05rem; color:#fff;">${c.name}</b></td>
-            <td style="color: var(--muted);">${c.phone}</td>
-            <td style="color: var(--muted); font-size:0.85rem;">${c.date || '-'}</td>
-            <td><button class="btn btn-wa" onclick="sendWA('${c.phone}', '${c.name}')">WhatsApp</button></td>
-        </tr>
-    `).join('');
-}
+            // Render Lists
+            document.getElementById('acc_list').innerHTML = accDb.map(i => `
+                <div class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm">
+                    <div><h4 class="font-bold text-gray-800">${i.name}</h4><p class="text-[10px] text-gray-400 font-bold uppercase">${i.date}</p></div>
+                    <div class="text-right"><div class="font-black text-blue-900">रू ${parseFloat(i.amount).toLocaleString()}</div>
+                    <button onclick="deleteItem('acc', ${i.id})" class="text-red-300 hover:text-red-500 text-xs mt-1"><i class="fas fa-trash"></i></button></div>
+                </div>`).join('');
 
-// Smart WhatsApp Template
-function sendWA(phone, name) {
-    const msg = `*नमस्ते ${name} जी,* 🙏\n\nम *PRERAK Construction* बाट। हेटौँडा-२ मा रहेको हाम्रो सोरुममा हजुरलाई स्वागत छ। हजुरको घर वा अफिसको निर्माण कार्यका लागि हामीसँग उत्कृष्ट *UPVC, एएसी ब्लक र इन्टेरियर* सेवा उपलब्ध छन्।\n\nथप जानकारीको लागि सम्पर्क गर्नुहोला। धन्यवाद!`;
-    window.open(`https://wa.me/977${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-}
+            document.getElementById('crm_list').innerHTML = crmDb.map(c => `
+                <div class="bg-white p-4 rounded-3xl border border-gray-50 flex justify-between items-center shadow-sm">
+                    <div><h4 class="font-bold text-gray-800">${c.name}</h4><p class="text-xs text-blue-600 font-bold"><i class="fas fa-phone mr-1"></i> ${c.phone}</p><p class="text-[9px] text-gray-400 font-black mt-1 uppercase">${c.addr}</p></div>
+                    <div class="text-right flex flex-col items-end gap-2">
+                        <span class="text-[9px] font-black px-2 py-1 rounded-full ${c.status==='Closed'?'bg-green-100 text-green-700':'bg-orange-100 text-orange-700'}">${c.status}</span>
+                        <div class="flex gap-4 text-gray-300"><a href="tel:${c.phone}" class="hover:text-blue-600"><i class="fas fa-phone-alt"></i></a><button onclick="deleteItem('crm', ${c.id})" class="hover:text-red-500"><i class="fas fa-trash"></i></button></div>
+                    </div>
+                </div>`).join('');
 
-// Task Management Logic
-function addTask() {
-    const val = document.getElementById('task-input').value.trim();
-    if(!val) return;
-    tasks.unshift({ id: Date.now(), text: val, status: 'pending' });
-    document.getElementById('task-input').value = '';
-    save(); renderTasks(); showToast('👷‍♂️ काम थपियो!');
-}
+            document.getElementById('stf_list').innerHTML = stfDb.map(s => `
+                <div class="bg-white p-4 rounded-2xl border-l-8 border-green-600 shadow-sm">
+                    <div class="flex justify-between items-start"><div><h4 class="font-bold text-gray-800 leading-none">${s.name}</h4><p class="text-[10px] text-green-700 font-bold uppercase mt-1 tracking-tighter"><i class="fas fa-map-marker-alt mr-1"></i> ${s.site} | ${s.time}</p></div><button onclick="deleteItem('stf', ${s.id})" class="text-gray-300 hover:text-red-500"><i class="fas fa-times-circle text-lg"></i></button></div>
+                    <p class="text-xs text-gray-500 mt-2 italic bg-gray-50 p-2 rounded-lg border border-gray-100">"${s.task}"</p>
+                </div>`).join('');
+        }
 
-function renderTasks() {
-    document.getElementById('task-list').innerHTML = tasks.map(t => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:20px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:16px; transition:0.3s;" class="task-item">
-            <span style="${t.status === 'done' ? 'text-decoration:line-through; color:var(--muted)' : 'color:#fff; font-weight:500;'}">${t.text}</span>
-            <button class="btn" onclick="toggleTask(${t.id})" style="background:${t.status === 'done' ? 'rgba(34, 197, 94, 0.2)' : 'rgba(255,255,255,0.1)'}; color:${t.status === 'done' ? 'var(--green)' : '#fff'}; padding:8px 16px; border-radius:10px; font-size:0.85rem;">
-                ${t.status === 'done' ? '✓ सम्पन्न' : '⏳ बाँकी'}
-            </button>
-        </div>
-    `).join('');
-}
+        function downloadBackup() {
+            const data = { accounting: accDb, crm: crmDb, staff: stfDb };
+            const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `Prerak_OS_Backup.json`;
+            a.click();
+        }
 
-function toggleTask(id) {
-    const t = tasks.find(x => x.id === id);
-    t.status = t.status === 'done' ? 'pending' : 'done';
-    save(); renderTasks(); updateDash();
-}
-
-// Dashboard Logic
-function updateDash() { 
-    document.getElementById('stat-total').textContent = customers.length; 
-    
-    // Calculate today's entries
-    const todayStr = new Date().toLocaleDateString('ne-NP');
-    const todayCount = customers.filter(c => c.date === todayStr).length;
-    document.getElementById('stat-today').textContent = todayCount;
-    
-    // Calculate pending tasks
-    document.getElementById('stat-tasks').textContent = tasks.filter(t => t.status === 'pending').length;
-}
-
-// Initialize App
-(function init() {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('date-display').textContent = new Date().toLocaleDateString('ne-NP', options);
-    updateDash();
-})();
-</script>
+        renderAll();
+    </script>
 </body>
 </html>
