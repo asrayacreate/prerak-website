@@ -1,224 +1,58 @@
-<!DOCTYPE html>
-<html lang="ne">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prerak OS Pro | All-in-One Business Suite</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;600;700&family=Orbitron:wght@700&display=swap');
-        body { font-family: 'Mukta', sans-serif; background: #f4f7f9; }
-        .logo-font { font-family: 'Orbitron', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        .tab-active { background: #1e3a8a; color: white !important; font-weight: 800; border-radius: 15px; }
-        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
-        input, select, textarea { transition: all 0.2s; border: 1px solid #e2e8f0; }
-        input:focus { border-color: #1e3a8a !important; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
-    </style>
-</head>
-<body class="pb-24">
+<style>
+  /* Floating Contact Button */
+  .floating-contact {
+    position: fixed;
+    bottom: 85px;
+    right: 24px;
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .float-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+  .float-wa { background: #25D366; }
+  .float-call { background: #1e3a8a; }
+  .float-btn:hover { transform: scale(1.1) rotate(10deg); }
 
-    <header class="bg-blue-900 text-white p-4 sticky top-0 z-50 flex justify-between items-center shadow-lg">
-        <div class="flex items-center gap-3">
-            <div class="h-10 w-10 bg-white text-blue-900 rounded-xl flex items-center justify-center shadow-inner">
-                <i class="fas fa-hammer text-xl"></i>
-            </div>
-            <div>
-                <h1 class="logo-font text-lg leading-none tracking-tighter">PRERAK OS</h1>
-                <p class="text-[9px] uppercase font-bold opacity-70 tracking-widest">Construction & Interior v3.1</p>
-            </div>
-        </div>
-        <button onclick="downloadBackup()" class="bg-blue-800 p-2 px-3 rounded-lg text-xs font-bold border border-blue-700 hover:bg-blue-700">
-            <i class="fas fa-cloud-download-alt mr-1"></i> BACKUP
-        </button>
-    </header>
+  /* Smooth Reveal Animation */
+  .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
 
-    <nav class="bg-white border-b sticky top-[72px] z-40 flex p-2 gap-1 overflow-x-auto shadow-sm">
-        <button onclick="switchTab('crm')" id="btn-crm" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500 tab-active">CRM (ग्राहक)</button>
-        <button onclick="switchTab('accounting')" id="btn-accounting" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Accounting</button>
-        <button onclick="switchTab('staff')" id="btn-staff" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Staff Log</button>
-        <button onclick="switchTab('rate')" id="btn-rate" class="flex-1 py-3 px-2 text-[10px] font-black uppercase tracking-tighter text-gray-500">Rates</button>
-    </nav>
+<div class="floating-contact">
+  <a href="https://wa.me/9779855069733" target="_blank" class="float-btn float-wa" title="WhatsApp Us">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.538-2.961-2.654-.087-.116-.708-.941-.708-1.792s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.231.006.332.013c.101.007.237-.038.37.284.133.322.456 1.111.496 1.191.04.079.066.171.013.276-.052.106-.078.173-.157.265-.079.091-.166.202-.237.271-.081.079-.166.165-.071.328.095.163.423.697.908 1.129.623.556 1.148.73 1.309.81.161.08.257.066.352-.043.094-.109.407-.472.516-.633.109-.161.218-.135.367-.08.149.054.945.445 1.108.526.163.081.271.122.311.19.04.067.04.389-.104.794z"/></svg>
+  </a>
+  <a href="tel:9855069733" class="float-btn float-call" title="Call Us">
+    <i class="fas fa-phone"></i>
+  </a>
+</div>
 
-    <main class="max-w-4xl mx-auto p-4 space-y-6">
+<script>
+  // १. जतिबेला पनि ताजा मिति देखाउने (Footer मा)
+  document.addEventListener('DOMContentLoaded', () => {
+    const yearSpan = document.querySelector('footer p');
+    if(yearSpan) yearSpan.innerHTML = `© ${new Date().getFullYear()} PRERAK MULTIPURPOSE PVT LTD. Built for Hetauda.`;
+  });
 
-        <section id="sec-crm" class="space-y-4">
-            <div class="bg-white rounded-3xl p-6 card-shadow border border-gray-100">
-                <h3 class="text-xs font-black text-gray-400 uppercase mb-4 flex items-center gap-2"><i class="fas fa-user-plus text-blue-900"></i> New Customer Inquiry</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="text" id="crm_name" placeholder="ग्राहकको नाम" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
-                    <input type="number" id="crm_phone" placeholder="मोबाइल नम्बर" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
-                    <input type="text" id="crm_addr" placeholder="ठेगाना" class="p-3 bg-gray-50 rounded-xl outline-none text-sm md:col-span-2">
-                    <select id="crm_status" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold text-blue-800">
-                        <option value="New">નयाँ Inquiry</option>
-                        <option value="Pending">पर्खाइमा (Pending)</option>
-                        <option value="Closed">काम सुरु (Closed)</option>
-                    </select>
-                    <button onclick="saveCRM()" class="bg-blue-900 text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition">CRM मा थप्नुहोस्</button>
-                </div>
-            </div>
-            <div id="crm_list" class="space-y-3"></div>
-        </section>
+  // २. इमेज क्लिक गर्दा फुल स्क्रिन हेर्न मिल्ने (Lightbox)
+  document.querySelectorAll('.proj-card img').forEach(img => {
+    img.style.cursor = "zoom-in";
+    img.onclick = () => {
+      window.open(img.src, '_blank');
+    };
+  });
 
-        <section id="sec-accounting" class="hidden space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-blue-900 p-5 rounded-3xl shadow-lg text-white">
-                    <p class="text-[10px] font-bold opacity-70 uppercase">कुल कारोबार</p>
-                    <h2 id="totalRev" class="text-2xl font-black mt-1 tracking-tighter text-white">रू ०</h2>
-                </div>
-                <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 text-blue-900">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">सम्पन्न काम</p>
-                    <h2 id="totalProj" class="text-2xl font-black mt-1 leading-none">०</h2>
-                </div>
-            </div>
-            <div class="bg-white rounded-3xl p-6 card-shadow">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <input type="text" id="acc_name" placeholder="ग्राहक / बिलिङ विवरण" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
-                    <input type="number" id="acc_amount" placeholder="रकम (रू)" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-black text-blue-900">
-                    <button onclick="saveAccounting()" class="md:col-span-2 bg-blue-900 text-white font-bold py-3 rounded-xl shadow-lg">Save Transaction</button>
-                </div>
-            </div>
-            <div id="acc_list" class="space-y-2"></div>
-        </section>
-
-        <section id="sec-staff" class="hidden space-y-4">
-            <div class="bg-white rounded-3xl p-6 card-shadow border border-gray-100">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
-                    <input type="text" id="stf_name" placeholder="स्टाफको नाम" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold">
-                    <input type="text" id="stf_site" placeholder="काम गरेको साइट" class="p-3 bg-gray-50 rounded-xl outline-none text-sm font-bold text-blue-700">
-                    <textarea id="stf_task" placeholder="कामको छोटो विवरण..." class="p-3 bg-gray-50 rounded-xl outline-none text-sm md:col-span-2 h-20"></textarea>
-                    <button onclick="saveStaff()" class="md:col-span-2 bg-green-700 text-white font-bold py-3 rounded-xl shadow-lg">Update Staff Report</button>
-                </div>
-            </div>
-            <div id="stf_list" class="space-y-3"></div>
-        </section>
-
-        <section id="sec-rate" class="hidden grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
-                <h4 class="text-[10px] font-bold text-gray-400 uppercase">UPVC झ्याल</h4>
-                <p class="text-xl font-black text-blue-900">रू ९५० / Sq.Ft</p>
-            </div>
-            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
-                <h4 class="text-[10px] font-bold text-gray-400 uppercase">WPC फ्रेम</h4>
-                <p class="text-xl font-black text-blue-900">रू १,२०० / Pc</p>
-            </div>
-            <div class="bg-white p-5 rounded-3xl shadow-sm border-l-4 border-blue-900">
-                <h4 class="text-[10px] font-bold text-gray-400 uppercase">AAC ब्लक</h4>
-                <p class="text-xl font-black text-blue-900">रू १,१०० / Cubic</p>
-            </div>
-        </section>
-
-    </main>
-
-    <div class="md:hidden fixed bottom-6 left-6 right-6 h-16 glass rounded-full shadow-2xl border border-white flex justify-around items-center px-6 z-50">
-        <button onclick="switchTab('crm')" class="text-blue-900"><i class="fas fa-users"></i></button>
-        <button onclick="switchTab('accounting')" class="text-blue-900"><i class="fas fa-calculator"></i></button>
-        <button onclick="switchTab('staff')" class="text-blue-900"><i class="fas fa-tasks"></i></button>
-        <button onclick="switchTab('rate')" class="text-blue-900"><i class="fas fa-tags"></i></button>
-    </div>
-
-    <script>
-        let accDb = JSON.parse(localStorage.getItem('prerak_acc_v3')) || [];
-        let crmDb = JSON.parse(localStorage.getItem('prerak_crm_v3')) || [];
-        let stfDb = JSON.parse(localStorage.getItem('prerak_stf_v3')) || [];
-
-        function switchTab(tab) {
-            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('nav > button').forEach(b => b.classList.remove('tab-active'));
-            document.getElementById('sec-' + tab).classList.remove('hidden');
-            document.getElementById('btn-' + tab).classList.add('tab-active');
-            renderAll();
-        }
-
-        function saveAccounting() {
-            const name = document.getElementById('acc_name').value;
-            const amount = document.getElementById('acc_amount').value;
-            if(!name || !amount) return alert("नाम र रकम भर्नुहोस्!");
-            accDb.unshift({ id: Date.now(), name, amount, date: new Date().toLocaleDateString('ne-NP') });
-            localStorage.setItem('prerak_acc_v3', JSON.stringify(accDb));
-            document.getElementById('acc_name').value = '';
-            document.getElementById('acc_amount').value = '';
-            renderAll();
-        }
-
-        function saveCRM() {
-            const name = document.getElementById('crm_name').value;
-            const phone = document.getElementById('crm_phone').value;
-            const status = document.getElementById('crm_status').value;
-            const addr = document.getElementById('crm_addr').value;
-            if(!name || !phone) return alert("विवरण पूरा भर्नुहोस्!");
-            crmDb.unshift({ id: Date.now(), name, phone, status, addr, date: new Date().toLocaleDateString('ne-NP') });
-            localStorage.setItem('prerak_crm_v3', JSON.stringify(crmDb));
-            document.getElementById('crm_name').value = '';
-            document.getElementById('crm_phone').value = '';
-            renderAll();
-        }
-
-        function saveStaff() {
-            const name = document.getElementById('stf_name').value;
-            const site = document.getElementById('stf_site').value;
-            const task = document.getElementById('stf_task').value;
-            if(!name || !site) return alert("स्टाफ र साइट चाहिन्छ!");
-            stfDb.unshift({ id: Date.now(), name, site, task, time: new Date().toLocaleTimeString('ne-NP') });
-            localStorage.setItem('prerak_stf_v3', JSON.stringify(stfDb));
-            document.getElementById('stf_name').value = '';
-            document.getElementById('stf_site').value = '';
-            document.getElementById('stf_task').value = '';
-            renderAll();
-        }
-
-        function deleteItem(type, id) {
-            if(!confirm('के हटाउन चाहनुहुन्छ?')) return;
-            if(type==='acc') accDb = accDb.filter(i => i.id !== id);
-            if(type==='crm') crmDb = crmDb.filter(i => i.id !== id);
-            if(type==='stf') stfDb = stfDb.filter(i => i.id !== id);
-            localStorage.setItem('prerak_acc_v3', JSON.stringify(accDb));
-            localStorage.setItem('prerak_crm_v3', JSON.stringify(crmDb));
-            localStorage.setItem('prerak_stf_v3', JSON.stringify(stfDb));
-            renderAll();
-        }
-
-        function renderAll() {
-            // Stats
-            const total = accDb.reduce((s, i) => s + parseFloat(i.amount), 0);
-            document.getElementById('totalRev').innerText = `रू ${total.toLocaleString()}`;
-            document.getElementById('totalProj').innerText = accDb.length;
-
-            // Render Lists
-            document.getElementById('acc_list').innerHTML = accDb.map(i => `
-                <div class="bg-white p-4 rounded-2xl flex justify-between items-center shadow-sm">
-                    <div><h4 class="font-bold text-gray-800">${i.name}</h4><p class="text-[10px] text-gray-400 font-bold uppercase">${i.date}</p></div>
-                    <div class="text-right"><div class="font-black text-blue-900">रू ${parseFloat(i.amount).toLocaleString()}</div>
-                    <button onclick="deleteItem('acc', ${i.id})" class="text-red-300 hover:text-red-500 text-xs mt-1"><i class="fas fa-trash"></i></button></div>
-                </div>`).join('');
-
-            document.getElementById('crm_list').innerHTML = crmDb.map(c => `
-                <div class="bg-white p-4 rounded-3xl border border-gray-50 flex justify-between items-center shadow-sm">
-                    <div><h4 class="font-bold text-gray-800">${c.name}</h4><p class="text-xs text-blue-600 font-bold"><i class="fas fa-phone mr-1"></i> ${c.phone}</p><p class="text-[9px] text-gray-400 font-black mt-1 uppercase">${c.addr}</p></div>
-                    <div class="text-right flex flex-col items-end gap-2">
-                        <span class="text-[9px] font-black px-2 py-1 rounded-full ${c.status==='Closed'?'bg-green-100 text-green-700':'bg-orange-100 text-orange-700'}">${c.status}</span>
-                        <div class="flex gap-4 text-gray-300"><a href="tel:${c.phone}" class="hover:text-blue-600"><i class="fas fa-phone-alt"></i></a><button onclick="deleteItem('crm', ${c.id})" class="hover:text-red-500"><i class="fas fa-trash"></i></button></div>
-                    </div>
-                </div>`).join('');
-
-            document.getElementById('stf_list').innerHTML = stfDb.map(s => `
-                <div class="bg-white p-4 rounded-2xl border-l-8 border-green-600 shadow-sm">
-                    <div class="flex justify-between items-start"><div><h4 class="font-bold text-gray-800 leading-none">${s.name}</h4><p class="text-[10px] text-green-700 font-bold uppercase mt-1 tracking-tighter"><i class="fas fa-map-marker-alt mr-1"></i> ${s.site} | ${s.time}</p></div><button onclick="deleteItem('stf', ${s.id})" class="text-gray-300 hover:text-red-500"><i class="fas fa-times-circle text-lg"></i></button></div>
-                    <p class="text-xs text-gray-500 mt-2 italic bg-gray-50 p-2 rounded-lg border border-gray-100">"${s.task}"</p>
-                </div>`).join('');
-        }
-
-        function downloadBackup() {
-            const data = { accounting: accDb, crm: crmDb, staff: stfDb };
-            const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `Prerak_OS_Backup.json`;
-            a.click();
-        }
-
-        renderAll();
-    </script>
-</body>
-</html>
+  // ३. SEO कीवर्डहरू कन्सोलमा चेक गर्न (तपाईंको लागि)
+  console.log("Prerak Multipurpose Website Loaded - Target: Hetauda Construction Market");
+</script>
