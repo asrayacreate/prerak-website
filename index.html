@@ -1,212 +1,154 @@
 <!DOCTYPE html>
-<html lang="ne">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PRERAK MULTIPURPOSE | Construction, Interior & UPVC Hetauda</title>
-<meta name="description" content="Prerak Multipurpose Pvt Ltd - Top Construction, Interior, UPVC & Solar Solutions in Hetauda, Nepal. Premium Quality, On-Time Delivery.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root{
-  --orange:#f97316;--orange-d:#c2410c;--dark:#0c0c0e;--dark2:#161618;
-  --dark3:#1e1e22;--border:rgba(255,255,255,0.08);--text:#f5f5f0;--muted:#9ca3af;
-}
-body.theme-light{--dark:#f8f8f8;--dark2:#ffffff;--dark3:#f0f0f0;--border:rgba(0,0,0,0.1);--text:#111111;--muted:#666666;}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
-
-/* Navbar */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:15px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(12,12,14,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,#f97316,#c2410c);border-radius:10px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;box-shadow:0 5px 15px rgba(249,115,22,0.4);}
-.nav-logo-text .name{font-family:'Syne',sans-serif;font-weight:900;font-size:1.1rem;color:var(--orange);letter-spacing:1px;}
-.nav-logo-text .sub{font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
-.nav-links{display:flex;gap:30px;list-style:none;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;transition:0.3s;}
-.nav-links a:hover{color:var(--orange);}
-
-/* Hero */
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 5% 60px;position:relative;background-image:linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('uploaded:upvc-windows-and-doors.png-7d58c868-e6b8-46da-811e-f685b4c91c8d');background-size:cover;background-position:center;}
-.hero-content{max-width:750px;z-index:2;}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,4.5rem);font-weight:900;line-height:1.1;margin-bottom:20px;text-shadow:0 5px 15px rgba(0,0,0,0.5);}
-.hero h1 span{color:var(--orange);}
-.hero p{color:white;font-size:1.2rem;margin-bottom:35px;max-width:600px;text-shadow:0 2px 10px rgba(0,0,0,0.3);}
-
-/* Rate List Section */
-.rate-section{padding:80px 5%;background:var(--dark2);}
-.rate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:25px;}
-.rate-card{background:var(--dark3);padding:30px;border-radius:25px;border:1px solid var(--border);position:relative;transition:0.3s;display:flex;flex-direction:column;justify-content:space-between;}
-.rate-card:hover{border-color:var(--orange);transform:translateY(-8px);box-shadow:0 15px 30px rgba(0,0,0,0.5);}
-.rate-card h4{font-size:0.9rem;color:var(--muted);text-transform:uppercase;margin-bottom:15px;letter-spacing:1px;font-weight:bold;}
-.rate-card .price-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;}
-.rate-card .price{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--orange);}
-.rate-card .unit{font-size:1rem;color:var(--muted);}
-.rate-card .details-list{list-style:none;font-size:0.85rem;color:var(--muted);border-top:1px solid var(--border);padding-top:15px;}
-.rate-card .details-list li{margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.rate-card .details-list li i{color:var(--orange);font-size:0.7rem;}
-
-/* Services Grid */
-.services-section{padding:100px 5%;}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;padding:50px 0;}
-.service-card{background:var(--dark3);border-radius:25px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:0.3s;}
-.service-card:hover{transform:translateY(-10px);border-color:var(--orange);box-shadow:0 15px 30px rgba(0,0,0,0.5);}
-.service-img{width:100%;height:220px;object-fit:cover;}
-.service-body{padding:30px;}
-.service-body h3{font-family:'Syne',sans-serif;font-size:1.4rem;margin-bottom:12px;}
-.service-body p{font-size:0.95rem;color:var(--muted);line-height:1.7;}
-
-/* Floating Contact Bar (Mobile) */
-.mobile-contact-bar{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);width:92%;max-width:450px;background:rgba(255,255,255,0.05);backdrop-filter:blur(25px);border:1px solid var(--border);border-radius:50px;display:none;justify-content:space-around;padding:12px;z-index:1000;box-shadow:0 15px 40px rgba(0,0,0,0.6);}
-@media(max-width:900px){.mobile-contact-bar{display:flex;}}
-.m-btn{color:white;text-decoration:none;display:flex;flex-direction:column;align-items:center;font-size:0.75rem;font-weight:bold;transition:0.2s;}
-.m-btn i{font-size:1.3rem;margin-bottom:4px;color:var(--orange);}
-.m-btn:active{transform:scale(0.9);}
-
-/* Utils */
-.section-header{margin-bottom:60px;max-width:600px;}
-.label{color:var(--orange);text-transform:uppercase;font-size:0.75rem;letter-spacing:3px;font-weight:bold;margin-bottom:12px;display:block;}
-.btn-primary{background:var(--orange);color:white;padding:16px 35px;border-radius:12px;text-decoration:none;font-weight:bold;display:inline-block;box-shadow:0 10px 20px rgba(249,115,22,0.3);transition:0.3s;}
-.btn-primary:hover{background:var(--orange-d);transform:translateY(-2px);}
-
-/* Animations */
-.reveal{opacity:0;transform:translateY(30px);transition:1.2s all ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>PRERAK MULTIPURPOSE | Official Hybrid OS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --orange: #f97316; --dark: #0c0c0e; --dark2: #161618; --border: rgba(255,255,255,0.08); }
+        body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: white; margin: 0; scroll-behavior: smooth; }
+        .syne { font-family: 'Syne', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(12px); border: 1px solid var(--border); }
+        .active-tab { border-bottom: 3px solid var(--orange); color: var(--orange); font-weight: 800; }
+        .service-card:hover { border-color: var(--orange); transform: translateY(-5px); transition: 0.3s; }
+    </style>
 </head>
-<body>
+<body class="pb-20">
 
-<nav>
-  <a href="#" class="nav-logo">
-    <div class="logo-icon"><i class="fas fa-hammer"></i></div>
-    <div class="nav-logo-text">
-      <div class="name">PRERAK</div>
-      <div class="sub">Multipurpose Pvt Ltd</div>
-    </div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#services">Work We Do</a></li>
-    <li><a href="#rates">Material Prices</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="tel:9855069733" class="btn-primary" style="padding:12px 25px; font-size:0.85rem;">📞 Call</a>
-</nav>
+    <nav class="sticky top-0 z-50 glass p-4 flex justify-between items-center px-6">
+        <div class="flex items-center gap-2">
+            <div class="bg-orange-600 p-2 rounded-xl text-white shadow-lg shadow-orange-600/30"><i class="fas fa-hammer"></i></div>
+            <h1 class="syne text-lg tracking-tighter leading-none">PRERAK<br><span class="text-[8px] text-gray-500 uppercase tracking-widest font-bold">Multipurpose</span></h1>
+        </div>
+        <div class="flex gap-4">
+            <button onclick="showSec('web')" id="btn-web" class="text-[10px] uppercase tracking-widest px-2 py-1 active-tab">Website</button>
+            <button onclick="showSec('os')" id="btn-os" class="text-[10px] uppercase tracking-widest px-2 py-1">Work OS</button>
+        </div>
+    </nav>
 
-<section class="hero">
-  <div class="hero-content">
-    <span class="label">Nepal's Premier Construction & Interior Hub</span>
-    <h1>Building Your <span>Dreams</span> Into Reality</h1>
-    <p>गुणस्तरीय निर्माण, आधुनिक इन्टेरियर डिजाइन, र उच्च-स्तरीय UPVC झ्याल-ढोकाको भरपर्दो केन्द्र। हेटाौंडामा १२ वर्षदेखिको विश्वास।</p>
-    <div style="display:flex; gap:15px;">
-      <a href="#contact" class="btn-primary">Get Free Quote</a>
-      <a href="#services" style="color:white; text-decoration:none; font-weight:bold; align-self:center;">View Work →</a>
-    </div>
-  </div>
-</section>
+    <div id="sec-web" class="animate-in fade-in duration-500">
+        <header class="text-center py-20 px-6">
+            <h2 class="syne text-5xl md:text-8xl font-black leading-none tracking-tighter mb-6 uppercase">Modern <span class="text-orange-600">Living.</span></h2>
+            <p class="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">Hetauda's premium destination for UPVC Windows, Aluminum Fabrication, and Luxury Modular Interiors.</p>
+            <div class="mt-10 flex justify-center gap-4">
+                <a href="tel:9855069733" class="bg-orange-600 px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest">Contact Now</a>
+            </div>
+        </header>
 
-<section id="rates" class="rate-section reveal">
-  <div class="section-header">
-    <span class="label">Material Pricing & Specification</span>
-    <h2 class="syne" style="font-size:2.5rem; color:white;">Our Transparent Rates</h2>
-  </div>
-  <div class="rate-grid">
-    <div class="rate-card">
-      <h4>UPVC Window Systems</h4>
-      <div class="price-row"><div class="price">रू ९५०</div><div class="unit">/sqft</div></div>
-      <ul class="details-list">
-        <li><i class="fas fa-check-circle">
-        <li><i class="fas fa-check-circle"></i> CONCH Profile (U-Shape Steel Reinforcement)</li>
-        <li><i class="fas fa-check-circle"></i> 5mm + 6A + 5mm Double Glazed Tempered Glass</li>
-        <li><i class="fas fa-check-circle"></i> Soundproof, Waterproof, Dustproof (EPDM Gasket)</li>
-        <li><i class="fas fa-check-circle"></i> Multi-Point Locking System | 10-Year Profile Warranty</li>
-      </ul>
-    </div>
-    <div class="rate-card">
-      <h4>Interior Modular Solutions</h4>
-      <div class="price-row"><div class="price">रू १,२००</div><div class="unit">/sqft</div></div>
-      <ul class="details-list">
-        <li><i class="fas fa-check-circle"></i> HDHMR (Water Resistant) Board Base</li>
-        <li><i class="fas fa-check-circle"></i> 1mm Acrylic/Laminate Finish | Hettich/Ebco Hardware</li>
-        <li><i class="fas fa-check-circle"></i> Custom Modular Kitchen, Wardrobe, TV Unit, Partition</li>
-        <li><i class="fas fa-check-circle"></i> Modern CNC Cutting Designs | 5-Year Hardware Warranty</li>
-      </ul>
-    </div>
-    <div class="rate-card">
-      <h4>Gypsum False Ceiling</h4>
-      <div class="price-row"><div class="price">रू १६५</div><div class="unit">/sqft</div></div>
-      <ul class="details-list">
-        <li><i class="fas fa-check-circle"></i> SAINT-GOBAIN Gypsum Board</li>
-        <li><i class="fas fa-check-circle"></i> High-Grade Metal Framing (G.I. Section)</li>
-        <li><i class="fas fa-check-circle"></i> Advanced Lighting Provision (LED Strip & Spot)</li>
-        <li><i class="fas fa-check-circle"></i> Perfect Finishing with Modern Patterns</li>
-      </ul>
-    </div>
-  </div>
-</section>
+        <section class="px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 pb-20">
+            <div class="service-card glass rounded-[2.5rem] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" class="w-full h-56 object-cover opacity-70">
+                <div class="p-8">
+                    <h3 class="syne text-2xl font-bold text-orange-500 mb-2">Premium UPVC Systems</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-medium uppercase tracking-wider">Soundproof | Waterproof | Dustproof</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-microchip text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Hardware Description</p><p class="text-[11px] text-gray-500">Multi-point High Security Locks with Zinc-alloy handles.</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-shield-alt text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Technical Fitting</p><p class="text-[11px] text-gray-500">7-Tank processed profiles with EPDM double gasket sealing.</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-layer-group text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Glass Specs</p><p class="text-[11px] text-gray-500">5mm to 12mm Toughened / Double Glazed for heat insulation.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<section id="services" class="services-section">
-  <div class="section-header">
-    <span class="label">What We Exell At</span>
-    <h2 class="syne" style="font-size:2.8rem; color:var(--text);">Construction to Finising</h2>
-  </div>
-  <div class="services-grid reveal">
-    <div class="service-card">
-      <img src="uploaded:images.jpeg-42b6b4bd-8bfe-4917-948d-9db8f3d6f670" class="service-img" alt="Luxury Interior">
-      <div class="service-body">
-        <h3>Interior Marvels</h3>
-        <p>तपाईँको सपनाको घरको इन्टेरियर कस्तो देखिनेछ भन्ने कुराको प्रत्यक्ष अनुभव। यो हामीले हेटाौंडामा सम्पन्न गरेको लग्जरी प्रोजेक्टको झलक हो। हामी HDHMR र Acrylic सामाग्री प्रयोग गरी गुणस्तरीय इन्टेरियर बनाउँछौँ।</p>
-      </div>
+            <div class="service-card glass rounded-[2.5rem] overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" class="w-full h-56 object-cover opacity-70">
+                <div class="p-8">
+                    <h3 class="syne text-2xl font-bold text-orange-500 mb-2">Modular Interiors</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-medium uppercase tracking-wider">Smart Space | Modern Finish</p>
+                    
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-tools text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Hardware Details</p><p class="text-[11px] text-gray-500">Soft-close telescopic channels and Hettich style hydraulic hinges.</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-tree text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Material Quality</p><p class="text-[11px] text-gray-500">BWR (Boiling Water Resistant) Marine Plywood with HDHMR options.</p></div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-paint-brush text-orange-600 mt-1"></i>
+                            <div><p class="text-sm font-bold">Surface Finish</p><p class="text-[11px] text-gray-500">High-gloss anti-scratch Acrylic or customized premium Laminates.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="service-card">
-      <img src="https://images.unsplash.com/photo-1541913054-211499114d5e?q=80&w=800" class="service-img" alt="Construction Hetauda">
-      <div class="service-body">
-        <h3>Complete Construction</h3>
-        <p>A-Class निर्माण सामाग्री र अनुभवी इन्जिनियरको रेखदेखमा फाउन्डेसनदेखि फिनिसिङसम्मको काम। Residential होम, Commercial भवन र RCC स्ट्रक्चरका लागि हामीलाई सम्झनुहोस्।</p>
-      </div>
+
+    <div id="sec-os" class="hidden p-6 max-w-2xl mx-auto space-y-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="glass p-6 rounded-[2rem] border-l-4 border-orange-600">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Total Revenue</p>
+                <h4 id="totalRev" class="text-2xl font-black">रू ०</h4>
+            </div>
+            <div class="glass p-6 rounded-[2rem] border-l-4 border-blue-600">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Projects Logged</p>
+                <h4 id="projCount" class="text-2xl font-black">०</h4>
+            </div>
+        </div>
+
+        <div class="glass p-8 rounded-[2.5rem] space-y-5">
+            <h3 class="syne text-xs font-bold text-orange-500 uppercase tracking-widest">New Work Entry</h3>
+            <input type="text" id="accName" placeholder="Customer Name" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-sm text-white focus:border-orange-500">
+            <input type="number" id="accAmt" placeholder="Amount (रू)" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-sm text-white focus:border-orange-500">
+            <button onclick="saveAcc()" class="w-full bg-orange-600 p-4 rounded-2xl font-bold uppercase tracking-widest text-[10px]">Save Record</button>
+        </div>
+
+        <div id="logList" class="space-y-3"></div>
     </div>
-    <div class="service-card">
-      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800" class="service-img" alt="Solar & Electrical">
-      <div class="service-body">
-        <h3>Smart Energy & Electrical</h3>
-        <p>गुणस्तरीय इलेक्ट्रिकल वायरिङ, आधुनिक लाइटिङ सेटअप, र उच्च-स्तरीय सोलर प्यानल जडान। हामी टाटा र लुमिनस जस्ता ब्राण्डका सामाग्री प्रयोग गर्छौँ।</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="contact" style="padding:100px 5%; background:var(--dark2); border-radius:50px; margin:0 5% 100px;">
-  <div style="text-align:center;">
-    <h2 class="syne" style="font-size:3rem; margin-bottom:20px; color:white;">Start Your Project</h2>
-    <p style="color:var(--muted); margin-bottom:40px; max-width:500px; margin-left:auto; margin-right:auto;">तपाईँको नयाँ घर वा इन्टेरियर प्रोजेक्टको लागि आजै निःशुल्क परामर्श लिनुहोस् र विस्तृत कोटेसन प्राप्त गर्नुहोस्।</p>
-    <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-      <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी! मलाई कोटेसन चाहियो।" target="_blank" class="btn-primary" style="background:#25D366; box-shadow:0 10px 20px rgba(37,211,102,0.2);">
-        <i class="fab fa-whatsapp"></i> WhatsApp Us
-      </a>
-      <a href="tel:9855069733" class="btn-primary">
-        <i class="fas fa-phone-alt"></i> Call: 9855069733
-      </a>
-    </div>
-    <p style="color:var(--muted); font-size:0.8rem; margin-top:30px;">Sun-Fri: 8AM-6PM | Sat: Closed</p>
-  </div>
-</section>
+    <a href="https://wa.me/9779855069733" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] h-14 w-14 rounded-full flex items-center justify-center shadow-2xl z-50 animate-bounce">
+        <i class="fab fa-whatsapp text-2xl text-white"></i>
+    </a>
 
-<footer style="padding:60px 5%; text-align:center; border-top:1px solid var(--border);">
-  <p style="color:var(--muted); font-size:0.8rem; letter-spacing:1px;">© 2026 PRERAK MULTIPURPOSE PVT LTD. Hetauda-4, Nepal. <br>Building dreams across Makwanpur.</p>
-</footer>
+    <script>
+        let db = JSON.parse(localStorage.getItem('prerak_v5_db')) || [];
 
-<div class="mobile-contact-bar">
-  <a href="#" class="m-btn"><i class="fas fa-home"></i>Home</a>
-  <a href="#services" class="m-btn"><i class="fas fa-hammer"></i>Work</a>
-  <a href="https://wa.me/9779855069733" class="m-btn"><i class="fab fa-whatsapp"></i>Chat</a>
-  <a href="tel:9855069733" class="m-btn"><i class="fas fa-phone"></i>Call</a>
-</div>
+        function showSec(id) {
+            document.getElementById('sec-web').classList.add('hidden');
+            document.getElementById('sec-os').classList.add('hidden');
+            document.getElementById('btn-web').classList.remove('active-tab');
+            document.getElementById('btn-os').classList.remove('active-tab');
+            document.getElementById('sec-' + id).classList.remove('hidden');
+            document.getElementById('btn-' + id).classList.add('active-tab');
+            render();
+        }
 
-<script>
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('visible'); });
-}, {threshold: 0.1});
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+        function saveAcc() {
+            const name = document.getElementById('accName').value;
+            const amt = document.getElementById('accAmt').value;
+            if(!name || !amt) return alert("नाम र रकम भर्नुहोस्!");
+            db.unshift({ id: Date.now(), name, amt, date: new Date().toLocaleDateString('ne-NP') });
+            localStorage.setItem('prerak_v5_db', JSON.stringify(db));
+            document.getElementById('accName').value = '';
+            document.getElementById('accAmt').value = '';
+            render();
+        }
+
+        function render() {
+            const total = db.reduce((s, i) => s + parseFloat(i.amt), 0);
+            document.getElementById('totalRev').innerText = 'रू ' + total.toLocaleString();
+            document.getElementById('projCount').innerText = db.length;
+            document.getElementById('logList').innerHTML = db.map(i => `
+                <div class="glass p-4 rounded-2xl flex justify-between items-center">
+                    <div><p class="font-bold text-sm">${i.name}</p><p class="text-[9px] text-gray-500 uppercase tracking-widest font-bold mt-1">${i.date}</p></div>
+                    <p class="font-black text-orange-500 text-sm">रू ${parseFloat(i.amt).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+        render();
+    </script>
 </body>
 </html>
