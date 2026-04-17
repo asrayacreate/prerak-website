@@ -1,156 +1,777 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>PRERAK MULTIPURPOSE | Building Your Dreams</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root { --orange: #f97316; --dark: #0c0c0e; --dark2: #161618; --border: rgba(255,255,255,0.08); }
-        body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: white; margin: 0; scroll-behavior: smooth; }
-        .syne { font-family: 'Syne', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid var(--border); }
-        .active-tab { border-bottom: 4px solid var(--orange); color: var(--orange); font-weight: 800; }
-        .service-card { transition: 0.4s all ease; border-radius: 2.5rem; overflow: hidden; height: 100%; }
-        .service-card:hover { transform: translateY(-10px); border-color: var(--orange); box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PRERAK MULTIPURPOSE PVT LTD | Building Your Dreams — Hetauda, Nepal</title>
+<meta name="description" content="PRERAK MULTIPURPOSE PVT LTD — Construction, Interior, UPVC, Gypsum, Solar. 10+ years trusted partner in Hetauda, Makwanpur, Nepal.">
+<meta name="keywords" content="Hetauda construction, UPVC windows Nepal, interior design Makwanpur, gypsum ceiling, solar panel Nepal">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --orange:#f97316;--orange-d:#c2410c;--orange-l:#fb923c;
+  --dark:#0c0c0e;--dark2:#161618;--dark3:#1e1e22;
+  --border:rgba(255,255,255,0.08);--border-l:rgba(255,255,255,0.15);
+  --text:#f5f5f0;--muted:#9ca3af;--gold:#f59e0b;--green:#22c55e;
+}
+body.theme-light{--dark:#f8f8f8;--dark2:#fff;--dark3:#f0f0f0;--border:rgba(0,0,0,0.1);--text:#111;--muted:#666;}
+body.theme-saffron{--dark:#1a0f00;--dark2:#2a1800;--dark3:#3a2200;--border:rgba(249,115,22,0.2);--text:#fff8f0;--muted:#c8a070;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background .3s,color .3s;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-thumb{background:var(--orange);border-radius:3px;}
+.syne{font-family:'Syne',sans-serif;}
+.glass{background:rgba(255,255,255,0.02);backdrop-filter:blur(15px);border:1px solid var(--border);}
+
+/* THEME TOGGLE */
+#theme-bar{position:fixed;bottom:100px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;}
+.theme-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--border);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--dark2);
+  transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.theme-btn:hover{transform:scale(1.1);border-color:var(--orange);}
+.theme-btn.active{border-color:var(--orange);background:var(--orange);}
+
+/* NAV */
+nav.mainnav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(12,12,14,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all .3s;}
+body.theme-light nav.mainnav{background:rgba(248,248,248,0.95);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);}
+.nav-logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#f97316,#c2410c);
+  display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(249,115,22,0.4);}
+.nav-logo-text .name{font-family:'Syne',sans-serif;font-weight:900;font-size:1.05rem;color:var(--orange);letter-spacing:1px;line-height:1;}
+.nav-logo-text .sub{font-size:0.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{background:var(--orange);color:#fff;padding:9px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.82rem;transition:all .2s;}
+.nav-cta:hover{background:var(--orange-d);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
+.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s;}
+.mobile-menu{display:none;position:fixed;top:65px;left:0;right:0;background:rgba(12,12,14,0.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);padding:16px 5%;flex-direction:column;gap:12px;z-index:99;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:var(--muted);text-decoration:none;font-size:0.95rem;padding:8px 0;border-bottom:1px solid var(--border);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 5% 60px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 65% 50%,rgba(249,115,22,0.12),transparent),
+  linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);}
+.hero-grid{position:absolute;inset:0;opacity:0.03;
+  background-image:linear-gradient(rgba(249,115,22,1) 1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,1) 1px,transparent 1px);
+  background-size:60px 60px;}
+.hero-img{position:absolute;right:0;top:0;bottom:0;width:48%;overflow:hidden;}
+.hero-img img{width:100%;height:100%;object-fit:cover;opacity:0.2;}
+.hero-img::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--dark) 0%,transparent 50%);z-index:1;}
+.hero-content{position:relative;z-index:2;max-width:680px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,0.1);
+  border:1px solid rgba(249,115,22,0.25);padding:5px 14px;border-radius:20px;
+  font-size:0.72rem;color:var(--orange);font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:22px;animation:fadeUp .8s both;}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5.8vw,4rem);font-weight:900;line-height:1.06;margin-bottom:20px;animation:fadeUp .8s .1s both;}
+.hero h1 .accent{color:var(--orange);display:block;text-decoration:underline;text-decoration-color:rgba(255,255,255,0.1);text-underline-offset:6px;}
+.hero p{font-size:1rem;color:var(--muted);line-height:1.7;max-width:520px;margin-bottom:32px;animation:fadeUp .8s .2s both;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .8s .3s both;}
+.btn-primary{background:var(--orange);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.9rem;
+  display:flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 8px 24px rgba(249,115,22,0.35);border:none;cursor:pointer;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,0.45);}
+.btn-secondary{border:1px solid var(--border-l);color:var(--text);padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:600;font-size:0.9rem;
+  display:flex;align-items:center;gap:8px;transition:all .2s;background:rgba(255,255,255,0.04);}
+.btn-secondary:hover{border-color:rgba(249,115,22,0.5);background:rgba(249,115,22,0.06);}
+.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:36px;border-top:1px solid var(--border);flex-wrap:wrap;animation:fadeUp .8s .4s both;}
+.hero-stat .num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:900;color:var(--orange);line-height:1;}
+.hero-stat .label{font-size:0.7rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:1px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION */
+section{padding:80px 5%;}
+.section-label{font-size:0.68rem;color:var(--orange);letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';width:22px;height:2px;background:var(--orange);}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.15;margin-bottom:14px;text-transform:uppercase;}
+.section-title .hl{color:var(--orange);text-decoration:underline;text-decoration-color:rgba(255,255,255,0.15);text-underline-offset:4px;}
+.section-sub{color:var(--muted);font-size:0.95rem;max-width:540px;line-height:1.7;margin-bottom:44px;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* SERVICES - with technical specs */
+.services-section{background:var(--dark2);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.service-card{background:var(--dark3);border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:pointer;transition:all .4s;display:flex;flex-direction:column;}
+.service-card:hover{transform:translateY(-6px);border-color:rgba(249,115,22,0.4);box-shadow:0 20px 40px rgba(249,115,22,0.08);}
+.service-card-img{width:100%;height:200px;object-fit:cover;display:block;transition:transform .5s;opacity:.85;}
+.service-card:hover .service-card-img{transform:scale(1.05);opacity:1;}
+.service-card-img-wrap{overflow:hidden;position:relative;}
+.service-card-body{padding:22px;flex:1;display:flex;flex-direction:column;}
+.service-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:10px;}
+.service-card h3{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--orange);}
+.service-badge{background:rgba(249,115,22,0.15);color:var(--orange);font-size:0.62rem;padding:3px 10px;border-radius:20px;
+  font-weight:700;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;}
+.service-badge.blue{background:rgba(59,130,246,0.15);color:#60a5fa;}
+.service-badge.green{background:rgba(34,197,94,0.15);color:#4ade80;}
+.service-badge.purple{background:rgba(168,85,247,0.15);color:#c084fc;}
+.service-card p{color:var(--muted);font-size:0.85rem;line-height:1.6;margin-bottom:14px;}
+.service-specs{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;flex:1;}
+.spec-row{display:flex;gap:12px;align-items:flex-start;}
+.spec-icon{width:32px;height:32px;border-radius:8px;background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.spec-icon i{color:var(--orange);font-size:0.9rem;}
+.spec-text .label{font-size:0.7rem;color:var(--text);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;}
+.spec-text .desc{font-size:0.76rem;color:var(--muted);line-height:1.5;}
+.service-card-cta{background:var(--orange);color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:700;
+  font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:background .2s;margin-top:auto;}
+.service-card-cta:hover{background:var(--orange-d);}
+
+/* VIDEO SECTION */
+.video-section{background:var(--dark3);}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.video-card{border-radius:16px;overflow:hidden;border:1px solid var(--border);position:relative;cursor:pointer;}
+.video-card:first-child{grid-column:span 2;}
+.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .4s;}
+.video-card:hover .video-thumb{transform:scale(1.03);}
+.video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;transition:background .3s;}
+.video-card:hover .video-overlay{background:rgba(0,0,0,0.3);}
+.play-btn{width:68px;height:68px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;box-shadow:0 8px 24px rgba(249,115,22,0.5);transition:transform .2s;}
+.video-card:hover .play-btn{transform:scale(1.1);}
+.play-btn svg{margin-left:4px;}
+.video-label{background:var(--orange);color:#fff;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:20px;
+  letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.video-overlay h4{color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;text-align:center;padding:0 16px;}
+
+/* VIDEO MODAL */
+.vid-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:600;
+  align-items:center;justify-content:center;padding:16px;}
+.vid-overlay.open{display:flex;}
+.vid-modal{max-width:900px;width:100%;position:relative;}
+.vid-close{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;}
+.vid-modal iframe{width:100%;aspect-ratio:16/9;border-radius:12px;border:none;}
+
+/* SERVICE MODAL */
+.svc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;
+  align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px);}
+.svc-overlay.open{display:flex;}
+.svc-modal{background:var(--dark2);border:1px solid var(--border);border-radius:24px;
+  max-width:820px;width:100%;max-height:90vh;overflow-y:auto;}
+.svc-modal-header{position:relative;}
+.svc-modal-img{width:100%;height:260px;object-fit:cover;border-radius:24px 24px 0 0;}
+.svc-modal-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.6);border:none;color:#fff;
+  width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;}
+.svc-modal-body{padding:28px;}
+.svc-modal-body h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:12px;}
+.svc-modal-body .lead{color:var(--muted);line-height:1.7;margin-bottom:20px;font-size:0.95rem;}
+.svc-modal-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0;}
+.svc-modal-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform .2s;}
+.svc-modal-gallery img:hover{transform:scale(1.04);}
+.svc-modal-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;}
+.svc-feat{display:flex;gap:10px;align-items:flex-start;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;}
+.svc-feat i{color:var(--green);font-size:0.9rem;margin-top:3px;}
+.svc-feat span{font-size:0.82rem;color:var(--text);line-height:1.5;}
+.svc-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
+.wa-modal-btn{display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:13px 22px;
+  border-radius:12px;text-decoration:none;font-weight:700;font-size:0.85rem;}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.why-img-wrap{border-radius:24px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);position:relative;}
+.why-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
+.why-badge-box{position:absolute;bottom:-18px;right:-18px;background:var(--orange);padding:16px 20px;border-radius:14px;
+  box-shadow:0 14px 36px rgba(249,115,22,0.45);}
+.why-badge-box .num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:900;color:#fff;line-height:1;}
+.why-badge-box .txt{font-size:0.68rem;color:rgba(255,255,255,.85);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+.why-points{display:flex;flex-direction:column;gap:16px;}
+.why-point{display:flex;gap:14px;padding:18px;border-radius:14px;border:1px solid var(--border);transition:all .2s;}
+.why-point:hover{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.04);transform:translateX(4px);}
+.why-icon{width:46px;height:46px;border-radius:12px;background:rgba(249,115,22,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.why-icon i{color:var(--orange);font-size:1.2rem;}
+.why-point h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:4px;}
+.why-point p{color:var(--muted);font-size:0.82rem;line-height:1.6;}
+
+/* PROJECTS */
+.projects-section{background:var(--dark2);}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.proj-card{border-radius:14px;overflow:hidden;position:relative;border:1px solid var(--border);cursor:pointer;}
+.proj-card:first-child{grid-column:span 2;aspect-ratio:16/9;}
+.proj-card:not(:first-child){aspect-ratio:4/3;}
+.proj-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.proj-card:hover img{transform:scale(1.06);}
+.proj-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 60%);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:18px;}
+.proj-tag{background:var(--orange);color:#fff;font-size:0.62rem;font-weight:700;padding:3px 10px;border-radius:20px;
+  display:inline-block;margin-bottom:6px;width:fit-content;letter-spacing:1px;text-transform:uppercase;}
+.proj-overlay h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;}
+.proj-overlay p{color:rgba(255,255,255,.65);font-size:0.72rem;margin-top:2px;}
+
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+.test-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:26px;transition:all .2s;}
+.test-card:hover{border-color:rgba(249,115,22,.25);transform:translateY(-3px);}
+.stars{color:var(--gold);font-size:0.9rem;margin-bottom:14px;}
+.test-card p{color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:18px;font-style:italic;}
+.test-author{display:flex;align-items:center;gap:12px;}
+.test-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-d));
+  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#fff;flex-shrink:0;}
+.test-author .name{font-weight:700;font-size:0.88rem;}
+.test-author .loc{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+
+/* CTA */
+.cta-section{text-align:center;padding:90px 5%;
+  background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(249,115,22,.04));
+  border-top:1px solid rgba(249,115,22,.15);border-bottom:1px solid rgba(249,115,22,.15);}
+.cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:900;margin-bottom:14px;text-transform:uppercase;}
+.cta-section p{color:var(--muted);max-width:480px;margin:0 auto 30px;line-height:1.7;}
+
+/* CONTACT */
+.contact-section{background:var(--dark2);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:start;}
+.contact-info{display:flex;flex-direction:column;gap:14px;}
+.contact-item{display:flex;gap:14px;padding:18px;border-radius:14px;border:1px solid var(--border);transition:all .2s;}
+.contact-item:hover{border-color:rgba(249,115,22,.25);}
+.contact-item-icon{width:46px;height:46px;border-radius:12px;background:rgba(249,115,22,.12);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-item-icon i{color:var(--orange);font-size:1.1rem;}
+.contact-item h4{font-weight:700;font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.contact-item p,.contact-item a{font-size:0.88rem;color:var(--text);text-decoration:none;line-height:1.5;}
+.contact-item a:hover{color:var(--orange);}
+.contact-form{background:var(--dark3);border:1px solid var(--border);border-radius:20px;padding:30px;}
+.contact-form h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:20px;}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600;}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.88rem;
+  font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(249,115,22,.5);}
+.fg textarea{resize:vertical;min-height:90px;}
+.fg select option{background:var(--dark3);}
+.form-submit{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:10px;
+  font-size:0.9rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:6px;}
+.form-submit:hover{background:var(--orange-d);transform:translateY(-1px);}
+#form-success{display:none;text-align:center;padding:18px;color:var(--green);font-weight:600;}
+
+/* FOOTER */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5% 22px;}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px;}
+.footer-brand .tagline{color:var(--muted);font-size:0.85rem;line-height:1.7;margin:12px 0 20px;max-width:260px;}
+.footer-socials{display:flex;gap:8px;}
+.soc-btn{width:38px;height:38px;border-radius:10px;background:var(--dark3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:0.9rem;transition:all .2s;}
+.soc-btn:hover{border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.08);color:var(--orange);}
+.footer-col h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text);margin-bottom:16px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul a{color:var(--muted);text-decoration:none;font-size:0.84rem;transition:color .2s;}
+.footer-col ul a:hover{color:var(--orange);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.footer-bottom p{color:var(--muted);font-size:0.76rem;}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:24px;right:24px;background:#25D366;width:60px;height:60px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,0.5);
+  z-index:50;text-decoration:none;animation:bounce 2s infinite;}
+.wa-float i{color:#fff;font-size:1.6rem;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .why-grid,.contact-grid{grid-template-columns:1fr;gap:40px;}
+  .why-img-wrap{display:none;}
+  .video-grid{grid-template-columns:1fr;}
+  .video-card:first-child{grid-column:span 1;}
+  .proj-grid{grid-template-columns:1fr 1fr;}
+  .proj-card:first-child{grid-column:span 2;aspect-ratio:16/9;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .hero-img{display:none;}
+  .svc-modal-gallery{grid-template-columns:1fr 1fr;}
+  .svc-modal-features{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .proj-grid{grid-template-columns:1fr;}
+  .proj-card:first-child{grid-column:span 1;}
+  .footer-grid{grid-template-columns:1fr;}
+  nav.mainnav{padding:12px 4%;}
+  section{padding:60px 4%;}
+  #theme-bar{bottom:90px;right:16px;}
+  .wa-float{bottom:16px;right:16px;width:54px;height:54px;}
+  .svc-modal-gallery{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+  .hero-stat .num{font-size:1.6rem;}
+}
+</style>
 </head>
-<body class="pb-20">
+<body>
 
-    <nav class="sticky top-0 z-50 glass p-4 flex justify-between items-center px-6">
-        <div class="flex items-center gap-2">
-            <div class="bg-orange-600 p-2 rounded-xl text-white shadow-lg shadow-orange-600/30"><i class="fas fa-hammer"></i></div>
-            <h1 class="syne text-lg tracking-tighter leading-none">PRERAK<br><span class="text-[8px] text-gray-500 uppercase tracking-widest font-bold">Multipurpose</span></h1>
-        </div>
-        <div class="flex gap-4">
-            <button onclick="showSec('web')" id="btn-web" class="text-[10px] uppercase tracking-widest active-tab py-1">Business Catalog</button>
-            <button onclick="showSec('os')" id="btn-os" class="text-[10px] uppercase tracking-widest py-1">Work OS</button>
-        </div>
-    </nav>
+<!-- THEME BAR -->
+<div id="theme-bar">
+  <button class="theme-btn active" onclick="setTheme('dark')" title="Dark">🌙</button>
+  <button class="theme-btn" onclick="setTheme('light')" title="Light">☀️</button>
+  <button class="theme-btn" onclick="setTheme('saffron')" title="Saffron">🔶</button>
+</div>
 
-    <div id="sec-web" class="animate-in fade-in p-6 max-w-6xl mx-auto space-y-12">
-        <header class="text-center py-12">
-            <h2 class="syne text-5xl md:text-7xl font-black mb-4 uppercase">Quality <span class="text-orange-500 underline decoration-white/10">Defined.</span></h2>
-            <p class="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">Hardware specs र technical विवरणसहितको हाम्रो आधिकारिक क्याटलग।</p>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="service-card glass">
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover opacity-80">
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="syne text-2xl font-bold text-orange-500">Premium UPVC Systems</h3>
-                        <span class="bg-orange-600/20 text-orange-500 text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">7-Tank Processed</span>
-                    </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-microchip text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Hardware Specs</p><p class="text-[12px] text-gray-400">Multi-point High Security Locks with Zinc-alloy handles & multi-stage locking.</p></div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-shield-alt text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Sealing Technology</p><p class="text-[12px] text-gray-400">EPDM double gasket for 100% Sound and Water insulation. Zero leakage guarantee.</p></div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-layer-group text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Glass Configuration</p><p class="text-[12px] text-gray-400">5mm to 12mm Toughened Glass or DGU (Double Glazed Unit) for Heat control.</p></div>
-                        </li>
-                    </ul>
-                    <a href="https://wa.me/9779855069733" class="block text-center bg-orange-600 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-orange-700 transition shadow-lg shadow-orange-600/20">Check Rate & Fitting</a>
-                </div>
-            </div>
-
-            <div class="service-card glass">
-                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80" class="w-full h-64 object-cover opacity-80">
-                <div class="p-8">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="syne text-2xl font-bold text-orange-500">Modular Interiors</h3>
-                        <span class="bg-blue-600/20 text-blue-500 text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">BWR Marine Plywood</span>
-                    </div>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-tools text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Hardware Details</p><p class="text-[12px] text-gray-400">Soft-close telescopic channels and Hettich Style hydraulic hinges for life-long durability.</p></div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-gem text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Surface Finish</p><p class="text-[12px] text-gray-400">High-gloss Acrylic, Anti-scratch Laminates, or Anti-fingerprint premium finish.</p></div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <i class="fas fa-cube text-orange-600 mt-1 text-lg"></i>
-                            <div><p class="text-sm font-bold text-white uppercase tracking-wider">Storage Solutions</p><p class="text-[12px] text-gray-400">Magic corners, tall units, and smart organizers for maximum space utility.</p></div>
-                        </li>
-                    </ul>
-                    <a href="https://wa.me/9779855069733" class="block text-center bg-orange-600 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-orange-700 transition shadow-lg shadow-orange-600/20">Book Site Visit</a>
-                </div>
-            </div>
-        </div>
+<!-- NAV -->
+<nav class="mainnav" id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <i class="fas fa-hammer" style="color:#fff;font-size:1rem"></i>
     </div>
-
-    <div id="sec-os" class="hidden p-6 max-w-2xl mx-auto space-y-6">
-        <div class="grid grid-cols-2 gap-4">
-            <div class="glass p-6 rounded-[2rem] border-l-4 border-orange-600">
-                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Total Revenue</p>
-                <h4 id="totalRev" class="text-2xl font-black">रू ०</h4>
-            </div>
-            <div class="glass p-6 rounded-[2rem] border-l-4 border-blue-600">
-                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Projects Logged</p>
-                <h4 id="projCount" class="text-2xl font-black">०</h4>
-            </div>
-        </div>
-
-        <div class="glass p-8 rounded-[2.5rem] space-y-5">
-            <h3 class="syne text-xs font-bold text-orange-500 uppercase tracking-widest">System Log Entry</h3>
-            <input type="text" id="accName" placeholder="Client or Staff Name" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-white focus:border-orange-500">
-            <input type="number" id="accAmt" placeholder="Amount (रू)" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-white focus:border-orange-500">
-            <button onclick="saveAcc()" class="w-full bg-orange-600 p-4 rounded-2xl font-bold uppercase tracking-widest text-[10px]">Save to DB</button>
-        </div>
-
-        <div id="logList" class="space-y-3"></div>
+    <div class="nav-logo-text">
+      <div class="name">PRERAK</div>
+      <div class="sub">Multipurpose Pvt Ltd</div>
     </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#videos">Work Videos</a></li>
+    <li><a href="#why-us">Why Us</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:9855069733" class="nav-cta">📞 9855069733</a>
+  <div class="hamburger" onclick="toggleMenu()" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#videos" onclick="toggleMenu()">Work Videos</a>
+  <a href="#why-us" onclick="toggleMenu()">Why Choose Us</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="tel:9855069733" style="color:var(--orange);font-weight:700">📞 9855069733</a>
+</div>
 
-    <a href="https://wa.me/9779855069733" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] h-16 w-16 rounded-full flex items-center justify-center shadow-2xl z-50 animate-bounce">
-        <i class="fab fa-whatsapp text-3xl text-white"></i>
-    </a>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80" alt="Construction">
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">Hetauda-4, Makwanpur, Nepal</div>
+    <h1>Quality <span class="accent">Defined.</span><br>Building Your Dreams.</h1>
+    <p>PRERAK MULTIPURPOSE PVT LTD — Nepal's trusted partner for Construction, Interior, UPVC, Gypsum, Solar र Complete Renovation। 10+ वर्षको विश्वसनीय अनुभव।</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary"><i class="fas fa-hammer"></i> Get Free Quote</a>
+      <a href="#services" class="btn-secondary">View Catalog <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">500+</div><div class="label">Projects Done</div></div>
+      <div class="hero-stat"><div class="num">10+</div><div class="label">Years Experience</div></div>
+      <div class="hero-stat"><div class="num">100%</div><div class="label">Satisfaction</div></div>
+      <div class="hero-stat"><div class="num">24/7</div><div class="label">Support</div></div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        let db = JSON.parse(localStorage.getItem('prerak_final_v10')) || [];
+<!-- SERVICES with TECH SPECS -->
+<section class="services-section" id="services">
+  <div class="section-label">Our Catalog</div>
+  <h2 class="section-title">Services <span class="hl">Defined.</span></h2>
+  <p class="section-sub">Technical विवरण र hardware specs सहितको आधिकारिक क्याटलग। Click any service for detailed information.</p>
+  <div class="services-grid reveal" id="services-grid"></div>
+</section>
 
-        function showSec(id) {
-            document.getElementById('sec-web').classList.add('hidden');
-            document.getElementById('sec-os').classList.add('hidden');
-            document.getElementById('btn-web').classList.remove('active-tab');
-            document.getElementById('btn-os').classList.remove('active-tab');
-            document.getElementById('sec-' + id).classList.remove('hidden');
-            document.getElementById('btn-' + id).classList.add('active-tab');
-            render();
-        }
+<!-- SERVICE MODAL -->
+<div class="svc-overlay" id="svc-overlay" onclick="if(event.target===this)closeSvc()">
+  <div class="svc-modal" id="svc-modal">
+    <div class="svc-modal-header">
+      <img id="svc-img" src="" alt="" class="svc-modal-img">
+      <button class="svc-modal-close" onclick="closeSvc()">✕</button>
+    </div>
+    <div class="svc-modal-body">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <div style="font-size:2.2rem" id="svc-icon"></div>
+        <h2 id="svc-title"></h2>
+      </div>
+      <p class="lead" id="svc-desc"></p>
+      <div class="svc-modal-gallery" id="svc-gallery"></div>
+      <h3 style="font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--orange);margin:20px 0 12px;letter-spacing:1px;text-transform:uppercase">✓ Features Included</h3>
+      <div id="svc-features" class="svc-modal-features"></div>
+      <div class="svc-cta">
+        <a href="#contact" class="btn-primary" onclick="closeSvc()"><i class="fas fa-hammer"></i> Get Quote</a>
+        <a id="svc-wa" href="#" target="_blank" class="wa-modal-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-        function saveAcc() {
-            const name = document.getElementById('accName').value;
-            const amt = document.getElementById('accAmt').value;
-            if(!name || !amt) return alert("नाम र रकम भर्नुहोस्!");
-            db.unshift({ id: Date.now(), name, amt, date: new Date().toLocaleDateString('ne-NP') });
-            localStorage.setItem('prerak_final_v10', JSON.stringify(db));
-            document.getElementById('accName').value = '';
-            document.getElementById('accAmt').value = '';
-            render();
-        }
+<!-- VIDEOS -->
+<section class="video-section" id="videos">
+  <div class="section-label">Work Videos</div>
+  <h2 class="section-title">See Our <span class="hl">Craft.</span></h2>
+  <p class="section-sub">Watch real project videos and our professional work process in action.</p>
+  <div class="video-grid reveal">
+    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+      <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80" alt="Main Work Video" class="video-thumb">
+      <div class="video-overlay">
+        <div class="video-label">⭐ Featured</div>
+        <div class="play-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <h4>Complete Company Overview — PRERAK Hetauda</h4>
+      </div>
+    </div>
+    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" alt="Interior" class="video-thumb">
+      <div class="video-overlay">
+        <div class="video-label">Interior</div>
+        <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <h4>Interior Design Project</h4>
+      </div>
+    </div>
+    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="UPVC" class="video-thumb">
+      <div class="video-overlay">
+        <div class="video-label">UPVC</div>
+        <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
+        <h4>UPVC Windows Installation</h4>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function render() {
-            const total = db.reduce((s, i) => s + parseFloat(i.amt), 0);
-            document.getElementById('totalRev').innerText = 'रू ' + total.toLocaleString();
-            document.getElementById('projCount').innerText = db.length;
-            document.getElementById('logList').innerHTML = db.map(i => `
-                <div class="glass p-4 rounded-2xl flex justify-between items-center">
-                    <div><p class="font-bold text-sm text-gray-200">${i.name}</p><p class="text-[9px] text-gray-500 uppercase font-bold mt-1">${i.date}</p></div>
-                    <p class="font-black text-orange-500 text-sm">रू ${parseFloat(i.amt).toLocaleString()}</p>
-                </div>
-            `).join('');
-        }
-        render();
-    </script>
+<!-- VIDEO MODAL -->
+<div class="vid-overlay" id="vid-overlay" onclick="if(event.target===this)closeVideo()">
+  <div class="vid-modal">
+    <button class="vid-close" onclick="closeVideo()">✕ Close</button>
+    <iframe id="vid-frame" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section id="why-us">
+  <div class="why-grid reveal">
+    <div class="why-visual">
+      <div class="why-img-wrap">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Interior">
+        <div class="why-badge-box"><div class="num">10+</div><div class="txt">Years Nepal</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Why Choose Us</div>
+      <h2 class="section-title">Built on <span class="hl">Trust.</span></h2>
+      <p class="section-sub">Expertise, quality materials, honest pricing र professional service — सबै एकै ठाउँमा।</p>
+      <div class="why-points">
+        <div class="why-point"><div class="why-icon"><i class="fas fa-certificate"></i></div><div><h4>Certified Quality Materials</h4><p>ISI/ISO certified, premium grade materials मात्र। No shortcuts।</p></div></div>
+        <div class="why-point"><div class="why-icon"><i class="fas fa-clock"></i></div><div><h4>On-Time Delivery</h4><p>Projects always on schedule। Deadline miss हुँदैन।</p></div></div>
+        <div class="why-point"><div class="why-icon"><i class="fas fa-tag"></i></div><div><h4>Transparent Pricing</h4><p>No hidden charges। Nepal मा best value।</p></div></div>
+        <div class="why-point"><div class="why-icon"><i class="fas fa-handshake"></i></div><div><h4>Lifetime Support</h4><p>Full warranty + after-sales service। हामी सँगै छौं।</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects-section" id="projects">
+  <div class="section-label">Recent Work</div>
+  <h2 class="section-title">Our <span class="hl">Projects.</span></h2>
+  <p class="section-sub">Hetauda र Makwanpur भरी सम्पन्न गरिएका projects।</p>
+  <div class="proj-grid reveal">
+    <div class="proj-card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Interior"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Modern Living Room</h4><p>Hetauda Residential</p></div></div>
+    <div class="proj-card"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=600&q=80" alt="Kitchen"><div class="proj-overlay"><span class="proj-tag">Kitchen</span><h4>Modular Kitchen</h4><p>Makwanpur</p></div></div>
+    <div class="proj-card"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80" alt="Ceiling"><div class="proj-overlay"><span class="proj-tag">Gypsum</span><h4>False Ceiling</h4><p>Commercial</p></div></div>
+    <div class="proj-card"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="UPVC"><div class="proj-overlay"><span class="proj-tag">UPVC</span><h4>UPVC Windows</h4><p>Residential</p></div></div>
+    <div class="proj-card"><img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=600&q=80" alt="Bedroom"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Master Bedroom</h4><p>Hetauda</p></div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">Happy Clients</div>
+  <h2 class="section-title">What Clients <span class="hl">Say.</span></h2>
+  <p class="section-sub">Trusted by hundreds across Makwanpur।</p>
+  <div class="test-grid reveal">
+    <div class="test-card"><div class="stars">★★★★★</div><p>"PRERAK ले हाम्रो घरको interior design गर्यो — बिल्कुल सपना जस्तै। Quality र time दुवैमा best!"</p><div class="test-author"><div class="test-avatar">र</div><div><div class="name">Ramesh Sharma</div><div class="loc">Hetauda-6</div></div></div></div>
+    <div class="test-card"><div class="stars">★★★★★</div><p>"UPVC windows and doors ko quality ekdam ramro. Rate pani fair thiyo. Strongly recommend!"</p><div class="test-author"><div class="test-avatar">स</div><div><div class="name">Sita Thapa</div><div class="loc">Hetauda-4</div></div></div></div>
+    <div class="test-card"><div class="stars">★★★★★</div><p>"Gypsum ceiling ko kaam top level. Team professional, deadline pani meet garyo. Best!"</p><div class="test-author"><div class="test-avatar">ब</div><div><div class="name">Bikash Adhikari</div><div class="loc">Hetauda-3</div></div></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section reveal">
+  <div class="section-label" style="justify-content:center">Start Today</div>
+  <h2>Ready to Build Your <span style="color:var(--orange)">Dream?</span></h2>
+  <p>Free site visit र detailed quotation। No obligation।</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="#contact" class="btn-primary"><i class="fas fa-hammer"></i> Get Free Quote</a>
+    <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-modal-btn"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact <span class="hl">Us.</span></h2>
+  <p class="section-sub">Call, WhatsApp or send message। हामी 2 hours भित्र response दिन्छौं।</p>
+  <div class="contact-grid reveal">
+    <div class="contact-info">
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-location-dot"></i></div><div><h4>Address</h4><p>Hetauda-4, Kantirajpath<br>Makwanpur, Nepal</p></div></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-phone"></i></div><div><h4>Phone</h4><a href="tel:9855069733">9855069733</a><br><a href="tel:9801069733">9801069733</a><br><a href="tel:057590733">057-590733</a></div></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><a href="mailto:prerakconstrucion21@gmail.com">prerakconstrucion21@gmail.com</a></div></div>
+      <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-clock"></i></div><div><h4>Working Hours</h4><p>Sun–Fri: 8 AM – 6 PM<br>Sat: 9 AM – 4 PM</p></div></div>
+      <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-modal-btn"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+    </div>
+    <div class="contact-form">
+      <h3>Get Free Quote 🏗️</h3>
+      <div id="formContent">
+        <div class="fg"><label>Name *</label><input type="text" id="cf-name" placeholder="Your name"></div>
+        <div class="fg"><label>Phone *</label><input type="tel" id="cf-phone" placeholder="98XXXXXXXX"></div>
+        <div class="fg"><label>Service Interested</label>
+          <select id="cf-svc">
+            <option>-- Select --</option>
+            <option>Construction Works</option>
+            <option>Interior Design</option>
+            <option>Gypsum & Ceiling</option>
+            <option>UPVC & Aluminum</option>
+            <option>Flooring & Finishing</option>
+            <option>Solar & Electrical</option>
+            <option>Renovation</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea id="cf-msg" placeholder="Tell us about your project..."></textarea></div>
+        <button class="form-submit" onclick="submitForm()">Send Message 📤</button>
+      </div>
+      <div id="form-success">✅ Message sent successfully!<br><strong>WhatsApp: 9855069733</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon"><i class="fas fa-hammer" style="color:#fff;font-size:0.9rem"></i></div>
+        <div class="nav-logo-text"><div class="name">PRERAK</div><div class="sub">Multipurpose Pvt Ltd</div></div>
+      </a>
+      <p class="tagline">Building dreams across Hetauda & Makwanpur since 2012। Quality Defined.</p>
+      <div class="footer-socials">
+        <a href="https://wa.me/9779855069733" target="_blank" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:prerakconstrucion21@gmail.com" class="soc-btn"><i class="fas fa-envelope"></i></a>
+        <a href="tel:9855069733" class="soc-btn"><i class="fas fa-phone"></i></a>
+        <a href="#" class="soc-btn"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#services">Construction</a></li><li><a href="#services">Interior Design</a></li><li><a href="#services">Gypsum Ceiling</a></li><li><a href="#services">UPVC & Aluminum</a></li><li><a href="#services">Solar Panel</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="#why-us">About Us</a></li><li><a href="#projects">Projects</a></li><li><a href="#videos">Videos</a></li><li><a href="#testimonials">Reviews</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:9855069733">📞 9855069733</a></li><li><a href="tel:9801069733">📞 9801069733</a></li><li><a href="tel:057590733">☎️ 057-590733</a></li><li><a href="#">📍 Hetauda-4, Makwanpur</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PRERAK MULTIPURPOSE PVT LTD. All rights reserved.</p>
+    <p>🇳🇵 Made in Hetauda, Nepal</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-float">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+// ══ THEME ══
+function setTheme(t){
+  document.body.className = t==='dark'?'':('theme-'+t);
+  try{localStorage.setItem('pw_theme',t);}catch(e){}
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+  const map={dark:0,light:1,saffron:2};
+  document.querySelectorAll('.theme-btn')[map[t]]?.classList.add('active');
+}
+(function(){try{setTheme(localStorage.getItem('pw_theme')||'dark');}catch(e){setTheme('dark');}})();
+
+// ══ SERVICES DATA with TECH SPECS ══
+const SERVICES = [
+  {
+    id:'upvc', icon:'🪟', name:'Premium UPVC Systems',
+    badge:{text:'7-Tank Processed',cls:''},
+    img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
+    desc:'Nepal को mausam र condition अनुसार design गरिएको premium UPVC windows र doors। Heat insulation, waterproof, soundproof र 20+ वर्ष durability।',
+    specs:[
+      {icon:'fa-microchip',label:'Hardware Specs',desc:'Multi-point High Security Locks with Zinc-alloy handles'},
+      {icon:'fa-shield-alt',label:'Sealing Tech',desc:'EPDM double gasket — 100% sound र water insulation। Zero leakage।'},
+      {icon:'fa-layer-group',label:'Glass Options',desc:'5mm to 12mm Toughened Glass वा DGU (Double Glazing) for heat control'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1560448075-cbc16bb4af8e?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Multi-point lock system','EPDM weather sealing','Toughened/DGU glass','Zinc-alloy handles','20+ year warranty','Energy efficient','Soundproof','Waterproof']
+  },
+  {
+    id:'interior', icon:'🛋️', name:'Modular Interior Design',
+    badge:{text:'BWR Plywood',cls:'blue'},
+    img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+    desc:'Complete interior transformation with modular kitchens, custom wardrobes, TV units र smart storage solutions। BWR grade plywood मा premium finishing।',
+    specs:[
+      {icon:'fa-tools',label:'Hardware Details',desc:'Soft-close telescopic channels र Hettich style hydraulic hinges'},
+      {icon:'fa-gem',label:'Finish Quality',desc:'High-gloss Acrylic, PU paint वा anti-scratch premium laminates'},
+      {icon:'fa-cubes',label:'Smart Storage',desc:'Magic corners, tall units र smart organizers for maximum space utility'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Modular kitchen','Custom wardrobes','TV unit design','Soft-close hinges','Premium laminates','Magic corner','Smart organizers','3D design preview']
+  },
+  {
+    id:'construction', icon:'🏗️', name:'Construction Works',
+    badge:{text:'RCC Certified',cls:'green'},
+    img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
+    desc:'Foundation देखि finishing सम्म complete construction। Residential घर, commercial buildings, RCC structures र prefab houses।',
+    specs:[
+      {icon:'fa-drafting-compass',label:'Structural Design',desc:'Licensed engineer certified RCC design with earthquake resistance'},
+      {icon:'fa-cube',label:'Quality Materials',desc:'NS standard cement, TMT rods (500D grade), tested aggregates'},
+      {icon:'fa-users-cog',label:'Skilled Team',desc:'Experienced masons, electricians र plumbers। Quality control at every step'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Foundation to finishing','RCC structure','Earthquake resistant','Prefab homes','Commercial buildings','Site supervision','Engineer certified','Timeline guarantee']
+  },
+  {
+    id:'gypsum', icon:'🪨', name:'Gypsum & Ceiling Works',
+    badge:{text:'Fire Rated',cls:'purple'},
+    img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
+    desc:'Professional gypsum ceiling, false ceiling, 2x2 grid ceiling, PVC boards र partition work with perfect finishing।',
+    specs:[
+      {icon:'fa-fire-extinguisher',label:'Fire Rating',desc:'Gyproc fire-rated boards for extra safety'},
+      {icon:'fa-volume-xmark',label:'Acoustic Control',desc:'Sound absorption boards for offices र recording studios'},
+      {icon:'fa-lightbulb',label:'Lighting Integration',desc:'Cove lights, spot lights र LED strips fully integrated'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Gypsum false ceiling','2×2 grid ceiling','PVC board','Smart board','Office partition','Cove lighting','Fire-rated','Acoustic options']
+  },
+  {
+    id:'flooring', icon:'🏠', name:'Flooring & Finishing',
+    badge:{text:'Anti-Scratch',cls:'blue'},
+    img:'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?auto=format&fit=crop&w=800&q=80',
+    desc:'Parquet, tiles, marble, granite flooring with expert craftsmanship। Painting र complete renovation पनि।',
+    specs:[
+      {icon:'fa-palette',label:'Surface Options',desc:'Parquet, engineered wood, marble, granite, ceramic tiles, vinyl'},
+      {icon:'fa-brush',label:'Paint Quality',desc:'Asian Paints, Berger Paints — weatherproof र washable finishes'},
+      {icon:'fa-wrench',label:'Renovation Expert',desc:'Old house complete makeover — modernize with latest trends'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Parquet flooring','Marble/granite','Ceramic tiles','Vinyl flooring','Wall painting','Polishing','Old house renovation','Weatherproof paints']
+  },
+  {
+    id:'solar', icon:'☀️', name:'Solar & Electrical',
+    badge:{text:'Grid Tied',cls:'green'},
+    img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+    desc:'Complete solar panel installation, electrical wiring, lighting setup र plumbing। Government subsidy eligible systems।',
+    specs:[
+      {icon:'fa-solar-panel',label:'Solar Panels',desc:'Tier-1 panels — 25 year warranty, 330W-550W options'},
+      {icon:'fa-bolt',label:'Electrical Work',desc:'BS standard wiring, MCB/ELCB protection, CCTV integration'},
+      {icon:'fa-faucet',label:'Plumbing Setup',desc:'CPVC pipes, bathroom fitting, water tank, pressure pumps'}
+    ],
+    gallery:[
+      'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80'
+    ],
+    features:['Solar installation','Grid-tied system','Battery backup','Electrical wiring','CCTV setup','LED lighting','Plumbing','Bathroom fitting']
+  }
+];
+
+// Render services
+document.getElementById('services-grid').innerHTML = SERVICES.map(s=>`
+  <div class="service-card" onclick="openSvc('${s.id}')">
+    <div class="service-card-img-wrap">
+      <img src="${s.img}" alt="${s.name}" class="service-card-img">
+    </div>
+    <div class="service-card-body">
+      <div class="service-top">
+        <h3>${s.name}</h3>
+        <span class="service-badge ${s.badge.cls}">${s.badge.text}</span>
+      </div>
+      <div class="service-specs">
+        ${s.specs.map(sp=>`
+          <div class="spec-row">
+            <div class="spec-icon"><i class="fas ${sp.icon}"></i></div>
+            <div class="spec-text">
+              <div class="label">${sp.label}</div>
+              <div class="desc">${sp.desc}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="service-card-cta">View Details & Quote</div>
+    </div>
+  </div>`).join('');
+
+function openSvc(id){
+  const s=SERVICES.find(x=>x.id===id);
+  if(!s) return;
+  document.getElementById('svc-img').src=s.img;
+  document.getElementById('svc-icon').textContent=s.icon;
+  document.getElementById('svc-title').textContent=s.name;
+  document.getElementById('svc-desc').textContent=s.desc;
+  document.getElementById('svc-gallery').innerHTML=s.gallery.map(g=>`<img src="${g}" alt="">`).join('');
+  document.getElementById('svc-features').innerHTML=s.features.map(f=>`<div class="svc-feat"><i class="fas fa-check-circle"></i><span>${f}</span></div>`).join('');
+  document.getElementById('svc-wa').href='https://wa.me/9779855069733?text='+encodeURIComponent('नमस्ते PRERAK जी! मलाई '+s.name+' को बारेमा जानकारी चाहियो।');
+  document.getElementById('svc-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSvc(){
+  document.getElementById('svc-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ══ VIDEO ══
+function openVideo(url){
+  document.getElementById('vid-frame').src=url+'?autoplay=1';
+  document.getElementById('vid-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeVideo(){
+  document.getElementById('vid-frame').src='';
+  document.getElementById('vid-overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ══ NAV ══
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').style.padding=window.scrollY>50?'10px 5%':'14px 5%';
+});
+document.addEventListener('click',function(e){
+  const m=document.getElementById('mobileMenu'),h=document.getElementById('hamburger');
+  if(m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open');
+});
+
+// ══ SCROLL REVEAL ══
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ══ CONTACT FORM ══
+function submitForm(){
+  const name=(document.getElementById('cf-name').value||'').trim();
+  const phone=(document.getElementById('cf-phone').value||'').trim();
+  const svc=document.getElementById('cf-svc').value;
+  const msg=(document.getElementById('cf-msg').value||'').trim();
+  if(!name||!phone){alert('कृपया नाम र फोन हाल्नुस्।');return;}
+  const waMsg='🏗️ *New Quote Request — PRERAK Website*\n\n👤 Name: '+name+'\n📞 Phone: '+phone+'\n🔧 Service: '+(svc||'General Inquiry')+'\n📝 Message: '+(msg||'—')+'\n\n_Sent from prerakmultipurpose.com_';
+  window.open('https://wa.me/9779855069733?text='+encodeURIComponent(waMsg),'_blank');
+  document.getElementById('formContent').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+</script>
 </body>
 </html>
