@@ -1,3 +1,35 @@
+<!--
+═══════════════════════════════════════════════════════════
+PRERAK WEBSITE — PHOTO UPDATE GUIDE
+═══════════════════════════════════════════════════════════
+
+To replace stock images with your own real work photos:
+
+STEP 1: Upload photos to GitHub
+  - Create 'images' folder in your repo
+  - Upload photos like: construction1.jpg, interior1.jpg, upvc1.jpg
+
+STEP 2: Find "const SERVICES = [" in this file (around line 680)
+
+STEP 3: Replace image URLs:
+  
+  OLD: img:'https://images.unsplash.com/photo-xxxxx'
+  NEW: img:'images/construction-main.jpg'
+  
+  OLD: gallery:['https://images.unsplash.com/...', ...]
+  NEW: gallery:['images/construction1.jpg','images/construction2.jpg', ...]
+
+SERVICE IDs:
+  - construction (3-4 photos)
+  - interior (3-4 photos)  
+  - gypsum (3-4 photos)
+  - upvc (3-4 photos)
+  - flooring (3-4 photos)
+  - solar (3-4 photos)
+
+═══════════════════════════════════════════════════════════
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,7 +434,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5%
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-img">
-    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=85" alt="Construction">
+    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=85" alt="Construction">
   </div>
   <div class="hero-content">
     <div class="hero-badge"><i class="fas fa-map-marker-alt"></i> Hetauda-4, Makwanpur, Nepal</div>
@@ -479,7 +511,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5%
     <div class="why-grid reveal">
       <div class="why-visual">
         <div class="why-img-wrap">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" alt="Interior design">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85" alt="Interior design">
           <div class="why-badge-box"><div class="num">10+</div><div class="txt">Years in Nepal</div></div>
         </div>
       </div>
@@ -505,11 +537,11 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:50px 5%
     <h2 class="section-title">Recent Projects</h2>
     <p class="section-sub">Hetauda र Makwanpur भर completed projects को showcase।</p>
     <div class="proj-grid reveal">
-      <div class="proj-card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85" alt="Modern Interior"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Modern Living Room</h4><p>Hetauda Residential · 2024</p></div></div>
-      <div class="proj-card"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=85" alt="Modular Kitchen"><div class="proj-overlay"><span class="proj-tag">Kitchen</span><h4>Modular Kitchen</h4><p>Makwanpur</p></div></div>
-      <div class="proj-card"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=85" alt="False Ceiling"><div class="proj-overlay"><span class="proj-tag">Gypsum</span><h4>False Ceiling Design</h4><p>Commercial</p></div></div>
-      <div class="proj-card"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=85" alt="UPVC Windows"><div class="proj-overlay"><span class="proj-tag">UPVC</span><h4>UPVC Systems</h4><p>Residential Complex</p></div></div>
-      <div class="proj-card"><img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=800&q=85" alt="Bedroom"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Master Bedroom</h4><p>Hetauda-5</p></div></div>
+      <div class="proj-card"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85" alt="Modern Interior"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Modern Living Room</h4><p>Hetauda Residential · 2024</p></div></div>
+      <div class="proj-card"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=85" alt="Modular Kitchen"><div class="proj-overlay"><span class="proj-tag">Kitchen</span><h4>Modular Kitchen</h4><p>Makwanpur</p></div></div>
+      <div class="proj-card"><img src="https://images.unsplash.com/photo-1615874694520-474822394e73?auto=format&fit=crop&w=800&q=85" alt="False Ceiling"><div class="proj-overlay"><span class="proj-tag">Gypsum</span><h4>False Ceiling Design</h4><p>Commercial</p></div></div>
+      <div class="proj-card"><img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=85" alt="UPVC Windows"><div class="proj-overlay"><span class="proj-tag">UPVC</span><h4>UPVC Systems</h4><p>Residential Complex</p></div></div>
+      <div class="proj-card"><img src="https://images.unsplash.com/photo-1615529162924-f8605388461d?auto=format&fit=crop&w=800&q=85" alt="Bedroom"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Master Bedroom</h4><p>Hetauda-5</p></div></div>
     </div>
   </div>
 </section>
@@ -620,13 +652,20 @@ function setTheme(t){
 (function(){ setTheme(localStorage.getItem('pw_theme')||'dark'); })();
 
 // SERVICES DATA
+// ═══════════════════════════════════════════════════════════
+// PHOTOS: Replace the 'img' and 'gallery' URLs below with your own
+// To use your own photos:
+// 1. Upload photos to GitHub repo in /images/ folder
+// 2. Replace URLs like: img: 'images/construction-main.jpg'
+// 3. Or use any direct image URL (imgur, drive, etc.)
+// ═══════════════════════════════════════════════════════════
 const SERVICES = [
   {
     id:'construction',
     icon:'🏗️',
     name:'Construction Works',
     badge:'RCC Certified',
-    img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=85',
     desc:'Complete construction services from foundation to finishing. Residential homes, commercial buildings, RCC structures, prefab houses — all under one roof with quality materials and skilled workers.',
     tags:['Residential','Commercial','RCC','Prefab'],
     techSpecs:[
@@ -646,7 +685,7 @@ const SERVICES = [
     icon:'🛋️',
     name:'Modular Interior',
     badge:'BWR Plywood',
-    img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85',
     desc:'Transform your space with premium modular interior design. We create beautiful, functional spaces that reflect your personality — from modular kitchens to complete home makeovers.',
     tags:['Modular Kitchen','Wardrobe','TV Unit','Lighting'],
     techSpecs:[
@@ -666,7 +705,7 @@ const SERVICES = [
     icon:'🪨',
     name:'Gypsum & Ceiling',
     badge:'Premium Grade',
-    img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1200&q=85',
     desc:'Professional gypsum ceiling and partition work. We install false ceilings, 2x2 grid ceilings, PVC boards and smart boards with perfect finishing and modern designs.',
     tags:['False Ceiling','Grid Ceiling','PVC Board','Partition'],
     techSpecs:[
@@ -686,7 +725,7 @@ const SERVICES = [
     icon:'🪟',
     name:'Premium UPVC Systems',
     badge:'7-Tank Processed',
-    img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=85',
     desc:'High-quality UPVC windows and doors, aluminum sliding systems and glass work. Our products are waterproof, soundproof and energy efficient — perfect for Nepal\'s climate.',
     tags:['UPVC Windows','Aluminum','Glass Work','Sliding'],
     techSpecs:[
@@ -706,7 +745,7 @@ const SERVICES = [
     icon:'🏠',
     name:'Flooring & Finishing',
     badge:'Premium Finish',
-    img:'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=1200&q=85',
     desc:'Complete flooring solutions including parquet, tiles, marble and granite. We also do painting, floor polishing and complete renovation of old houses.',
     tags:['Parquet','Tiles','Marble','Painting'],
     techSpecs:[
@@ -726,7 +765,7 @@ const SERVICES = [
     icon:'☀️',
     name:'Solar & Electrical',
     badge:'Energy Efficient',
-    img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+    img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=85',
     desc:'Complete solar panel installation, electrical wiring, lighting setup, plumbing and bathroom fitting. We provide end-to-end electrical and solar solutions for homes and offices.',
     tags:['Solar Panel','Electrical','Plumbing','Lighting'],
     techSpecs:[
