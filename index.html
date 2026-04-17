@@ -1,740 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>PRERAK MULTIPURPOSE PVT LTD | Building Your Dreams</title>
-<meta name="description" content="PRERAK MULTIPURPOSE PVT LTD - Construction, Interior, UPVC, Gypsum, Solar. Hetauda, Makwanpur, Nepal.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-:root{
-  --orange:#f97316;--orange-d:#c2410c;--dark:#0c0c0e;--dark2:#161618;
-  --dark3:#1e1e22;--border:rgba(255,255,255,0.08);--text:#f5f5f0;--muted:#9ca3af;
-  --gold:#f59e0b;
-}
-body.theme-light{
-  --dark:#f8f8f8;--dark2:#ffffff;--dark3:#f0f0f0;--border:rgba(0,0,0,0.1);
-  --text:#111111;--muted:#666666;
-}
-body.theme-saffron{
-  --dark:#1a0f00;--dark2:#2a1800;--dark3:#3a2200;--border:rgba(249,115,22,0.2);
-  --text:#fff8f0;--muted:#c8a070;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;transition:background .3s,color .3s;}
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px;}
-
-/* THEME TOGGLE */
-#theme-bar{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;}
-.theme-btn{width:42px;height:42px;border-radius:50%;border:2px solid var(--border);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  background:var(--dark2);backdrop-filter:blur(10px);transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
-.theme-btn:hover{transform:scale(1.1);border-color:var(--orange);}
-.theme-btn.active{border-color:var(--orange);background:var(--orange);}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 5%;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(12,12,14,0.9);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);transition:all .3s;}
-body.theme-light nav{background:rgba(248,248,248,0.95);}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-logo-icon{width:36px;height:36px;border-radius:9px;
-  background:linear-gradient(135deg,#f97316,#c2410c);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 12px rgba(249,115,22,0.4);}
-.nav-logo-text .name{font-family:'Syne',sans-serif;font-weight:900;font-size:1rem;color:var(--orange);letter-spacing:1px;}
-.nav-logo-text .sub{font-size:0.52rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-.nav-links{display:flex;gap:28px;list-style:none;}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color .2s;}
-.nav-links a:hover{color:var(--text);}
-.nav-cta{background:var(--orange);color:#fff;padding:8px 18px;border-radius:8px;
-  text-decoration:none;font-weight:700;font-size:0.82rem;transition:all .2s;white-space:nowrap;}
-.nav-cta:hover{background:var(--orange-d);transform:translateY(-1px);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
-.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:all .3s;}
-.mobile-menu{display:none;position:fixed;top:65px;left:0;right:0;
-  background:rgba(12,12,14,0.98);backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);padding:16px 5%;flex-direction:column;gap:12px;z-index:99;}
-.mobile-menu.open{display:flex;}
-.mobile-menu a{color:var(--muted);text-decoration:none;font-size:0.95rem;padding:8px 0;border-bottom:1px solid var(--border);}
-
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 5% 60px;}
-.hero-bg{position:absolute;inset:0;
-  background:radial-gradient(ellipse 60% 50% at 65% 50%,rgba(249,115,22,0.12),transparent),
-  linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);}
-.hero-grid{position:absolute;inset:0;opacity:0.03;
-  background-image:linear-gradient(rgba(249,115,22,1) 1px,transparent 1px),linear-gradient(90deg,rgba(249,115,22,1) 1px,transparent 1px);
-  background-size:60px 60px;}
-.hero-img{position:absolute;right:0;top:0;bottom:0;width:48%;overflow:hidden;}
-.hero-img img{width:100%;height:100%;object-fit:cover;opacity:0.2;}
-.hero-img::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--dark) 0%,transparent 50%);z-index:1;}
-.hero-content{position:relative;z-index:2;max-width:640px;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(249,115,22,0.1);
-  border:1px solid rgba(249,115,22,0.25);padding:5px 14px;border-radius:20px;
-  font-size:0.72rem;color:var(--orange);font-weight:600;letter-spacing:1px;text-transform:uppercase;
-  margin-bottom:20px;animation:fadeUp .8s both;}
-.hero-badge::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:900;
-  line-height:1.06;margin-bottom:18px;animation:fadeUp .8s .1s both;}
-.hero h1 .accent{color:var(--orange);display:block;}
-.hero p{font-size:1rem;color:var(--muted);line-height:1.7;max-width:520px;margin-bottom:32px;animation:fadeUp .8s .2s both;}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .8s .3s both;}
-.btn-primary{background:var(--orange);color:#fff;padding:13px 26px;border-radius:10px;
-  text-decoration:none;font-weight:700;font-size:0.9rem;display:flex;align-items:center;gap:7px;
-  transition:all .2s;box-shadow:0 8px 24px rgba(249,115,22,0.35);}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(249,115,22,0.45);}
-.btn-secondary{border:1px solid var(--border);color:var(--text);padding:13px 26px;border-radius:10px;
-  text-decoration:none;font-weight:600;font-size:0.9rem;display:flex;align-items:center;gap:7px;
-  transition:all .2s;background:rgba(255,255,255,0.04);}
-.btn-secondary:hover{border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.06);}
-.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:36px;border-top:1px solid var(--border);flex-wrap:wrap;animation:fadeUp .8s .4s both;}
-.hero-stat .num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:900;color:var(--orange);line-height:1;}
-.hero-stat .label{font-size:0.7rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:1px;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-/* SECTION */
-section{padding:80px 5%;}
-.section-label{font-size:0.68rem;color:var(--orange);letter-spacing:3px;text-transform:uppercase;
-  font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
-.section-label::before{content:'';width:22px;height:2px;background:var(--orange);}
-.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:800;line-height:1.15;margin-bottom:14px;}
-.section-sub{color:var(--muted);font-size:0.95rem;max-width:500px;line-height:1.7;margin-bottom:44px;}
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
-
-/* SERVICES */
-.services-section{background:var(--dark2);}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-.service-card{background:var(--dark3);border:1px solid var(--border);border-radius:16px;
-  overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
-.service-card:hover{transform:translateY(-6px);border-color:rgba(249,115,22,0.4);
-  box-shadow:0 20px 40px rgba(0,0,0,0.3);}
-.service-card-img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .5s;}
-.service-card:hover .service-card-img{transform:scale(1.05);}
-.service-card-img-wrap{overflow:hidden;position:relative;}
-.service-card-img-wrap::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,0.6) 100%);}
-.service-card-body{padding:20px;}
-.service-icon{font-size:1.8rem;margin-bottom:10px;}
-.service-card h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;}
-.service-card p{color:var(--muted);font-size:0.82rem;line-height:1.6;margin-bottom:12px;}
-.service-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
-.service-tag{background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.15);
-  color:var(--orange);font-size:0.65rem;padding:2px 8px;border-radius:20px;font-weight:600;}
-.service-more{color:var(--orange);font-size:0.78rem;font-weight:700;display:flex;align-items:center;gap:5px;}
-
-/* SERVICE MODAL */
-.svc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;
-  align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px);}
-.svc-overlay.open{display:flex;}
-.svc-modal{background:var(--dark2);border:1px solid var(--border);border-radius:20px;
-  max-width:800px;width:100%;max-height:90vh;overflow-y:auto;}
-.svc-modal-header{position:relative;}
-.svc-modal-img{width:100%;height:240px;object-fit:cover;border-radius:20px 20px 0 0;}
-.svc-modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.6);
-  border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;
-  display:flex;align-items:center;justify-content:center;}
-.svc-modal-body{padding:24px;}
-.svc-modal-body h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:12px;}
-.svc-modal-body p{color:var(--muted);line-height:1.7;margin-bottom:16px;}
-.svc-modal-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0;}
-.svc-modal-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .2s;}
-.svc-modal-gallery img:hover{transform:scale(1.03);}
-.svc-modal-features{display:flex;flex-direction:column;gap:8px;margin:16px 0;}
-.svc-feat{display:flex;align-items:center;gap:10px;font-size:0.85rem;}
-.svc-feat::before{content:'✅';font-size:0.75rem;}
-.svc-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
-
-/* VIDEO SECTION */
-.video-section{background:var(--dark3);}
-.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.video-card{border-radius:14px;overflow:hidden;border:1px solid var(--border);position:relative;cursor:pointer;}
-.video-card:first-child{grid-column:span 2;}
-.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;transition:transform .4s;}
-.video-card:hover .video-thumb{transform:scale(1.03);}
-.video-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:background .3s;}
-.video-card:hover .video-overlay{background:rgba(0,0,0,0.3);}
-.play-btn{width:64px;height:64px;border-radius:50%;background:var(--orange);
-  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
-  box-shadow:0 8px 24px rgba(249,115,22,0.5);transition:transform .2s;}
-.video-card:hover .play-btn{transform:scale(1.1);}
-.play-btn svg{margin-left:4px;}
-.video-label{background:var(--orange);color:#fff;font-size:0.65rem;font-weight:700;
-  padding:3px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-.video-overlay h4{color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;text-align:center;}
-
-/* VIDEO MODAL */
-.vid-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:600;
-  align-items:center;justify-content:center;padding:16px;}
-.vid-overlay.open{display:flex;}
-.vid-modal{max-width:900px;width:100%;position:relative;}
-.vid-close{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;
-  font-size:1.5rem;cursor:pointer;}
-.vid-modal iframe,.vid-modal video{width:100%;aspect-ratio:16/9;border-radius:12px;border:none;}
-
-/* WHY US */
-.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-.why-img-wrap{border-radius:20px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);position:relative;}
-.why-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;}
-.why-badge-box{position:absolute;bottom:-16px;right:-16px;background:var(--orange);
-  padding:14px 18px;border-radius:12px;box-shadow:0 14px 36px rgba(249,115,22,0.45);}
-.why-badge-box .num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:900;color:#fff;line-height:1;}
-.why-badge-box .txt{font-size:0.68rem;color:rgba(255,255,255,.8);font-weight:600;}
-.why-points{display:flex;flex-direction:column;gap:16px;}
-.why-point{display:flex;gap:14px;padding:16px;border-radius:12px;border:1px solid var(--border);transition:all .2s;}
-.why-point:hover{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.04);}
-.why-icon{width:42px;height:42px;border-radius:10px;background:rgba(249,115,22,.12);
-  display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0;}
-.why-point h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:3px;}
-.why-point p{color:var(--muted);font-size:0.8rem;line-height:1.6;}
-
-/* PROJECTS */
-.projects-section{background:var(--dark2);}
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.proj-card{border-radius:12px;overflow:hidden;position:relative;border:1px solid var(--border);cursor:pointer;}
-.proj-card:first-child{grid-column:span 2;aspect-ratio:16/9;}
-.proj-card:not(:first-child){aspect-ratio:4/3;}
-.proj-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.proj-card:hover img{transform:scale(1.06);}
-.proj-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%);
-  display:flex;flex-direction:column;justify-content:flex-end;padding:16px;}
-.proj-tag{background:var(--orange);color:#fff;font-size:0.62rem;font-weight:700;
-  padding:2px 9px;border-radius:20px;display:inline-block;margin-bottom:5px;
-  width:fit-content;letter-spacing:1px;text-transform:uppercase;}
-.proj-overlay h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.92rem;}
-.proj-overlay p{color:rgba(255,255,255,.65);font-size:0.72rem;margin-top:2px;}
-
-/* TESTIMONIALS */
-.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
-.test-card{background:var(--dark2);border:1px solid var(--border);border-radius:14px;padding:24px;transition:all .2s;}
-.test-card:hover{border-color:rgba(249,115,22,.25);transform:translateY(-2px);}
-.stars{color:var(--gold);font-size:0.85rem;margin-bottom:12px;}
-.test-card p{color:var(--muted);font-size:0.87rem;line-height:1.7;margin-bottom:16px;font-style:italic;}
-.test-author{display:flex;align-items:center;gap:10px;}
-.test-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-d));
-  display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:0.95rem;color:#fff;flex-shrink:0;}
-.test-author .name{font-weight:700;font-size:0.85rem;}
-.test-author .loc{font-size:0.7rem;color:var(--muted);margin-top:1px;}
-
-/* CTA */
-.cta-section{text-align:center;padding:80px 5%;
-  background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(249,115,22,.04));
-  border-top:1px solid rgba(249,115,22,.15);border-bottom:1px solid rgba(249,115,22,.15);}
-.cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:900;margin-bottom:14px;}
-.cta-section p{color:var(--muted);max-width:460px;margin:0 auto 28px;line-height:1.7;}
-
-/* CONTACT */
-.contact-section{background:var(--dark2);}
-.contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:start;}
-.contact-info{display:flex;flex-direction:column;gap:16px;}
-.contact-item{display:flex;gap:12px;padding:16px;border-radius:12px;border:1px solid var(--border);}
-.contact-item-icon{width:42px;height:42px;border-radius:10px;background:rgba(249,115,22,.12);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
-.contact-item h4{font-weight:700;font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
-.contact-item p,.contact-item a{font-size:0.88rem;color:var(--text);text-decoration:none;line-height:1.5;}
-.contact-item a:hover{color:var(--orange);}
-.wa-btn{display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;
-  padding:13px 22px;border-radius:12px;text-decoration:none;font-weight:700;font-size:0.9rem;
-  transition:all .2s;box-shadow:0 8px 24px rgba(37,211,102,.3);margin-top:8px;}
-.wa-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(37,211,102,.4);}
-.contact-form{background:var(--dark3);border:1px solid var(--border);border-radius:18px;padding:28px;}
-.contact-form h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;margin-bottom:20px;}
-.fg{margin-bottom:14px;}
-.fg label{display:block;font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;font-weight:600;}
-.fg input,.fg select,.fg textarea{width:100%;padding:11px 13px;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:0.88rem;
-  font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(249,115,22,.5);}
-.fg textarea{resize:vertical;min-height:90px;}
-.fg select option{background:var(--dark3);}
-.form-submit{width:100%;padding:13px;background:var(--orange);color:#fff;border:none;
-  border-radius:9px;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all .2s;
-  font-family:'DM Sans',sans-serif;margin-top:6px;}
-.form-submit:hover{background:var(--orange-d);transform:translateY(-1px);}
-#form-success{display:none;text-align:center;padding:16px;color:#22c55e;font-weight:600;}
-
-/* FOOTER */
-footer{background:var(--dark);border-top:1px solid var(--border);padding:44px 5% 20px;}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px;}
-.footer-brand .tagline{color:var(--muted);font-size:0.82rem;line-height:1.7;margin:10px 0 18px;max-width:250px;}
-.footer-socials{display:flex;gap:8px;}
-.soc-btn{width:34px;height:34px;border-radius:8px;background:var(--dark3);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:0.85rem;transition:all .2s;}
-.soc-btn:hover{border-color:rgba(249,115,22,.4);background:rgba(249,115,22,.08);}
-.footer-col h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:1px;
-  text-transform:uppercase;color:var(--text);margin-bottom:14px;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
-.footer-col ul a{color:var(--muted);text-decoration:none;font-size:0.82rem;transition:color .2s;}
-.footer-col ul a:hover{color:var(--orange);}
-.footer-bottom{border-top:1px solid var(--border);padding-top:18px;
-  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
-.footer-bottom p{color:var(--muted);font-size:0.75rem;}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .nav-links,.nav-cta{display:none;}
-  .hamburger{display:flex;}
-  .why-grid,.contact-grid{grid-template-columns:1fr;}
-  .why-img-wrap{display:none;}
-  .video-grid{grid-template-columns:1fr;}
-  .video-card:first-child{grid-column:span 1;}
-  .proj-grid{grid-template-columns:1fr 1fr;}
-  .proj-card:first-child{grid-column:span 2;aspect-ratio:16/9;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  .hero-img{display:none;}
-  .svc-modal-gallery{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:600px){
-  .proj-grid{grid-template-columns:1fr;}
-  .proj-card:first-child{grid-column:span 1;}
-  .footer-grid{grid-template-columns:1fr;}
-  nav{padding:12px 4%;}
-  section{padding:60px 4%;}
-  #theme-bar{bottom:16px;right:16px;}
-  .svc-modal-gallery{grid-template-columns:1fr 1fr;}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>PRERAK OS | Hybrid Website & Work CRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --orange: #f97316; --dark: #0c0c0e; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--dark); color: white; margin: 0; }
+        .syne { font-family: 'Syne', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .active-tab { border-bottom: 4px solid var(--orange); color: var(--orange); font-weight: 800; }
+        .tab-btn { padding: 12px 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+    </style>
 </head>
-<body>
+<body class="pb-20">
 
-<!-- THEME BAR -->
-<div id="theme-bar">
-  <button class="theme-btn active" onclick="setTheme('dark')" title="Dark">🌙</button>
-  <button class="theme-btn" onclick="setTheme('light')" title="Light">☀️</button>
-  <button class="theme-btn" onclick="setTheme('saffron')" title="Saffron">🔶</button>
-</div>
-
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">
-    <div class="nav-logo-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>
-        <polyline points="9,22 9,12 15,12 15,22" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <div class="nav-logo-text">
-      <div class="name">PRERAK</div>
-      <div class="sub">Multipurpose Pvt Ltd</div>
-    </div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#videos">Videos</a></li>
-    <li><a href="#why-us">Why Us</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="tel:9855069733" class="nav-cta">📞 Call Now</a>
-  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#services" onclick="toggleMenu()">Services</a>
-  <a href="#videos" onclick="toggleMenu()">Videos</a>
-  <a href="#why-us" onclick="toggleMenu()">Why Choose Us</a>
-  <a href="#projects" onclick="toggleMenu()">Projects</a>
-  <a href="#contact" onclick="toggleMenu()">Contact</a>
-  <a href="tel:9855069733" style="color:var(--orange);font-weight:700">📞 9855069733</a>
-</div>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-img">
-    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80" alt="Construction">
-  </div>
-  <div class="hero-content">
-    <div class="hero-badge">Hetauda, Makwanpur, Nepal</div>
-    <h1>Building Your <span class="accent">Dreams</span> Into Reality</h1>
-    <p>PRERAK MULTIPURPOSE PVT LTD — Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation solutions.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-primary">🏗️ Get Free Quote</a>
-      <a href="#services" class="btn-secondary">View Services →</a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><div class="num">500+</div><div class="label">Projects Done</div></div>
-      <div class="hero-stat"><div class="num">10+</div><div class="label">Years Experience</div></div>
-      <div class="hero-stat"><div class="num">100%</div><div class="label">Satisfaction</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="services-section" id="services">
-  <div class="section-label">What We Do</div>
-  <h2 class="section-title">Our Services</h2>
-  <p class="section-sub">Complete construction & interior solutions — click any service to learn more.</p>
-  <div class="services-grid reveal" id="services-grid"></div>
-</section>
-
-<!-- SERVICE MODAL -->
-<div class="svc-overlay" id="svc-overlay" onclick="if(event.target===this)closeSvc()">
-  <div class="svc-modal" id="svc-modal">
-    <div class="svc-modal-header">
-      <img id="svc-img" src="" alt="" class="svc-modal-img">
-      <button class="svc-modal-close" onclick="closeSvc()">✕</button>
-    </div>
-    <div class="svc-modal-body">
-      <div style="font-size:2rem;margin-bottom:8px" id="svc-icon"></div>
-      <h2 id="svc-title"></h2>
-      <p id="svc-desc"></p>
-      <div class="svc-modal-gallery" id="svc-gallery"></div>
-      <div id="svc-features" class="svc-modal-features"></div>
-      <div class="svc-cta">
-        <a href="#contact" class="btn-primary" onclick="closeSvc()">🏗️ Get Quote</a>
-        <a id="svc-wa" href="#" target="_blank" class="wa-btn">💬 WhatsApp</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- VIDEOS -->
-<section class="video-section" id="videos">
-  <div class="section-label">Our Work</div>
-  <h2 class="section-title">See Our Projects</h2>
-  <p class="section-sub">Watch our completed projects and work process videos.</p>
-  <div class="video-grid reveal">
-    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ','Construction Work - Hetauda')">
-      <div class="video-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);height:100%;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9">
-        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80" alt="Construction" class="video-thumb" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7">
-      </div>
-      <div class="video-overlay">
-        <div class="video-label">Featured</div>
-        <div class="play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
-        <h4>PRERAK Construction Work — Hetauda</h4>
-      </div>
-    </div>
-    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ','Interior Design')">
-      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80" alt="Interior" class="video-thumb">
-      <div class="video-overlay">
-        <div class="video-label">Interior</div>
-        <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
-        <h4>Interior Design Project</h4>
-      </div>
-    </div>
-    <div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ','UPVC Work')">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="UPVC" class="video-thumb">
-      <div class="video-overlay">
-        <div class="video-label">UPVC</div>
-        <div class="play-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="5,3 19,12 5,21"/></svg></div>
-        <h4>UPVC Windows Installation</h4>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VIDEO MODAL -->
-<div class="vid-overlay" id="vid-overlay" onclick="if(event.target===this)closeVideo()">
-  <div class="vid-modal">
-    <button class="vid-close" onclick="closeVideo()">✕</button>
-    <iframe id="vid-frame" src="" allowfullscreen></iframe>
-  </div>
-</div>
-
-<!-- WHY US -->
-<section id="why-us">
-  <div class="why-grid reveal">
-    <div class="why-visual">
-      <div class="why-img-wrap">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Interior">
-        <div class="why-badge-box"><div class="num">10+</div><div class="txt">Years Nepal</div></div>
-      </div>
-    </div>
-    <div>
-      <div class="section-label">Why Choose Us</div>
-      <h2 class="section-title">Quality You Can Trust</h2>
-      <p class="section-sub">We combine expertise, quality materials and honest pricing.</p>
-      <div class="why-points">
-        <div class="why-point"><div class="why-icon">⭐</div><div><h4>Quality Materials</h4><p>Certified, premium materials — no shortcuts.</p></div></div>
-        <div class="why-point"><div class="why-icon">⏱️</div><div><h4>On-Time Delivery</h4><p>Projects delivered on schedule, always.</p></div></div>
-        <div class="why-point"><div class="why-icon">💰</div><div><h4>Transparent Pricing</h4><p>No hidden charges. Best value in Nepal.</p></div></div>
-        <div class="why-point"><div class="why-icon">🤝</div><div><h4>After-Sales Support</h4><p>Full warranty and after-sales service.</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="projects-section" id="projects">
-  <div class="section-label">Our Work</div>
-  <h2 class="section-title">Recent Projects</h2>
-  <p class="section-sub">Completed projects across Hetauda and Makwanpur.</p>
-  <div class="proj-grid reveal">
-    <div class="proj-card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80" alt="Interior"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Modern Living Room</h4><p>Hetauda Residential</p></div></div>
-    <div class="proj-card"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=600&q=80" alt="Kitchen"><div class="proj-overlay"><span class="proj-tag">Kitchen</span><h4>Modular Kitchen</h4><p>Makwanpur</p></div></div>
-    <div class="proj-card"><img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80" alt="Ceiling"><div class="proj-overlay"><span class="proj-tag">Gypsum</span><h4>False Ceiling</h4><p>Commercial</p></div></div>
-    <div class="proj-card"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="UPVC"><div class="proj-overlay"><span class="proj-tag">UPVC</span><h4>UPVC Windows</h4><p>Residential</p></div></div>
-    <div class="proj-card"><img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=600&q=80" alt="Bedroom"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Master Bedroom</h4><p>Hetauda</p></div></div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="section-label">Happy Clients</div>
-  <h2 class="section-title">What Clients Say</h2>
-  <p class="section-sub">Trusted by hundreds across Makwanpur.</p>
-  <div class="test-grid reveal">
-    <div class="test-card"><div class="stars">★★★★★</div><p>"PRERAK ले हाम्रो घरको interior design गर्यो — बिल्कुल सपना जस्तै। Quality र time दुवैमा best!"</p><div class="test-author"><div class="test-avatar">र</div><div><div class="name">Ramesh Sharma</div><div class="loc">Hetauda-6</div></div></div></div>
-    <div class="test-card"><div class="stars">★★★★★</div><p>"UPVC windows and doors ko quality ekdam ramro. Rate pani fair thiyo. Strongly recommend!"</p><div class="test-author"><div class="test-avatar">स</div><div><div class="name">Sita Thapa</div><div class="loc">Hetauda-4</div></div></div></div>
-    <div class="test-card"><div class="stars">★★★★★</div><p>"Gypsum ceiling ko kaam top level. Team professional, deadline pani meet garyo. Best!"</p><div class="test-author"><div class="test-avatar">ब</div><div><div class="name">Bikash Adhikari</div><div class="loc">Hetauda-3</div></div></div></div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section reveal">
-  <div class="section-label" style="justify-content:center">Start Today</div>
-  <h2>Ready to Build Your Dream?</h2>
-  <p>Free site visit & detailed quotation. No obligation.</p>
-  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-    <a href="#contact" class="btn-primary">🏗️ Get Free Quote</a>
-    <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-btn">💬 WhatsApp Us</a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div class="section-label">Get In Touch</div>
-  <h2 class="section-title">Contact Us</h2>
-  <p class="section-sub">Call, WhatsApp or send a message. We respond within 2 hours.</p>
-  <div class="contact-grid reveal">
-    <div class="contact-info">
-      <div class="contact-item"><div class="contact-item-icon">📍</div><div><h4>Address</h4><p>Hetauda-4, Kantirajpath<br>Makwanpur, Nepal</p></div></div>
-      <div class="contact-item"><div class="contact-item-icon">📞</div><div><h4>Phone</h4><a href="tel:9855069733">9855069733</a><br><a href="tel:9801069733">9801069733</a><br><a href="tel:057590733">057-590733</a></div></div>
-      <div class="contact-item"><div class="contact-item-icon">📧</div><div><h4>Email</h4><a href="mailto:prerakconstrucion21@gmail.com">prerakconstrucion21@gmail.com</a></div></div>
-      <div class="contact-item"><div class="contact-item-icon">⏰</div><div><h4>Hours</h4><p>Sun–Fri: 8AM–6PM<br>Sat: 9AM–4PM</p></div></div>
-      <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-btn">💬 Chat on WhatsApp</a>
-    </div>
-    <div class="contact-form">
-      <h3>Get Free Quote 🏗️</h3>
-      <div id="formContent">
-        <div class="fg"><label>Name *</label><input type="text" id="cf-name" placeholder="Your name"></div>
-        <div class="fg"><label>Phone *</label><input type="tel" id="cf-phone" placeholder="98XXXXXXXX"></div>
-        <div class="fg"><label>Service</label>
-          <select id="cf-svc">
-            <option>-- Select --</option>
-            <option>Construction</option><option>Interior Design</option>
-            <option>Gypsum Ceiling</option><option>UPVC & Aluminum</option>
-            <option>Flooring</option><option>Solar</option><option>Renovation</option>
-          </select>
+    <nav class="sticky top-0 z-50 glass p-4 flex justify-between items-center shadow-2xl">
+        <div class="flex items-center gap-2">
+            <div class="bg-orange-600 p-2 rounded-xl text-white shadow-lg shadow-orange-600/30">
+                <i class="fas fa-hammer"></i>
+            </div>
+            <h1 class="syne text-lg tracking-tighter leading-none text-white">PRERAK<br><span class="text-[8px] text-gray-500 uppercase tracking-widest font-bold">Multipurpose</span></h1>
         </div>
-        <div class="fg"><label>Message</label><textarea id="cf-msg" placeholder="Tell us about your project..."></textarea></div>
-        <button class="form-submit" onclick="submitForm()">Send Message 📤</button>
-      </div>
-      <div id="form-success">✅ Message sent! We'll contact you shortly.<br><strong>WhatsApp: 9855069733</strong></div>
+        <div class="flex">
+            <button onclick="showSec('web')" id="btn-web" class="tab-btn active-tab">Web</button>
+            <button onclick="showSec('os')" id="btn-os" class="tab-btn">Work OS</button>
+        </div>
+    </nav>
+
+    <div id="sec-web" class="p-6">
+        <div class="text-center py-20 space-y-6">
+            <div class="inline-block bg-orange-600/10 text-orange-500 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-orange-500/20 mb-2">Hetauda, Nepal</div>
+            <h2 class="syne text-5xl md:text-8xl font-black leading-none tracking-tighter">BUILDING <span class="text-orange-500">DREAMS.</span></h2>
+            <p class="text-gray-400 max-w-sm mx-auto text-sm leading-relaxed">Nepal's trusted partner for Construction, Interior, and Modular Home solutions.</p>
+            <div class="pt-8 flex justify-center gap-4">
+                <a href="tel:9855069733" class="bg-orange-600 px-8 py-4 rounded-full font-bold text-sm shadow-xl shadow-orange-600/20">Call Now</a>
+                <button onclick="showSec('os')" class="bg-white/5 border border-white/10 px-8 py-4 rounded-full font-bold text-sm">Staff Portal</button>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-10">
+            <div class="glass p-6 rounded-[2rem] text-center border-orange-500/20 border"><i class="fas fa-couch text-orange-500 text-2xl mb-3"></i><h4 class="font-bold text-[10px] uppercase">Interior</h4></div>
+            <div class="glass p-6 rounded-[2rem] text-center"><i class="fas fa-building text-orange-500 text-2xl mb-3"></i><h4 class="font-bold text-[10px] uppercase">Construction</h4></div>
+            <div class="glass p-6 rounded-[2rem] text-center"><i class="fas fa-solar-panel text-orange-500 text-2xl mb-3"></i><h4 class="font-bold text-[10px] uppercase">Solar</h4></div>
+            <div class="glass p-6 rounded-[2rem] text-center"><i class="fas fa-door-open text-orange-500 text-2xl mb-3"></i><h4 class="font-bold text-[10px] uppercase">UPVC</h4></div>
+        </div>
     </div>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#" class="nav-logo"><div class="nav-logo-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/><polyline points="9,22 9,12 15,12 15,22" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/></svg></div><div class="nav-logo-text"><div class="name">PRERAK</div><div class="sub">Multipurpose Pvt Ltd</div></div></a>
-      <p class="tagline">Building dreams across Hetauda & Makwanpur since 2012.</p>
-      <div class="footer-socials">
-        <a href="https://wa.me/9779855069733" target="_blank" class="soc-btn">💬</a>
-        <a href="mailto:prerakconstrucion21@gmail.com" class="soc-btn">📧</a>
-        <a href="tel:9855069733" class="soc-btn">📞</a>
-      </div>
+    <div id="sec-os" class="hidden p-4 space-y-6">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="glass p-6 rounded-[2rem] border-l-4 border-orange-600">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Total Revenue</p>
+                <h4 id="totalRev" class="text-2xl font-black text-white">रू ०</h4>
+            </div>
+            <div class="glass p-6 rounded-[2rem] border-l-4 border-blue-600">
+                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Projects Logged</p>
+                <h4 id="projCount" class="text-2xl font-black text-white">०</h4>
+            </div>
+        </div>
+
+        <div class="glass p-8 rounded-[2.5rem] space-y-5 border border-white/5">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="syne text-xs font-bold text-orange-500 uppercase tracking-widest">New Work Entry</h3>
+                <span class="text-[9px] bg-white/10 px-2 py-1 rounded text-gray-400">ID: #000${Date.now().toString().slice(-3)}</span>
+            </div>
+            <input type="text" id="accName" placeholder="Customer or Staff Name" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-sm font-bold text-white placeholder:text-gray-600 focus:border-orange-500/50">
+            <div class="grid grid-cols-2 gap-3">
+                <input type="number" id="accAmt" placeholder="Amount (रू)" class="w-full bg-white/5 p-4 rounded-2xl border border-white/10 outline-none text-sm font-bold text-white placeholder:text-gray-600 focus:border-orange-500/50">
+                <button onclick="saveAcc()" class="bg-orange-600 p-4 rounded-2xl font-bold shadow-2xl shadow-orange-600/40 text-white uppercase tracking-widest text-[10px]">Save Record</button>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+             <h3 class="text-[10px] text-gray-500 font-bold uppercase tracking-widest ml-2">Recent Activities</h3>
+             <div id="logList" class="space-y-3">
+                </div>
+        </div>
     </div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="#services">Construction</a></li><li><a href="#services">Interior Design</a></li><li><a href="#services">Gypsum Ceiling</a></li><li><a href="#services">UPVC & Aluminum</a></li><li><a href="#services">Solar</a></li></ul></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a href="#why-us">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#videos">Videos</a></li><li><a href="#contact">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:9855069733">📞 9855069733</a></li><li><a href="tel:9801069733">📞 9801069733</a></li><li><a href="tel:057590733">☎️ 057-590733</a></li><li><a href="#">📍 Hetauda-4, Makwanpur</a></li></ul></div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 PRERAK MULTIPURPOSE PVT LTD. All rights reserved.</p>
-    <p>Hetauda, Makwanpur, Nepal</p>
-  </div>
-</footer>
 
-<script>
-// ══ THEME ══
-function setTheme(t){
-  document.body.className = t==='dark'?'':('theme-'+t);
-  localStorage.setItem('pw_theme',t);
-  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
-  const map={dark:0,light:1,saffron:2};
-  document.querySelectorAll('.theme-btn')[map[t]]?.classList.add('active');
-}
-(function(){
-  const t=localStorage.getItem('pw_theme')||'dark';
-  setTheme(t);
-})();
+    <a href="https://wa.me/9779855069733" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] h-16 w-16 rounded-full flex items-center justify-center shadow-2xl z-50">
+        <i class="fab fa-whatsapp text-3xl text-white"></i>
+    </a>
 
-// ══ SERVICES DATA ══
-const SERVICES = [
-  {
-    id:'construction',
-    icon:'🏗️',
-    name:'Construction Works',
-    img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
-    desc:'We provide complete construction services from foundation to finishing. Residential homes, commercial buildings, RCC structures, prefab houses — all under one roof with quality materials and skilled workers.',
-    tags:['Residential','Commercial','RCC','Prefab'],
-    gallery:[
-      'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['Foundation to finishing','RCC structure','Prefab & modular homes','Commercial buildings','Renovation & repair']
-  },
-  {
-    id:'interior',
-    icon:'🛋️',
-    name:'Interior Design',
-    img:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
-    desc:'Transform your space with our expert interior design services. We create beautiful, functional spaces that reflect your personality — from modular kitchens to complete home makeovers.',
-    tags:['Modular Kitchen','Wardrobe','TV Unit','Lighting'],
-    gallery:[
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['Modular kitchen design','Custom wardrobe','TV unit & partition','Lighting design','Wall decoration']
-  },
-  {
-    id:'gypsum',
-    icon:'🪨',
-    name:'Gypsum & Ceiling',
-    img:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80',
-    desc:'Professional gypsum ceiling and partition work. We install false ceilings, 2x2 grid ceilings, PVC boards and smart boards with perfect finishing and modern designs.',
-    tags:['False Ceiling','Grid Ceiling','PVC Board','Partition'],
-    gallery:[
-      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['Gypsum false ceiling','2×2 grid ceiling','PVC & smart board','Office partition','Modern designs']
-  },
-  {
-    id:'upvc',
-    icon:'🪟',
-    name:'UPVC & Aluminum',
-    img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',
-    desc:'High-quality UPVC windows and doors, aluminum sliding systems and glass work. Our products are waterproof, soundproof and energy efficient — perfect for Nepal\'s climate.',
-    tags:['UPVC Windows','Aluminum','Glass Work','Sliding'],
-    gallery:[
-      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1560448075-cbc16bb4af8e?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['UPVC windows & doors','Aluminum sliding','Office glass work','Waterproof & soundproof','Energy efficient']
-  },
-  {
-    id:'flooring',
-    icon:'🏠',
-    name:'Flooring & Finishing',
-    img:'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?auto=format&fit=crop&w=800&q=80',
-    desc:'Complete flooring solutions including parquet, tiles, marble and granite. We also do painting, floor polishing and complete renovation of old houses.',
-    tags:['Parquet','Tiles','Marble','Painting'],
-    gallery:[
-      'https://images.unsplash.com/photo-1504309092620-4d0ec726efa4?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['Parquet flooring','Tile & marble work','Granite finishing','Interior painting','House renovation']
-  },
-  {
-    id:'solar',
-    icon:'☀️',
-    name:'Solar & Electrical',
-    img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80',
-    desc:'Complete solar panel installation, electrical wiring, lighting setup, plumbing and bathroom fitting. We provide end-to-end electrical and solar solutions for homes and offices.',
-    tags:['Solar Panel','Electrical','Plumbing','Lighting'],
-    gallery:[
-      'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=400&q=80',
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=400&q=80'
-    ],
-    features:['Solar panel installation','Electrical wiring','Lighting design','Plumbing','Bathroom fitting']
-  }
-];
+    <script>
+        // Database Loading (Persistence)
+        let db = JSON.parse(localStorage.getItem('prerak_hybrid_os')) || [];
 
-// Render services
-document.getElementById('services-grid').innerHTML = SERVICES.map(s=>`
-  <div class="service-card" onclick="openSvc('${s.id}')">
-    <div class="service-card-img-wrap">
-      <img src="${s.img}" alt="${s.name}" class="service-card-img">
-    </div>
-    <div class="service-card-body">
-      <div class="service-icon">${s.icon}</div>
-      <h3>${s.name}</h3>
-      <p>${s.desc.substring(0,90)}...</p>
-      <div class="service-tags">${s.tags.map(t=>`<span class="service-tag">${t}</span>`).join('')}</div>
-      <div class="service-more">View Details <span>→</span></div>
-    </div>
-  </div>`).join('');
+        function showSec(id) {
+            document.getElementById('sec-web').classList.add('hidden');
+            document.getElementById('sec-os').classList.add('hidden');
+            document.getElementById('btn-web').classList.remove('active-tab');
+            document.getElementById('btn-os').classList.remove('active-tab');
+            
+            document.getElementById('sec-' + id).classList.remove('hidden');
+            document.getElementById('btn-' + id).classList.add('active-tab');
+            render();
+        }
 
-function openSvc(id){
-  const s=SERVICES.find(x=>x.id===id);
-  if(!s) return;
-  document.getElementById('svc-img').src=s.img;
-  document.getElementById('svc-icon').textContent=s.icon;
-  document.getElementById('svc-title').textContent=s.name;
-  document.getElementById('svc-desc').textContent=s.desc;
-  document.getElementById('svc-gallery').innerHTML=s.gallery.map(g=>`<img src="${g}" alt="">`).join('');
-  document.getElementById('svc-features').innerHTML=s.features.map(f=>`<div class="svc-feat">${f}</div>`).join('');
-  document.getElementById('svc-wa').href=`https://wa.me/9779855069733?text=नमस्ते PRERAK जी! मलाई ${s.name} को बारे जानकारी चाहियो।`;
-  document.getElementById('svc-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeSvc(){
-  document.getElementById('svc-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
+        function saveAcc() {
+            const name = document.getElementById('accName').value.trim();
+            const amt = document.getElementById('accAmt').value.trim();
+            
+            if(!name || !amt) {
+                alert("विवरण र रकम भर्नुहोस्!");
+                return;
+            }
 
-// ══ VIDEO ══
-function openVideo(url,title){
-  document.getElementById('vid-frame').src=url+'?autoplay=1';
-  document.getElementById('vid-overlay').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeVideo(){
-  document.getElementById('vid-frame').src='';
-  document.getElementById('vid-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
+            const entry = {
+                id: Date.now(),
+                name: name,
+                amt: amt,
+                date: new Date().toLocaleDateString('ne-NP')
+            };
 
-// ══ NAV ══
-function toggleMenu(){
-  document.getElementById('mobileMenu').classList.toggle('open');
-}
-window.addEventListener('scroll',function(){
-  document.getElementById('navbar').style.padding=window.scrollY>50?'10px 5%':'14px 5%';
-});
-document.addEventListener('click',function(e){
-  const m=document.getElementById('mobileMenu'),h=document.getElementById('hamburger');
-  if(m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open');
-});
+            db.unshift(entry);
+            localStorage.setItem('prerak_hybrid_os', JSON.stringify(db));
+            
+            // Clear inputs & Refresh
+            document.getElementById('accName').value = '';
+            document.getElementById('accAmt').value = '';
+            render();
+        }
 
-// ══ SCROLL REVEAL ══
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+        function render() {
+            const total = db.reduce((s, i) => s + parseFloat(i.amt), 0);
+            document.getElementById('totalRev').innerText = 'रू ' + total.toLocaleString();
+            document.getElementById('projCount').innerText = db.length;
+            
+            const logContainer = document.getElementById('logList');
+            if(db.length === 0) {
+                logContainer.innerHTML = '<div class="text-center py-10 text-gray-600 text-[10px] uppercase">No records found</div>';
+                return;
+            }
 
-// ══ CONTACT FORM ══
-function submitForm(){
-  const name=(document.getElementById('cf-name').value||'').trim();
-  const phone=(document.getElementById('cf-phone').value||'').trim();
-  const svc=document.getElementById('cf-svc').value;
-  const msg=(document.getElementById('cf-msg').value||'').trim();
-  if(!name||!phone){alert('कृपया नाम र फोन हाल्नुस्।');return;}
-  const waMsg=`🏗️ *New Quote Request*\n\n👤 ${name}\n📞 ${phone}\n🔧 ${svc||'General'}\n📝 ${msg||'—'}\n\n_From PRERAK Website_`;
-  window.open('https://wa.me/9779855069733?text='+encodeURIComponent(waMsg),'_blank');
-  document.getElementById('formContent').style.display='none';
-  document.getElementById('form-success').style.display='block';
-}
-</script>
+            logContainer.innerHTML = db.map(i => `
+                <div class="glass p-4 rounded-2xl flex justify-between items-center border border-white/5 animate-fade-in">
+                    <div>
+                        <p class="font-bold text-sm text-gray-200">${i.name}</p>
+                        <p class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1">${i.date}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black text-orange-500 text-sm">रू ${parseFloat(i.amt).toLocaleString()}</p>
+                        <button onclick="deleteLog(${i.id})" class="text-[8px] text-gray-600 hover:text-red-500 font-bold uppercase mt-1">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteLog(id) {
+            if(confirm('के तपाईं यो रेकर्ड हटाउन चाहनुहुन्छ?')) {
+                db = db.filter(item => item.id !== id);
+                localStorage.setItem('prerak_hybrid_os', JSON.stringify(db));
+                render();
+            }
+        }
+
+        // Initial Load
+        render();
+    </script>
 </body>
 </html>
-Aba weblai complete garne claude bata yo code chha hera yasma.sudhar garnuparne sudharera banau code final draft la
