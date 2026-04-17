@@ -24,7 +24,7 @@ body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;o
 ::-webkit-scrollbar-thumb{background:var(--orange);border-radius:3px;}
 .syne{font-family:'Syne',sans-serif;}
 .glass{background:rgba(255,255,255,0.02);backdrop-filter:blur(15px);border:1px solid var(--border);}
-
+ 
 /* THEME TOGGLE */
 #theme-bar{position:fixed;bottom:100px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px;}
 .theme-btn{width:38px;height:38px;border-radius:50%;border:2px solid var(--border);cursor:pointer;
@@ -32,7 +32,7 @@ body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;o
   transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
 .theme-btn:hover{transform:scale(1.1);border-color:var(--orange);}
 .theme-btn.active{border-color:var(--orange);background:var(--orange);}
-
+ 
 /* NAV */
 nav.mainnav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 5%;
   display:flex;align-items:center;justify-content:space-between;
@@ -54,7 +54,7 @@ body.theme-light nav.mainnav{background:rgba(248,248,248,0.95);}
   border-bottom:1px solid var(--border);padding:16px 5%;flex-direction:column;gap:12px;z-index:99;}
 .mobile-menu.open{display:flex;}
 .mobile-menu a{color:var(--muted);text-decoration:none;font-size:0.95rem;padding:8px 0;border-bottom:1px solid var(--border);}
-
+ 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 5% 60px;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 65% 50%,rgba(249,115,22,0.12),transparent),
@@ -86,7 +86,7 @@ body.theme-light nav.mainnav{background:rgba(248,248,248,0.95);}
 .hero-stat .num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:900;color:var(--orange);line-height:1;}
 .hero-stat .label{font-size:0.7rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:1px;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
+ 
 /* SECTION */
 section{padding:80px 5%;}
 .section-label{font-size:0.68rem;color:var(--orange);letter-spacing:3px;text-transform:uppercase;font-weight:700;
@@ -97,7 +97,7 @@ section{padding:80px 5%;}
 .section-sub{color:var(--muted);font-size:0.95rem;max-width:540px;line-height:1.7;margin-bottom:44px;}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
 .reveal.visible{opacity:1;transform:translateY(0);}
-
+ 
 /* SERVICES - with technical specs */
 .services-section{background:var(--dark2);}
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
@@ -124,7 +124,7 @@ section{padding:80px 5%;}
 .service-card-cta{background:var(--orange);color:#fff;padding:12px;border-radius:12px;text-align:center;font-weight:700;
   font-size:0.78rem;text-transform:uppercase;letter-spacing:1px;text-decoration:none;transition:background .2s;margin-top:auto;}
 .service-card-cta:hover{background:var(--orange-d);}
-
+ 
 /* VIDEO SECTION */
 .video-section{background:var(--dark3);}
 .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -142,7 +142,7 @@ section{padding:80px 5%;}
 .video-label{background:var(--orange);color:#fff;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:20px;
   letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
 .video-overlay h4{color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;text-align:center;padding:0 16px;}
-
+ 
 /* VIDEO MODAL */
 .vid-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:600;
   align-items:center;justify-content:center;padding:16px;}
@@ -150,7 +150,7 @@ section{padding:80px 5%;}
 .vid-modal{max-width:900px;width:100%;position:relative;}
 .vid-close{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;}
 .vid-modal iframe{width:100%;aspect-ratio:16/9;border-radius:12px;border:none;}
-
+ 
 /* SERVICE MODAL */
 .svc-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;
   align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px);}
@@ -175,7 +175,7 @@ section{padding:80px 5%;}
 .svc-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;}
 .wa-modal-btn{display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:13px 22px;
   border-radius:12px;text-decoration:none;font-weight:700;font-size:0.85rem;}
-
+ 
 /* WHY US */
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
 .why-img-wrap{border-radius:24px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);position:relative;}
@@ -191,7 +191,7 @@ section{padding:80px 5%;}
 .why-icon i{color:var(--orange);font-size:1.2rem;}
 .why-point h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:4px;}
 .why-point p{color:var(--muted);font-size:0.82rem;line-height:1.6;}
-
+ 
 /* PROJECTS */
 .projects-section{background:var(--dark2);}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -206,7 +206,7 @@ section{padding:80px 5%;}
   display:inline-block;margin-bottom:6px;width:fit-content;letter-spacing:1px;text-transform:uppercase;}
 .proj-overlay h4{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;color:#fff;}
 .proj-overlay p{color:rgba(255,255,255,.65);font-size:0.72rem;margin-top:2px;}
-
+ 
 /* TESTIMONIALS */
 .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
 .test-card{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:26px;transition:all .2s;}
@@ -218,14 +218,14 @@ section{padding:80px 5%;}
   display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:#fff;flex-shrink:0;}
 .test-author .name{font-weight:700;font-size:0.88rem;}
 .test-author .loc{font-size:0.72rem;color:var(--muted);margin-top:2px;}
-
+ 
 /* CTA */
 .cta-section{text-align:center;padding:90px 5%;
   background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(249,115,22,.04));
   border-top:1px solid rgba(249,115,22,.15);border-bottom:1px solid rgba(249,115,22,.15);}
 .cta-section h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:900;margin-bottom:14px;text-transform:uppercase;}
 .cta-section p{color:var(--muted);max-width:480px;margin:0 auto 30px;line-height:1.7;}
-
+ 
 /* CONTACT */
 .contact-section{background:var(--dark2);}
 .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:start;}
@@ -252,7 +252,7 @@ section{padding:80px 5%;}
   font-size:0.9rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:6px;}
 .form-submit:hover{background:var(--orange-d);transform:translateY(-1px);}
 #form-success{display:none;text-align:center;padding:18px;color:var(--green);font-weight:600;}
-
+ 
 /* FOOTER */
 footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5% 22px;}
 .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px;}
@@ -269,14 +269,14 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
 .footer-bottom{border-top:1px solid var(--border);padding-top:20px;
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
 .footer-bottom p{color:var(--muted);font-size:0.76rem;}
-
+ 
 /* WHATSAPP FLOAT */
 .wa-float{position:fixed;bottom:24px;right:24px;background:#25D366;width:60px;height:60px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,0.5);
   z-index:50;text-decoration:none;animation:bounce 2s infinite;}
 .wa-float i{color:#fff;font-size:1.6rem;}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
+ 
 /* RESPONSIVE */
 @media(max-width:900px){
   .nav-links,.nav-cta{display:none;}
@@ -307,14 +307,14 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
 </style>
 </head>
 <body>
-
+ 
 <!-- THEME BAR -->
 <div id="theme-bar">
   <button class="theme-btn active" onclick="setTheme('dark')" title="Dark">🌙</button>
   <button class="theme-btn" onclick="setTheme('light')" title="Light">☀️</button>
   <button class="theme-btn" onclick="setTheme('saffron')" title="Saffron">🔶</button>
 </div>
-
+ 
 <!-- NAV -->
 <nav class="mainnav" id="navbar">
   <a href="#" class="nav-logo">
@@ -344,7 +344,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
   <a href="#contact" onclick="toggleMenu()">Contact</a>
   <a href="tel:9855069733" style="color:var(--orange);font-weight:700">📞 9855069733</a>
 </div>
-
+ 
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
@@ -368,7 +368,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     </div>
   </div>
 </section>
-
+ 
 <!-- SERVICES with TECH SPECS -->
 <section class="services-section" id="services">
   <div class="section-label">Our Catalog</div>
@@ -376,7 +376,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
   <p class="section-sub">Technical विवरण र hardware specs सहितको आधिकारिक क्याटलग। Click any service for detailed information.</p>
   <div class="services-grid reveal" id="services-grid"></div>
 </section>
-
+ 
 <!-- SERVICE MODAL -->
 <div class="svc-overlay" id="svc-overlay" onclick="if(event.target===this)closeSvc()">
   <div class="svc-modal" id="svc-modal">
@@ -400,7 +400,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     </div>
   </div>
 </div>
-
+ 
 <!-- VIDEOS -->
 <section class="video-section" id="videos">
   <div class="section-label">Work Videos</div>
@@ -433,7 +433,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     </div>
   </div>
 </section>
-
+ 
 <!-- VIDEO MODAL -->
 <div class="vid-overlay" id="vid-overlay" onclick="if(event.target===this)closeVideo()">
   <div class="vid-modal">
@@ -441,7 +441,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     <iframe id="vid-frame" src="" allowfullscreen></iframe>
   </div>
 </div>
-
+ 
 <!-- WHY US -->
 <section id="why-us">
   <div class="why-grid reveal">
@@ -464,7 +464,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     </div>
   </div>
 </section>
-
+ 
 <!-- PROJECTS -->
 <section class="projects-section" id="projects">
   <div class="section-label">Recent Work</div>
@@ -478,7 +478,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     <div class="proj-card"><img src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=600&q=80" alt="Bedroom"><div class="proj-overlay"><span class="proj-tag">Interior</span><h4>Master Bedroom</h4><p>Hetauda</p></div></div>
   </div>
 </section>
-
+ 
 <!-- TESTIMONIALS -->
 <section id="testimonials">
   <div class="section-label">Happy Clients</div>
@@ -490,7 +490,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     <div class="test-card"><div class="stars">★★★★★</div><p>"Gypsum ceiling ko kaam top level. Team professional, deadline pani meet garyo. Best!"</p><div class="test-author"><div class="test-avatar">ब</div><div><div class="name">Bikash Adhikari</div><div class="loc">Hetauda-3</div></div></div></div>
   </div>
 </section>
-
+ 
 <!-- CTA -->
 <section class="cta-section reveal">
   <div class="section-label" style="justify-content:center">Start Today</div>
@@ -501,7 +501,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-modal-btn"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
   </div>
 </section>
-
+ 
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
   <div class="section-label">Get In Touch</div>
@@ -539,7 +539,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     </div>
   </div>
 </section>
-
+ 
 <!-- FOOTER -->
 <footer>
   <div class="footer-grid">
@@ -565,12 +565,12 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:48px 5%
     <p>🇳🇵 Made in Hetauda, Nepal</p>
   </div>
 </footer>
-
+ 
 <!-- WHATSAPP FLOAT -->
 <a href="https://wa.me/9779855069733?text=नमस्ते%20PRERAK%20जी!" target="_blank" class="wa-float">
   <i class="fab fa-whatsapp"></i>
 </a>
-
+ 
 <script>
 // ══ THEME ══
 function setTheme(t){
@@ -581,7 +581,7 @@ function setTheme(t){
   document.querySelectorAll('.theme-btn')[map[t]]?.classList.add('active');
 }
 (function(){try{setTheme(localStorage.getItem('pw_theme')||'dark');}catch(e){setTheme('dark');}})();
-
+ 
 // ══ SERVICES DATA with TECH SPECS ══
 const SERVICES = [
   {
@@ -687,7 +687,7 @@ const SERVICES = [
     features:['Solar installation','Grid-tied system','Battery backup','Electrical wiring','CCTV setup','LED lighting','Plumbing','Bathroom fitting']
   }
 ];
-
+ 
 // Render services
 document.getElementById('services-grid').innerHTML = SERVICES.map(s=>`
   <div class="service-card" onclick="openSvc('${s.id}')">
@@ -713,7 +713,7 @@ document.getElementById('services-grid').innerHTML = SERVICES.map(s=>`
       <div class="service-card-cta">View Details & Quote</div>
     </div>
   </div>`).join('');
-
+ 
 function openSvc(id){
   const s=SERVICES.find(x=>x.id===id);
   if(!s) return;
@@ -731,7 +731,7 @@ function closeSvc(){
   document.getElementById('svc-overlay').classList.remove('open');
   document.body.style.overflow='';
 }
-
+ 
 // ══ VIDEO ══
 function openVideo(url){
   document.getElementById('vid-frame').src=url+'?autoplay=1';
@@ -743,7 +743,7 @@ function closeVideo(){
   document.getElementById('vid-overlay').classList.remove('open');
   document.body.style.overflow='';
 }
-
+ 
 // ══ NAV ══
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
 window.addEventListener('scroll',function(){
@@ -753,13 +753,13 @@ document.addEventListener('click',function(e){
   const m=document.getElementById('mobileMenu'),h=document.getElementById('hamburger');
   if(m.classList.contains('open')&&!m.contains(e.target)&&!h.contains(e.target))m.classList.remove('open');
 });
-
+ 
 // ══ SCROLL REVEAL ══
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
+ 
 // ══ CONTACT FORM ══
 function submitForm(){
   const name=(document.getElementById('cf-name').value||'').trim();
