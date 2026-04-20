@@ -574,6 +574,17 @@ body.admin-mode .site-nav{top:34px;}
     <button class="ab-btn" onclick="logoutAdmin()">🚪 Exit</button>
   </div>
 </div>
+
+<!-- PUBLIC QUICK ACTION PANEL -->
+<div id="quick-panel" style="position:fixed;bottom:92px;right:20px;z-index:350;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+  <div id="qp-menu" style="display:none;flex-direction:column;gap:6px;align-items:flex-end;margin-bottom:4px">
+    <a id="qp-call" href="#" style="display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--brd2);border-radius:30px;padding:8px 14px;font-size:.72rem;font-weight:700;color:var(--a);text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.3);animation:su .3s ease">📞 Call Us</a>
+    <a id="qp-wa" href="#" target="_blank" style="display:flex;align-items:center;gap:8px;background:#25D366;border-radius:30px;padding:8px 14px;font-size:.72rem;font-weight:700;color:#fff;text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(37,211,102,.3);animation:su .3s .05s ease both">💬 WhatsApp</a>
+    <a href="#visiting-card" onclick="setTimeout(open3DCard,400);closeQP()" style="display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--brd2);border-radius:30px;padding:8px 14px;font-size:.72rem;font-weight:700;color:var(--txt);text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.3);animation:su .3s .1s ease both">✨ 3D Card</a>
+    <a href="#contact" onclick="closeQP()" style="display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--brd2);border-radius:30px;padding:8px 14px;font-size:.72rem;font-weight:700;color:var(--txt);text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.3);animation:su .3s .15s ease both">🏗️ Get Quote</a>
+  </div>
+  <button id="qp-toggle" onclick="toggleQP()" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--ad),var(--a));border:none;color:var(--bg);font-size:1.4rem;cursor:pointer;box-shadow:0 6px 22px rgba(201,147,58,.42);transition:transform .25s,box-shadow .25s;display:flex;align-items:center;justify-content:center">⚡</button>
+</div>
 <div id="social-float"></div>
 <div id="prog"></div>
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
@@ -592,27 +603,51 @@ body.admin-mode .site-nav{top:34px;}
 </div>
 
 <!-- 3D CARD MODAL -->
-<div id="card3d-ov" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);backdrop-filter:blur(22px);align-items:center;justify-content:center;flex-direction:column;gap:24px" onclick="if(event.target===this)close3DCard()">
-  <div id="card3d-wrap" style="perspective:1000px;width:min(540px,90vw);cursor:grab;user-select:none;-webkit-user-select:none">
-    <div id="card3d-inner" style="width:100%;transform-style:preserve-3d;transition:transform .15s ease-out;position:relative">
-      <!-- FRONT -->
-      <div id="card3d-front" style="width:100%;aspect-ratio:1.75;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 80px rgba(201,147,58,.15)"></div>
-      <!-- BACK -->
-      <div id="card3d-back" style="position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;transform:rotateY(180deg);box-shadow:0 40px 100px rgba(0,0,0,.8)"></div>
-      <!-- HOLOGRAPHIC SHINE -->
-      <div id="card3d-shine" style="position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:10;background:linear-gradient(125deg,rgba(255,255,255,.0) 0%,rgba(255,255,255,.12) 45%,rgba(255,255,255,.0) 55%,rgba(255,255,255,.06) 100%);mix-blend-mode:overlay;transition:background .05s"></div>
-      <!-- EDGE GLOW -->
-      <div style="position:absolute;inset:-1px;border-radius:23px;border:1px solid rgba(255,255,255,.15);pointer-events:none;z-index:11"></div>
+<div id="card3d-ov" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.95);backdrop-filter:blur(24px);align-items:center;justify-content:center;flex-direction:column;gap:20px" onclick="if(event.target===this)close3DCard()">
+  <!-- Color bar at top -->
+  <div id="card3d-colorbar" style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff0000,#ff7700,#ffff00,#00ff00,#0000ff,#8b00ff,#ff0000);background-size:200%;animation:holo-bar 3s linear infinite;pointer-events:none"></div>
+  <style>
+    @keyframes holo-bar{from{background-position:0%}to{background-position:200%}}
+    @keyframes holo-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+    .card3d-color-btn{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;flex-shrink:0;}
+    .card3d-color-btn.active{border-color:#fff;transform:scale(1.2);}
+    .card3d-color-btn:hover{transform:scale(1.15);}
+    #card3d-holo{position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:9;mix-blend-mode:color-dodge;opacity:0;transition:opacity .3s;}
+    #card3d-holo.on{opacity:.35;}
+  </style>
+  <div id="card3d-wrap" style="perspective:1000px;width:min(520px,90vw);cursor:grab;user-select:none;-webkit-user-select:none">
+    <div id="card3d-inner" style="width:100%;transform-style:preserve-3d;transition:transform .12s ease-out;position:relative">
+      <div id="card3d-front" style="width:100%;aspect-ratio:1.75;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;position:relative"></div>
+      <div id="card3d-back" style="position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;transform:rotateY(180deg)"></div>
+      <!-- HOLOGRAPHIC LAYERS -->
+      <div id="card3d-shine" style="position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:10;mix-blend-mode:overlay;transition:background .04s"></div>
+      <div id="card3d-holo" style="position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:9;mix-blend-mode:color-dodge"></div>
+      <div style="position:absolute;inset:-1px;border-radius:23px;border:1px solid rgba(255,255,255,.2);pointer-events:none;z-index:11"></div>
+      <!-- Dynamic shadow under card -->
+      <div id="card3d-shadow" style="position:absolute;left:5%;right:5%;bottom:-30px;height:30px;border-radius:50%;background:radial-gradient(ellipse,rgba(201,147,58,.4),transparent 70%);filter:blur(12px);z-index:-1;transition:all .1s"></div>
     </div>
   </div>
   <!-- Controls -->
-  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-    <button onclick="flip3DCard()" style="padding:10px 22px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:30px;color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:7px">🔄 Flip Card</button>
-    <a id="c3d-wa" href="#" target="_blank" style="padding:10px 22px;background:#25D366;border:none;border-radius:30px;color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:7px;text-decoration:none">💬 Share</a>
-    <button onclick="close3DCard()" style="padding:10px 22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:30px;color:rgba(255,255,255,.6);font-size:.78rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕ Close</button>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center">
+    <button onclick="flip3DCard()" style="padding:9px 18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:30px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:6px">🔄 Flip</button>
+    <button onclick="toggle3DHolo()" id="holo-btn" style="padding:9px 18px;background:linear-gradient(90deg,rgba(255,0,255,.2),rgba(0,255,255,.2));border:1px solid rgba(255,255,255,.2);border-radius:30px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">🌈 Holo</button>
+    <a id="c3d-wa" href="#" target="_blank" style="padding:9px 18px;background:#25D366;border:none;border-radius:30px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:6px;text-decoration:none">💬 Share</a>
+    <button onclick="close3DCard()" style="padding:9px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:30px;color:rgba(255,255,255,.5);font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕</button>
   </div>
-  <p style="font-size:.6rem;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase">🖱️ Drag to rotate · Pinch to zoom</p>
-  <!-- Particle canvas -->
+  <!-- Color theme picker -->
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-size:.58rem;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase">Color:</span>
+    <div id="card3d-colors" style="display:flex;gap:6px">
+      <div class="card3d-color-btn active" style="background:#c9933a" onclick="set3DColor('#c9933a','#07070a')" title="Gold"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#ff00ff,#00ffff)" onclick="set3DColor('#ff00ff','#000510')" title="Holo"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#1a3a6e,#2550a0)" onclick="set3DColor('#4080ff','#04080f')" title="Blue"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#22c55e,#15803d)" onclick="set3DColor('#22c55e','#021108')" title="Green"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#f97316,#c2410c)" onclick="set3DColor('#f97316','#0d0500')" title="Orange"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#a855f7,#7e22ce)" onclick="set3DColor('#a855f7','#080012')" title="Purple"></div>
+      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#ec4899,#be185d)" onclick="set3DColor('#ec4899','#100008')" title="Pink"></div>
+    </div>
+  </div>
+  <p style="font-size:.58rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase">🖱️ Drag to rotate · 🌈 Holo for rainbow</p>
   <canvas id="card3d-particles" style="position:fixed;inset:0;pointer-events:none;z-index:-1"></canvas>
 </div>
 
@@ -797,11 +832,29 @@ body.admin-mode .site-nav{top:34px;}
           <div class="afg"><label>Tags (comma separated)</label><input type="text" id="sf-tags" placeholder="Residential, Commercial, RCC"></div>
           <div class="afg"><label>Features (one per line)</label><textarea id="sf-feats" rows="4"></textarea></div>
         </div>
-        <div class="afg"><label>Main Image</label>
+        <div class="afg"><label>Main Image (Card Thumbnail)</label>
           <div class="ap-img-prev"><img id="sf-imgc" src="" alt="" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="afr" style="margin-top:8px">
             <div class="ap-upz"><input type="file" accept="image/*" onchange="uploadSvcImg(this)"><span>📁</span><p>Upload image</p></div>
             <div class="afg"><label>Or URL</label><input type="text" id="sf-imgurl" placeholder="https://..."><button class="abtn" style="margin-top:6px;width:100%;justify-content:center" onclick="setSvcImgUrl()">Apply</button></div>
+          </div>
+        </div>
+        <!-- GALLERY MANAGEMENT -->
+        <div style="margin-top:16px;padding:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <label style="font-size:.59rem;letter-spacing:1.5px;text-transform:uppercase;color:#8a8a9a;font-weight:600">🖼️ Gallery Images (<span id="sf-gal-count">0</span>)</label>
+            <label style="display:flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(201,147,58,.12);border:1px solid rgba(201,147,58,.22);border-radius:7px;cursor:pointer;font-size:.7rem;color:#c9933a;font-weight:700">
+              + Add Photos
+              <input type="file" accept="image/*" multiple style="display:none" onchange="addSvcGallery(this)">
+            </label>
+          </div>
+          <div id="sf-gal-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px"></div>
+          <div class="afg" style="margin-bottom:0">
+            <label>Or add image URL</label>
+            <div style="display:flex;gap:7px">
+              <input type="text" id="sf-gal-url" placeholder="https://..." style="flex:1;padding:8px 11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:#f0ede8;font-family:'Plus Jakarta Sans',sans-serif;font-size:.8rem;outline:none">
+              <button onclick="addSvcGalUrl()" class="abtn">Add</button>
+            </div>
           </div>
         </div>
         <input type="hidden" id="sf-eid">
@@ -1506,7 +1559,7 @@ function renderSite(){
   // Back to top visibility
   window.addEventListener('scroll',()=>{document.getElementById('btt')?.classList.toggle('vis',window.scrollY>400);},{ passive:true });
   initCanvas();initNav();initReveal();initCounters();initTest();
-  renderSocialFloat();
+  renderSocialFloat();initQP();
   setTimeout(initVCTilt, 400);
 }
 function renderSocialFloat(){
@@ -1896,7 +1949,21 @@ function showSec(n){
   if(n==='visitcard')renderVCAdmin();
   if(n==='social')renderSocialAdmin();
 }
-// ═══ SOCIAL MEDIA ADMIN ═══
+// ═══ PUBLIC QUICK PANEL ═══
+let _qpOpen=false;
+function toggleQP(){
+  _qpOpen=!_qpOpen;
+  const menu=document.getElementById('qp-menu');
+  const btn=document.getElementById('qp-toggle');
+  if(menu)menu.style.display=_qpOpen?'flex':'none';
+  if(btn){btn.style.transform=_qpOpen?'rotate(45deg) scale(1.1)':'';btn.textContent=_qpOpen?'✕':'⚡';}
+}
+function closeQP(){_qpOpen=false;const m=document.getElementById('qp-menu');if(m)m.style.display='none';const b=document.getElementById('qp-toggle');if(b){b.style.transform='';b.textContent='⚡';}}
+function initQP(){
+  const S=D.settings;
+  const qc=document.getElementById('qp-call');if(qc)qc.href='tel:'+S.phone1;
+  const qw=document.getElementById('qp-wa');if(qw)qw.href='https://wa.me/'+S.wa+'?text='+encodeURIComponent('नमस्ते '+S.company+' जी!');
+}
 function renderSocialAdmin(){
   const S=D.settings;
   const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
@@ -2104,6 +2171,8 @@ function saveHero(){
 // ADMIN SERVICES
 // ═══════════════════════════════════════════════
 let _sfImg=''; // temp store for service image during edit
+let _sfGallery=[]; // temp gallery during edit
+
 function renderAdminSvc(){
   document.getElementById('svc-list').innerHTML=D.services.map(s=>`
     <div class="apc" id="svc-row-${s.id}">
@@ -2116,7 +2185,7 @@ function renderAdminSvc(){
       </div>
       <div style="display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:start">
         <div style="position:relative">
-          <img src="${s.img}" id="svc-thumb-${s.id}" style="width:110px;height:80px;object-fit:cover;border-radius:9px;border:1px solid rgba(255,255,255,.1);display:block" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22110%22 height=%2280%22><rect fill=%22%231a1a2e%22 width=%22110%22 height=%2280%22/><text x=%2255%22 y=%2244%22 font-size=%2224%22 text-anchor=%22middle%22>${s.icon}</text></svg>'">
+          <img src="${s.img}" id="svc-thumb-${s.id}" style="width:110px;height:80px;object-fit:cover;border-radius:9px;border:1px solid rgba(255,255,255,.1);display:block" onerror="this.style.background='#1a1a2e'">
           <label style="position:absolute;bottom:4px;left:0;right:0;background:rgba(201,147,58,.92);color:#07070a;font-size:.58rem;font-weight:700;text-align:center;padding:3px;cursor:pointer;border-radius:0 0 8px 8px;letter-spacing:.5px">
             📷 Replace
             <input type="file" accept="image/*" style="display:none" onchange="quickReplaceImg(this,'${s.id}')">
@@ -2124,8 +2193,8 @@ function renderAdminSvc(){
         </div>
         <div>
           <p style="font-size:.78rem;color:#8a8a9a;line-height:1.65;margin-bottom:8px">${s.desc.substring(0,120)}…</p>
-          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">${s.tags.map(t=>`<span style="background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);color:#c9933a;font-size:.58rem;padding:2px 8px;border-radius:10px">${t}</span>`).join('')}</div>
-          <div style="font-size:.65rem;color:#5a5a6a">${s.features.slice(0,3).map(f=>'✓ '+f).join('  ·  ')}</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">${s.tags.map(t=>`<span style="background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);color:#c9933a;font-size:.58rem;padding:2px 8px;border-radius:10px">${t}</span>`).join('')}</div>
+          <div style="font-size:.65rem;color:#c9933a;font-weight:600">🖼️ Gallery: ${(s.gallery||[]).length} images</div>
         </div>
       </div>
     </div>`).join('');
@@ -2139,17 +2208,18 @@ async function quickReplaceImg(input,svcId){
   if(thumb)thumb.src=b64;
 }
 function openAddSvc(){
-  _sfImg='';
+  _sfImg='';_sfGallery=[];
   document.getElementById('svc-form-ttl').textContent='Add New Service';
   ['sf-icon','sf-name','sf-desc','sf-tags','sf-feats','sf-imgurl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const ic=document.getElementById('sf-imgc');if(ic)ic.src='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="140"><rect fill="%231a1a2e" width="200" height="140"/><text x="100" y="75" font-size="14" fill="%235a5a6a" text-anchor="middle">No image yet</text></svg>';
+  const ic=document.getElementById('sf-imgc');if(ic)ic.src='';
   document.getElementById('sf-eid').value='';
+  renderSfGal();
   document.getElementById('svc-form').classList.add('open');
   document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
 }
 function openEditSvc(id){
   const s=D.services.find(x=>x.id===id);if(!s)return;
-  _sfImg=s.img;
+  _sfImg=s.img;_sfGallery=JSON.parse(JSON.stringify(s.gallery||[]));
   document.getElementById('svc-form-ttl').textContent='Edit — '+s.name;
   document.getElementById('sf-icon').value=s.icon;
   document.getElementById('sf-name').value=s.name;
@@ -2159,8 +2229,41 @@ function openEditSvc(id){
   const ic=document.getElementById('sf-imgc');if(ic)ic.src=s.img;
   document.getElementById('sf-imgurl').value=s.img.startsWith('data:')?'(uploaded image)':s.img;
   document.getElementById('sf-eid').value=id;
+  renderSfGal();
   document.getElementById('svc-form').classList.add('open');
   document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
+}
+function renderSfGal(){
+  const grid=document.getElementById('sf-gal-grid');
+  const cnt=document.getElementById('sf-gal-count');
+  if(!grid)return;
+  if(cnt)cnt.textContent=_sfGallery.length;
+  if(!_sfGallery.length){
+    grid.innerHTML='<div style="grid-column:span 4;text-align:center;padding:16px;color:#5a5a6a;font-size:.72rem;border:1px dashed rgba(255,255,255,.07);border-radius:8px">No gallery images — add photos below</div>';
+    return;
+  }
+  grid.innerHTML=_sfGallery.map(function(g,i){
+    return '<div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">'
+      +'<img src="'+g.src+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.background=\'#1a1a2e\'">'
+      +'<button onclick="rmSfGal('+i+')" style="position:absolute;top:3px;right:3px;width:20px;height:20px;background:rgba(239,68,68,.92);border:none;border-radius:50%;color:#fff;font-size:.6rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center">✕</button>'
+    +'</div>';
+  }).join('');
+}
+function rmSfGal(i){_sfGallery.splice(i,1);renderSfGal();}
+async function addSvcGallery(input){
+  for(const f of Array.from(input.files)){
+    if(!f.type.startsWith('image/'))continue;
+    const b64=await resizeImg(f,800,600,.82);
+    _sfGallery.push({type:'image',src:b64,cap:f.name.replace(/\.[^.]+$/,'')});
+  }
+  renderSfGal();input.value='';
+}
+function addSvcGalUrl(){
+  const url=(document.getElementById('sf-gal-url')?.value||'').trim();
+  if(!url||!url.startsWith('http')){alert('Valid URL required');return;}
+  _sfGallery.push({type:'image',src:url,cap:''});
+  document.getElementById('sf-gal-url').value='';
+  renderSfGal();
 }
 function closeSvcForm(){document.getElementById('svc-form').classList.remove('open');}
 async function uploadSvcImg(input){
@@ -2185,9 +2288,9 @@ function saveSvc(){
   const feats=document.getElementById('sf-feats').value.split('\n').map(f=>f.trim()).filter(Boolean);
   const img=_sfImg||document.getElementById('sf-imgc')?.src||'';
   const eid=document.getElementById('sf-eid').value;
-  if(eid){const idx=D.services.findIndex(x=>x.id===eid);if(idx>-1)D.services[idx]={...D.services[idx],icon,name,desc,tags,features:feats,img};}
-  else{const id='s'+Date.now();D.services.push({id,icon,name,desc,tags,img,gallery:[],features:feats});UPM[id]=[];}
-  _sfImg='';
+  if(eid){const idx=D.services.findIndex(x=>x.id===eid);if(idx>-1)D.services[idx]={...D.services[idx],icon,name,desc,tags,features:feats,img,gallery:_sfGallery};}
+  else{const id='s'+Date.now();D.services.push({id,icon,name,desc,tags,img,gallery:_sfGallery,features:feats});UPM[id]=[];}
+  _sfImg='';_sfGallery=[];
   save();renderSite();renderAdminSvc();closeSvcForm();
 }
 function deleteSvc(id){if(!confirm('Delete this service?'))return;D.services=D.services.filter(s=>s.id!==id);delete UPM[id];save();renderSite();renderAdminSvc();}
@@ -2435,17 +2538,63 @@ function close3DCard(){
   window.removeEventListener('touchmove',_3dTM);window.removeEventListener('touchend',_3dMU);
 }
 function flip3DCard(){_3dFlipped=!_3dFlipped;_3dRY+=180;_update3D();}
+let _3dHolo=false,_3dAccent='#c9933a',_3dBg='#07070a';
 function _update3D(init){
   const inner=document.getElementById('card3d-inner');
   const shine=document.getElementById('card3d-shine');
+  const holo=document.getElementById('card3d-holo');
+  const shadow=document.getElementById('card3d-shadow');
   if(!inner)return;
-  inner.style.transform=`rotateX(${_3dRX}deg) rotateY(${_3dRY}deg)`;
+  inner.style.transform='rotateX('+_3dRX+'deg) rotateY('+_3dRY+'deg)';
   inner.style.transition=_3dDrag?'none':'transform .12s ease-out';
+  // dynamic shadow follows tilt
+  if(shadow){
+    const sx=Math.sin(_3dRY*Math.PI/180)*20;
+    const sy=Math.sin(_3dRX*Math.PI/180)*10;
+    shadow.style.transform='translateX('+sx+'px) translateY('+sy+'px)';
+    shadow.style.background='radial-gradient(ellipse,'+_3dAccent+'55,transparent 70%)';
+  }
+  // holographic shine layer
   if(shine){
     const a=(_3dRY%360)*Math.PI/180;
-    const p1=50+Math.sin(a)*40,p2=60+Math.cos(a)*30;
-    shine.style.background=`linear-gradient(${_3dRY%360}deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.18) ${p1}%,rgba(255,255,255,.04) ${p2}%,rgba(255,255,255,0) 100%)`;
+    const p1=50+Math.sin(a)*40;const p2=60+Math.cos(a)*30;
+    shine.style.background='linear-gradient('+(_3dRY%360)+'deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) '+p1+'%,rgba(255,255,255,.05) '+p2+'%,rgba(255,255,255,0) 100%)';
   }
+  // holographic rainbow layer when holo is on
+  if(holo&&_3dHolo){
+    const hue=(_3dRY*2)%360;
+    const hue2=(hue+120)%360;
+    const hue3=(hue+240)%360;
+    holo.style.background='linear-gradient('+(_3dRY%360)+'deg,hsla('+hue+'deg,100%,60%,.55) 0%,hsla('+hue2+'deg,100%,60%,.3) 50%,hsla('+hue3+'deg,100%,60%,.55) 100%)';
+    // also flash border color
+    const front=document.getElementById('card3d-front');
+    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px hsla('+hue+'deg,100%,60%,.4)';
+  } else if(holo){
+    holo.style.background='transparent';
+    const front=document.getElementById('card3d-front');
+    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+_3dAccent+'33';
+  }
+}
+function toggle3DHolo(){
+  _3dHolo=!_3dHolo;
+  const btn=document.getElementById('holo-btn');
+  const el=document.getElementById('card3d-holo');
+  if(btn){btn.style.background=_3dHolo?'linear-gradient(90deg,#ff00ff,#00ffff)':'linear-gradient(90deg,rgba(255,0,255,.2),rgba(0,255,255,.2))';btn.textContent=_3dHolo?'🌈 ON':'🌈 Holo';}
+  _update3D();
+}
+function set3DColor(accent,bg){
+  _3dAccent=accent;_3dBg=bg;
+  // update color buttons
+  document.querySelectorAll('.card3d-color-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  // re-render card faces with new accent color feel
+  const front=document.getElementById('card3d-front');
+  const back=document.getElementById('card3d-back');
+  if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+accent+'44';
+  if(back)back.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px '+accent+'33';
+  // update particle color
+  if(window._3dParticleColor)window._3dParticleColor=accent;
+  _update3D();
 }
 function _3dMD(e){_3dDrag=true;_3dSX=e.clientX;_3dSY=e.clientY;document.getElementById('card3d-inner').style.cursor='grabbing';}
 function _3dTD(e){e.preventDefault();_3dDrag=true;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;}
@@ -2460,16 +2609,27 @@ function _start3DParticles(){
   const c=document.getElementById('card3d-particles');if(!c)return;
   c.width=window.innerWidth;c.height=window.innerHeight;
   const ctx=c.getContext('2d');
-  const t=D.card.style||'dark';
-  const col=t==='saffron'?'249,115,22':t==='corporate'?'100,149,255':'201,147,58';
-  const pts=Array.from({length:60},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,o:Math.random()*.45+.05}));
+  const pts=Array.from({length:70},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,o:Math.random()*.45+.05,hue:Math.random()*360}));
   let frame=0;
   function draw(){
     _3dPAF=requestAnimationFrame(draw);frame++;
     ctx.clearRect(0,0,c.width,c.height);
-    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;const pulse=p.o*(0.7+Math.sin(frame*.04+p.x)*.3);ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${col},${pulse})`;ctx.fill();});
-    // auto slow rotation when not dragging
-    if(!_3dDrag){_3dRY+=.25;_update3D();}
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>c.width)p.vx*=-1;
+      if(p.y<0||p.y>c.height)p.vy*=-1;
+      const pulse=p.o*(0.7+Math.sin(frame*.04+p.x)*.3);
+      // if holo mode, rainbow particles
+      if(_3dHolo){
+        p.hue=(p.hue+0.5)%360;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='hsla('+p.hue+',100%,70%,'+pulse+')';ctx.fill();
+      } else {
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='hsla(0,0%,100%,'+pulse*.35+')';ctx.fill();
+      }
+    });
+    if(!_3dDrag){_3dRY+=.2;_update3D();}
   }
   draw();
 }
