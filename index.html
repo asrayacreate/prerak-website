@@ -565,6 +565,11 @@ body.admin-mode .site-nav{top:34px;}
 .cal-act.all{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);}
 .cal-act.all:hover{background:rgba(255,255,255,.22);}
 @media(max-width:600px){.cal-det-month{font-size:2rem;}.cal-det-right{font-size:2.5rem;}.cal-pills{flex-wrap:wrap;}}
+.tpl-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:11px;padding:12px 14px;cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:11px;}
+.tpl-card:hover{border-color:var(--a);background:rgba(201,147,58,.08);}
+.tpl-ico{font-size:1.6rem;flex-shrink:0;}
+.tpl-name{font-size:.8rem;font-weight:700;color:var(--txt);line-height:1.2;}
+.tpl-desc{font-size:.62rem;color:#5a5a6a;margin-top:2px;}
 /* ══ WELCOME INTRO POPUP ══ */
 #welcome-overlay{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.92);backdrop-filter:blur(28px);}
 #welcome-box{background:var(--bg2);border:1px solid var(--brd);border-radius:24px;padding:40px 36px;max-width:420px;width:90%;text-align:center;animation:wbIn .5s cubic-bezier(.16,1,.3,1);}
@@ -1269,16 +1274,79 @@ body.admin-mode .site-nav{top:34px;}
         </div>
       </div>
 
-      <!-- Preset festival templates -->
+      <!-- Preset Templates Library -->
       <div class="apc">
-        <div class="apc-hdr"><h3>🎊 Quick Festival Templates</h3></div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-          <button onclick="loadFestTemplate('dashain')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🎊 Dashain</button>
-          <button onclick="loadFestTemplate('tihar')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🪔 Tihar</button>
-          <button onclick="loadFestTemplate('newyear')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🎆 New Year</button>
-          <button onclick="loadFestTemplate('eid')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">☪️ Eid</button>
-          <button onclick="loadFestTemplate('holi')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🌈 Holi</button>
-          <button onclick="loadFestTemplate('offer')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">💰 Offer</button>
+        <div class="apc-hdr"><h3>🎨 Ready-Made Templates</h3><span style="font-size:.65rem;color:#8a8a9a;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);padding:2px 10px;border-radius:12px">25+ templates</span></div>
+
+        <!-- Category tabs -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+          <button onclick="switchTplCat('festival')" id="tcat-festival" class="cal-tpl on" style="padding:6px 14px;font-size:.68rem;font-weight:700;color:var(--a)">🎊 Festival</button>
+          <button onclick="switchTplCat('offer')" id="tcat-offer" class="cal-tpl" style="padding:6px 14px;font-size:.68rem;font-weight:700;color:#22c55e">💰 Offers</button>
+          <button onclick="switchTplCat('season')" id="tcat-season" class="cal-tpl" style="padding:6px 14px;font-size:.68rem;font-weight:700;color:#3b82f6">🌤️ Season</button>
+          <button onclick="switchTplCat('company')" id="tcat-company" class="cal-tpl" style="padding:6px 14px;font-size:.68rem;font-weight:700;color:#a855f7">🏢 Company</button>
+          <button onclick="switchTplCat('holiday')" id="tcat-holiday" class="cal-tpl" style="padding:6px 14px;font-size:.68rem;font-weight:700;color:#f97316">🏖️ Holiday</button>
+        </div>
+
+        <!-- Festival Category -->
+        <div id="tpl-cat-festival" class="tpl-cat">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div class="tpl-card" onclick="loadFestTemplate('dashain')"><div class="tpl-ico">🎊</div><div class="tpl-name">Dashain</div><div class="tpl-desc">विजयादशमी शुभकामना</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('tihar')"><div class="tpl-ico">🪔</div><div class="tpl-name">Tihar / Dipawali</div><div class="tpl-desc">दीपावलीको शुभकामना</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('chhath')"><div class="tpl-ico">🌅</div><div class="tpl-name">Chhath Puja</div><div class="tpl-desc">छठ पूजाको शुभकामना</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('holi')"><div class="tpl-ico">🌈</div><div class="tpl-name">Holi / Fagu</div><div class="tpl-desc">फागुको रंग</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('eid')"><div class="tpl-ico">☪️</div><div class="tpl-name">Eid Mubarak</div><div class="tpl-desc">Eid wishes</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('christmas')"><div class="tpl-ico">🎄</div><div class="tpl-name">Christmas</div><div class="tpl-desc">Merry Christmas</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('indra')"><div class="tpl-ico">🐘</div><div class="tpl-name">Indra Jatra</div><div class="tpl-desc">इन्द्र जात्राको शुभकामना</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('teej')"><div class="tpl-ico">💃</div><div class="tpl-name">Haritalika Teej</div><div class="tpl-desc">तीजको शुभकामना</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('baisakh')"><div class="tpl-ico">🌸</div><div class="tpl-name">Nepali New Year</div><div class="tpl-desc">नयाँ वर्ष २०८३</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('newyear')"><div class="tpl-ico">🎆</div><div class="tpl-name">English New Year</div><div class="tpl-desc">Happy New Year</div></div>
+          </div>
+        </div>
+
+        <!-- Offer Category -->
+        <div id="tpl-cat-offer" class="tpl-cat" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div class="tpl-card" onclick="loadFestTemplate('offer10')"><div class="tpl-ico">🔥</div><div class="tpl-name">10% Discount</div><div class="tpl-desc">Special offer this month</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('offer20')"><div class="tpl-ico">💥</div><div class="tpl-name">20% Mega Offer</div><div class="tpl-desc">Limited time deal</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('freevisit')"><div class="tpl-ico">🏠</div><div class="tpl-name">Free Site Visit</div><div class="tpl-desc">No-cost consultation</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('package')"><div class="tpl-ico">📦</div><div class="tpl-name">Package Deal</div><div class="tpl-desc">Bundle services</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('monsoon')"><div class="tpl-ico">🌧️</div><div class="tpl-name">Monsoon Offer</div><div class="tpl-desc">Waterproofing special</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('solar')"><div class="tpl-ico">☀️</div><div class="tpl-name">Solar Offer</div><div class="tpl-desc">Save on electricity</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('interior')"><div class="tpl-ico">🛋️</div><div class="tpl-name">Interior Offer</div><div class="tpl-desc">Design your dream home</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('urgent')"><div class="tpl-ico">⚡</div><div class="tpl-name">Urgent Call</div><div class="tpl-desc">Last chance offer</div></div>
+          </div>
+        </div>
+
+        <!-- Season Category -->
+        <div id="tpl-cat-season" class="tpl-cat" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div class="tpl-card" onclick="loadFestTemplate('winter')"><div class="tpl-ico">❄️</div><div class="tpl-name">Winter Season</div><div class="tpl-desc">Heating & insulation tips</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('summer')"><div class="tpl-ico">🌞</div><div class="tpl-name">Summer Season</div><div class="tpl-desc">Cool your home</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('rainy')"><div class="tpl-ico">⛈️</div><div class="tpl-name">Rainy Season</div><div class="tpl-desc">Protect your home</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('spring')"><div class="tpl-ico">🌺</div><div class="tpl-name">Spring Season</div><div class="tpl-desc">Fresh start for your home</div></div>
+          </div>
+        </div>
+
+        <!-- Company Category -->
+        <div id="tpl-cat-company" class="tpl-cat" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div class="tpl-card" onclick="loadFestTemplate('anniversary')"><div class="tpl-ico">🎂</div><div class="tpl-name">Company Anniversary</div><div class="tpl-desc">Years of excellence</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('thankyou')"><div class="tpl-ico">🙏</div><div class="tpl-name">Thank You</div><div class="tpl-desc">Gratitude to clients</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('newservice')"><div class="tpl-ico">🆕</div><div class="tpl-name">New Service Launch</div><div class="tpl-desc">Exciting announcement</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('award')"><div class="tpl-ico">🏆</div><div class="tpl-name">Award / Achievement</div><div class="tpl-desc">We won an award!</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('project')"><div class="tpl-ico">🏗️</div><div class="tpl-name">Project Complete</div><div class="tpl-desc">Successfully delivered</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('referral')"><div class="tpl-ico">👥</div><div class="tpl-name">Refer & Earn</div><div class="tpl-desc">Refer friends program</div></div>
+          </div>
+        </div>
+
+        <!-- Holiday Category -->
+        <div id="tpl-cat-holiday" class="tpl-cat" style="display:none">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div class="tpl-card" onclick="loadFestTemplate('closedholiday')"><div class="tpl-ico">🔒</div><div class="tpl-name">Office Closed</div><div class="tpl-desc">Holiday notice</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('halfday')"><div class="tpl-ico">🕐</div><div class="tpl-name">Half Day Today</div><div class="tpl-desc">Short working hours</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('emergency')"><div class="tpl-ico">🚨</div><div class="tpl-name">Emergency Notice</div><div class="tpl-desc">Important update</div></div>
+            <div class="tpl-card" onclick="loadFestTemplate('resume')"><div class="tpl-ico">✅</div><div class="tpl-name">Office Reopened</div><div class="tpl-desc">Back to work!</div></div>
+          </div>
         </div>
       </div>
 
@@ -3048,13 +3116,56 @@ function editNotice(id){
   document.getElementById('sec-notices').scrollTop=0;
 }
 function deleteNotice(id){if(!confirm('Delete this notice?'))return;D.notices=D.notices.filter(x=>x.id!==id);save();renderNoticeAdmin();renderNoticeTicker();}
+function switchTplCat(cat){
+  ['festival','offer','season','company','holiday'].forEach(function(c){
+    const el=document.getElementById('tpl-cat-'+c);
+    if(el)el.style.display=c===cat?'block':'none';
+    const btn=document.getElementById('tcat-'+c);
+    if(btn)btn.classList.toggle('on',c===cat);
+  });
+}
 const FEST_TPL={
-  dashain:{icon:'🎊',msg:'शुभ विजयादशमी! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट हार्दिक मंगलमय शुभकामना!',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
-  tihar:{icon:'🪔',msg:'शुभ तिहार! दीपावलीको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! घर उज्यालो होस्!',cat:'festival',bg:'gold',btnLbl:'हामीलाई भेट्नुस्',btnUrl:'tel:9855069733'},
-  newyear:{icon:'🎆',msg:'Happy New Year! Wishing you a year full of successful construction projects! Contact PRERAK today.',cat:'festival',bg:'blue',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
-  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Multipurpose Pvt Ltd wishes you a blessed celebration!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
-  holi:{icon:'🌈',msg:'Happy Holi! रंगहरूले तपाईंको जीवन भरियोस्! PRERAK परिवारतर्फबाट शुभकामना!',cat:'festival',bg:'purple',btnLbl:'Visit Us',btnUrl:'tel:9855069733'},
-  offer:{icon:'🔥',msg:'SPECIAL OFFER! This month get 10% discount on all Interior Design services. Limited time only!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733'}
+  // ─── FESTIVALS ───
+  dashain:{icon:'🎊',msg:'शुभ विजयादशमी २०८२! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट सम्पूर्ण ग्राहक एवं शुभचिन्तकहरूमा हार्दिक मंगलमय शुभकामना! घरपरिवारमा सुख, शान्ति र समृद्धि होस्।',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
+  tihar:{icon:'🪔',msg:'🪔 शुभ तिहार! दीपावलीको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! घर–आँगन उज्यालो होस्, खुसी–समृद्धि आओस्। सबैलाई पाँच दिने उत्सवको मंगलमय शुभकामना!',cat:'festival',bg:'gold',btnLbl:'हामीलाई भेट्नुस्',btnUrl:'tel:9855069733'},
+  chhath:{icon:'🌅',msg:'🌅 छठ पूजाको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! सूर्य देवताको कृपाले आपको जीवनमा सुख, स्वास्थ्य र समृद्धि आओस्।',cat:'festival',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
+  holi:{icon:'🌈',msg:'🌈 शुभ फागु पूर्णिमा! PRERAK Multipurpose परिवारतर्फबाट होली उत्सवको हार्दिक शुभकामना! रंग–उमंगले भरिपूर्ण यो उत्सवले तपाईंको जीवनमा खुसी ल्याओस्।',cat:'festival',bg:'purple',btnLbl:'Visit Us',btnUrl:'tel:9855069733'},
+  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Multipurpose Pvt Ltd wishes you and your family a blessed Eid filled with joy, peace and prosperity. May Allah accept your prayers!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
+  christmas:{icon:'🎄',msg:'Merry Christmas! PRERAK Multipurpose Pvt Ltd wishes you a joyful Christmas and a prosperous New Year. May this season bring warmth and happiness to your home!',cat:'festival',bg:'red',btnLbl:'Call Us',btnUrl:'tel:9855069733'},
+  indra:{icon:'🐘',msg:'🐘 इन्द्र जात्राको शुभ पर्वमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! यो पर्वले हाम्रो नेपाली संस्कृति र परम्पराको गौरव बढाओस्।',cat:'festival',bg:'blue',btnLbl:'सम्पर्क',btnUrl:'tel:9855069733'},
+  teej:{icon:'💃',msg:'💃 हरितालिका तीज पर्वको हार्दिक शुभकामना! PRERAK परिवारतर्फबाट सम्पूर्ण दिदीबहिनीहरूलाई हार्दिक शुभकामना! यो तीजले सुख–सौभाग्य ल्याओस्।',cat:'festival',bg:'red',btnLbl:'Call',btnUrl:'tel:9855069733'},
+  baisakh:{icon:'🌸',msg:'🌸 नयाँ वर्ष २०८३ को हार्दिक शुभकामना! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट नयाँ वर्षमा नयाँ उमंग, नयाँ उत्साह र नयाँ सफलताको कामना! शुभ नयाँ वर्ष!',cat:'festival',bg:'gold',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
+  newyear:{icon:'🎆',msg:'Happy New Year! PRERAK Multipurpose Pvt Ltd wishes you a year full of success, happiness and beautiful spaces. Start the new year with your dream home renovation!',cat:'festival',bg:'blue',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
+
+  // ─── OFFERS ───
+  offer10:{icon:'🔥',msg:'🔥 SPECIAL OFFER! यस महिना Interior Design सेवामा 10% छुट! PRERAK Multipurpose Pvt Ltd को विशेष प्रस्ताव — सीमित समयका लागि मात्र। अहिले नै सम्पर्क गर्नुस्!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733?text=10% Discount ko lagi interested'},
+  offer20:{icon:'💥',msg:'💥 MEGA OFFER — 20% DISCOUNT! Gypsum Ceiling, UPVC Windows र Flooring सेवामा 20% छुट! PRERAK Multipurpose Pvt Ltd — Limited Time Only! आज नै call गर्नुस्।',cat:'offer',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
+  freevisit:{icon:'🏠',msg:'🏠 FREE SITE VISIT! PRERAK Multipurpose Pvt Ltd ले नि:शुल्क साइट भ्रमण र विस्तृत estimate दिँदैछ। घरमै आएर design र cost बताउँछौं — कुनै charge छैन!',cat:'offer',bg:'green',btnLbl:'Book Free Visit',btnUrl:'https://wa.me/9779855069733?text=Free site visit ko lagi book garnuhos'},
+  package:{icon:'📦',msg:'📦 COMPLETE HOME PACKAGE! Construction + Interior + Flooring + Electrical एकैपटक गराउनुस् र special bundle discount पाउनुस्! PRERAK Multipurpose — One Stop Solution.',cat:'offer',bg:'blue',btnLbl:'Get Package',btnUrl:'tel:9855069733'},
+  monsoon:{icon:'🌧️',msg:'⚠️ Monsoon आउँदैछ! अहिले नै Waterproofing र Roofing check गराउनुस्। PRERAK Multipurpose Pvt Ltd को professional waterproofing service — Monsoon Special Price मा!',cat:'offer',bg:'blue',btnLbl:'Book Now',btnUrl:'tel:9855069733'},
+  solar:{icon:'☀️',msg:'☀️ SOLAR SPECIAL OFFER! Solar Panel installation मा यस महिना विशेष छुट। बिजुली बिल शून्य गर्नुस्! PRERAK Multipurpose को expert solar team — Free site assessment!',cat:'offer',bg:'gold',btnLbl:'Solar Quote',btnUrl:'https://wa.me/9779855069733?text=Solar installation ko lagi interested'},
+  interior:{icon:'🛋️',msg:'🛋️ INTERIOR DESIGN OFFER! सपनाको घर बनाउनुस् special price मा। Modular Kitchen, Wardrobe, TV Unit, Gypsum Ceiling — Complete Interior Package available! PRERAK Multipurpose.',cat:'offer',bg:'purple',btnLbl:'See Designs',btnUrl:'tel:9855069733'},
+  urgent:{icon:'⚡',msg:'⚡ LAST CHANCE! यो offer आज मात्र! PRERAK Multipurpose को special construction package अब limited slots मात्र बाँकी। अहिले नै book गर्नुस् — पछि पछुताउनुपर्छ!',cat:'offer',bg:'red',btnLbl:'Book NOW',btnUrl:'https://wa.me/9779855069733?text=Urgent booking'},
+
+  // ─── SEASONS ───
+  winter:{icon:'❄️',msg:'❄️ जाडो आयो! PRERAK Multipurpose Pvt Ltd को सल्लाह: Windows insulation, UPVC doors र heating system check गराउनुस्। जाडोमा गर्म रहनुस् — हामी सेवामा छौं!',cat:'announce',bg:'blue',btnLbl:'Enquire',btnUrl:'tel:9855069733'},
+  summer:{icon:'🌞',msg:'🌞 गर्मी बढ्दैछ! UPVC windows र proper insulation ले घरलाई cool राख्छ। PRERAK Multipurpose Pvt Ltd को expert team — Summer maintenance service available!',cat:'announce',bg:'gold',btnLbl:'Contact',btnUrl:'tel:9855069733'},
+  rainy:{icon:'⛈️',msg:'⛈️ वर्षा सुरु! PRERAK को Waterproofing service ले आफ्नो घर बचाउनुस्। Roof leakage, damp walls, seepage — सबै problem को expert solution। अहिले नै call!',cat:'announce',bg:'blue',btnLbl:'Emergency Call',btnUrl:'tel:9855069733'},
+  spring:{icon:'🌺',msg:'🌺 वसन्त ऋतु! घर renew गर्ने perfect time। Painting, polishing, renovation — PRERAK Multipurpose को complete home refresh package। नयाँ मौसम, नयाँ घर!',cat:'announce',bg:'green',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
+
+  // ─── COMPANY ───
+  anniversary:{icon:'🎂',msg:'🎂 PRERAK Multipurpose Pvt Ltd को स्थापना दिवसको अवसरमा सबै ग्राहक एवं शुभचिन्तकहरूलाई हार्दिक धन्यवाद! तपाईंहरूको विश्वास र सहयोगले हामी यहाँसम्म पुग्न सफल भयौं।',cat:'announce',bg:'gold',btnLbl:'Celebrate With Us',btnUrl:'tel:9855069733'},
+  thankyou:{icon:'🙏',msg:'🙏 हाम्रा प्रिय ग्राहकहरूलाई हार्दिक धन्यवाद! PRERAK Multipurpose Pvt Ltd सँग काम गर्नुभएकोमा कृतज्ञ छौं। तपाईंको विश्वास नै हाम्रो सबैभन्दा ठूलो पुरस्कार हो।',cat:'announce',bg:'blue',btnLbl:'Rate Us',btnUrl:'https://wa.me/9779855069733?text=PRERAK ko service review'},
+  newservice:{icon:'🆕',msg:'🆕 नयाँ सेवा सुरु! PRERAK Multipurpose Pvt Ltd ले अब Prefab House Construction सेवा सुरु गरेको छ। छिटो, सस्तो र टिकाउ — थप जानकारीका लागि सम्पर्क गर्नुस्!',cat:'announce',bg:'green',btnLbl:'Learn More',btnUrl:'tel:9855069733'},
+  award:{icon:'🏆',msg:'🏆 उपलब्धि! PRERAK Multipurpose Pvt Ltd लाई Makwanpur District को Best Construction Company award प्राप्त भएको छ। यो सफलता हाम्रा ग्राहकहरूको विश्वासको कारण हो। धन्यवाद!',cat:'announce',bg:'gold',btnLbl:'Congratulate',btnUrl:'https://wa.me/9779855069733'},
+  project:{icon:'🏗️',msg:'🏗️ Project सम्पन्न! PRERAK Multipurpose Pvt Ltd ले Hetauda मा एउटा residential project सफलतापूर्वक complete गर्यो। Quality र timeline — दुवैमा 100%! धन्यवाद client जी।',cat:'announce',bg:'blue',btnLbl:'See Portfolio',btnUrl:'tel:9855069733'},
+  referral:{icon:'👥',msg:'👥 REFER & EARN! आफ्ना साथीभाइलाई PRERAK Multipurpose refer गर्नुस् र हरेक successful project मा special reward पाउनुस्! Details जान्न WhatsApp गर्नुस्।',cat:'announce',bg:'purple',btnLbl:'Refer Now',btnUrl:'https://wa.me/9779855069733?text=Referral program ko barema'},
+
+  // ─── HOLIDAY ───
+  closedholiday:{icon:'🔒',msg:'🔒 NOTICE: PRERAK Multipurpose Pvt Ltd को office आज बन्द छ। [Festival] को अवसरमा बिदा। भोलिदेखि सामान्य रूपमा सेवा उपलब्ध हुनेछ। Emergency: 9855069733',cat:'holiday',bg:'red',btnLbl:'Emergency',btnUrl:'tel:9855069733'},
+  halfday:{icon:'🕐',msg:'🕐 NOTICE: आज PRERAK Multipurpose Pvt Ltd को office दिउँसो 1 बजेसम्म मात्र खुला रहनेछ। असुविधाको लागि माफ गर्नुहोला। भोलिदेखि सामान्य समय।',cat:'holiday',bg:'gold',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
+  emergency:{icon:'🚨',msg:'🚨 IMPORTANT NOTICE: PRERAK Multipurpose Pvt Ltd का सबै ग्राहकहरूलाई जरुरी सूचना। कृपया थप जानकारीका लागि तुरुन्त सम्पर्क गर्नुहोला। 📞 9855069733',cat:'announce',bg:'red',btnLbl:'URGENT CALL',btnUrl:'tel:9855069733'},
+  resume:{icon:'✅',msg:'✅ PRERAK Multipurpose Pvt Ltd फेरि सेवामा! बिदाको अवधिपछि हामी पुन: सम्पूर्ण सेवाका साथ उपलब्ध छौं। आजैदेखि appointment लिनुस् — टिम तयार छ!',cat:'announce',bg:'green',btnLbl:'Book Now',btnUrl:'tel:9855069733'}
 };
 function loadFestTemplate(key){
   const t=FEST_TPL[key];if(!t)return;
@@ -3064,12 +3175,13 @@ function loadFestTemplate(key){
   if(t.btnLbl)document.getElementById('nf-btn-lbl').value=t.btnLbl;
   if(t.btnUrl)document.getElementById('nf-btn-url').value=t.btnUrl;
   selNfBg(t.bg);
-  // Set dates to today + 7 days
-  const now=new Date();
-  const end=new Date(now);end.setDate(end.getDate()+7);
+  const now=new Date(),end=new Date(now);end.setDate(end.getDate()+7);
   const fmt=d=>d.toISOString().slice(0,16);
   document.getElementById('nf-from').value=fmt(now);
   document.getElementById('nf-to').value=fmt(end);
+  showBSDate('nf-from','nf-from-bs');showBSDate('nf-to','nf-to-bs');
+  // Scroll to form
+  document.getElementById('sec-notices').scrollTop=0;
 }
 
 // ═══ CALENDAR ADMIN ═══
