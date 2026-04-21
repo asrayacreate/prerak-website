@@ -515,7 +515,101 @@ body.admin-mode .svc-card:hover::after{opacity:1;}
 .ab-btn:hover{background:rgba(0,0,0,.25);}
 /* Push content down when admin bar visible */
 body.admin-mode .site-nav{top:34px;}
-/* ══ MOBILE STICKY BAR ══ */
+/* ══ NEPALI FLAG ══ */
+.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:default;flex-shrink:0}
+.np-flag svg{width:24px;height:32px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));transform-origin:left center;animation:flagWave 3s ease-in-out infinite;}
+@keyframes flagWave{0%,100%{transform:skewY(0deg) scaleX(1)}25%{transform:skewY(-2deg) scaleX(1.03)}50%{transform:skewY(1deg) scaleX(.98)}75%{transform:skewY(-1deg) scaleX(1.02)}}
+/* ══ LANGUAGE SWITCHER ══ */
+.lang-sw{display:flex;gap:3px;background:rgba(255,255,255,.08);border:1px solid var(--brd2);border-radius:20px;padding:3px;flex-shrink:0}
+.lang-btn{padding:6px 14px;border-radius:16px;border:none;font-size:.72rem;font-weight:700;letter-spacing:.5px;cursor:pointer;font-family:var(--fb);transition:all .2s;background:transparent;color:var(--mt);white-space:nowrap}
+.lang-btn.on{background:var(--a);color:var(--bg)}
+/* ══ VIDEO SECTION ══ */
+.vid-sec{padding:80px 6%;background:var(--bg2);}
+.vid-frame{position:relative;width:100%;max-width:800px;margin:0 auto;border-radius:var(--rl);overflow:hidden;border:1px solid var(--brd);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.vid-frame iframe,.vid-frame video{width:100%;aspect-ratio:16/9;display:block;border:none;}
+.vid-placeholder{width:100%;aspect-ratio:16/9;background:var(--bg3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;}
+.vid-play{width:72px;height:72px;background:linear-gradient(135deg,var(--ad),var(--a));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 8px 28px rgba(201,147,58,.45);transition:transform .3s;}
+.vid-placeholder:hover .vid-play{transform:scale(1.1);}
+/* ══ NEPALI CALENDAR — ALL IN BANNER ══ */
+.cal-sec{padding:0;background:transparent;}
+.cal-banner{background:linear-gradient(160deg,#003893 0%,#6B0000 45%,#DC143C 75%,#003893 100%);position:relative;overflow:hidden;padding-bottom:28px;}
+.cal-banner::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0,rgba(255,255,255,.025) 1px,transparent 0,transparent 9px);pointer-events:none;}
+.cal-banner-hdr{padding:28px 5% 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.cal-banner-title{flex:1;}
+.cal-banner-title h2{font-family:var(--fd);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px;}
+.cal-banner-title p{font-size:.78rem;color:rgba(255,255,255,.65);}
+.cal-yr-ctl{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.35);border-radius:30px;padding:6px 14px;}
+.cal-yr-ctl button{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.18);border:none;color:#fff;cursor:pointer;font-size:.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.cal-yr-ctl button:hover{background:rgba(255,255,255,.35);}
+.cal-yr-ctl span{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:#FFD700;min-width:72px;text-align:center;}
+/* 12 month pills scrollable */
+.cal-pills{display:flex;gap:6px;overflow-x:auto;padding:0 5% 16px;scrollbar-width:none;flex-wrap:wrap;}
+.cal-pills::-webkit-scrollbar{display:none;}
+.cal-pill{padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .22s;white-space:nowrap;font-family:var(--fb);}
+.cal-pill:hover{background:rgba(255,255,255,.18);}
+.cal-pill.on{background:#FFD700;color:#003893;border-color:#FFD700;}
+/* Detail card — inside banner */
+.cal-det{margin:0 5%;background:rgba(0,0,0,.5);backdrop-filter:blur(18px);border-radius:18px;border:1px solid rgba(255,255,255,.18);overflow:hidden;transition:all .35s;}
+.cal-det-body{padding:22px 22px 14px;display:flex;align-items:flex-start;gap:18px;}
+.cal-det-left{flex:1;}
+.cal-det-month{font-family:var(--fd);font-size:2.8rem;font-weight:700;color:#FFD700;line-height:1;}
+.cal-det-sub{font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:3px;}
+.cal-det-svc{margin-top:14px;font-size:1rem;font-weight:700;color:#fff;line-height:1.4;}
+.cal-det-tip{font-size:.78rem;color:rgba(255,255,255,.6);margin-top:5px;line-height:1.5;}
+.cal-det-right{font-size:3.5rem;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5));flex-shrink:0;}
+.cal-det-actions{padding:14px 22px;background:rgba(0,0,0,.35);display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);}
+.cal-act{display:inline-flex;align-items:center;gap:6px;padding:9px 17px;border-radius:22px;font-size:.73rem;font-weight:700;cursor:pointer;border:none;font-family:var(--fb);transition:all .2s;text-decoration:none;}
+.cal-act.dl{background:#FFD700;color:#003893;}
+.cal-act.dl:hover{background:#fff;}
+.cal-act.wa{background:#25D366;color:#fff;}
+.cal-act.all{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.cal-act.all:hover{background:rgba(255,255,255,.22);}
+@media(max-width:600px){.cal-det-month{font-size:2rem;}.cal-det-right{font-size:2.5rem;}.cal-pills{flex-wrap:wrap;}}
+/* ══ WELCOME INTRO POPUP ══ */
+#welcome-overlay{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.92);backdrop-filter:blur(28px);}
+#welcome-box{background:var(--bg2);border:1px solid var(--brd);border-radius:24px;padding:40px 36px;max-width:420px;width:90%;text-align:center;animation:wbIn .5s cubic-bezier(.16,1,.3,1);}
+@keyframes wbIn{from{transform:scale(.88) translateY(20px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.wb-logo{width:72px;height:72px;background:linear-gradient(135deg,var(--ad),var(--a));border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 28px rgba(201,147,58,.4);}
+.wb-flag{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:16px;}
+.wb-title{font-family:var(--fd);font-size:1.8rem;font-weight:700;color:var(--a);letter-spacing:3px;margin-bottom:4px;}
+.wb-sub{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--mt);margin-bottom:6px;}
+.wb-tagline{font-size:.84rem;color:var(--mt);line-height:1.7;margin-bottom:28px;max-width:300px;margin-left:auto;margin-right:auto;}
+.wb-langs{display:flex;gap:10px;justify-content:center;margin-bottom:24px;}
+.wb-lang-btn{padding:8px 22px;border-radius:20px;border:1.5px solid var(--brd2);background:transparent;color:var(--mt);font-size:.78rem;font-weight:700;cursor:pointer;font-family:var(--fb);transition:all .2s;}
+.wb-lang-btn.on{background:var(--a);color:var(--bg);border-color:var(--a);}
+.wb-enter{width:100%;padding:14px;background:linear-gradient(135deg,var(--ad),var(--a));color:var(--bg);border:none;border-radius:30px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:var(--fb);letter-spacing:.5px;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.wb-enter:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,147,58,.4);}
+.wb-skip{font-size:.62rem;color:var(--mt2);margin-top:14px;cursor:pointer;letter-spacing:1px;}
+.wb-skip:hover{color:var(--mt);}
+/* ══ CALENDAR SPLIT LAYOUT ══ */
+.cal-split{display:grid;grid-template-columns:1fr 1fr;gap:0;background:transparent;}
+.cal-split-right{background:var(--bg2);padding:32px 5%;display:flex;flex-direction:column;gap:20px;}
+@media(max-width:768px){.cal-split{grid-template-columns:1fr;}.cal-split-right{padding:28px 5%;}}
+.nb-wrap{position:relative;overflow:hidden;background:linear-gradient(90deg,rgba(201,147,58,.14),rgba(201,147,58,.06));border-bottom:1px solid rgba(201,147,58,.22);}
+.nb-ticker{display:flex;align-items:center;min-height:42px;}
+.nb-label{padding:0 14px;background:var(--a);color:var(--bg);font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;height:42px;display:flex;align-items:center;flex-shrink:0;gap:5px;}
+.nb-scroll{flex:1;overflow:hidden;height:42px;display:flex;align-items:center;}
+.nb-track{display:flex;gap:48px;animation:nbScroll 28s linear infinite;white-space:nowrap;cursor:pointer;}
+.nb-track:hover{animation-play-state:paused;}
+@keyframes nbScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.nb-item{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--txt);font-weight:500;}
+.nb-item .ni{font-size:1rem;}
+.nb-item b{color:var(--a);}
+.fest-pop{position:fixed;top:72px;right:16px;z-index:600;width:min(340px,92vw);background:var(--bg2);border:1px solid var(--brd);border-radius:18px;padding:20px 22px 16px;box-shadow:0 24px 60px rgba(0,0,0,.55);display:none;animation:slideR .35s cubic-bezier(.16,1,.3,1);}
+.fest-pop.show{display:block;}
+@keyframes slideR{from{transform:translateX(24px) scale(.96);opacity:0}to{transform:translateX(0) scale(1);opacity:1}}
+/* Admin notice */
+.nc{background:var(--cbg);border:1px solid var(--brd2);border-radius:12px;padding:14px 16px;margin-bottom:10px;position:relative;}
+.nc-status{position:absolute;top:12px;right:12px;font-size:.58rem;font-weight:700;padding:3px 9px;border-radius:10px;}
+.nc-on{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.nc-soon{background:rgba(234,179,8,.1);color:#eab308;border:1px solid rgba(234,179,8,.2);}
+.nc-off{background:rgba(255,255,255,.05);color:#5a5a6a;border:1px solid rgba(255,255,255,.07);}
+/* Cal template btns */
+.cal-tpl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.cal-tpl{border:2px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.cal-tpl.on,.cal-tpl:hover{border-color:var(--a);}
+.cal-tpl-prev{height:60px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;letter-spacing:1.5px;color:#fff;}
+.cal-tpl-lbl{padding:5px;text-align:center;font-size:.58rem;color:#8a8a9a;background:var(--bg3);}
 .mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:350;background:var(--bg2);border-top:1px solid var(--brd2);padding:10px 14px;gap:8px;}
 @media(max-width:600px){.mob-cta{display:flex;}}
 .mob-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;border-radius:10px;font-size:.78rem;font-weight:700;text-align:center;}
@@ -609,9 +703,6 @@ body.admin-mode .site-nav{top:34px;}
   <style>
     @keyframes holo-bar{from{background-position:0%}to{background-position:200%}}
     @keyframes holo-pulse{0%,100%{opacity:.6}50%{opacity:1}}
-    .card3d-color-btn{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .2s;flex-shrink:0;}
-    .card3d-color-btn.active{border-color:#fff;transform:scale(1.2);}
-    .card3d-color-btn:hover{transform:scale(1.15);}
     #card3d-holo{position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:9;mix-blend-mode:color-dodge;opacity:0;transition:opacity .3s;}
     #card3d-holo.on{opacity:.35;}
   </style>
@@ -634,21 +725,52 @@ body.admin-mode .site-nav{top:34px;}
     <a id="c3d-wa" href="#" target="_blank" style="padding:9px 18px;background:#25D366;border:none;border-radius:30px;color:#fff;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:6px;text-decoration:none">💬 Share</a>
     <button onclick="close3DCard()" style="padding:9px 18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:30px;color:rgba(255,255,255,.5);font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif">✕</button>
   </div>
-  <!-- Color theme picker -->
-  <div style="display:flex;align-items:center;gap:10px">
-    <span style="font-size:.58rem;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase">Color:</span>
-    <div id="card3d-colors" style="display:flex;gap:6px">
-      <div class="card3d-color-btn active" style="background:#c9933a" onclick="set3DColor('#c9933a','#07070a')" title="Gold"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#ff00ff,#00ffff)" onclick="set3DColor('#ff00ff','#000510')" title="Holo"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#1a3a6e,#2550a0)" onclick="set3DColor('#4080ff','#04080f')" title="Blue"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#22c55e,#15803d)" onclick="set3DColor('#22c55e','#021108')" title="Green"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#f97316,#c2410c)" onclick="set3DColor('#f97316','#0d0500')" title="Orange"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#a855f7,#7e22ce)" onclick="set3DColor('#a855f7','#080012')" title="Purple"></div>
-      <div class="card3d-color-btn" style="background:linear-gradient(135deg,#ec4899,#be185d)" onclick="set3DColor('#ec4899','#100008')" title="Pink"></div>
-    </div>
-  </div>
-  <p style="font-size:.58rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase">🖱️ Drag to rotate · 🌈 Holo for rainbow</p>
+  <p style="font-size:.58rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase">🖱️ Drag to rotate · 🌈 Holo for rainbow effect</p>
   <canvas id="card3d-particles" style="position:fixed;inset:0;pointer-events:none;z-index:-1"></canvas>
+</div>
+
+<!-- WELCOME INTRO POPUP -->
+<div id="welcome-overlay">
+  <div id="welcome-box">
+    <!-- Flag -->
+    <div class="wb-flag">
+      <svg viewBox="0 0 42 56" xmlns="http://www.w3.org/2000/svg" width="28" height="37" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))">
+        <rect x="1" y="0" width="3.5" height="56" fill="#fff" rx="1.5"/>
+        <polygon points="4.5,1 4.5,52 41,30.5 4.5,22" fill="white"/>
+        <polygon points="4.5,22 41,30.5 4.5,52" fill="white"/>
+        <polygon points="4.5,2.5 4.5,50 39,30.5 4.5,23.5" fill="#003893"/>
+        <polygon points="4.5,23.5 39,30.5 4.5,50" fill="#003893"/>
+        <polygon points="4.5,4.5 4.5,48 36.5,30.5 4.5,25" fill="#DC143C"/>
+        <polygon points="4.5,25 36.5,30.5 4.5,48" fill="#DC143C"/>
+        <circle cx="17" cy="16" r="5.5" fill="white"/>
+        <circle cx="20" cy="14.5" r="4.2" fill="#DC143C"/>
+        <circle cx="17" cy="37" r="4.5" fill="white"/>
+        <g stroke="white" stroke-width="1.4" stroke-linecap="round">
+          <line x1="17" y1="30.2" x2="17" y2="32"/><line x1="17" y1="42" x2="17" y2="43.8"/>
+          <line x1="10.2" y1="37" x2="12" y2="37"/><line x1="22" y1="37" x2="23.8" y2="37"/>
+          <line x1="12.3" y1="32.3" x2="13.6" y2="33.6"/><line x1="20.4" y1="40.4" x2="21.7" y2="41.7"/>
+          <line x1="12.3" y1="41.7" x2="13.6" y2="40.4"/><line x1="20.4" y1="33.6" x2="21.7" y2="32.3"/>
+        </g>
+      </svg>
+      <span style="font-size:.65rem;color:var(--mt);letter-spacing:2px">HETAUDA, MAKWANPUR</span>
+    </div>
+    <!-- Logo -->
+    <div class="wb-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#07070a" stroke-width="2.5" width="34" height="34"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    </div>
+    <div class="wb-title">PRERAK</div>
+    <div class="wb-sub">Multipurpose Pvt Ltd</div>
+    <div class="wb-tagline" id="wb-tagline">Building dreams across Hetauda &amp; Makwanpur since 2012.</div>
+    <!-- Language selector -->
+    <div class="wb-langs">
+      <button class="wb-lang-btn on" id="wbl-en" onclick="wbLang('en')">🇬🇧 English</button>
+      <button class="wb-lang-btn" id="wbl-ne" onclick="wbLang('ne')">🇳🇵 नेपाली</button>
+    </div>
+    <button class="wb-enter" id="wb-enter-btn" onclick="enterWebsite()">
+      🏗️ <span id="wb-enter-txt">Enter Website</span>
+    </button>
+    <div class="wb-skip" onclick="enterWebsite()">Skip →</div>
+  </div>
 </div>
 
 <!-- Admin Login -->
@@ -693,6 +815,8 @@ body.admin-mode .site-nav{top:34px;}
       <div class="ap-ni" onclick="showSec('whyus')"><span class="ap-ni-ic">⭐</span> Why Us</div>
       <div class="ap-ni" onclick="showSec('contact')"><span class="ap-ni-ic">📞</span> Contact Info</div>
       <div class="ap-ni" onclick="showSec('social')"><span class="ap-ni-ic">📱</span> Social Media</div>
+      <div class="ap-ni" onclick="showSec('notices')"><span class="ap-ni-ic">📢</span> Notice Board</div>
+      <div class="ap-ni" onclick="showSec('calendar')"><span class="ap-ni-ic">📅</span> Calendar Content</div>
       <div class="ap-ni" onclick="showSec('visitcard')"><span class="ap-ni-ic">📇</span> Visiting Card</div>
       <div class="ap-ni" onclick="showSec('settings')"><span class="ap-ni-ic">⚙️</span> Settings</div>
     </div>
@@ -707,9 +831,25 @@ body.admin-mode .site-nav{top:34px;}
     <div class="ap-sec on" id="sec-dashboard">
       <div class="ap-hdr"><h2>📊 Dashboard</h2><p>Overview of your website content</p></div>
       <div id="dash-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;"></div>
+      <!-- Notifications panel -->
+      <div id="dash-notif" style="margin-bottom:14px"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
         <div class="apc"><div class="apc-hdr"><h3>⚡ Quick Actions</h3></div><div style="display:flex;flex-direction:column;gap:8px;"><button class="cbtn" onclick="showSec('services');openAddSvc()" style="justify-content:flex-start">+ Add New Service</button><button class="cbtn" onclick="showSec('projects')" style="justify-content:flex-start">+ Upload Projects</button><button class="cbtn" onclick="showSec('testimonials');openAddTest()" style="justify-content:flex-start">+ Add Testimonial</button><button class="abtn" onclick="showSec('contact')" style="justify-content:flex-start">✎ Edit Contact</button></div></div>
         <div class="apc"><div class="apc-hdr"><h3>🎨 Active Template</h3></div><div id="dash-tmpl" style="font-size:.85rem;color:#8a8a9a;margin-bottom:14px;"></div><button class="abtn" onclick="showSec('templates')">Switch Template →</button></div>
+      </div>
+      <!-- Calendar Dashboard Preview -->
+      <div class="apc" style="margin-top:14px">
+        <div class="apc-hdr"><h3>📅 Calendar Preview — <span id="dash-cal-yr" style="color:#c9933a">2083</span> B.S.</h3>
+          <div class="apc-acts">
+            <button class="abtn" onclick="dashCalYear(-1)">←</button>
+            <button class="abtn" onclick="dashCalYear(1)">→</button>
+          </div>
+        </div>
+        <div id="dash-cal-grid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:12px"></div>
+        <div style="display:flex;gap:8px">
+          <button class="cbtn" onclick="downloadFullCalendar()" style="justify-content:flex-start">📥 Download Full Calendar PNG</button>
+          <a href="#np-calendar" onclick="exitAdmin()" class="abtn" style="display:flex;align-items:center;gap:6px">👁️ View on Website</a>
+        </div>
       </div>
       <!-- PIN CHANGE WIDGET — built-in on dashboard -->
       <div class="apc" style="border:1px solid rgba(201,147,58,.3);background:rgba(201,147,58,.04)">
@@ -950,6 +1090,7 @@ body.admin-mode .site-nav{top:34px;}
         <div class="afg"><label>Email Address</label><input type="text" id="c-email"></div>
         <div class="afg"><label>Full Address</label><textarea id="c-addr" rows="2"></textarea></div>
         <div class="afg"><label>Office Hours</label><input type="text" id="c-hrs"></div>
+        <div class="afg"><label>🎬 Brand Video URL (YouTube link or direct video URL)</label><input type="url" id="c-video" placeholder="https://youtube.com/watch?v=..."></div>
       </div>
       <div class="apc">
         <div class="apc-hdr"><h3>📱 Social Media Links</h3></div>
@@ -1065,6 +1206,89 @@ body.admin-mode .site-nav{top:34px;}
       </div>
     </div>
 
+    <!-- CALENDAR CONTENT ADMIN -->
+    <div class="ap-sec" id="sec-calendar">
+      <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
+      <div class="ap-hdr"><h2>📅 Calendar Content</h2><p>Edit service recommendations for each Nepali month</p></div>
+      <div id="cal-admin-list"></div>
+      <div style="margin-top:14px;display:flex;gap:10px">
+        <button class="af-save" onclick="saveCalServices()">💾 Save All Months</button>
+        <span class="af-ok" id="cal-svc-ok">✅ Saved!</span>
+      </div>
+    </div>
+
+    <!-- NOTICE BOARD -->
+    <div class="ap-sec" id="sec-notices">
+      <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
+      <div class="ap-hdr"><h2>📢 Notice Board & Greetings</h2><p>Add festival wishes, announcements, special offers — auto-show by date & time</p></div>
+
+      <!-- Add new notice -->
+      <div class="apc" style="border-left:3px solid var(--a)">
+        <div class="apc-hdr"><h3 id="nf-ttl">➕ Add New Notice</h3></div>
+        <div class="afg"><label>📝 Message / Greeting Text</label>
+          <textarea id="nf-msg" rows="3" placeholder="🎉 शुभ दशैं! PRERAK परिवारतर्फबाट हार्दिक शुभकामना!"></textarea>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>🎨 Icon / Emoji</label><input type="text" id="nf-ico" placeholder="🎊" maxlength="4" style="font-size:1.4rem;width:70px;text-align:center"></div>
+          <div class="afg"><label>🏷️ Category</label>
+            <select id="nf-cat" style="padding:10px 12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:var(--txt);font-family:var(--fb);font-size:.83rem;outline:none">
+              <option value="festival">🎊 Festival Greeting</option>
+              <option value="offer">💰 Special Offer</option>
+              <option value="announce">📣 Announcement</option>
+              <option value="holiday">🏖️ Holiday Notice</option>
+              <option value="news">📰 Company News</option>
+            </select>
+          </div>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>📅 Show From <span id="nf-from-bs" style="font-size:.65rem;color:#c9933a;font-weight:700"></span></label><input type="datetime-local" id="nf-from" oninput="showBSDate('nf-from','nf-from-bs')"></div>
+          <div class="afg"><label>📅 Show Until <span id="nf-to-bs" style="font-size:.65rem;color:#c9933a;font-weight:700"></span></label><input type="datetime-local" id="nf-to" oninput="showBSDate('nf-to','nf-to-bs')"></div>
+        </div>
+        <div class="afg">
+          <label>🔗 Action Button (optional)</label>
+          <div class="afr">
+            <input type="text" id="nf-btn-lbl" placeholder="Get Discount" style="flex:1">
+            <input type="text" id="nf-btn-url" placeholder="https://wa.me/..." style="flex:2">
+          </div>
+        </div>
+        <div class="afg"><label>🖼️ Background Style</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div onclick="selNfBg('gold')" id="nbg-gold" class="cal-tpl on" style="padding:8px 14px;font-size:.68rem;font-weight:700;color:#c9933a;background:rgba(201,147,58,.1);border-color:var(--a);flex-shrink:0">🌙 Gold</div>
+            <div onclick="selNfBg('red')" id="nbg-red" class="cal-tpl" style="padding:8px 14px;font-size:.68rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,.08);flex-shrink:0">🔴 Red</div>
+            <div onclick="selNfBg('green')" id="nbg-green" class="cal-tpl" style="padding:8px 14px;font-size:.68rem;font-weight:700;color:#22c55e;background:rgba(34,197,94,.08);flex-shrink:0">🟢 Green</div>
+            <div onclick="selNfBg('blue')" id="nbg-blue" class="cal-tpl" style="padding:8px 14px;font-size:.68rem;font-weight:700;color:#3b82f6;background:rgba(59,130,246,.08);flex-shrink:0">🔵 Blue</div>
+            <div onclick="selNfBg('purple')" id="nbg-purple" class="cal-tpl" style="padding:8px 14px;font-size:.68rem;font-weight:700;color:#a855f7;background:rgba(168,85,247,.08);flex-shrink:0">🟣 Purple</div>
+          </div>
+        </div>
+        <input type="hidden" id="nf-eid">
+        <input type="hidden" id="nf-bg" value="gold">
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button class="af-save" onclick="saveNotice()">💾 Save Notice</button>
+          <button class="dbtn" onclick="clearNoticeForm()">Clear</button>
+          <span class="af-ok" id="notice-ok">✅ Saved!</span>
+        </div>
+      </div>
+
+      <!-- Preset festival templates -->
+      <div class="apc">
+        <div class="apc-hdr"><h3>🎊 Quick Festival Templates</h3></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <button onclick="loadFestTemplate('dashain')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🎊 Dashain</button>
+          <button onclick="loadFestTemplate('tihar')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🪔 Tihar</button>
+          <button onclick="loadFestTemplate('newyear')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🎆 New Year</button>
+          <button onclick="loadFestTemplate('eid')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">☪️ Eid</button>
+          <button onclick="loadFestTemplate('holi')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">🌈 Holi</button>
+          <button onclick="loadFestTemplate('offer')" style="padding:10px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--txt);font-size:.7rem;cursor:pointer;font-family:var(--fb);transition:all .2s" onmouseover="this.style.borderColor='var(--a)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">💰 Offer</button>
+        </div>
+      </div>
+
+      <!-- Active notices list -->
+      <div class="apc">
+        <div class="apc-hdr"><h3>📋 All Notices</h3><span style="font-size:.65rem;color:#8a8a9a" id="notice-count"></span></div>
+        <div id="notice-list"></div>
+      </div>
+    </div>
+
     <!-- VISITING CARD -->
     <div class="ap-sec" id="sec-visitcard">
       <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
@@ -1124,9 +1348,26 @@ body.admin-mode .site-nav{top:34px;}
             </div>
           </div>
         </div>
+        <!-- Admin-only color picker for card accent -->
+        <div style="margin-top:14px;padding:14px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.06)">
+          <label style="display:block;font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;color:#8a8a9a;margin-bottom:10px;font-weight:600">🎨 Card Accent Color (Admin Only)</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <div onclick="setCardAccent('#c9933a')" id="ca-gold" style="width:28px;height:28px;border-radius:50%;background:#c9933a;cursor:pointer;border:2px solid #fff;transition:transform .2s" title="Gold (Default)"></div>
+            <div onclick="setCardAccent('#ec4899')" id="ca-pink" style="width:28px;height:28px;border-radius:50%;background:#ec4899;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Pink"></div>
+            <div onclick="setCardAccent('#a855f7')" id="ca-purple" style="width:28px;height:28px;border-radius:50%;background:#a855f7;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Purple"></div>
+            <div onclick="setCardAccent('#22c55e')" id="ca-green" style="width:28px;height:28px;border-radius:50%;background:#22c55e;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Green"></div>
+            <div onclick="setCardAccent('#3b82f6')" id="ca-blue" style="width:28px;height:28px;border-radius:50%;background:#3b82f6;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Blue"></div>
+            <div onclick="setCardAccent('#f97316')" id="ca-orange" style="width:28px;height:28px;border-radius:50%;background:#f97316;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Orange"></div>
+            <div onclick="setCardAccent('#ef4444')" id="ca-red" style="width:28px;height:28px;border-radius:50%;background:#ef4444;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Red"></div>
+            <div onclick="setCardAccent('#06b6d4')" id="ca-cyan" style="width:28px;height:28px;border-radius:50%;background:#06b6d4;cursor:pointer;border:2px solid transparent;transition:transform .2s" title="Cyan"></div>
+            <div style="display:flex;align-items:center;gap:6px;margin-left:4px">
+              <label style="font-size:.64rem;color:#8a8a9a">Custom:</label>
+              <input type="color" id="ca-custom" value="#c9933a" onchange="setCardAccent(this.value)" style="width:28px;height:28px;border:none;border-radius:50%;cursor:pointer;background:none;padding:0">
+            </div>
+          </div>
+          <p style="font-size:.62rem;color:#5a5a6a;margin-top:8px">Accent color changes button colors, borders & glow on the card</p>
+        </div>
       </div>
-
-      <!-- LOGO -->
       <div class="apc">
         <div class="apc-hdr"><h3>🖼️ Company Logo</h3></div>
         <div style="display:grid;grid-template-columns:140px 1fr;gap:14px;align-items:center">
@@ -1274,7 +1515,7 @@ body.admin-mode .site-nav{top:34px;}
 // ═══════════════════════════════════════════════
 const DEF={
   meta:{template:'dark'},
-  settings:{company:'PRERAK',sub:'Multipurpose Pvt Ltd',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Hetauda-4, Kantirajpath\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:''},
+  settings:{company:'PRERAK',sub:'Multipurpose Pvt Ltd',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Hetauda-4, Kantirajpath\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
   hero:{eyebrow:'Hetauda, Makwanpur, Nepal',line1:'Building Your',line2:'Dreams',line3:'Into Reality',sub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",btn1:'🏗️ Get Free Quote',btn2:'Explore Services →',bgImg:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80',stats:[{num:'500+',label:'Projects Done'},{num:'10+',label:'Years Experience'},{num:'100%',label:'Satisfaction'}]},
   services:[
     {id:'s1',icon:'🏗️',name:'Construction Works',desc:'Complete construction from foundation to finishing. Residential homes, commercial buildings, RCC structures and prefab houses — all under one roof.',tags:['Residential','Commercial','RCC','Prefab'],img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80',gallery:[{type:'image',src:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80',cap:'Foundation Work'},{type:'image',src:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80',cap:'RCC Structure'}],features:['Foundation to finishing','RCC structure design','Prefab & modular homes','Commercial buildings','Renovation & repair']},
@@ -1315,7 +1556,9 @@ const DEF={
     email:'prerakconstrucion21@gmail.com',addr:'Hetauda-4, Kantirajpath, Makwanpur',
     logo:'',style:'dark'
   },
-  adminEmail:'prerakconstrucion21@gmail.com'
+  adminEmail:'prerakconstrucion21@gmail.com',
+  notices:[],
+  calServices:null
 };
 
 // ═══════════════════════════════════════════════
@@ -1328,6 +1571,7 @@ try{D=JSON.parse(localStorage.getItem(LSK)||'null');}catch(e){}
 if(!D)D=JSON.parse(JSON.stringify(DEF));
 // ensure new fields exist on older saves
 if(!D.card)D.card=JSON.parse(JSON.stringify(DEF.card));
+if(!D.notices)D.notices=[];
 if(!D.adminEmail)D.adminEmail=DEF.adminEmail;
 if(!D.settings.facebook)D.settings.facebook='';
 if(!D.settings.instagram)D.settings.instagram='';
@@ -1402,14 +1646,50 @@ function renderSite(){
     <a href="#" class="nav-logo">
       <div class="logo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="${logostroke}" stroke-width="2.5" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
       <div class="logo-txt"><div class="ln">${S.company}</div><div class="ls">${S.sub}</div></div>
+      <div class="np-flag"><svg viewBox="0 0 42 56" xmlns="http://www.w3.org/2000/svg" style="display:block">
+  <!-- Staff -->
+  <rect x="1" y="0" width="3.5" height="56" fill="#fff" rx="1.5"/>
+  <!-- White outline (border) -->
+  <polygon points="4.5,1 4.5,52 41,30.5 4.5,22" fill="white"/>
+  <polygon points="4.5,22 41,30.5 4.5,52" fill="white"/>
+  <!-- Blue border -->
+  <polygon points="4.5,2.5 4.5,50 39,30.5 4.5,23.5" fill="#003893"/>
+  <polygon points="4.5,23.5 39,30.5 4.5,50" fill="#003893"/>
+  <!-- Red fill upper -->
+  <polygon points="4.5,4.5 4.5,48 36.5,30.5 4.5,25" fill="#DC143C"/>
+  <!-- Red fill lower -->
+  <polygon points="4.5,25 36.5,30.5 4.5,48" fill="#DC143C"/>
+  <!-- MOON (upper triangle, crescent) -->
+  <circle cx="17" cy="16" r="5.5" fill="white"/>
+  <circle cx="20" cy="14.5" r="4.2" fill="#DC143C"/>
+  <!-- MOON rays (simplified) -->
+  <!-- SUN (lower triangle) -->
+  <circle cx="17" cy="37" r="4.5" fill="white"/>
+  <!-- Sun rays -->
+  <g stroke="white" stroke-width="1.4" stroke-linecap="round">
+    <line x1="17" y1="30.2" x2="17" y2="32"/>
+    <line x1="17" y1="42" x2="17" y2="43.8"/>
+    <line x1="10.2" y1="37" x2="12" y2="37"/>
+    <line x1="22" y1="37" x2="23.8" y2="37"/>
+    <line x1="12.3" y1="32.3" x2="13.6" y2="33.6"/>
+    <line x1="20.4" y1="40.4" x2="21.7" y2="41.7"/>
+    <line x1="12.3" y1="41.7" x2="13.6" y2="40.4"/>
+    <line x1="20.4" y1="33.6" x2="21.7" y2="32.3"/>
+  </g>
+</svg></div>
     </a>
     <ul class="nav-links">
-      <li><a href="#services" onclick="mClose()">Services</a></li>
-      <li><a href="#projects" onclick="mClose()">Projects</a></li>
-      <li><a href="#why-us" onclick="mClose()">About</a></li>
-      <li><a href="#contact" onclick="mClose()">Contact</a></li>
+      <li><a href="#services" onclick="mClose()" data-en="Services" data-ne="सेवाहरू">Services</a></li>
+      <li><a href="#projects" onclick="mClose()" data-en="Projects" data-ne="परियोजनाहरू">Projects</a></li>
+      <li><a href="#why-us" onclick="mClose()" data-en="About" data-ne="हाम्रोबारे">About</a></li>
+      <li><a href="#contact" onclick="mClose()" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
+      <li><a href="#np-calendar" onclick="mClose()" data-en="Calendar" data-ne="पात्रो">Calendar</a></li>
     </ul>
-    <div style="display:flex;align-items:center;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="lang-sw">
+        <button class="lang-btn on" id="lang-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="lang-ne" onclick="setLang('ne')">नेपाली</button>
+      </div>
       <a href="tel:${S.phone1}" class="nav-cta">📞 ${S.phone1}</a>
       <div class="hamburger" id="hbg" onclick="mToggle()"><span></span><span></span><span></span></div>
     </div>
@@ -1421,6 +1701,7 @@ function renderSite(){
     <a href="#contact" onclick="mClose()">Contact</a>
     <a href="tel:${S.phone1}" style="color:var(--a)!important;font-size:1.3rem!important" onclick="mClose()">📞 ${S.phone1}</a>
   </div>
+  <div id="nb-wrap"></div>
   <section class="hero" id="home">
     <div class="hero-bg"><img src="${H.bgImg}" alt="Construction" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80'"></div>
     <div class="hero-ring"></div>
@@ -1480,6 +1761,8 @@ function renderSite(){
     <div class="test-ctrl"><button class="t-btn" onclick="tSlide(-1)">←</button><button class="t-btn" onclick="tSlide(1)">→</button><div class="t-dots" id="tDots"></div></div>
   </section>
   ${renderVCSection()}
+  ${renderCalendarSection()}
+  ${renderVideoSection()}
   <section class="cta-sec reveal">
     <div class="cta-in">
       <div class="sec-ey" style="justify-content:center"><span>Start Today</span></div>
@@ -1523,7 +1806,24 @@ function renderSite(){
     <!-- Google Maps -->
     <div style="margin-top:36px;border-radius:var(--rl);overflow:hidden;border:1px solid var(--brd2);height:280px;position:relative;">
       <div style="position:absolute;top:12px;left:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">📍 Find Us</div>
-      <iframe src="https://maps.google.com/maps?q=Hetauda+4+Kantirajpath+Makwanpur+Nepal&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="280" style="border:0;display:block;filter:grayscale(20%)" allowfullscreen loading="lazy" title="PRERAK Office Location"></iframe>
+      <a href="https://maps.google.com/maps?q=Hetauda+4+Kantirajpath+Makwanpur+Nepal" target="_blank" style="display:block;width:100%;height:280px;background:linear-gradient(135deg,var(--bg3),var(--bg2));border-radius:var(--r);overflow:hidden;position:relative;text-decoration:none;border:1px solid var(--brd2)" title="Open in Google Maps">
+        <!-- Map background pattern -->
+        <div style="position:absolute;inset:0;opacity:.15;background-image:repeating-linear-gradient(0deg,var(--brd2) 0,var(--brd2) 1px,transparent 0,transparent 40px),repeating-linear-gradient(90deg,var(--brd2) 0,var(--brd2) 1px,transparent 0,transparent 40px)"></div>
+        <!-- Fake roads -->
+        <div style="position:absolute;top:50%;left:0;right:0;height:3px;background:rgba(201,147,58,.3);transform:translateY(-50%)"></div>
+        <div style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:rgba(201,147,58,.2);transform:translateX(-50%)"></div>
+        <div style="position:absolute;top:30%;left:0;right:0;height:2px;background:rgba(255,255,255,.06)"></div>
+        <div style="position:absolute;top:70%;left:0;right:0;height:2px;background:rgba(255,255,255,.06)"></div>
+        <!-- Pin -->
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);text-align:center">
+          <div style="font-size:2.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))">📍</div>
+          <div style="background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;padding:5px 14px;border-radius:20px;white-space:nowrap;margin-top:4px;box-shadow:0 4px 14px rgba(201,147,58,.4)">${S.company} — Hetauda</div>
+        </div>
+        <!-- Open maps button -->
+        <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:var(--a);color:var(--bg);font-size:.7rem;font-weight:700;padding:8px 20px;border-radius:20px;white-space:nowrap;display:flex;align-items:center;gap:7px;box-shadow:0 4px 14px rgba(201,147,58,.45)">
+          🗺️ Open in Google Maps →
+        </div>
+      </a>
     </div>
   </section>
   <footer class="site-footer">
@@ -1559,7 +1859,7 @@ function renderSite(){
   // Back to top visibility
   window.addEventListener('scroll',()=>{document.getElementById('btt')?.classList.toggle('vis',window.scrollY>400);},{ passive:true });
   initCanvas();initNav();initReveal();initCounters();initTest();
-  renderSocialFloat();initQP();
+  renderSocialFloat();initQP();renderNoticeTicker();
   setTimeout(initVCTilt, 400);
 }
 function renderSocialFloat(){
@@ -1606,8 +1906,491 @@ function renderTestCards(){
 }
 
 // ═══════════════════════════════════════════════
-// VISITING CARD SECTION
+// NEPALI CALENDAR SECTION
 // ═══════════════════════════════════════════════
+let _calYear=2083;
+const NP_MONTHS_NE=['बैशाख','जेठ','असार','साउन','भदौ','असोज','कार्तिक','मङ्सिर','पुस','माघ','फागुन','चैत'];
+const NP_MONTHS_EN=['Baisakh','Jestha','Ashadh','Shrawan','Bhadra','Ashoj','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra'];
+const NP_MONTH_EN_MAP=['Apr-May','May-Jun','Jun-Jul','Jul-Aug','Aug-Sep','Sep-Oct','Oct-Nov','Nov-Dec','Dec-Jan','Jan-Feb','Feb-Mar','Mar-Apr'];
+const NP_DAYS_NE=['आ','सो','मं','बु','बि','श','श'];
+const NP_DAYS_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+// ─── ACTUAL Nepali calendar data ───
+// days[month] = total days, startDay[month] = 0=Sun..6=Sat for day 1
+const NP_CAL={
+  2082:{days:[31,32,31,32,31,30,30,29,30,30,29,30],start:[4,0,3,5,1,4,0,3,5,0,2,4]},
+  2083:{days:[31,31,32,31,31,30,29,30,29,30,30,30],start:[2,5,1,6,2,5,1,4,6,1,3,5]},
+  2084:{days:[31,32,31,32,30,31,30,29,30,29,30,30],start:[0,3,6,2,5,1,4,0,2,4,0,2]},
+  2085:{days:[31,31,32,31,31,31,30,29,30,29,30,30],start:[5,1,4,0,3,6,2,5,1,3,5,1]}
+};
+// Services data from D.calServices (admin editable) with fallback
+function getCalSvc(i){
+  return (D.calServices&&D.calServices[i])||{
+    icon:['🏗️','🪟','⚡','🌧️','🏠','🛋️','🪨','🏡','🎨','☀️','🔧','🏢'][i],
+    ne:['जग निर्माण सुरु गर्नुस्','UPVC झ्याल राख्नुस्','बिजुली जडान गर्नुस्','छत जाँच गर्नुस्','भित्री काम सुरु','इन्टेरियर डिजाइन','जिप्सम सिलिङ','फ्लोरिङ राख्नुस्','पेन्टिङ गर्नुस्','सोलार जडान','नवीकरण गर्नुस्','नयाँ निर्माण योजना'][i],
+    en:['Start Foundation Work','Install UPVC Windows','Electrical & Solar Setup','Waterproofing & Roof Check','Interior Work Begins','Interior Design','Gypsum Ceiling Work','Flooring Installation','Painting & Finishing','Solar Panel Installation','Renovation Projects','Plan New Construction'][i],
+    tip:['Best season for construction','Pre-monsoon installation','Plan before monsoon','Monsoon preparation','Mid-monsoon indoors','Furniture & fittings','Post-monsoon indoors','Marble, tiles, parquet','Final interior touch','Winter solar setup','Spring upgrades','New year, new dreams'][i]
+  };
+}
+
+// ─── Calendar Render ───
+function renderCalendarSection(){
+  const isNe=window._lang==='ne';
+  const pills=NP_MONTHS_NE.map(function(m,i){
+    return '<button class="cal-pill'+(i===_activeMon?' on':'')+'" id="cpill-'+i+'" onclick="showCalMonth('+i+')">'+(isNe?m:NP_MONTHS_EN[i])+'</button>';
+  }).join('');
+  const det=_buildCalDet(0,isNe);
+  return '<section class="cal-sec" id="np-calendar">'
+    +'<div class="cal-split">'
+    // LEFT HALF — calendar banner
+    +'<div class="cal-banner">'
+    +'<div class="cal-banner-hdr">'
+    +'<div class="cal-banner-title">'
+    +'<h2>🇳🇵 '+(isNe?'नेपाली <em style="font-style:italic;color:#FFD700">पात्रो</em>':'Nepal <em style="font-style:italic;color:#FFD700">Calendar</em>')+'</h2>'
+    +'<p>'+(isNe?'महिना छान्नुस् — मिति, Download र WhatsApp':'Select month — Dates, Download & WhatsApp')+'</p>'
+    +'</div>'
+    +'<div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">'
+    +'<div class="cal-yr-ctl">'
+    +'<button onclick="changeCalYear(-1)">←</button>'
+    +'<span id="cal-yr-disp">'+_calYear+'</span>'
+    +'<button onclick="changeCalYear(1)">→</button>'
+    +'</div>'
+    +'<button onclick="downloadFullCalendar()" style="display:flex;align-items:center;gap:5px;padding:6px 12px;background:rgba(255,215,0,.18);border:1.5px solid rgba(255,215,0,.4);border-radius:16px;color:#FFD700;font-size:.65rem;font-weight:700;cursor:pointer;font-family:var(--fb)">📥 '+(isNe?'Full':'Full')+'</button>'
+    +'<div style="display:flex;gap:4px">'
+    +'<button onclick="setCalTpl(\'dark\')" data-tpl="dark" class="cal-tpl on" style="padding:3px 8px;font-size:.58rem;color:#c9933a">🌙</button>'
+    +'<button onclick="setCalTpl(\'flag\')" data-tpl="flag" class="cal-tpl" style="padding:3px 8px;font-size:.58rem;color:#FFD700">🇳🇵</button>'
+    +'<button onclick="setCalTpl(\'minimal\')" data-tpl="minimal" class="cal-tpl" style="padding:3px 8px;font-size:.58rem;color:#888">☀️</button>'
+    +'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="cal-pills" id="cal-pills-row">'+pills+'</div>'
+    +'<div class="cal-det" id="cal-det-box">'+det+'</div>'
+    +'</div>'
+    // RIGHT HALF — today info + quick contact
+    +'<div class="cal-split-right">'
+    +_buildCalRightPanel(isNe)
+    +'</div>'
+    +'</div>'
+    +'</section>';
+}
+
+let _activeMon=0;
+function showCalMonth(i){
+  _activeMon=i;
+  const isNe=window._lang==='ne';
+  document.querySelectorAll('.cal-pill').forEach(function(p,j){p.classList.toggle('on',j===i);});
+  const box=document.getElementById('cal-det-box');
+  if(box)box.innerHTML=_buildCalDet(i,isNe);
+}
+
+function _buildDateGrid(monthIdx,yr){
+  const calData=NP_CAL[yr]||NP_CAL[2083];
+  const totalDays=calData.days[monthIdx];
+  const startDay=calData.start[monthIdx];
+  const isNe=window._lang==='ne';
+  const days=isNe?NP_DAYS_NE:NP_DAYS_EN;
+
+  // Today in BS (approximate)
+  const todayAD=new Date();
+  const todayBS=adToBS(todayAD);
+  const isThisMonth=todayBS&&todayBS.year===yr&&todayBS.month===monthIdx;
+  const todayDate=isThisMonth?todayBS.day:0;
+
+  let html='<div style="margin:14px 0 6px">'
+    +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;margin-bottom:6px">'
+    +days.map(function(d,di){return '<div style="font-size:.6rem;font-weight:700;color:'+(di===6?'#ef4444':di===0?'#f97316':'rgba(255,255,255,.5)')+';padding:4px 0">'+d+'</div>';}).join('')
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center">';
+
+  // Empty cells before start
+  for(let i=0;i<startDay;i++){
+    html+='<div style="padding:5px 0"></div>';
+  }
+  // Date cells
+  for(let d=1;d<=totalDays;d++){
+    const col=(d+startDay-1)%7;
+    const isSat=col===6,isSun=col===0;
+    const isToday=d===todayDate;
+    const dateColor=isSat?'#ef4444':isSun?'#f97316':'rgba(255,255,255,.85)';
+    const bg=isToday?'#FFD700':'rgba(255,255,255,.05)';
+    const txtClr=isToday?'#003893':dateColor;
+    html+='<div style="padding:5px 2px;background:'+bg+';border-radius:5px;font-size:.78rem;font-weight:'+(isToday?'700':'500')+';color:'+txtClr+'">'+d+'</div>';
+  }
+  html+='</div></div>';
+  return html;
+}
+
+// AD to BS conversion (approximate — works well 2020-2030)
+function adToBS(d){
+  try{
+    const AD_BS_REF={year:2000,month:8,day:17,bsYear:2057,bsMonth:4,bsDay:1};
+    const refAD=new Date(2000,8,17);
+    const diffDays=Math.floor((d-refAD)/(1000*60*60*24));
+    if(diffDays<0||diffDays>10000)return null;
+    let bsY=2057,bsM=4,bsD=1,rem=diffDays;
+    const allDays=Object.keys(NP_CAL).map(Number).sort();
+    outer:
+    for(let y=2057;;y++){
+      const ydata=NP_CAL[y]||NP_CAL[2083];
+      for(let m=0;m<12;m++){
+        if(y===2057&&m<4)continue;
+        const md=ydata.days[m];
+        if(rem<md){bsY=y;bsM=m;bsD=rem+1;break outer;}
+        rem-=md;
+      }
+    }
+    return{year:bsY,month:bsM,day:bsD};
+  }catch(e){return null;}
+}
+
+function _buildCalDet(i,isNe){
+  const s=getCalSvc(i);
+  const S=D.settings;
+  const monthNE=NP_MONTHS_NE[i];
+  const monthEN=NP_MONTHS_EN[i];
+  const calData=NP_CAL[_calYear]||NP_CAL[2083];
+  const totalDays=calData.days[i];
+
+  // WhatsApp text only (no image)
+  const waMsg=monthNE+' '+_calYear+' B.S.\n'
+    +monthEN+' ('+NP_MONTH_EN_MAP[i]+')\n'
+    +'─────────────────\n'
+    +(isNe?s.ne:s.en)+'\n'
+    +s.tip+'\n'
+    +'─────────────────\n'
+    +S.company+' '+S.sub+'\n'
+    +'📞 '+S.phone1+'\n'
+    +'📧 '+S.email+'\n'
+    +'📍 '+S.address.replace(/\n/g,' ')+'\n'
+    +'wa.me/'+S.wa;
+
+  const dateGrid=_buildDateGrid(i,_calYear);
+
+  return '<div class="cal-det-body">'
+    +'<div class="cal-det-left" style="flex:1">'
+    +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">'
+    +'<div class="cal-det-right" style="font-size:2.8rem">'+s.icon+'</div>'
+    +'<div>'
+    +'<div class="cal-det-month">'+monthNE+'</div>'
+    +'<div class="cal-det-sub">'+monthEN+' · '+NP_MONTH_EN_MAP[i]+' · '+_calYear+' B.S. · '+totalDays+' days</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="cal-det-svc">'+(isNe?s.ne:s.en)+'</div>'
+    +'<div class="cal-det-tip">'+s.tip+'</div>'
+    +dateGrid
+    +'</div>'
+    +'</div>'
+    +'<div class="cal-det-actions">'
+    +'<button class="cal-act dl" onclick="downloadCalCard('+i+')">📥 '+(isNe?'Download':'Download')+'</button>'
+    +'<a class="cal-act wa" href="https://wa.me/'+S.wa+'?text='+encodeURIComponent(waMsg)+'" target="_blank">💬 WhatsApp</a>'
+    +'<a class="cal-act all" href="tel:'+S.phone1+'">📞 '+S.phone1+'</a>'
+    +'</div>';
+}
+
+function changeCalYear(d){
+  _calYear+=d;
+  const el=document.getElementById('cal-yr-disp');
+  if(el)el.textContent=_calYear;
+  showCalMonth(_activeMon);
+}
+
+let _calTpl='dark';
+function setCalTpl(t){
+  _calTpl=t;
+  document.querySelectorAll('[data-tpl]').forEach(function(el){
+    el.classList.toggle('on',el.dataset.tpl===t);
+  });
+}
+
+function downloadCalCard(monthIdx){
+  const isNe=window._lang==='ne';
+  const m=NP_MONTHS_NE[monthIdx];
+  const en=NP_MONTHS_EN[monthIdx];
+  const s=getCalSvc(monthIdx);
+  const S=D.settings;
+  const calData=NP_CAL[_calYear]||NP_CAL[2083];
+  const totalDays=calData.days[monthIdx];
+  const startDay=calData.start[monthIdx];
+
+  const c=document.createElement('canvas');c.width=900;c.height=680;
+  const ctx=c.getContext('2d');
+
+  // Background
+  if(_calTpl==='flag'){
+    const g=ctx.createLinearGradient(0,0,900,680);g.addColorStop(0,'#003893');g.addColorStop(.5,'#8B0000');g.addColorStop(1,'#003893');
+    ctx.fillStyle=g;ctx.fillRect(0,0,900,680);ctx.fillStyle='rgba(0,0,0,.65)';ctx.fillRect(0,0,900,680);
+  }else if(_calTpl==='minimal'){
+    ctx.fillStyle='#fafaf8';ctx.fillRect(0,0,900,680);
+  }else{
+    const g=ctx.createLinearGradient(0,0,900,680);g.addColorStop(0,'#07070a');g.addColorStop(1,'#1a1a22');
+    ctx.fillStyle=g;ctx.fillRect(0,0,900,680);
+  }
+
+  const isDark=_calTpl!=='minimal';
+  const gold=_calTpl==='flag'?'#FFD700':'#c9933a';
+  const white=isDark?'rgba(255,255,255,.85)':'#111827';
+  const sub=isDark?'rgba(255,255,255,.4)':'rgba(0,0,0,.45)';
+
+  // Top bar
+  ctx.fillStyle=gold;ctx.fillRect(0,0,900,4);
+
+  // Company header
+  ctx.fillStyle=gold;ctx.font='bold 20px sans-serif';ctx.textAlign='center';ctx.fillText(S.company+' '+S.sub,450,36);
+  ctx.fillStyle=sub;ctx.font='13px sans-serif';ctx.fillText(S.address.replace(/\n/g,' · ')+'  ·  '+S.phone1,450,57);
+  ctx.fillStyle=isDark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)';ctx.fillRect(60,68,780,1);
+
+  // Month name big
+  ctx.fillStyle=gold;ctx.font='bold 80px serif';ctx.textAlign='center';ctx.fillText(m,450,155);
+  ctx.fillStyle=sub;ctx.font='18px sans-serif';ctx.fillText(en+' · '+NP_MONTH_EN_MAP[monthIdx]+' · '+_calYear+' B.S. · '+totalDays+' days',450,185);
+  ctx.fillStyle=isDark?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)';ctx.fillRect(60,198,780,1);
+
+  // Day headers
+  const dayLabels=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const cellW=114,startX=60,dayY=230;
+  dayLabels.forEach(function(dl,di){
+    ctx.fillStyle=di===6?'#ef4444':di===0?'#f97316':sub;
+    ctx.font='bold 15px sans-serif';ctx.textAlign='center';
+    ctx.fillText(dl,startX+di*cellW+cellW/2,dayY);
+  });
+
+  // Date grid
+  ctx.fillStyle=isDark?'rgba(255,255,255,.06)':'rgba(0,0,0,.04)';
+  ctx.fillRect(60,238,780,1);
+  const gridY=255;const cellH=52;
+  for(let dd=1;dd<=totalDays;dd++){
+    const pos=dd-1+startDay;
+    const col=pos%7;const row=Math.floor(pos/7);
+    const x=startX+col*cellW;const y=gridY+row*cellH;
+    const isSat=col===6,isSun=col===0;
+    // today highlight
+    const todayBS=adToBS(new Date());
+    const isToday=todayBS&&todayBS.year===_calYear&&todayBS.month===monthIdx&&todayBS.day===dd;
+    if(isToday){ctx.fillStyle=gold;ctx.beginPath();ctx.arc(x+cellW/2,y+20,18,0,Math.PI*2);ctx.fill();}
+    ctx.fillStyle=isToday?(isDark?'#07070a':'#fff'):isSat?'#ef4444':isSun?'#f97316':white;
+    ctx.font=(isToday?'bold ':'')+'22px sans-serif';ctx.textAlign='center';
+    ctx.fillText(dd,x+cellW/2,y+26);
+  }
+
+  // Service section
+  const gridRows=Math.ceil((totalDays+startDay)/7);
+  const svcY=gridY+gridRows*cellH+20;
+  ctx.fillStyle=isDark?'rgba(255,255,255,.08)':'rgba(0,0,0,.06)';ctx.fillRect(60,svcY-10,780,1);
+  ctx.font='32px serif';ctx.textAlign='center';ctx.fillText(s.icon,450,svcY+32);
+  ctx.fillStyle=white;ctx.font='bold 22px sans-serif';ctx.fillText(isNe?s.ne:s.en,450,svcY+65);
+  ctx.fillStyle=sub;ctx.font='15px sans-serif';ctx.fillText(s.tip,450,svcY+90);
+
+  // Footer
+  const footY=c.height-52;
+  ctx.fillStyle=isDark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)';ctx.fillRect(0,footY-10,900,62);
+  ctx.fillStyle=sub;ctx.font='14px sans-serif';ctx.textAlign='center';
+  ctx.fillText('📞 '+S.phone1+'  ·  '+S.email+'  ·  wa.me/'+S.wa,450,footY+14);
+
+  const a=document.createElement('a');
+  a.download='PRERAK-'+m+'-'+_calYear+'.png';
+  a.href=c.toDataURL('image/png');a.click();
+}
+
+function downloadFullCalendar(){
+  const isNe=window._lang==='ne';
+  const S=D.settings;
+  const cols=3,rows=4,pw=560,ph=480,gap=16;
+  const w=cols*(pw+gap)+gap,h=rows*(ph+gap)+gap+160;
+  const c=document.createElement('canvas');c.width=w;c.height=h;
+  const ctx=c.getContext('2d');
+
+  // BG
+  if(_calTpl==='flag'){
+    const bg=ctx.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#003893');bg.addColorStop(.5,'#8B0000');bg.addColorStop(1,'#003893');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(0,0,w,h);
+  }else if(_calTpl==='minimal'){
+    ctx.fillStyle='#f5f4f1';ctx.fillRect(0,0,w,h);
+  }else{
+    const bg=ctx.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#07070a');bg.addColorStop(1,'#1a1a22');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+  }
+
+  const isDark=_calTpl!=='minimal';
+  const gold=_calTpl==='flag'?'#FFD700':'#c9933a';
+  const txtC=isDark?'rgba(255,255,255,.85)':'#111';
+  const subC=isDark?'rgba(255,255,255,.4)':'rgba(0,0,0,.4)';
+
+  // Header
+  const hg=ctx.createLinearGradient(0,0,w,130);hg.addColorStop(0,_calTpl==='flag'?'#003893':'#0f0f14');hg.addColorStop(1,_calTpl==='flag'?'#DC143C':'#1a1a22');
+  ctx.fillStyle=hg;ctx.fillRect(0,0,w,130);
+  ctx.fillStyle=gold;ctx.font='bold 52px serif';ctx.textAlign='center';
+  ctx.fillText((isNe?'नेपाली पात्रो ':'Nepali Calendar ')+_calYear+' B.S.',w/2,58);
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='22px sans-serif';
+  ctx.fillText(S.company+' '+S.sub+'  ·  '+S.phone1,w/2,96);
+
+  const calData=NP_CAL[_calYear]||NP_CAL[2083];
+  NP_MONTHS_NE.forEach(function(m,i){
+    const s=getCalSvc(i);
+    const col=i%cols,row=Math.floor(i/cols);
+    const x=gap+col*(pw+gap),y=140+gap+row*(ph+gap);
+    const sd=calData.start[i],td=calData.days[i];
+
+    // Card bg
+    ctx.fillStyle=isDark?'rgba(0,0,0,.5)':'rgba(255,255,255,.7)';ctx.fillRect(x,y,pw,ph);
+    ctx.fillStyle=gold;ctx.fillRect(x,y,pw,3);
+
+    // Month name
+    ctx.fillStyle=gold;ctx.font='bold 34px serif';ctx.textAlign='center';
+    ctx.fillText(m,x+pw/2,y+44);
+    ctx.fillStyle=subC;ctx.font='14px sans-serif';
+    ctx.fillText(NP_MONTHS_EN[i]+' · '+_calYear,x+pw/2,y+65);
+
+    // Day headers small
+    const cw=pw/7;
+    ['S','M','T','W','T','F','S'].forEach(function(dl,di){
+      ctx.fillStyle=di===6?'#ef4444':di===0?'#f97316':subC;
+      ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+      ctx.fillText(dl,x+di*cw+cw/2,y+88);
+    });
+    ctx.fillStyle=isDark?'rgba(255,255,255,.07)':'rgba(0,0,0,.07)';ctx.fillRect(x,y+94,pw,1);
+
+    // Dates
+    const gY=y+106,ch=26;
+    for(let dd=1;dd<=td;dd++){
+      const pos=dd-1+sd,dc=pos%7,dr=Math.floor(pos/7);
+      const dx=x+dc*cw+cw/2,dy=gY+dr*ch+18;
+      const isSat=dc===6,isSun=dc===0;
+      const todayBS=adToBS(new Date());
+      const isToday=todayBS&&todayBS.year===_calYear&&todayBS.month===i&&todayBS.day===dd;
+      if(isToday){ctx.fillStyle=gold;ctx.beginPath();ctx.arc(dx,dy-9,11,0,Math.PI*2);ctx.fill();}
+      ctx.fillStyle=isToday?(isDark?'#07070a':'#fff'):isSat?'#ef4444':isSun?'#f97316':txtC;
+      ctx.font=(isToday?'bold ':'')+'14px sans-serif';ctx.textAlign='center';
+      ctx.fillText(dd,dx,dy);
+    }
+
+    // Service
+    const svY=y+ph-48;
+    ctx.fillStyle=isDark?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)';ctx.fillRect(x,svY-8,pw,1);
+    ctx.font='20px serif';ctx.textAlign='center';ctx.fillText(s.icon,x+pw/2-50,svY+20);
+    ctx.fillStyle=isDark?'rgba(255,255,255,.7)':'rgba(0,0,0,.7)';ctx.font='bold 13px sans-serif';
+    ctx.fillText(isNe?s.ne.substring(0,20):s.en.substring(0,22),x+pw/2+10,svY+20);
+    ctx.fillStyle=subC;ctx.font='11px sans-serif';ctx.fillText(s.tip.substring(0,28),x+pw/2,svY+38);
+    ctx.strokeStyle=isDark?'rgba(255,255,255,.1)':'rgba(0,0,0,.1)';ctx.lineWidth=1;ctx.strokeRect(x,y,pw,ph);
+  });
+
+  // Footer
+  ctx.fillStyle=isDark?'rgba(0,0,0,.5)':'rgba(0,0,0,.08)';ctx.fillRect(0,h-60,w,60);
+  ctx.fillStyle=subC;ctx.font='18px sans-serif';ctx.textAlign='center';
+  ctx.fillText(S.address.replace(/\n/g,' · ')+'  ·  '+S.phone1+'  ·  '+S.email,w/2,h-28);
+
+  const a=document.createElement('a');
+  a.download='PRERAK-Calendar-'+_calYear+'.png';a.href=c.toDataURL('image/png');a.click();
+}
+
+// ═══════════════════════════════════════════════
+// VIDEO SECTION
+// ═══════════════════════════════════════════════
+function renderVideoSection(){
+  const isNe=window._lang==='ne';
+  const vid=D.settings.videoUrl||'';
+  const isYT=vid.includes('youtube.com')||vid.includes('youtu.be');
+  const isMp4=vid.includes('.mp4')||vid.includes('.webm')||vid.startsWith('data:video');
+  let ytId='';
+  if(isYT){ytId=vid.replace(/.*[?&]v=([^&]+).*/,'$1').replace(/.*youtu\.be\//,'').split('?')[0];}
+  const ytEmbed=isYT?'https://www.youtube.com/embed/'+ytId+'?rel=0&modestbranding=1&autoplay=0':'';
+  const vidContent=isYT
+    ?'<iframe src="'+ytEmbed+'" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'
+    :isMp4
+    ?'<video src="'+vid+'" controls style="width:100%;aspect-ratio:16/9;border:none"></video>'
+    :'<div class="vid-placeholder" onclick="document.getElementById(\'admin-fab\').click()" title="Admin: Add video URL">'
+      +'<div class="vid-play" style="animation:bl 2s infinite">▶</div>'
+      +'<h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:600;color:var(--txt)">'+(isNe?'एनिमेसन / ब्रान्ड भिडियो':'Animation / Brand Story Video')+'</h3>'
+      +'<p style="font-size:.8rem;color:var(--mt);text-align:center;max-width:340px;line-height:1.7">'+(isNe?'तपाईंले बनाएको cartoon animation video यहाँ राख्नुस्। Admin → Contact → Video URL':'Add your cartoon animation video here. Admin → Contact → Video URL')+'</p>'
+      +'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center">'
+      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">YouTube</span>'
+      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">MP4 Upload</span>'
+      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">Kling AI</span>'
+      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">Pika Labs</span>'
+      +'</div>'
+      +'</div>';
+  return '<section class="vid-sec reveal" id="video-sec">'
+    +'<div style="text-align:center;margin-bottom:40px">'
+    +'<div class="sec-ey" style="justify-content:center"><span>'+(isNe?'भिडियो':'Video')+'</span></div>'
+    +'<h2 class="sec-h" style="text-align:center">'+(isNe?'हाम्रो <em>एनिमेसन भिडियो</em>':'Watch Our <em>Animation Story</em>')+'</h2>'
+    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:440px;margin:0 auto">'+(isNe?'PRERAK को सेवाहरू cartoon animation मा — निर्माणदेखि सम्पन्नसम्म':'PRERAK services in cartoon animation — from foundation to finish')+'</p>'
+    +'</div>'
+    +'<div class="vid-frame">'+vidContent+'</div>'
+    +'</section>';
+}
+
+// ═══════════════════════════════════════════════
+// LANGUAGE SWITCHER
+// ═══════════════════════════════════════════════
+window._lang='en';
+const TRANS={
+  en:{
+    services:'Services',projects:'Projects',about:'About',contact:'Contact',calendar:'Calendar',
+    heroSub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",
+    servicesTitle:'Our <em>Services</em>',projectsTitle:'Recent <em>Projects</em>',
+    whyTitle:'Quality You Can <em>Trust</em>',clientsTitle:"What Clients <em>Say</em>",
+    ctaH:'Ready to Build Your <em>Dream?</em>',ctaP:'Free site visit & detailed quotation. We respond within 2 hours.',
+    ctaBtn:'🏗️ Get Free Quote',contactTitle:'Contact <em>Us</em>',
+    badge:'Now Accepting Projects'
+  },
+  ne:{
+    services:'सेवाहरू',projects:'परियोजनाहरू',about:'हाम्रोबारे',contact:'सम्पर्क',calendar:'पात्रो',
+    heroSub:'नेपालको विश्वसनीय निर्माण साझेदार — निर्माण, इन्टेरियर, UPVC, जिप्सम, सोलार र नवीकरण — २०१२ देखि।',
+    servicesTitle:'हाम्रा <em>सेवाहरू</em>',projectsTitle:'हालका <em>परियोजनाहरू</em>',
+    whyTitle:'विश्वासको <em>गुणस्तर</em>',clientsTitle:'ग्राहकहरूले <em>भन्छन्</em>',
+    ctaH:'सपनाको घर <em>बनाउनुस्!</em>',ctaP:'नि:शुल्क साइट भ्रमण र विस्तृत मूल्य सूची। २ घण्टामा जवाफ दिन्छौं।',
+    ctaBtn:'🏗️ नि:शुल्क Quote',contactTitle:'<em>हामीलाई</em> सम्पर्क',
+    badge:'परियोजना स्वीकार गर्दैछौं'
+  }
+};
+function setLang(l){
+  window._lang=l;
+  const t=TRANS[l];
+  // buttons
+  document.getElementById('lang-en')?.classList.toggle('on',l==='en');
+  document.getElementById('lang-ne')?.classList.toggle('on',l==='ne');
+  // nav links
+  const navMap={services:t.services,projects:t.projects,'why-us':t.about,contact:t.contact,'np-calendar':t.calendar};
+  document.querySelectorAll('.nav-links a[data-en]').forEach(function(a){
+    const key=a.getAttribute('href').replace('#','');
+    a.textContent=navMap[key]||(l==='ne'?a.dataset.ne:a.dataset.en);
+  });
+  // hero
+  const heroH=document.querySelector('.hero h1');
+  if(heroH){
+    heroH.innerHTML=l==='ne'
+      ?'<span>सपनाहरू</span><span class="ha">निर्माण</span><span class="ho">गर्दैछौं</span>'
+      :'<span>'+D.hero.line1+'</span><span class="ha">'+D.hero.line2+'</span><span class="ho">'+D.hero.line3+'</span>';
+  }
+  const heroSub=document.querySelector('.hero-sub');
+  if(heroSub)heroSub.textContent=t.heroSub;
+  // live badge
+  const lb=document.querySelector('.live-badge');
+  if(lb)lb.innerHTML='<div class="live-dot"></div> '+t.badge;
+  // Section headings
+  function updateSecH(secId,html){
+    const sec=document.getElementById(secId);
+    if(!sec)return;
+    const h=sec.querySelector('.sec-h');
+    if(h)h.innerHTML=html;
+  }
+  updateSecH('services',t.servicesTitle);
+  updateSecH('projects',t.projectsTitle);
+  updateSecH('why-us',t.whyTitle);
+  // testimonials
+  const testSec=document.querySelector('#site section:not([id]) .sec-h');
+  // CTA
+  const ctaH=document.querySelector('.cta-in h2');if(ctaH)ctaH.innerHTML=t.ctaH;
+  const ctaP=document.querySelector('.cta-in p');if(ctaP)ctaP.textContent=t.ctaP;
+  const ctaBtn=document.querySelector('.cta-btns .btn-a');if(ctaBtn)ctaBtn.innerHTML=t.ctaBtn;
+  // contact
+  const contSec=document.getElementById('contact');
+  if(contSec){const h=contSec.querySelector('.sec-h');if(h)h.innerHTML=t.contactTitle;}
+  // re-render calendar & video
+  const calSec=document.getElementById('np-calendar');
+  if(calSec){calSec.outerHTML=renderCalendarSection();setTimeout(function(){showCalMonth(_activeMon);},50);}
+  const vidSec=document.querySelector('.vid-sec');
+  if(vidSec)vidSec.outerHTML=renderVideoSection();
+  initReveal();
+}
 function renderVCSection(){
   const C=D.card;const t=C.style||'dark';
   const isDark=t==='dark',isCorp=t==='corporate',isSaff=t==='saffron';
@@ -1696,7 +2479,10 @@ if(!document.getElementById('vc-style')){
   document.head.appendChild(s);
 }
 // Visiting Card flip
-let _vcFS=false;
+// ═══ VISITING CARD — HOLOGRAPHIC FINGER PLAY ═══
+// Color changes with finger/mouse — no UI shown to public
+let _vcFS=false,_vcHue=0,_vcSaturation=0,_vcHoloAF=null;
+
 function vcFlip(){
   _vcFS=!_vcFS;
   const fl=document.getElementById('vc-flipper');
@@ -1705,25 +2491,113 @@ function vcFlip(){
   const sb=document.getElementById('vc-side-b');
   if(sf){sf.style.color=_vcFS?'var(--mt)':'var(--a)';sf.style.opacity=_vcFS?'.4':'1';}
   if(sb){sb.style.color=_vcFS?'var(--a)':'var(--mt)';sb.style.opacity=_vcFS?'1':'.4';}
+  // flash color on flip
+  _vcFlashColor();
 }
-// Hover tilt on card (init after render)
+function _vcFlashColor(){
+  _vcHue=(_vcHue+90)%360;
+  _applyVCHolo(_vcHue,1);
+  setTimeout(()=>_applyVCHolo(_vcHue,0),600);
+}
+function _applyVCHolo(hue,intensity){
+  const shine=document.getElementById('vc-card-shine');
+  const glow=document.getElementById('vc-card-glow');
+  if(shine){
+    if(intensity>0){
+      shine.style.background='linear-gradient(125deg,hsla('+(hue)+',100%,75%,'+(.15*intensity)+') 0%,hsla('+((hue+60)%360)+',100%,75%,'+(.3*intensity)+') 40%,hsla('+((hue+120)%360)+',100%,75%,'+(.15*intensity)+') 70%,transparent 100%)';
+      shine.style.opacity='1';
+    } else {
+      shine.style.opacity='0';
+    }
+  }
+  if(glow){
+    glow.style.boxShadow=intensity>0
+      ?'14px 22px 55px rgba(0,0,0,.65),0 0 '+(40*intensity)+'px hsla('+hue+',100%,60%,'+(.5*intensity)+'),0 0 '+(80*intensity)+'px hsla('+((hue+60)%360)+',100%,60%,'+(.15*intensity)+')'
+      :'14px 22px 55px rgba(0,0,0,.65)';
+  }
+}
+
 function initVCTilt(){
   _vcFS=false;
   const wrap=document.getElementById('vc-flipper')?.parentElement;
   if(!wrap)return;
-  wrap.addEventListener('mousemove',function(e){
+
+  // inject holographic overlay into card faces
+  ['vc-mini'].forEach(function(id){
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.id=id;
+    // add shine overlay
+    if(!document.getElementById('vc-card-shine')){
+      const shine=document.createElement('div');
+      shine.id='vc-card-shine';
+      shine.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:20;mix-blend-mode:screen;opacity:0;transition:opacity .4s,background .1s;border-radius:inherit;';
+      el.appendChild(shine);
+    }
+  });
+  // glow reference is the front face
+  const frontFace=document.getElementById('vc-mini');
+
+  function applyTilt(nx,ny){
     if(_vcFS)return;
+    const fl=document.getElementById('vc-flipper');
+    if(fl)fl.style.transform='rotateY('+(nx*28)+'deg) rotateX('+(-ny*18)+'deg)';
+    // color: hue from x position, saturation from movement intensity
+    const hue=Math.round(((nx+.5)*360))%360;
+    const sat=Math.abs(nx)*100;
+    const intensity=Math.sqrt(nx*nx+ny*ny);
+    _vcHue=hue;
+    if(intensity>.05){
+      _applyVCHolo(hue,Math.min(intensity*1.5,1));
+      // glow on front
+      if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65),0 0 '+(30*intensity)+'px hsla('+hue+',100%,60%,'+(0.5*intensity)+')';
+    }
+  }
+
+  // MOUSE
+  wrap.addEventListener('mousemove',function(e){
     const r=wrap.getBoundingClientRect();
     const x=(e.clientX-r.left)/r.width-.5;
     const y=(e.clientY-r.top)/r.height-.5;
-    const fl=document.getElementById('vc-flipper');
-    if(fl)fl.style.transform='rotateY('+(x*22)+'deg) rotateX('+(-y*14)+'deg)';
+    applyTilt(x,y);
   });
   wrap.addEventListener('mouseleave',function(){
     if(_vcFS)return;
     const fl=document.getElementById('vc-flipper');
-    if(fl)fl.style.transform='rotateY(0deg)';
+    if(fl)fl.style.transform='rotateY(0deg) rotateX(0deg)';
+    _applyVCHolo(0,0);
+    if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65)';
   });
+
+  // TOUCH — finger drag changes color
+  let _tcStart={x:0,y:0};
+  wrap.addEventListener('touchstart',function(e){
+    _tcStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
+  },{passive:true});
+  wrap.addEventListener('touchmove',function(e){
+    e.preventDefault();
+    const r=wrap.getBoundingClientRect();
+    const tx=e.touches[0].clientX,ty=e.touches[0].clientY;
+    const x=(tx-r.left)/r.width-.5;
+    const y=(ty-r.top)/r.height-.5;
+    applyTilt(x,y);
+  },{passive:false});
+  wrap.addEventListener('touchend',function(){
+    const fl=document.getElementById('vc-flipper');
+    if(fl&&!_vcFS)fl.style.transform='rotateY(0deg) rotateX(0deg)';
+    _applyVCHolo(0,0);
+    if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65)';
+  });
+
+  // GYROSCOPE — phone tilt
+  if(window.DeviceOrientationEvent){
+    window.addEventListener('deviceorientation',function(e){
+      if(!e.gamma&&!e.beta)return;
+      const x=Math.max(-1,Math.min(1,(e.gamma||0)/45));
+      const y=Math.max(-1,Math.min(1,(e.beta||0)/45));
+      applyTilt(x*.5,y*.3);
+    },{passive:true});
+  }
 }
 let mOpen=false;
 function mToggle(){mOpen=!mOpen;document.getElementById('hbg')?.classList.toggle('open',mOpen);const m=document.getElementById('mobM');if(!m)return;if(mOpen){m.style.display='flex';requestAnimationFrame(()=>m.classList.add('open'));document.body.classList.add('ns');}else mClose();}
@@ -1939,7 +2813,7 @@ function delProjConfirm(id){
 }
 
 function showSec(n){
-  document.querySelectorAll('.ap-ni').forEach((el,i)=>{const m=['dashboard','templates','hero','services','projects','testimonials','whyus','contact','social','visitcard','settings'];el.classList.toggle('on',m[i]===n);});
+  document.querySelectorAll('.ap-ni').forEach((el,i)=>{const m=['dashboard','templates','hero','services','projects','testimonials','whyus','contact','social','notices','calendar','visitcard','settings'];el.classList.toggle('on',m[i]===n);});
   document.querySelectorAll('.ap-sec').forEach(el=>el.classList.remove('on'));
   document.getElementById('sec-'+n)?.classList.add('on');
   if(n==='services')renderAdminSvc();
@@ -1948,6 +2822,8 @@ function showSec(n){
   if(n==='whyus')renderAdminWhy();
   if(n==='visitcard')renderVCAdmin();
   if(n==='social')renderSocialAdmin();
+  if(n==='notices')renderNoticeAdmin();
+  if(n==='calendar')renderCalAdmin();
 }
 // ═══ PUBLIC QUICK PANEL ═══
 let _qpOpen=false;
@@ -1963,6 +2839,272 @@ function initQP(){
   const S=D.settings;
   const qc=document.getElementById('qp-call');if(qc)qc.href='tel:'+S.phone1;
   const qw=document.getElementById('qp-wa');if(qw)qw.href='https://wa.me/'+S.wa+'?text='+encodeURIComponent('नमस्ते '+S.company+' जी!');
+}
+function _buildCalRightPanel(isNe){
+  const todayBS=adToBS(new Date());
+  const S=D.settings;
+  const curMon=todayBS?todayBS.month:_activeMon;
+  const s=getCalSvc(curMon);
+  const calData=NP_CAL[todayBS?todayBS.year:_calYear]||NP_CAL[2083];
+  const todayTxt=todayBS
+    ?NP_MONTHS_NE[todayBS.month]+' '+todayBS.day+', '+todayBS.year+' B.S.'
+    :'N/A';
+  const todayEN=todayBS
+    ?NP_MONTHS_EN[todayBS.month]+' '+todayBS.day+', '+(todayBS.year)
+    :'N/A';
+  const adDate=new Date().toLocaleDateString('en-NP',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  return '<div>'
+    // Today's date card
+    +'<div style="background:linear-gradient(135deg,rgba(201,147,58,.12),rgba(201,147,58,.06));border:1px solid rgba(201,147,58,.25);border-radius:16px;padding:20px 22px;margin-bottom:18px">'
+    +'<div style="font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--a);font-weight:700;margin-bottom:8px">📅 '+(isNe?'आजको मिति':'Today\'s Date')+'</div>'
+    +'<div style="font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--a);line-height:1;margin-bottom:4px">'+todayTxt+'</div>'
+    +'<div style="font-size:.72rem;color:var(--mt);margin-bottom:10px">'+adDate+'</div>'
+    +'<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:10px">'
+    +'<span style="font-size:1.6rem">'+s.icon+'</span>'
+    +'<div><div style="font-size:.78rem;font-weight:700;color:var(--txt)">'+(isNe?s.ne:s.en)+'</div>'
+    +'<div style="font-size:.65rem;color:var(--mt)">'+s.tip+'</div></div>'
+    +'</div>'
+    +'</div>'
+    // Services list
+    +'<div style="margin-bottom:18px">'
+    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--mt2);font-weight:700;margin-bottom:10px">🏗️ '+(isNe?'हाम्रा सेवाहरू':'Our Services')+'</div>'
+    +D.services.slice(0,4).map(function(sv){
+      return '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid var(--brd2);border-radius:9px;margin-bottom:6px;cursor:pointer" onclick="document.getElementById(\'services\').scrollIntoView({behavior:\'smooth\'})">'
+        +'<span style="font-size:1.2rem">'+sv.icon+'</span>'
+        +'<span style="font-size:.8rem;font-weight:600;color:var(--txt)">'+sv.name+'</span>'
+        +'<span style="margin-left:auto;font-size:.7rem;color:var(--a)">→</span>'
+        +'</div>';
+    }).join('')
+    +'</div>'
+    // Quick contact
+    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--mt2);font-weight:700;margin-bottom:10px">📞 '+(isNe?'सम्पर्क':'Quick Contact')+'</div>'
+    +'<a href="tel:'+S.phone1+'" style="display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(135deg,rgba(201,147,58,.15),rgba(201,147,58,.08));border:1px solid rgba(201,147,58,.25);border-radius:12px;text-decoration:none;margin-bottom:8px">'
+    +'<span style="font-size:1.3rem">📞</span>'
+    +'<div><div style="font-size:.82rem;font-weight:700;color:var(--a)">'+S.phone1+'</div><div style="font-size:.6rem;color:var(--mt)">'+(isNe?'Call गर्नुस्':'Call Now')+'</div></div>'
+    +'</a>'
+    +'<a href="https://wa.me/'+S.wa+'?text='+encodeURIComponent('नमस्ते '+S.company+' जी!')+'" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 16px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);border-radius:12px;text-decoration:none">'
+    +'<span style="font-size:1.3rem">💬</span>'
+    +'<div><div style="font-size:.82rem;font-weight:700;color:#25D366">WhatsApp</div><div style="font-size:.6rem;color:var(--mt)">'+(isNe?'Message गर्नुस्':'Message Us')+'</div></div>'
+    +'</a>'
+    +'</div>';
+}
+
+// ═══ WELCOME INTRO ═══
+let _wbLang='en';
+function wbLang(l){
+  _wbLang=l;
+  document.getElementById('wbl-en')?.classList.toggle('on',l==='en');
+  document.getElementById('wbl-ne')?.classList.toggle('on',l==='ne');
+  const tgl=document.getElementById('wb-tagline');
+  const btn=document.getElementById('wb-enter-txt');
+  if(tgl)tgl.textContent=l==='ne'?'हेटौँडा र मकवानपुर जिल्लामा सेवा — निर्माण, इन्टेरियर, UPVC, सोलार':'Building dreams across Hetauda & Makwanpur since 2012.';
+  if(btn)btn.textContent=l==='ne'?'वेबसाइट प्रवेश गर्नुस्':'Enter Website';
+}
+function enterWebsite(){
+  const ov=document.getElementById('welcome-overlay');
+  if(ov){ov.style.animation='fadeOut .35s ease forwards';setTimeout(function(){ov.style.display='none';},340);}
+  if(_wbLang!==window._lang)setLang(_wbLang);
+  // Add fadeOut keyframe once
+  if(!document.getElementById('wb-fade-style')){
+    const s=document.createElement('style');s.id='wb-fade-style';
+    s.textContent='@keyframes fadeOut{to{opacity:0;transform:scale(.96)}}';
+    document.head.appendChild(s);
+  }
+}
+// Auto-show on load (only once per session)
+(function initWelcome(){
+  // Always show welcome on page load
+  // already shown via HTML — just apply D data
+  const wb=document.getElementById('welcome-overlay');
+  if(!wb)return;
+  // Apply current company data to welcome
+  const wbT=wb.querySelector('.wb-title');if(wbT)wbT.textContent=D.settings.company||'PRERAK';
+  const wbS=wb.querySelector('.wb-sub');if(wbS)wbS.textContent=D.settings.sub||'Multipurpose Pvt Ltd';
+})();
+function showBSDate(inputId,spanId){
+  const val=document.getElementById(inputId)?.value;
+  const span=document.getElementById(spanId);if(!span)return;
+  if(!val){span.textContent='';return;}
+  const bs=adToBS(new Date(val));
+  if(bs)span.textContent='= '+NP_MONTHS_NE[bs.month]+' '+bs.day+', '+bs.year+' B.S.';
+  else span.textContent='';
+}
+
+// ═══════════════════════════════════════════════
+// NOTICE BOARD
+// ═══════════════════════════════════════════════
+const NF_BG_COLORS={gold:'rgba(201,147,58,.18)',red:'rgba(220,38,38,.15)',green:'rgba(34,197,94,.12)',blue:'rgba(59,130,246,.12)',purple:'rgba(168,85,247,.12)'};
+const NF_BG_BORDERS={gold:'rgba(201,147,58,.4)',red:'rgba(220,38,38,.35)',green:'rgba(34,197,94,.3)',blue:'rgba(59,130,246,.3)',purple:'rgba(168,85,247,.3)'};
+const NF_COLORS={gold:'#c9933a',red:'#ef4444',green:'#22c55e',blue:'#3b82f6',purple:'#a855f7'};
+
+function renderNoticeTicker(){
+  const wrap=document.getElementById('nb-wrap');if(!wrap)return;
+  const now=new Date();
+  const active=(D.notices||[]).filter(function(n){
+    const from=n.from?new Date(n.from):null;
+    const to=n.to?new Date(n.to):null;
+    return (!from||from<=now)&&(!to||to>=now);
+  });
+  if(!active.length){wrap.innerHTML='';return;}
+  // double items for seamless loop
+  const items=[...active,...active].map(function(n){
+    const col=NF_COLORS[n.bg||'gold'];
+    return '<span class="nb-item" onclick="showFestPopup(\''+n.id+'\')"><span class="ni">'+n.icon+'</span><b style="color:'+col+'">'+n.msg+'</b></span>';
+  }).join('<span style="color:var(--a);margin:0 8px">✦</span>');
+  wrap.innerHTML='<div class="nb-wrap nb-ticker"><div class="nb-label">📢 Notice</div><div class="nb-scroll"><div class="nb-track">'+items+'</div></div></div>';
+}
+function showFestPopup(nid){
+  const n=(D.notices||[]).find(function(x){return x.id===nid;});
+  if(!n)return;
+  const col=NF_COLORS[n.bg||'gold'];
+  const bg=NF_BG_COLORS[n.bg||'gold'];
+  const brd=NF_BG_BORDERS[n.bg||'gold'];
+  let popup=document.getElementById('fest-pop-el');
+  if(!popup){popup=document.createElement('div');popup.id='fest-pop-el';popup.className='fest-pop';document.body.appendChild(popup);}
+  const btnHtml=n.btnLbl&&n.btnUrl?'<a href="'+n.btnUrl+'" target="_blank" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:'+col+';color:#fff;border-radius:20px;font-size:.76rem;font-weight:700;text-decoration:none;margin-top:14px">'+n.btnLbl+' →</a>':'';
+  popup.style.background='var(--bg2)';
+  popup.style.borderColor=brd;
+  popup.innerHTML='<button class="fest-close" onclick="closeFestPopup()">✕</button>'
+    +'<div style="font-size:2.8rem;margin-bottom:10px;text-align:center">'+n.icon+'</div>'
+    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:'+col+';font-weight:700;margin-bottom:8px;text-align:center">'+n.cat.toUpperCase()+'</div>'
+    +'<p style="font-size:.92rem;color:var(--txt);line-height:1.7;font-weight:500;text-align:center">'+n.msg+'</p>'
+    +btnHtml
+    +'<p style="font-size:.58rem;color:var(--mt2);text-align:center;margin-top:12px">— '+D.settings.company+' परिवार</p>';
+  popup.classList.add('show');
+}
+function closeFestPopup(){
+  const p=document.getElementById('fest-pop-el');if(p)p.classList.remove('show');
+}
+let _nfBg='gold';
+function selNfBg(bg){
+  _nfBg=bg;
+  document.getElementById('nf-bg').value=bg;
+  ['gold','red','green','blue','purple'].forEach(function(b){
+    const el=document.getElementById('nbg-'+b);
+    if(el)el.classList.toggle('on',b===bg);
+  });
+}
+function renderNoticeAdmin(){
+  const now=new Date();
+  const list=document.getElementById('notice-list');
+  const cnt=document.getElementById('notice-count');
+  if(!list)return;
+  if(cnt)cnt.textContent=(D.notices||[]).length+' total';
+  if(!(D.notices||[]).length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No notices yet. Add your first one above!</p>';return;}
+  list.innerHTML=[...(D.notices||[])].reverse().map(function(n){
+    const now2=new Date();
+    const from=n.from?new Date(n.from):null;
+    const to=n.to?new Date(n.to):null;
+    const active=(!from||from<=now2)&&(!to||to>=now2);
+    const upcoming=from&&from>now2;
+    const expired=to&&to<now2;
+    const statusClass=active?'nc-on':upcoming?'nc-soon':'nc-off';
+    const statusTxt=active?'● Live':upcoming?'⏳ Upcoming':'✕ Expired';
+    return '<div class="nc">'
+      +'<span class="nc-status '+statusClass+'">'+statusTxt+'</span>'
+      +'<div style="font-size:1.4rem;margin-bottom:6px">'+n.icon+'</div>'
+      +'<div style="font-size:.84rem;font-weight:600;color:var(--txt);margin-bottom:6px;padding-right:80px">'+n.msg+'</div>'
+      +'<div style="font-size:.62rem;color:#5a5a6a;margin-bottom:10px">'
+      +(n.from?'📅 From: '+new Date(n.from).toLocaleString():'No start limit')
+      +' &nbsp;→&nbsp; '
+      +(n.to?'Until: '+new Date(n.to).toLocaleString():'No end limit')
+      +'</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="abtn" onclick="editNotice(\''+n.id+'\')">✎ Edit</button>'
+      +'<button class="dbtn" onclick="deleteNotice(\''+n.id+'\')">🗑 Delete</button>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+function saveNotice(){
+  const msg=(document.getElementById('nf-msg')?.value||'').trim();if(!msg){alert('Message required');return;}
+  const icon=document.getElementById('nf-ico')?.value.trim()||'📢';
+  const cat=document.getElementById('nf-cat')?.value||'announce';
+  const from=document.getElementById('nf-from')?.value||'';
+  const to=document.getElementById('nf-to')?.value||'';
+  const btnLbl=document.getElementById('nf-btn-lbl')?.value.trim()||'';
+  const btnUrl=document.getElementById('nf-btn-url')?.value.trim()||'';
+  const bg=document.getElementById('nf-bg')?.value||'gold';
+  const eid=document.getElementById('nf-eid')?.value||'';
+  if(eid){const idx=D.notices.findIndex(x=>x.id===eid);if(idx>-1)D.notices[idx]={...D.notices[idx],msg,icon,cat,from,to,btnLbl,btnUrl,bg};}
+  else{D.notices.push({id:'n'+Date.now(),msg,icon,cat,from,to,btnLbl,btnUrl,bg});}
+  save();renderNoticeAdmin();renderNoticeTicker();clearNoticeForm();showOk('notice-ok');
+}
+function clearNoticeForm(){
+  ['nf-msg','nf-ico','nf-from','nf-to','nf-btn-lbl','nf-btn-url','nf-eid'].forEach(function(id){const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('nf-cat').value='festival';
+  selNfBg('gold');
+  document.getElementById('nf-ttl').textContent='➕ Add New Notice';
+}
+function editNotice(id){
+  const n=D.notices.find(x=>x.id===id);if(!n)return;
+  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  fld('nf-msg',n.msg);fld('nf-ico',n.icon);fld('nf-from',n.from);fld('nf-to',n.to);
+  fld('nf-btn-lbl',n.btnLbl);fld('nf-btn-url',n.btnUrl);fld('nf-eid',n.id);
+  document.getElementById('nf-cat').value=n.cat||'festival';
+  selNfBg(n.bg||'gold');
+  document.getElementById('nf-ttl').textContent='✎ Edit Notice';
+  document.getElementById('sec-notices').scrollTop=0;
+}
+function deleteNotice(id){if(!confirm('Delete this notice?'))return;D.notices=D.notices.filter(x=>x.id!==id);save();renderNoticeAdmin();renderNoticeTicker();}
+const FEST_TPL={
+  dashain:{icon:'🎊',msg:'शुभ विजयादशमी! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट हार्दिक मंगलमय शुभकामना!',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
+  tihar:{icon:'🪔',msg:'शुभ तिहार! दीपावलीको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! घर उज्यालो होस्!',cat:'festival',bg:'gold',btnLbl:'हामीलाई भेट्नुस्',btnUrl:'tel:9855069733'},
+  newyear:{icon:'🎆',msg:'Happy New Year! Wishing you a year full of successful construction projects! Contact PRERAK today.',cat:'festival',bg:'blue',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
+  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Multipurpose Pvt Ltd wishes you a blessed celebration!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
+  holi:{icon:'🌈',msg:'Happy Holi! रंगहरूले तपाईंको जीवन भरियोस्! PRERAK परिवारतर्फबाट शुभकामना!',cat:'festival',bg:'purple',btnLbl:'Visit Us',btnUrl:'tel:9855069733'},
+  offer:{icon:'🔥',msg:'SPECIAL OFFER! This month get 10% discount on all Interior Design services. Limited time only!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733'}
+};
+function loadFestTemplate(key){
+  const t=FEST_TPL[key];if(!t)return;
+  document.getElementById('nf-msg').value=t.msg;
+  document.getElementById('nf-ico').value=t.icon;
+  document.getElementById('nf-cat').value=t.cat;
+  if(t.btnLbl)document.getElementById('nf-btn-lbl').value=t.btnLbl;
+  if(t.btnUrl)document.getElementById('nf-btn-url').value=t.btnUrl;
+  selNfBg(t.bg);
+  // Set dates to today + 7 days
+  const now=new Date();
+  const end=new Date(now);end.setDate(end.getDate()+7);
+  const fmt=d=>d.toISOString().slice(0,16);
+  document.getElementById('nf-from').value=fmt(now);
+  document.getElementById('nf-to').value=fmt(end);
+}
+
+// ═══ CALENDAR ADMIN ═══
+function renderCalAdmin(){
+  const list=document.getElementById('cal-admin-list');if(!list)return;
+  if(!D.calServices)D.calServices=NP_MONTHS_NE.map(function(_,i){return Object.assign({},getCalSvc(i));});
+  list.innerHTML=D.calServices.map(function(s,i){
+    return '<div class="apc" style="margin-bottom:12px">'
+      +'<div class="apc-hdr"><h3>'+s.icon+' '+NP_MONTHS_NE[i]+' <span style="font-size:.65rem;color:#8a8a9a;font-family:var(--fb)">'+NP_MONTHS_EN[i]+' · '+NP_MONTH_EN_MAP[i]+'</span></h3></div>'
+      +'<div class="afr">'
+      +'<div class="afg" style="flex:0 0 70px"><label>Icon</label><input type="text" id="csi-'+i+'" value="'+s.icon+'" maxlength="4" style="font-size:1.4rem;text-align:center"></div>'
+      +'<div class="afg" style="flex:1"><label>नेपाली सेवा सुझाव</label><input type="text" id="csn-'+i+'" value="'+s.ne+'"></div>'
+      +'</div>'
+      +'<div class="afr">'
+      +'<div class="afg" style="flex:1"><label>English Service Name</label><input type="text" id="cse-'+i+'" value="'+s.en+'"></div>'
+      +'<div class="afg" style="flex:1"><label>Tip / Best For</label><input type="text" id="cst-'+i+'" value="'+s.tip+'"></div>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+function saveCalServices(){
+  if(!D.calServices)D.calServices=[];
+  for(let i=0;i<12;i++){
+    D.calServices[i]={
+      icon:document.getElementById('csi-'+i)?.value||getCalSvc(i).icon,
+      ne:document.getElementById('csn-'+i)?.value||getCalSvc(i).ne,
+      en:document.getElementById('cse-'+i)?.value||getCalSvc(i).en,
+      tip:document.getElementById('cst-'+i)?.value||getCalSvc(i).tip
+    };
+  }
+  save();showOk('cal-svc-ok');
+}
+
+function setCardAccent(color){
+  D.card.accent=color;save();updateVCPreview();
 }
 function renderSocialAdmin(){
   const S=D.settings;
@@ -2117,13 +3259,88 @@ function renderDashboard(){
     {icon:'🔧',label:'Services',val:D.services.length,c:'#c9933a'},
     {icon:'🏗️',label:'Projects',val:D.projects.length,c:'#22c55e'},
     {icon:'💬',label:'Testimonials',val:D.testimonials.length,c:'#3b82f6'},
-    {icon:'⭐',label:'Why Us Points',val:D.whyUs.length,c:'#a855f7'},
-    {icon:'📇',label:'Visiting Card',val:'1',c:'#22c55e'}
+    {icon:'⭐',label:'Why Us',val:D.whyUs.length,c:'#a855f7'},
+    {icon:'📢',label:'Notices',val:(D.notices||[]).length,c:'#f97316'}
   ].map(s=>`<div class="dash-stat"><div style="font-size:1.6rem;margin-bottom:6px">${s.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:${s.c};line-height:1">${s.val}</div><div style="font-size:.67rem;color:#8a8a9a;text-transform:uppercase;letter-spacing:1.5px;margin-top:3px">${s.label}</div></div>`).join('');
   const t=D.meta.template||'dark';
   const dashTmpl=document.getElementById('dash-tmpl');
   if(dashTmpl)dashTmpl.textContent={dark:'🌙 Dark Luxury',corporate:'🏢 Corporate Blue',saffron:'🔥 Bold Saffron'}[t];
   ['dark','corporate','saffron'].forEach(x=>document.getElementById('tc-'+x)?.classList.toggle('on',x===t));
+  // Notifications panel
+  renderDashNotif();
+  // Calendar mini grid
+  renderDashCal();
+}
+
+function renderDashNotif(){
+  const box=document.getElementById('dash-notif');if(!box)return;
+  const now=new Date();
+  const active=(D.notices||[]).filter(function(n){
+    const from=n.from?new Date(n.from):null;
+    const to=n.to?new Date(n.to):null;
+    return(!from||from<=now)&&(!to||to>=now);
+  });
+  const upcoming=(D.notices||[]).filter(function(n){
+    return n.from&&new Date(n.from)>now;
+  });
+  if(!active.length&&!upcoming.length){box.innerHTML='';return;}
+
+  let html='<div style="margin-bottom:14px">'
+    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
+    +'<h3 style="font-size:.85rem;font-weight:700;color:var(--txt)">🔔 Live Notifications</h3>'
+    +'<button onclick="showSec(\'notices\')" style="font-size:.62rem;color:var(--a);background:none;border:1px solid var(--brd);border-radius:12px;padding:3px 10px;cursor:pointer">Manage →</button>'
+    +'</div>'
+    +'<div style="display:flex;flex-direction:column;gap:7px">';
+
+  active.forEach(function(n){
+    const col=NF_COLORS[n.bg||'gold'];
+    const toDate=n.to?new Date(n.to):null;
+    const toBS=toDate?adToBS(toDate):null;
+    const toStr=toBS?NP_MONTHS_NE[toBS.month]+' '+toBS.day+', '+toBS.year+' B.S.':(toDate?toDate.toLocaleDateString():'No end');
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid '+col+'33;border-radius:10px;border-left:3px solid '+col+'">'
+      +'<span style="font-size:1.4rem">'+n.icon+'</span>'
+      +'<div style="flex:1"><div style="font-size:.8rem;font-weight:600;color:var(--txt)">'+n.msg.substring(0,60)+(n.msg.length>60?'...':'')+'</div>'
+      +'<div style="font-size:.6rem;color:#5a5a6a;margin-top:2px">● Live until: '+toStr+'</div></div>'
+      +'<span style="font-size:.58rem;font-weight:700;padding:3px 9px;background:rgba(34,197,94,.12);color:#22c55e;border-radius:10px;white-space:nowrap">● Live</span>'
+      +'</div>';
+  });
+
+  upcoming.slice(0,2).forEach(function(n){
+    const col=NF_COLORS[n.bg||'gold'];
+    const fromDate=new Date(n.from);
+    const fromBS=adToBS(fromDate);
+    const fromStr=fromBS?NP_MONTHS_NE[fromBS.month]+' '+fromBS.day+', '+fromBS.year+' B.S.':fromDate.toLocaleDateString();
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;border-left:3px solid rgba(234,179,8,.4)">'
+      +'<span style="font-size:1.4rem">'+n.icon+'</span>'
+      +'<div style="flex:1"><div style="font-size:.8rem;font-weight:600;color:var(--txt)">'+n.msg.substring(0,60)+'...</div>'
+      +'<div style="font-size:.6rem;color:#5a5a6a;margin-top:2px">⏳ Starts: '+fromStr+'</div></div>'
+      +'<span style="font-size:.58rem;font-weight:700;padding:3px 9px;background:rgba(234,179,8,.1);color:#eab308;border-radius:10px;white-space:nowrap">⏳ Soon</span>'
+      +'</div>';
+  });
+
+  html+='</div></div>';
+  box.innerHTML=html;
+}
+
+function dashCalYear(d){
+  _calYear+=d;
+  const el=document.getElementById('dash-cal-yr');
+  if(el)el.textContent=_calYear;
+  renderDashCal();
+}
+function renderDashCal(){
+  const grid=document.getElementById('dash-cal-grid');if(!grid)return;
+  const todayBS=adToBS(new Date());
+  grid.innerHTML=NP_MONTHS_NE.map(function(m,i){
+    const s=getCalSvc(i);
+    const isCurrentMonth=todayBS&&todayBS.year===_calYear&&todayBS.month===i;
+    return '<div onclick="downloadCalCard('+i+')" style="background:'+(isCurrentMonth?'rgba(201,147,58,.12)':'rgba(255,255,255,.04)')+';border:1px solid '+(isCurrentMonth?'rgba(201,147,58,.4)':'rgba(255,255,255,.08)')+';border-radius:9px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor=\'#c9933a\'" onmouseout="this.style.borderColor=\''+(isCurrentMonth?'rgba(201,147,58,.4)':'rgba(255,255,255,.08)')+'\';">'
+      +'<div style="font-size:1.3rem;margin-bottom:4px">'+s.icon+'</div>'
+      +'<div style="font-size:.68rem;font-weight:700;color:'+(isCurrentMonth?'#c9933a':'#8a8a9a')+'">'+m+'</div>'
+      +'<div style="font-size:.55rem;color:#5a5a6a;margin-top:2px">'+NP_MONTHS_EN[i]+'</div>'
+      +(isCurrentMonth?'<div style="font-size:.52rem;color:#c9933a;margin-top:3px;font-weight:700">▶ Current</div>':'')
+      +'</div>';
+  }).join('');
 }
 
 // ═══════════════════════════════════════════════
@@ -2139,6 +3356,7 @@ function populateForms(){
   document.getElementById('stats-ed').innerHTML=H.stats.map((s,i)=>`<div class="stat-ed"><label>Stat ${i+1} Number</label><input type="text" id="hs-n${i}" value="${s.num}"><label style="margin-top:4px">Label</label><input type="text" id="hs-l${i}" value="${s.label}"></div>`).join('');
   fld('c-ph1',S.phone1);fld('c-ph2',S.phone2);fld('c-ph3',S.phone3);
   fld('c-wa',S.wa);fld('c-email',S.email);fld('c-addr',S.address);fld('c-hrs',S.hours);
+  fld('c-video',S.videoUrl||'');
   fld('c-facebook',S.facebook||'');fld('c-instagram',S.instagram||'');fld('c-tiktok',S.tiktok||'');
   // sync social media section too
   fld('sm-facebook',S.facebook||'');fld('sm-instagram',S.instagram||'');fld('sm-tiktok',S.tiktok||'');
@@ -2407,6 +3625,7 @@ function saveContact(){
   D.settings.phone3=g('c-ph3')||D.settings.phone3;D.settings.wa=g('c-wa')||D.settings.wa;
   D.settings.email=g('c-email')||D.settings.email;D.settings.address=g('c-addr')||D.settings.address;
   D.settings.hours=g('c-hrs')||D.settings.hours;
+  D.settings.videoUrl=document.getElementById('c-video')?.value.trim()||'';
   D.settings.facebook=document.getElementById('c-facebook')?.value.trim()||'';
   D.settings.instagram=document.getElementById('c-instagram')?.value.trim()||'';
   D.settings.tiktok=document.getElementById('c-tiktok')?.value.trim()||'';
