@@ -1978,8 +1978,14 @@ let _calYear=2083;
 const NP_MONTHS_NE=['बैशाख','जेठ','असार','साउन','भदौ','असोज','कार्तिक','मङ्सिर','पुस','माघ','फागुन','चैत'];
 const NP_MONTHS_EN=['Baisakh','Jestha','Ashadh','Shrawan','Bhadra','Ashoj','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra'];
 const NP_MONTH_EN_MAP=['Apr-May','May-Jun','Jun-Jul','Jul-Aug','Aug-Sep','Sep-Oct','Oct-Nov','Nov-Dec','Dec-Jan','Jan-Feb','Feb-Mar','Mar-Apr'];
-const NP_DAYS_NE=['आ','सो','मं','बु','बि','श','श'];
-const NP_DAYS_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const NP_DAYS_NE=['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
+const NP_DAYS_NE_SHORT=['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि'];
+const NP_DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const NP_DAYS_EN_SHORT=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+// Nepali (Devanagari) numerals
+const NP_NUMS=['०','१','२','३','४','५','६','७','८','९'];
+function toNPNum(n){return String(n).split('').map(function(c){return NP_NUMS[parseInt(c)]||c;}).join('');}
+
 
 // ─── ACTUAL Nepali calendar data ───
 // days[month] = total days, startDay[month] = 0=Sun..6=Sat for day 1
@@ -2054,33 +2060,31 @@ function _buildDateGrid(monthIdx,yr){
   const totalDays=calData.days[monthIdx];
   const startDay=calData.start[monthIdx];
   const isNe=window._lang==='ne';
-  const days=isNe?NP_DAYS_NE:NP_DAYS_EN;
+  const days=isNe?NP_DAYS_NE_SHORT:NP_DAYS_EN_SHORT;
 
-  // Today in BS (approximate)
-  const todayAD=new Date();
-  const todayBS=adToBS(todayAD);
+  const todayBS=adToBS(new Date());
   const isThisMonth=todayBS&&todayBS.year===yr&&todayBS.month===monthIdx;
   const todayDate=isThisMonth?todayBS.day:0;
 
-  let html='<div style="margin:14px 0 6px">'
-    +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;margin-bottom:6px">'
-    +days.map(function(d,di){return '<div style="font-size:.6rem;font-weight:700;color:'+(di===6?'#ef4444':di===0?'#f97316':'rgba(255,255,255,.5)')+';padding:4px 0">'+d+'</div>';}).join('')
+  let html='<div style="margin:10px 0 4px">'
+    +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center;margin-bottom:4px">'
+    +days.map(function(d,di){
+      return '<div style="font-size:.58rem;font-weight:700;color:'+(di===6?'#ef4444':di===0?'#f97316':'rgba(255,255,255,.5)')+';padding:3px 0;letter-spacing:'+(isNe?'0':'.3px')+'">'+d+'</div>';
+    }).join('')
     +'</div>'
     +'<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center">';
 
-  // Empty cells before start
-  for(let i=0;i<startDay;i++){
-    html+='<div style="padding:5px 0"></div>';
-  }
-  // Date cells
+  for(let i=0;i<startDay;i++) html+='<div></div>';
+
   for(let d=1;d<=totalDays;d++){
     const col=(d+startDay-1)%7;
     const isSat=col===6,isSun=col===0;
     const isToday=d===todayDate;
     const dateColor=isSat?'#ef4444':isSun?'#f97316':'rgba(255,255,255,.85)';
-    const bg=isToday?'#FFD700':'rgba(255,255,255,.05)';
-    const txtClr=isToday?'#003893':dateColor;
-    html+='<div style="padding:5px 2px;background:'+bg+';border-radius:5px;font-size:.78rem;font-weight:'+(isToday?'700':'500')+';color:'+txtClr+'">'+d+'</div>';
+    const bg=isToday?'#c9933a':'rgba(255,255,255,.04)';
+    const txtClr=isToday?'#07070a':dateColor;
+    const displayNum=isNe?toNPNum(d):d;
+    html+='<div style="padding:4px 1px;background:'+bg+';border-radius:5px;font-size:.76rem;font-weight:'+(isToday?'700':'500')+';color:'+txtClr+'">'+displayNum+'</div>';
   }
   html+='</div></div>';
   return html;
@@ -2267,22 +2271,22 @@ function downloadCalCard(monthIdx){
   ctx.fillStyle='#c9933a';ctx.fillRect(RX,mhY+114,RW-20,2);
 
   // ── DAY HEADERS ─────────────────────────────────
-  const dayNE=['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि'];
+  const dayNE=['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
+  const dayNEsh=['आइत','सोम','मंगल','बुध','बिहि','शुक्र','शनि'];
   const dayEN=['SUN','MON','TUE','WED','THU','FRI','SAT'];
   const cellW=(RW-20)/7;
   const hdrY=mhY+130;
 
-  dayNE.forEach(function(d,di){
+  dayNEsh.forEach(function(d,di){
     const cx=RX+di*cellW+cellW/2;
     const isSat=di===6,isSun=di===0;
     const hbg=isSat?'#dc2626':isSun?'#ea580c':'#1a3a6e';
-    // header pill
     ctx.fillStyle=hbg;
     ctx.beginPath();ctx.roundRect(RX+di*cellW+3,hdrY-22,cellW-6,38,5);ctx.fill();
     ctx.fillStyle='#fff';ctx.font='bold 13px sans-serif';ctx.textAlign='center';
-    ctx.fillText(d,cx,hdrY-1);
+    ctx.fillText(isNe?d:dayEN[di],cx,hdrY-1);
     ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='10px sans-serif';
-    ctx.fillText(dayEN[di],cx,hdrY+13);
+    ctx.fillText(isNe?dayEN[di]:dayNE[di].substring(0,3),cx,hdrY+13);
   });
 
   // ── DATE GRID ────────────────────────────────────
@@ -2310,7 +2314,8 @@ function downloadCalCard(monthIdx){
     const baseColor=isToday?'#fff':isSat?'#dc2626':isSun?'#ea580c':'#111827';
     ctx.fillStyle=baseColor;
     ctx.font='bold '+Math.floor(cellH*0.55)+'px sans-serif';ctx.textAlign='center';
-    ctx.fillText(dd,cx,cy+cellH*0.62);
+    const dispNum=isNe?toNPNum(dd):dd;
+    ctx.fillText(dispNum,cx,cy+cellH*0.62);
 
     // Cell separator lines
     ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=0.5;
