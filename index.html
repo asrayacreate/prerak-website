@@ -516,9 +516,8 @@ body.admin-mode .svc-card:hover::after{opacity:1;}
 /* Push content down when admin bar visible */
 body.admin-mode .site-nav{top:34px;}
 /* ══ NEPALI FLAG ══ */
-.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:default;flex-shrink:0}
-.np-flag svg{width:24px;height:32px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));transform-origin:left center;animation:flagWave 3s ease-in-out infinite;}
-@keyframes flagWave{0%,100%{transform:skewY(0deg) scaleX(1)}25%{transform:skewY(-2deg) scaleX(1.03)}50%{transform:skewY(1deg) scaleX(.98)}75%{transform:skewY(-1deg) scaleX(1.02)}}
+.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:default;flex-shrink:0;}
+.np-flag canvas{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));}
 /* ══ LANGUAGE SWITCHER ══ */
 .lang-sw{display:flex;gap:3px;background:rgba(255,255,255,.08);border:1px solid var(--brd2);border-radius:20px;padding:3px;flex-shrink:0}
 .lang-btn{padding:6px 14px;border-radius:16px;border:none;font-size:.72rem;font-weight:700;letter-spacing:.5px;cursor:pointer;font-family:var(--fb);transition:all .2s;background:transparent;color:var(--mt);white-space:nowrap}
@@ -1712,37 +1711,7 @@ function renderSite(){
     <a href="#" class="nav-logo">
       <div class="logo-mk"><svg viewBox="0 0 24 24" fill="none" stroke="${logostroke}" stroke-width="2.5" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
       <div class="logo-txt"><div class="ln">${S.company}</div><div class="ls">${S.sub}</div></div>
-      <div class="np-flag"><svg viewBox="0 0 42 56" xmlns="http://www.w3.org/2000/svg" style="display:block">
-  <!-- Staff -->
-  <rect x="1" y="0" width="3.5" height="56" fill="#fff" rx="1.5"/>
-  <!-- White outline (border) -->
-  <polygon points="4.5,1 4.5,52 41,30.5 4.5,22" fill="white"/>
-  <polygon points="4.5,22 41,30.5 4.5,52" fill="white"/>
-  <!-- Blue border -->
-  <polygon points="4.5,2.5 4.5,50 39,30.5 4.5,23.5" fill="#003893"/>
-  <polygon points="4.5,23.5 39,30.5 4.5,50" fill="#003893"/>
-  <!-- Red fill upper -->
-  <polygon points="4.5,4.5 4.5,48 36.5,30.5 4.5,25" fill="#DC143C"/>
-  <!-- Red fill lower -->
-  <polygon points="4.5,25 36.5,30.5 4.5,48" fill="#DC143C"/>
-  <!-- MOON (upper triangle, crescent) -->
-  <circle cx="17" cy="16" r="5.5" fill="white"/>
-  <circle cx="20" cy="14.5" r="4.2" fill="#DC143C"/>
-  <!-- MOON rays (simplified) -->
-  <!-- SUN (lower triangle) -->
-  <circle cx="17" cy="37" r="4.5" fill="white"/>
-  <!-- Sun rays -->
-  <g stroke="white" stroke-width="1.4" stroke-linecap="round">
-    <line x1="17" y1="30.2" x2="17" y2="32"/>
-    <line x1="17" y1="42" x2="17" y2="43.8"/>
-    <line x1="10.2" y1="37" x2="12" y2="37"/>
-    <line x1="22" y1="37" x2="23.8" y2="37"/>
-    <line x1="12.3" y1="32.3" x2="13.6" y2="33.6"/>
-    <line x1="20.4" y1="40.4" x2="21.7" y2="41.7"/>
-    <line x1="12.3" y1="41.7" x2="13.6" y2="40.4"/>
-    <line x1="20.4" y1="33.6" x2="21.7" y2="32.3"/>
-  </g>
-</svg></div>
+      <div class="np-flag"><canvas id="np-flag-canvas" width="40" height="52" style="display:block"></canvas></div>
     </a>
     <ul class="nav-links">
       <li><a href="#services" onclick="mClose()" data-en="Services" data-ne="सेवाहरू">Services</a></li>
@@ -3076,6 +3045,76 @@ function enterWebsite(){
   const wbT=wb.querySelector('.wb-title');if(wbT)wbT.textContent=D.settings.company||'PRERAK';
   const wbS=wb.querySelector('.wb-sub');if(wbS)wbS.textContent=D.settings.sub||'Multipurpose Pvt Ltd';
 })();
+// ═══════════════════════════════════════════════
+// ANIMATED NEPAL FLAG — Canvas Wave Physics
+// ═══════════════════════════════════════════════
+function initNepalFlag(){
+  const canvas=document.getElementById('np-flag-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const POLE_X=4,FW=W-POLE_X;
+  const MID=H*0.43,T1_TIP_Y=H*0.41,T2_TIP_Y=H*0.66;
+  let t=0;
+  const GRID=22;
+  function wOff(nx){
+    const amp=3.2,freq=3,spd=2.2;
+    return Math.sin(freq*nx-spd*t)*amp*nx*nx;
+  }
+  function interp(a,b,f){return a*(1-f)+b*f;}
+  function drawFlag(){
+    ctx.clearRect(0,0,W,H);t+=0.05;
+    // Staff
+    const sg=ctx.createLinearGradient(0,0,POLE_X,0);sg.addColorStop(0,'#ccc');sg.addColorStop(.5,'#fff');sg.addColorStop(1,'#aaa');
+    ctx.fillStyle=sg;ctx.fillRect(0,0,POLE_X,H);
+    // Draw strips
+    for(let i=0;i<GRID;i++){
+      const nx0=i/GRID,nx1=(i+1)/GRID;
+      const x0=POLE_X+nx0*FW,x1=POLE_X+nx1*FW;
+      const w0=wOff(nx0),w1=wOff(nx1);
+      // Upper triangle bounds
+      const u_top0=interp(0,T1_TIP_Y+w0,nx0)+w0;
+      const u_top1=interp(0,T1_TIP_Y+w1,nx1)+w1;
+      const u_bot0=interp(MID,T1_TIP_Y+w0,nx0)+w0;
+      const u_bot1=interp(MID,T1_TIP_Y+w1,nx1)+w1;
+      // Lower triangle bounds
+      const l_top0=interp(MID,T2_TIP_Y+w0,nx0)+w0;
+      const l_top1=interp(MID,T2_TIP_Y+w1,nx1)+w1;
+      const l_bot0=interp(H,T2_TIP_Y+w0,nx0)+w0;
+      const l_bot1=interp(H,T2_TIP_Y+w1,nx1)+w1;
+      const shade=Math.sin(3*nx0-2.2*t)*0.12;
+      // White border
+      const BW=1.4;
+      [[u_top0-BW,u_top1-BW,u_bot1+BW,u_bot0+BW],[l_top0-BW,l_top1-BW,l_bot1+BW,l_bot0+BW]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='white';ctx.fill();
+      });
+      // Blue border
+      const BB=0.7;
+      [[u_top0-BB,u_top1-BB,u_bot1+BB,u_bot0+BB],[l_top0-BB,l_top1-BB,l_bot1+BB,l_bot0+BB]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='#003893';ctx.fill();
+      });
+      // Red fill with shading
+      const r=Math.min(255,Math.round(220+shade*40)),g=Math.round(20+shade*10),b2=Math.round(60+shade*20);
+      const rc='rgb('+r+','+g+','+b2+')';
+      [[u_top0,u_top1,u_bot1,u_bot0],[l_top0,l_top1,l_bot1,l_bot0]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle=rc;ctx.fill();
+      });
+    }
+    // Moon (upper triangle)
+    const mnx=0.33,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.09;
+    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
+    // Sun (lower triangle)
+    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.077;
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.3;ctx.lineCap='round';
+    for(let r=0;r<12;r++){const a=r*Math.PI/6;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*(sr+1.5),sy+Math.sin(a)*(sr+1.5));ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.58),sy+Math.sin(a)*(sr+sr*0.58));ctx.stroke();}
+    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    requestAnimationFrame(drawFlag);
+  }
+  drawFlag();
+}
+setTimeout(initNepalFlag,400);
+
 function showBSDate(inputId,spanId){
   const val=document.getElementById(inputId)?.value;
   const span=document.getElementById(spanId);if(!span)return;
