@@ -1388,15 +1388,8 @@ body.admin-mode .site-nav{top:34px;}
             <div style="padding:8px 10px;background:#0f0f18;text-align:center">
               <div style="font-size:.65rem;color:#8a8a9a">Cormorant · Premium Dark</div>
               <div id="vcs-dark-check" style="font-size:.6rem;color:#c9933a;margin-top:3px;display:none">✓ Active</div>
-           <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.4445853503525!2d85.03058867523315!3d27.424269176346222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49980d287707%3A0x633519da96803274!2sPrerak%20Multipurpose%20Pvt%20Ltd!5e0!3m2!1sen!2snp!4v1713876000000!5m2!1sen!2snp" 
-    width="100%" 
-    height="280" 
-    style="border:0; border-radius:14px;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+            </div>
+          </div>
           <div onclick="D.card.style='corporate';save();renderSite();renderVCAdmin()" id="vcs-corporate" style="border:2px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .25s">
             <div style="height:70px;background:linear-gradient(135deg,#fff 0%,#f4f6fa 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:relative">
               <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1a3a6e,#2550a0)"></div>
@@ -1585,25 +1578,9 @@ body.admin-mode .site-nav{top:34px;}
 // ═══════════════════════════════════════════════
 // DEFAULT DATA
 // ═══════════════════════════════════════════════
-const DEF={<div style="padding: 15px; margin-top: 10px; background-color: #ffffff; border-left: 5px solid #FF0000; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <h3 style="margin: 0; color: #008000; font-size: 1.1rem; font-family: sans-serif;">
-        PRERAK Construction & Prefab Homes
-    </h3>
-    <p style="margin: 5px 0; color: #555; font-size: 0.85rem;">
-        Modern Prefab Homes & Quality Engineering Solutions in Hetauda.
-    </p>
-    <div style="display: flex; gap: 10px; margin-top: 10px;">
-        <button onclick="location.href='tel:+97798550XXXXX'" style="flex: 1; background-color: #008000; color: white; border: none; padding: 8px; border-radius: 4px; font-weight: bold; cursor: pointer;">
-            Call Now
-        </button>
-        <button style="flex: 1; background-color: #ffffff; color: #FF0000; border: 1px solid #FF0000; padding: 8px; border-radius: 4px; font-weight: bold; cursor: pointer;">
-            Our Projects
-        </button>
-    </div>
-</div>
+const DEF={
   meta:{template:'dark'},
-  // यसलाई हाल्नुहोस्:
-  settings:{company:'PRERAK',sub:'Construction & Prefab Homes', ...}',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Hetauda-4, Kantirajpath\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
+  settings:{company:'PRERAK',sub:'Multipurpose Pvt Ltd',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Hetauda-4, Kantirajpath\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
   hero:{eyebrow:'Hetauda, Makwanpur, Nepal',line1:'Building Your',line2:'Dreams',line3:'Into Reality',sub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",btn1:'🏗️ Get Free Quote',btn2:'Explore Services →',bgImg:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80',stats:[{num:'500+',label:'Projects Done'},{num:'10+',label:'Years Experience'},{num:'100%',label:'Satisfaction'}]},
   services:[
     {id:'s1',icon:'🏗️',name:'Construction Works',desc:'Complete construction from foundation to finishing. Residential homes, commercial buildings, RCC structures and prefab houses — all under one roof.',tags:['Residential','Commercial','RCC','Prefab'],img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80',gallery:[{type:'image',src:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80',cap:'Foundation Work'},{type:'image',src:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80',cap:'RCC Structure'}],features:['Foundation to finishing','RCC structure design','Prefab & modular homes','Commercial buildings','Renovation & repair']},
