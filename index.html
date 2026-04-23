@@ -622,8 +622,13 @@ body.admin-mode .site-nav{top:34px;}
 .cal-tpl.on,.cal-tpl:hover{border-color:var(--a);}
 .cal-tpl-prev{height:60px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;letter-spacing:1.5px;color:#fff;}
 .cal-tpl-lbl{padding:5px;text-align:center;font-size:.58rem;color:#8a8a9a;background:var(--bg3);}
-.mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:350;background:var(--bg2);border-top:1px solid var(--brd2);padding:10px 14px;gap:8px;}
-@media(max-width:600px){.mob-cta{display:flex;}}
+.mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:350;background:var(--bg2);border-top:1px solid var(--brd2);padding:10px 14px;gap:8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));}
+@media(max-width:600px){
+  .mob-cta{display:flex;}
+  body{padding-bottom:64px;}
+  #btt{bottom:76px!important;}
+  #quick-panel{bottom:80px!important;right:12px!important;}
+}
 .mob-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;border-radius:10px;font-size:.78rem;font-weight:700;text-align:center;}
 .mob-cta .mc-call{background:linear-gradient(135deg,var(--ad),var(--a));color:var(--bg);}
 .mob-cta .mc-wa{background:#25D366;color:#fff;}
@@ -2949,7 +2954,7 @@ async function _sendOTPEmail(email,otp){
 
   // Method 1: EmailJS (free email service - works from browser)
   // To enable real email: go to emailjs.com, create account, get service/template/public key
-  const EMAILJS_SERVICE=D.settings.ejsService||'service_prerak';
+  const EMAILJS_SERVICE=D.settings.ejsService||'service_bvxfr3q';
   const EMAILJS_TEMPLATE=D.settings.ejsTemplate||'template_otp';
   const EMAILJS_KEY=D.settings.ejsKey||'YOUR_PUBLIC_KEY';
 
