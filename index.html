@@ -567,7 +567,10 @@ body.admin-mode .svc-card:hover::after{opacity:1;}
 /* Push content down when admin bar visible */
 body.admin-mode .site-nav{top:34px;}
 /* ══ NEPALI FLAG ══ */
-.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:default;flex-shrink:0;}
+.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:pointer;flex-shrink:0;transition:transform .25s;position:relative;}
+.np-flag:hover{transform:scale(1.15);}
+.np-flag:hover::after{content:'Click!';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.52rem;font-weight:700;color:var(--a);background:rgba(0,0,0,.8);padding:2px 6px;border-radius:4px;white-space:nowrap;pointer-events:none;animation:fpop .3s;}
+@keyframes fpop{from{opacity:0;transform:translateX(-50%) translateY(4px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 .np-flag canvas{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));}
 /* ══ LANGUAGE SWITCHER ══ */
 .lang-sw{display:flex;gap:3px;background:rgba(255,255,255,.08);border:1px solid var(--brd2);border-radius:20px;padding:3px;flex-shrink:0}
@@ -674,6 +677,138 @@ body.has-nav-sc #nb-wrap{top:68px;}
 .cal-tpl.on,.cal-tpl:hover{border-color:var(--a);}
 .cal-tpl-prev{height:60px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;letter-spacing:1.5px;color:#fff;}
 .cal-tpl-lbl{padding:5px;text-align:center;font-size:.58rem;color:#8a8a9a;background:var(--bg3);}
+/* ══ 🇳🇵 NEPAL FLAG FULLSCREEN MODAL ══ */
+.flag-overlay{position:fixed;inset:0;z-index:9600;background:linear-gradient(180deg,#0a0a1a 0%,#1a0a1a 40%,#2a0a0a 70%,#0a0a1a 100%);display:none;overflow-y:auto;overflow-x:hidden;animation:flagFadeIn .5s;}
+.flag-overlay.open{display:block;}
+@keyframes flagFadeIn{from{opacity:0}to{opacity:1}}
+.flag-close{position:fixed;top:20px;right:20px;z-index:100;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border:1.5px solid rgba(255,255,255,.25);color:#fff;width:48px;height:48px;border-radius:50%;cursor:pointer;font-size:1.2rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all .25s;box-shadow:0 8px 24px rgba(0,0,0,.5);}
+.flag-close:hover{background:#dc2626;border-color:#dc2626;transform:rotate(90deg) scale(1.1);}
+.flag-top-bar{display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:rgba(0,0,0,.55);backdrop-filter:blur(22px);border-bottom:2px solid rgba(220,38,38,.5);position:fixed;top:0;left:0;right:0;z-index:50;flex-wrap:wrap;gap:16px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+.flag-badge-live{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:linear-gradient(135deg,#dc2626,#991b1b);border-radius:20px;font-size:.7rem;font-weight:800;color:#fff;letter-spacing:2px;box-shadow:0 4px 14px rgba(220,38,38,.4);}
+.live-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:livePulse 1.5s ease-in-out infinite;}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.8)}50%{opacity:.7;transform:scale(1.3);box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+.flag-title h2{font-family:var(--fd);font-size:1.4rem;color:#fff;font-weight:700;letter-spacing:-.5px;margin-bottom:2px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
+.flag-title p{font-size:.7rem;color:rgba(255,255,255,.75);font-style:italic;}
+.flag-badge-date{text-align:right;background:rgba(255,204,77,.15);border:1px solid rgba(255,204,77,.4);padding:8px 16px;border-radius:12px;backdrop-filter:blur(10px);}
+#flag-np-date{color:#ffcc4d;font-size:.76rem;font-weight:700;letter-spacing:.5px;}
+#flag-time{color:rgba(255,255,255,.85);font-size:.88rem;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px;}
+
+/* FIXED BACKGROUND FLAG — stays while scrolling */
+.flag-stage{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;padding:120px 20px 20px;pointer-events:none;z-index:1;}
+#flag-big-canvas{max-width:88vw;max-height:80vh;filter:drop-shadow(0 20px 60px rgba(220,38,38,.6));animation:flagEntry 1.2s cubic-bezier(.23,1,.32,1);opacity:1;transition:opacity .4s;}
+@keyframes flagEntry{from{opacity:0;transform:scale(.8) rotateY(-30deg);}to{opacity:1;transform:scale(1) rotateY(0);}}
+.flag-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.flag-particle{position:absolute;width:6px;height:6px;background:#ffcc4d;border-radius:50%;opacity:.4;animation:flagFloat linear infinite;}
+@keyframes flagFloat{0%{transform:translateY(100vh) translateX(0);opacity:0;}10%{opacity:.6;}90%{opacity:.6;}100%{transform:translateY(-10vh) translateX(30px);opacity:0;}}
+.flag-bg-overlay{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 0%,transparent 40%,rgba(10,10,26,.4) 80%,rgba(10,10,26,.75) 100%);z-index:2;}
+
+/* Scrollable content over fixed flag */
+.flag-content-wrap{position:relative;z-index:3;margin-top:100vh;background:linear-gradient(180deg,transparent 0%,rgba(10,10,26,.7) 8%,rgba(10,10,26,.92) 15%,rgba(20,10,30,.95) 100%);padding-top:40px;min-height:50vh;}
+
+.flag-section-title{text-align:center;padding:40px 20px 16px;}
+.flag-section-title h3{font-family:var(--fd);font-size:1.9rem;color:#fff;background:linear-gradient(90deg,#ffcc4d,#ff6b6b,#ffcc4d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;font-weight:700;}
+.flag-section-title p{font-size:.78rem;color:rgba(255,255,255,.6);font-style:italic;letter-spacing:1px;}
+
+.flag-facts-wrap{background:linear-gradient(90deg,rgba(220,38,38,.92),rgba(30,20,60,.92));padding:16px 0;overflow:hidden;border-top:2px solid rgba(255,204,77,.5);border-bottom:2px solid rgba(255,204,77,.5);position:relative;backdrop-filter:blur(10px);}
+.flag-facts-track{display:flex;gap:60px;animation:flagTicker 120s linear infinite;white-space:nowrap;}
+@keyframes flagTicker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.flag-fact{display:inline-flex;align-items:center;gap:10px;font-size:.95rem;font-weight:600;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5);}
+.flag-fact b{color:#ffcc4d;}
+
+.flag-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-info-card{background:linear-gradient(155deg,rgba(255,255,255,.1),rgba(255,255,255,.03));backdrop-filter:blur(20px);border:1px solid rgba(255,204,77,.25);border-radius:16px;padding:20px;text-align:center;transition:all .3s;cursor:default;}
+.flag-info-card:hover{transform:translateY(-4px);border-color:rgba(255,204,77,.5);background:linear-gradient(155deg,rgba(255,204,77,.15),rgba(255,255,255,.03));box-shadow:0 12px 30px rgba(220,38,38,.2);}
+.flag-info-icon{font-size:2.2rem;margin-bottom:8px;}
+.flag-info-lbl{font-size:.62rem;font-weight:700;color:#ffcc4d;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.flag-info-val{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.flag-info-sub{font-size:.68rem;color:rgba(255,255,255,.6);}
+
+/* Symbols Grid */
+.flag-symbols-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-symbol-card{background:linear-gradient(155deg,rgba(220,38,38,.18),rgba(0,56,147,.15));backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:24px 18px;text-align:center;transition:all .3s;}
+.flag-symbol-card:hover{transform:translateY(-5px) scale(1.03);border-color:rgba(255,204,77,.5);}
+.flag-symbol-emoji{font-size:2.6rem;margin-bottom:10px;filter:drop-shadow(0 4px 12px rgba(255,204,77,.35));}
+.flag-symbol-name{font-size:.6rem;font-weight:800;color:#ffcc4d;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.flag-symbol-np{font-family:var(--fd);font-size:1.15rem;color:#fff;font-weight:700;margin-bottom:2px;}
+.flag-symbol-en{font-size:.72rem;color:rgba(255,255,255,.65);font-style:italic;}
+
+/* Provinces Grid */
+.flag-provinces-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-prov{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 18px;transition:all .3s;position:relative;}
+.flag-prov:hover{border-color:rgba(255,204,77,.4);transform:translateX(4px);}
+.prov-num{flex-shrink:0;width:42px;height:42px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--fd);font-size:1.3rem;box-shadow:0 4px 14px rgba(220,38,38,.4);}
+.flag-prov b{color:#fff;font-size:.85rem;}
+.flag-prov small{color:rgba(255,255,255,.6);font-size:.68rem;}
+.prov-star{display:inline-block;margin-left:6px;font-size:.6rem;color:#ffcc4d;font-weight:700;background:rgba(255,204,77,.15);padding:2px 8px;border-radius:10px;border:1px solid rgba(255,204,77,.3);}
+
+/* Places Grid */
+.flag-places-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-place{background:linear-gradient(135deg,rgba(255,204,77,.1),rgba(220,38,38,.08));backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;color:#fff;font-size:.85rem;transition:all .3s;}
+.flag-place:hover{border-color:rgba(255,204,77,.5);transform:translateY(-3px);background:linear-gradient(135deg,rgba(255,204,77,.2),rgba(220,38,38,.15));}
+.flag-place small{color:rgba(255,255,255,.55);font-size:.68rem;display:block;margin-top:4px;}
+
+/* Festivals Grid */
+.flag-festivals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-fest{background:linear-gradient(160deg,rgba(255,204,77,.15),rgba(220,38,38,.1));backdrop-filter:blur(16px);border:1px solid rgba(255,204,77,.25);border-radius:16px;padding:22px 16px;text-align:center;transition:all .3s;}
+.flag-fest:hover{transform:translateY(-5px) rotate(-1deg);border-color:rgba(255,204,77,.5);}
+.fest-icon{font-size:2.4rem;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(255,204,77,.4));}
+.fest-name{font-family:var(--fd);font-size:1.2rem;color:#ffcc4d;font-weight:700;}
+.fest-np{font-size:.95rem;color:#fff;font-weight:600;margin:3px 0 8px;}
+.fest-desc{font-size:.68rem;color:rgba(255,255,255,.6);font-style:italic;}
+
+/* Heroes Grid */
+.flag-heroes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-hero{background:rgba(0,56,147,.15);backdrop-filter:blur(14px);border-left:3px solid #ffcc4d;border-radius:8px;padding:14px 18px;color:#fff;font-size:.85rem;transition:all .3s;}
+.flag-hero:hover{background:rgba(0,56,147,.3);transform:translateX(6px);}
+.flag-hero small{color:rgba(255,255,255,.55);font-size:.68rem;display:block;margin-top:3px;font-style:italic;}
+
+.flag-anthem{max-width:700px;margin:40px auto;padding:32px;background:linear-gradient(155deg,rgba(220,38,38,.2),rgba(30,10,60,.5));border:1px solid rgba(255,204,77,.35);border-radius:20px;text-align:center;backdrop-filter:blur(20px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.flag-anthem-title{font-size:.7rem;font-weight:800;color:#ffcc4d;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;}
+.flag-anthem-text{font-family:var(--fd);font-size:1.25rem;color:#fff;line-height:1.7;margin-bottom:14px;font-style:italic;}
+.flag-anthem-trans{font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:10px;}
+.flag-anthem-credit{font-size:.65rem;color:rgba(255,204,77,.65);letter-spacing:1px;font-style:italic;}
+
+/* Did You Know */
+.flag-did-you-know{max-width:900px;margin:0 auto;padding:20px 40px;display:grid;gap:10px;}
+.flag-dyk{background:linear-gradient(90deg,rgba(255,204,77,.1),transparent);border-left:4px solid #ffcc4d;padding:14px 20px;color:#fff;font-size:.88rem;border-radius:0 12px 12px 0;transition:all .3s;}
+.flag-dyk:hover{background:linear-gradient(90deg,rgba(255,204,77,.2),transparent);transform:translateX(6px);}
+.flag-dyk b{color:#ffcc4d;}
+
+.flag-closing{text-align:center;padding:60px 20px 100px;background:radial-gradient(ellipse at center,rgba(220,38,38,.25),transparent 70%);}
+.flag-closing-flag{font-size:4rem;margin-bottom:16px;animation:flagBob 2s ease-in-out infinite;}
+@keyframes flagBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.flag-closing h3{font-family:var(--fd);font-size:2.6rem;color:#fff;margin-bottom:10px;background:linear-gradient(90deg,#dc2626,#ffcc4d,#dc2626);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.flag-closing p{font-size:.9rem;color:rgba(255,255,255,.75);margin-bottom:24px;}
+.flag-cta-btn{padding:14px 32px;background:linear-gradient(135deg,#ffcc4d,#e5a526);color:#131320;border:none;border-radius:30px;font-weight:800;font-size:.85rem;letter-spacing:1px;cursor:pointer;box-shadow:0 10px 30px rgba(255,204,77,.4);transition:all .25s;}
+.flag-cta-btn:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(255,204,77,.6);}
+
+.flag-scroll-hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:40;color:#ffcc4d;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;animation:scrollBob 2s ease-in-out infinite;pointer-events:none;background:rgba(0,0,0,.65);padding:10px 20px;border-radius:20px;backdrop-filter:blur(10px);border:1px solid rgba(255,204,77,.4);box-shadow:0 8px 20px rgba(0,0,0,.4);}
+@keyframes scrollBob{0%,100%{transform:translateX(-50%) translateY(0);opacity:.9;}50%{transform:translateX(-50%) translateY(8px);opacity:1;}}
+
+@media(max-width:600px){
+  .flag-top-bar{padding:12px 16px;gap:8px;}
+  .flag-title h2{font-size:1rem;}
+  .flag-title p{font-size:.58rem;}
+  #flag-np-date{font-size:.65rem;}
+  #flag-time{font-size:.78rem;}
+  .flag-badge-live{padding:4px 10px;font-size:.62rem;letter-spacing:1.5px;}
+  .flag-badge-date{padding:5px 10px;}
+  .flag-stage{padding:100px 10px 10px;}
+  #flag-big-canvas{max-width:94vw;max-height:75vh;}
+  .flag-content-wrap{margin-top:100vh;}
+  .flag-section-title{padding:30px 16px 12px;}
+  .flag-section-title h3{font-size:1.4rem;}
+  .flag-info-grid,.flag-symbols-grid,.flag-provinces-grid,.flag-places-grid,.flag-festivals-grid,.flag-heroes-grid,.flag-did-you-know{padding:16px;gap:10px;}
+  .flag-info-grid{grid-template-columns:repeat(2,1fr);}
+  .flag-info-val{font-size:1.2rem;}
+  .flag-anthem{margin:24px 16px;padding:22px;}
+  .flag-anthem-text{font-size:1rem;}
+  .flag-closing h3{font-size:1.8rem;}
+  .flag-closing-flag{font-size:3rem;}
+  .flag-fact{font-size:.78rem;}
+  .flag-close{top:12px;right:12px;width:40px;height:40px;}
+}
+
 /* ══ QUOTE REQUEST MODAL ══ */
 .qm-overlay{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:20px;animation:qmFade .3s;}
 .qm-overlay.open{display:flex;}
@@ -1095,6 +1230,301 @@ body.has-nav-sc #nb-wrap{top:68px;}
   </div>
   <p style="font-size:.58rem;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase">🖱️ Drag to rotate · 🌈 Holo for rainbow effect</p>
   <canvas id="card3d-particles" style="position:fixed;inset:0;pointer-events:none;z-index:-1"></canvas>
+</div>
+
+<!-- 🇳🇵 NEPAL FLAG FULLSCREEN MODAL -->
+<div id="flag-modal" class="flag-overlay">
+  <button class="flag-close" onclick="closeFlagModal()" title="Close">✕</button>
+  
+  <!-- Top Info Bar -->
+  <div class="flag-top-bar">
+    <div class="flag-badge-live">
+      <span class="live-dot"></span> LIVE
+    </div>
+    <div class="flag-title">
+      <h2>🇳🇵 नेपाल हाम्रो मातृभूमि</h2>
+      <p>Nepal — Our Motherland · Est. 2008 BS</p>
+    </div>
+    <div class="flag-badge-date" id="flag-live-date">
+      <div id="flag-np-date">--</div>
+      <div id="flag-time">--:--</div>
+    </div>
+  </div>
+
+  <!-- Main Flag Canvas - FIXED as background while scrolling -->
+  <div class="flag-stage">
+    <canvas id="flag-big-canvas" width="800" height="1000"></canvas>
+    <div class="flag-particles" id="flag-particles"></div>
+    <div class="flag-bg-overlay"></div>
+  </div>
+
+  <!-- Scroll content starts here -->
+  <div class="flag-content-wrap">
+
+  <!-- Scrolling Facts Ticker -->
+  <div class="flag-facts-wrap">
+    <div class="flag-facts-track" id="flag-facts-track">
+      <span class="flag-fact">🏔️ <b>Mount Everest</b> — World's highest peak (8,848.86 m)</span>
+      <span class="flag-fact">🦏 <b>One-horned Rhino</b> — Chitwan National Park</span>
+      <span class="flag-fact">🐅 <b>Royal Bengal Tiger</b> — Nepal's pride</span>
+      <span class="flag-fact">🏛️ <b>Pashupatinath</b> — UNESCO World Heritage</span>
+      <span class="flag-fact">☸️ <b>Lumbini</b> — Birthplace of Lord Buddha</span>
+      <span class="flag-fact">🎭 <b>Kathmandu Durbar Square</b> — Royal heritage</span>
+      <span class="flag-fact">🏔️ <b>Annapurna</b> — World's 10th highest</span>
+      <span class="flag-fact">🌊 <b>Rara Lake</b> — Queen of Lakes</span>
+      <span class="flag-fact">🎨 <b>Bhaktapur</b> — City of Devotees</span>
+      <span class="flag-fact">🏯 <b>Patan</b> — City of Fine Arts</span>
+      <span class="flag-fact">🌿 <b>Sagarmatha National Park</b> — UNESCO site</span>
+      <span class="flag-fact">🦌 <b>Danphe</b> — National Bird (Himalayan Monal)</span>
+      <span class="flag-fact">🌸 <b>Rhododendron</b> — National Flower (Lali Gurans)</span>
+      <span class="flag-fact">🐄 <b>Cow</b> — National Animal</span>
+      <span class="flag-fact">📜 <b>Only non-rectangular</b> national flag in the world!</span>
+      <span class="flag-fact">🕉️ <b>Crimson Red</b> — color of Rhododendron</span>
+      <span class="flag-fact">☀️ <b>Sun & Moon</b> — hope that nation lasts as long as celestial bodies</span>
+      <span class="flag-fact">🗻 <b>Gorkha warriors</b> — legendary bravery worldwide</span>
+      <span class="flag-fact">🙏 <b>Namaste</b> — traditional greeting of respect</span>
+      <span class="flag-fact">🏗️ <b>PRERAK Construction</b> — serving Nepal since 2012!</span>
+    </div>
+  </div>
+
+  <!-- Key Stats Grid -->
+  <div class="flag-section-title">
+    <h3>🇳🇵 Nepal at a Glance · नेपाल एक नजरमा</h3>
+    <p>Facts & Figures</p>
+  </div>
+  <div class="flag-info-grid">
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🏔️</div>
+      <div class="flag-info-lbl">Highest Peak</div>
+      <div class="flag-info-val">8,848 m</div>
+      <div class="flag-info-sub">Mount Everest</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🗺️</div>
+      <div class="flag-info-lbl">Total Area</div>
+      <div class="flag-info-val">147,516 km²</div>
+      <div class="flag-info-sub">7 Provinces · 77 Districts</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">👥</div>
+      <div class="flag-info-lbl">Population</div>
+      <div class="flag-info-val">30M+</div>
+      <div class="flag-info-sub">125+ ethnic groups</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🗣️</div>
+      <div class="flag-info-lbl">Languages</div>
+      <div class="flag-info-val">123+</div>
+      <div class="flag-info-sub">Nepali is official</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🏔️</div>
+      <div class="flag-info-lbl">8000m Peaks</div>
+      <div class="flag-info-val">8 of 14</div>
+      <div class="flag-info-sub">World's highest mountains</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🕉️</div>
+      <div class="flag-info-lbl">UNESCO Sites</div>
+      <div class="flag-info-val">10 Heritage</div>
+      <div class="flag-info-sub">Cultural & Natural</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">💰</div>
+      <div class="flag-info-lbl">Currency</div>
+      <div class="flag-info-val">NPR</div>
+      <div class="flag-info-sub">Nepalese Rupee ₨</div>
+    </div>
+    <div class="flag-info-card">
+      <div class="flag-info-icon">🏛️</div>
+      <div class="flag-info-lbl">Capital</div>
+      <div class="flag-info-val">Kathmandu</div>
+      <div class="flag-info-sub">काठमाडौं</div>
+    </div>
+  </div>
+
+  <!-- National Symbols -->
+  <div class="flag-section-title">
+    <h3>🏵️ National Symbols · राष्ट्रिय चिन्हहरू</h3>
+    <p>Sacred emblems of our nation</p>
+  </div>
+  <div class="flag-symbols-grid">
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🌸</div>
+      <div class="flag-symbol-name">National Flower</div>
+      <div class="flag-symbol-np">लालीगुराँस</div>
+      <div class="flag-symbol-en">Rhododendron</div>
+    </div>
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🦌</div>
+      <div class="flag-symbol-name">National Bird</div>
+      <div class="flag-symbol-np">डाँफे</div>
+      <div class="flag-symbol-en">Himalayan Monal</div>
+    </div>
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🐄</div>
+      <div class="flag-symbol-name">National Animal</div>
+      <div class="flag-symbol-np">गाई</div>
+      <div class="flag-symbol-en">Cow</div>
+    </div>
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🎨</div>
+      <div class="flag-symbol-name">National Colors</div>
+      <div class="flag-symbol-np">रातो र निलो</div>
+      <div class="flag-symbol-en">Crimson Red & Blue</div>
+    </div>
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🎵</div>
+      <div class="flag-symbol-name">National Anthem</div>
+      <div class="flag-symbol-np">सयौं थुँगा फूलका हामी</div>
+      <div class="flag-symbol-en">Sayaun Thunga Phool Ka</div>
+    </div>
+    <div class="flag-symbol-card">
+      <div class="flag-symbol-emoji">🗣️</div>
+      <div class="flag-symbol-name">National Language</div>
+      <div class="flag-symbol-np">नेपाली</div>
+      <div class="flag-symbol-en">Nepali (Devanagari)</div>
+    </div>
+  </div>
+
+  <!-- 7 Provinces -->
+  <div class="flag-section-title">
+    <h3>🗺️ Seven Provinces · सात प्रदेश</h3>
+    <p>Nepal's administrative divisions</p>
+  </div>
+  <div class="flag-provinces-grid">
+    <div class="flag-prov"><span class="prov-num">1</span><div><b>Koshi Province</b><br><small>कोशी प्रदेश · Biratnagar</small></div></div>
+    <div class="flag-prov"><span class="prov-num">2</span><div><b>Madhesh Province</b><br><small>मधेश प्रदेश · Janakpur</small></div></div>
+    <div class="flag-prov"><span class="prov-num">3</span><div><b>Bagmati Province</b><br><small>बागमती प्रदेश · Hetauda</small><span class="prov-star">⭐ Our Home</span></div></div>
+    <div class="flag-prov"><span class="prov-num">4</span><div><b>Gandaki Province</b><br><small>गण्डकी प्रदेश · Pokhara</small></div></div>
+    <div class="flag-prov"><span class="prov-num">5</span><div><b>Lumbini Province</b><br><small>लुम्बिनी प्रदेश · Deukhuri</small></div></div>
+    <div class="flag-prov"><span class="prov-num">6</span><div><b>Karnali Province</b><br><small>कर्णाली प्रदेश · Birendranagar</small></div></div>
+    <div class="flag-prov"><span class="prov-num">7</span><div><b>Sudurpashchim</b><br><small>सुदूरपश्चिम · Dhangadhi</small></div></div>
+  </div>
+
+  <!-- Famous Places -->
+  <div class="flag-section-title">
+    <h3>🏛️ Famous Places · प्रसिद्ध स्थलहरू</h3>
+    <p>Must-visit destinations of Nepal</p>
+  </div>
+  <div class="flag-places-grid">
+    <div class="flag-place">🏔️ <b>Everest Base Camp</b><br><small>Solukhumbu</small></div>
+    <div class="flag-place">🕉️ <b>Pashupatinath Temple</b><br><small>Kathmandu</small></div>
+    <div class="flag-place">☸️ <b>Lumbini</b><br><small>Birthplace of Buddha</small></div>
+    <div class="flag-place">🏯 <b>Kathmandu Durbar Square</b><br><small>Hanuman Dhoka</small></div>
+    <div class="flag-place">🎨 <b>Bhaktapur Durbar Square</b><br><small>Medieval city</small></div>
+    <div class="flag-place">🌅 <b>Pokhara · Phewa Lake</b><br><small>Lake city</small></div>
+    <div class="flag-place">🦏 <b>Chitwan National Park</b><br><small>Wildlife safari</small></div>
+    <div class="flag-place">🏛️ <b>Swayambhunath</b><br><small>Monkey Temple</small></div>
+    <div class="flag-place">🏛️ <b>Boudhanath Stupa</b><br><small>Largest stupa</small></div>
+    <div class="flag-place">🌊 <b>Rara Lake</b><br><small>Queen of lakes · Mugu</small></div>
+    <div class="flag-place">🏔️ <b>Annapurna Circuit</b><br><small>Trekking paradise</small></div>
+    <div class="flag-place">🙏 <b>Muktinath Temple</b><br><small>Mustang</small></div>
+  </div>
+
+  <!-- Cultural Heritage -->
+  <div class="flag-section-title">
+    <h3>🎭 Culture & Festivals · संस्कृति र चाडपर्व</h3>
+    <p>Richness of Nepali traditions</p>
+  </div>
+  <div class="flag-festivals-grid">
+    <div class="flag-fest">
+      <div class="fest-icon">🪔</div>
+      <div class="fest-name">Dashain</div>
+      <div class="fest-np">दशैं</div>
+      <div class="fest-desc">15-day festival · Victory of good</div>
+    </div>
+    <div class="flag-fest">
+      <div class="fest-icon">🎆</div>
+      <div class="fest-name">Tihar</div>
+      <div class="fest-np">तिहार</div>
+      <div class="fest-desc">Festival of lights · 5 days</div>
+    </div>
+    <div class="flag-fest">
+      <div class="fest-icon">🎨</div>
+      <div class="fest-name">Holi</div>
+      <div class="fest-np">होली</div>
+      <div class="fest-desc">Festival of colors</div>
+    </div>
+    <div class="flag-fest">
+      <div class="fest-icon">🎊</div>
+      <div class="fest-name">Nepali New Year</div>
+      <div class="fest-np">नयाँ वर्ष</div>
+      <div class="fest-desc">Bikram Sambat calendar</div>
+    </div>
+    <div class="flag-fest">
+      <div class="fest-icon">🎪</div>
+      <div class="fest-name">Indra Jatra</div>
+      <div class="fest-np">इन्द्र जात्रा</div>
+      <div class="fest-desc">Living Goddess Kumari</div>
+    </div>
+    <div class="flag-fest">
+      <div class="fest-icon">☸️</div>
+      <div class="fest-name">Buddha Jayanti</div>
+      <div class="fest-np">बुद्ध जयन्ती</div>
+      <div class="fest-desc">Birth of Lord Buddha</div>
+    </div>
+  </div>
+
+  <!-- Famous Personalities -->
+  <div class="flag-section-title">
+    <h3>⭐ Proud Nepalis · गर्विला नेपाली</h3>
+    <p>Legends who brought glory to Nepal</p>
+  </div>
+  <div class="flag-heroes-grid">
+    <div class="flag-hero">👑 <b>Prithvi Narayan Shah</b><br><small>Unifier of Nepal (1743-1775)</small></div>
+    <div class="flag-hero">🏔️ <b>Tenzing Norgay Sherpa</b><br><small>First to summit Everest (1953)</small></div>
+    <div class="flag-hero">📖 <b>Bhanubhakta Acharya</b><br><small>Adi Kavi · Father of Nepali literature</small></div>
+    <div class="flag-hero">⚔️ <b>Bhimsen Thapa</b><br><small>Mukhtiyar · Military leader</small></div>
+    <div class="flag-hero">🏔️ <b>Pasang Lhamu Sherpa</b><br><small>First Nepali woman on Everest</small></div>
+    <div class="flag-hero">☸️ <b>Lord Buddha</b><br><small>Born in Lumbini · Light of Asia</small></div>
+  </div>
+
+  <!-- National Anthem -->
+  <div class="flag-anthem">
+    <div class="flag-anthem-title">🎵 राष्ट्रिय गान · National Anthem</div>
+    <div class="flag-anthem-text">
+      "सयौं थुँगा फूलका हामी, एउटै माला नेपाली।<br>
+      सार्वभौम भई फैलिएका, मेची-महाकाली॥"
+    </div>
+    <div class="flag-anthem-trans">
+      "Woven from hundreds of flowers, we are one garland — Nepali.<br>
+      Sovereign, spread from Mechi to Mahakali."
+    </div>
+    <div class="flag-anthem-credit">— Byakul Maila (lyrics) · Amber Gurung (composer)</div>
+  </div>
+
+  <!-- Fun Facts -->
+  <div class="flag-section-title">
+    <h3>💡 Amazing Facts · रोचक तथ्यहरू</h3>
+    <p>Did you know?</p>
+  </div>
+  <div class="flag-did-you-know">
+    <div class="flag-dyk">✨ Nepal is the <b>only country</b> with a non-rectangular national flag</div>
+    <div class="flag-dyk">🏔️ <b>8 of 14</b> world's highest peaks (above 8,000m) are in Nepal</div>
+    <div class="flag-dyk">📅 Nepal follows <b>Bikram Sambat</b> — 56.7 years ahead of AD calendar</div>
+    <div class="flag-dyk">🙏 Nepal is the <b>birthplace of Lord Buddha</b> (Lumbini)</div>
+    <div class="flag-dyk">🇳🇵 Nepal has <b>never been colonized</b> in its history</div>
+    <div class="flag-dyk">⛰️ Everest grows <b>4mm taller</b> every year due to tectonic activity</div>
+    <div class="flag-dyk">🎖️ <b>Gurkha soldiers</b> serve in armies worldwide — legendary bravery</div>
+    <div class="flag-dyk">🌸 Nepal has <b>6,500+ flowering plant species</b> — biodiversity hotspot</div>
+  </div>
+
+  <!-- Closing Message -->
+  <div class="flag-closing">
+    <div class="flag-closing-flag">🇳🇵</div>
+    <h3>जय नेपाल! · Jaya Nepal!</h3>
+    <p>Proudly Nepali · Proudly PRERAK Construction & Prefab Homes</p>
+    <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-top:-18px;margin-bottom:24px;">Building dreams for Nepal since 2012</p>
+    <button class="flag-cta-btn" onclick="closeFlagModal()">Continue to Website →</button>
+  </div>
+
+  </div><!-- /flag-content-wrap -->
+
+  <!-- Scroll hint -->
+  <div class="flag-scroll-hint" id="flag-scroll-hint">
+    <div>↓ Scroll to learn more</div>
+  </div>
 </div>
 
 <!-- QUOTE REQUEST MODAL -->
@@ -2327,7 +2757,7 @@ function renderSite(){
     <a href="#" class="nav-logo">
       <div class="logo-mk" title="PRERAK Construction"><div class="logo-mk-inner"><img src="${PRERAK_LOGO}" alt="PRERAK" /><div class="logo-mk-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/><path d="M12 3v3"/><circle cx="7" cy="14" r=".5" fill="currentColor"/><circle cx="17" cy="14" r=".5" fill="currentColor"/></svg></div></div></div>
       <div class="logo-txt"><div class="ln">${S.company}</div><div class="ls">${S.sub}</div></div>
-      <div class="np-flag"><canvas id="np-flag-canvas" width="40" height="52" style="display:block"></canvas></div>
+      <div class="np-flag" onclick="openFlagModal()" title="Click to see Live Nepal Flag"><canvas id="np-flag-canvas" width="40" height="52" style="display:block"></canvas></div>
     </a>
     <ul class="nav-links">
       <li><a href="#services" onclick="mClose()" data-en="Services" data-ne="सेवाहरू">Services</a></li>
@@ -3047,6 +3477,178 @@ function downloadFullCalendar(){
 // ═══════════════════════════════════════════════
 // ═══ QUOTE REQUEST SYSTEM ═══
 let _quotePlanId='';
+// ═══ 🇳🇵 NEPAL FLAG FULLSCREEN MODAL ═══
+let _flagBigRAF=null,_flagTimeInt=null,_flagParticlesStarted=false;
+
+function openFlagModal(){
+  const m=document.getElementById('flag-modal');
+  if(!m)return;
+  m.classList.add('open');
+  m.scrollTop=0;
+  document.body.style.overflow='hidden';
+  startBigFlag();
+  startFlagTime();
+  startFlagParticles();
+  // Auto-scroll hint fade out
+  setTimeout(()=>{const h=document.getElementById('flag-scroll-hint');if(h)h.style.display='none';},6000);
+  // Listen to scroll inside modal
+  m.addEventListener('scroll',()=>{
+    const h=document.getElementById('flag-scroll-hint');
+    if(h && m.scrollTop>50)h.style.display='none';
+  });
+}
+
+function closeFlagModal(){
+  const m=document.getElementById('flag-modal');
+  if(!m)return;
+  m.classList.remove('open');
+  document.body.style.overflow='';
+  if(_flagBigRAF)cancelAnimationFrame(_flagBigRAF);
+  if(_flagTimeInt)clearInterval(_flagTimeInt);
+  _flagBigRAF=null;_flagTimeInt=null;
+}
+
+function startFlagTime(){
+  const updateTime=()=>{
+    const n=new Date();
+    const hh=String(n.getHours()).padStart(2,'0');
+    const mm=String(n.getMinutes()).padStart(2,'0');
+    const ss=String(n.getSeconds()).padStart(2,'0');
+    const te=document.getElementById('flag-time');
+    if(te)te.textContent=hh+':'+mm+':'+ss;
+    // Nepali date
+    try{
+      const months=['बैशाख','जेठ','असार','श्रावण','भाद्र','असोज','कार्तिक','मंसिर','पौष','माघ','फाल्गुन','चैत्र'];
+      if(typeof npCurrentDate==='function'){
+        const d=npCurrentDate();
+        const de=document.getElementById('flag-np-date');
+        if(de && d)de.textContent=(d.day||'')+' '+(months[d.month-1]||'')+' '+(d.year||'');
+      }else{
+        const de=document.getElementById('flag-np-date');
+        if(de)de.textContent=n.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
+      }
+    }catch(e){
+      const de=document.getElementById('flag-np-date');
+      if(de)de.textContent=n.toLocaleDateString();
+    }
+  };
+  updateTime();
+  _flagTimeInt=setInterval(updateTime,1000);
+}
+
+function startFlagParticles(){
+  if(_flagParticlesStarted)return;
+  _flagParticlesStarted=true;
+  const p=document.getElementById('flag-particles');
+  if(!p)return;
+  for(let i=0;i<15;i++){
+    const dot=document.createElement('div');
+    dot.className='flag-particle';
+    dot.style.left=(Math.random()*100)+'%';
+    dot.style.animationDuration=(8+Math.random()*12)+'s';
+    dot.style.animationDelay=(Math.random()*8)+'s';
+    dot.style.background=['#ffcc4d','#dc2626','#fff'][Math.floor(Math.random()*3)];
+    p.appendChild(dot);
+  }
+}
+
+function startBigFlag(){
+  const c=document.getElementById('flag-big-canvas');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  // Flag proportions (Nepal's unique shape)
+  const POLE_X=10,FW=W-POLE_X-40;
+  const MID=H*0.43,T1_TIP_Y=H*0.41,T2_TIP_Y=H*0.66;
+  let t=0;
+  const GRID=44;
+  function wOff(nx){
+    const amp=14,freq=3,spd=2.0;
+    return Math.sin(freq*nx-spd*t)*amp*nx*nx;
+  }
+  function interp(a,b,f){return a*(1-f)+b*f;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=0.04;
+    // Pole with gradient
+    const sg=ctx.createLinearGradient(0,0,POLE_X,0);
+    sg.addColorStop(0,'#888');sg.addColorStop(.5,'#ddd');sg.addColorStop(1,'#666');
+    ctx.fillStyle=sg;ctx.fillRect(0,0,POLE_X,H);
+    // Pole top decoration
+    ctx.beginPath();ctx.arc(POLE_X/2,8,POLE_X*0.9,0,Math.PI*2);ctx.fillStyle='#ffcc4d';ctx.fill();
+    ctx.strokeStyle='#b08230';ctx.lineWidth=1;ctx.stroke();
+    // Draw strips
+    for(let i=0;i<GRID;i++){
+      const nx0=i/GRID,nx1=(i+1)/GRID;
+      const x0=POLE_X+nx0*FW,x1=POLE_X+nx1*FW;
+      const w0=wOff(nx0),w1=wOff(nx1);
+      const u_top0=interp(0,T1_TIP_Y+w0,nx0)+w0;
+      const u_top1=interp(0,T1_TIP_Y+w1,nx1)+w1;
+      const u_bot0=interp(MID,T1_TIP_Y+w0,nx0)+w0;
+      const u_bot1=interp(MID,T1_TIP_Y+w1,nx1)+w1;
+      const l_top0=interp(MID,T2_TIP_Y+w0,nx0)+w0;
+      const l_top1=interp(MID,T2_TIP_Y+w1,nx1)+w1;
+      const l_bot0=interp(H,T2_TIP_Y+w0,nx0)+w0;
+      const l_bot1=interp(H,T2_TIP_Y+w1,nx1)+w1;
+      const shade=Math.sin(3*nx0-2.2*t)*0.18;
+      // White border
+      const BW=5;
+      [[u_top0-BW,u_top1-BW,u_bot1+BW,u_bot0+BW],[l_top0-BW,l_top1-BW,l_bot1+BW,l_bot0+BW]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='white';ctx.fill();
+      });
+      // Blue border
+      const BB=2.5;
+      [[u_top0-BB,u_top1-BB,u_bot1+BB,u_bot0+BB],[l_top0-BB,l_top1-BB,l_bot1+BB,l_bot0+BB]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='#003893';ctx.fill();
+      });
+      // Red fill with shading
+      const r=Math.min(255,Math.round(220+shade*40));
+      const g=Math.max(0,Math.round(20+shade*12));
+      const b2=Math.max(0,Math.round(60+shade*20));
+      const rc='rgb('+r+','+g+','+b2+')';
+      [[u_top0,u_top1,u_bot1,u_bot0],[l_top0,l_top1,l_bot1,l_bot0]].forEach(function(b){
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle=rc;ctx.fill();
+      });
+    }
+    // Moon
+    const mnx=0.33,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.095;
+    ctx.save();
+    ctx.shadowColor='rgba(255,255,255,.6)';ctx.shadowBlur=20;
+    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.restore();
+    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
+    // Moon rays (12 points)
+    ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.lineCap='round';
+    for(let r=0;r<8;r++){
+      const a=r*Math.PI/4;
+      ctx.beginPath();
+      ctx.moveTo(mx+Math.cos(a)*(mr+3),my+Math.sin(a)*(mr+3));
+      ctx.lineTo(mx+Math.cos(a)*(mr+mr*0.35),my+Math.sin(a)*(mr+mr*0.35));
+      ctx.stroke();
+    }
+    // Sun
+    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.08;
+    ctx.save();
+    ctx.shadowColor='rgba(255,255,255,.7)';ctx.shadowBlur=20;
+    ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.lineCap='round';
+    for(let r=0;r<12;r++){
+      const a=r*Math.PI/6;
+      ctx.beginPath();
+      ctx.moveTo(sx+Math.cos(a)*(sr+3),sy+Math.sin(a)*(sr+3));
+      ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.6),sy+Math.sin(a)*(sr+sr*0.6));
+      ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.restore();
+    _flagBigRAF=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// Close on Escape
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && document.getElementById('flag-modal')?.classList.contains('open'))closeFlagModal();
+});
+
 function swMap(view){
   ['map','satellite'].forEach(v=>{
     const f=document.getElementById('mapframe-'+v);
