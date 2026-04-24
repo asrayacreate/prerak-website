@@ -4562,4 +4562,643 @@ function saveHero(){
   D.hero.line1=g('h-line1')||D.hero.line1;D.hero.line2=g('h-line2')||D.hero.line2;D.hero.line3=g('h-line3')||D.hero.line3;
   D.hero.eyebrow=g('h-eyebrow')||D.hero.eyebrow;D.hero.sub=g('h-sub')||D.hero.sub;
   D.hero.btn1=g('h-btn1')||D.hero.btn1;D.hero.btn2=g('h-btn2')||D.hero.btn2;
-  D.hero.stats=D.hero.sta
+  D.hero.stats=D.hero.stats.map((s,i)=>({num:g('hs-n'+i)||s.num,label:g('hs-l'+i)||s.label}));
+  save();renderSite();showOk('hero-ok');
+}
+
+// ═══════════════════════════════════════════════
+// ADMIN SERVICES
+// ═══════════════════════════════════════════════
+let _sfImg=''; // temp store for service image during edit
+let _sfGallery=[]; // temp gallery during edit
+
+function renderAdminSvc(){
+  document.getElementById('svc-list').innerHTML=D.services.map(s=>`
+    <div class="apc" id="svc-row-${s.id}">
+      <div class="apc-hdr">
+        <h3>${s.icon} ${s.name}</h3>
+        <div class="apc-acts">
+          <button class="abtn" onclick="openEditSvc('${s.id}')">✎ Edit</button>
+          <button class="dbtn" onclick="deleteSvc('${s.id}')">🗑 Delete</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:start">
+        <div style="position:relative">
+          <img src="${s.img}" id="svc-thumb-${s.id}" style="width:110px;height:80px;object-fit:cover;border-radius:9px;border:1px solid rgba(255,255,255,.1);display:block" onerror="this.style.background='#1a1a2e'">
+          <label style="position:absolute;bottom:4px;left:0;right:0;background:rgba(201,147,58,.92);color:#07070a;font-size:.58rem;font-weight:700;text-align:center;padding:3px;cursor:pointer;border-radius:0 0 8px 8px;letter-spacing:.5px">
+            📷 Replace
+            <input type="file" accept="image/*" style="display:none" onchange="quickReplaceImg(this,'${s.id}')">
+          </label>
+        </div>
+        <div>
+          <p style="font-size:.78rem;color:#8a8a9a;line-height:1.65;margin-bottom:8px">${s.desc.substring(0,120)}…</p>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">${s.tags.map(t=>`<span style="background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);color:#c9933a;font-size:.58rem;padding:2px 8px;border-radius:10px">${t}</span>`).join('')}</div>
+          <div style="font-size:.65rem;color:#c9933a;font-weight:600">🖼️ Gallery: ${(s.gallery||[]).length} images</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+async function quickReplaceImg(input,svcId){
+  const f=input.files[0];if(!f)return;
+  const b64=await resizeImg(f,900,600,.82);
+  const s=D.services.find(x=>x.id===svcId);
+  if(s){s.img=b64;save();renderSite();}
+  const thumb=document.getElementById('svc-thumb-'+svcId);
+  if(thumb)thumb.src=b64;
+}
+function openAddSvc(){
+  _sfImg='';_sfGallery=[];
+  document.getElementById('svc-form-ttl').textContent='Add New Service';
+  ['sf-icon','sf-name','sf-desc','sf-tags','sf-feats','sf-imgurl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const ic=document.getElementById('sf-imgc');if(ic)ic.src='';
+  document.getElementById('sf-eid').value='';
+  renderSfGal();
+  document.getElementById('svc-form').classList.add('open');
+  document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
+}
+function openEditSvc(id){
+  const s=D.services.find(x=>x.id===id);if(!s)return;
+  _sfImg=s.img;_sfGallery=JSON.parse(JSON.stringify(s.gallery||[]));
+  document.getElementById('svc-form-ttl').textContent='Edit — '+s.name;
+  document.getElementById('sf-icon').value=s.icon;
+  document.getElementById('sf-name').value=s.name;
+  document.getElementById('sf-desc').value=s.desc;
+  document.getElementById('sf-tags').value=s.tags.join(', ');
+  document.getElementById('sf-feats').value=s.features.join('\n');
+  const ic=document.getElementById('sf-imgc');if(ic)ic.src=s.img;
+  document.getElementById('sf-imgurl').value=s.img.startsWith('data:')?'(uploaded image)':s.img;
+  document.getElementById('sf-eid').value=id;
+  renderSfGal();
+  document.getElementById('svc-form').classList.add('open');
+  document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
+}
+function renderSfGal(){
+  const grid=document.getElementById('sf-gal-grid');
+  const cnt=document.getElementById('sf-gal-count');
+  if(!grid)return;
+  if(cnt)cnt.textContent=_sfGallery.length;
+  if(!_sfGallery.length){
+    grid.innerHTML='<div style="grid-column:span 4;text-align:center;padding:16px;color:#5a5a6a;font-size:.72rem;border:1px dashed rgba(255,255,255,.07);border-radius:8px">No gallery images — add photos below</div>';
+    return;
+  }
+  grid.innerHTML=_sfGallery.map(function(g,i){
+    return '<div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">'
+      +'<img src="'+g.src+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.background=\'#1a1a2e\'">'
+      +'<button onclick="rmSfGal('+i+')" style="position:absolute;top:3px;right:3px;width:20px;height:20px;background:rgba(239,68,68,.92);border:none;border-radius:50%;color:#fff;font-size:.6rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center">✕</button>'
+    +'</div>';
+  }).join('');
+}
+function rmSfGal(i){_sfGallery.splice(i,1);renderSfGal();}
+async function addSvcGallery(input){
+  for(const f of Array.from(input.files)){
+    if(!f.type.startsWith('image/'))continue;
+    const b64=await resizeImg(f,800,600,.82);
+    _sfGallery.push({type:'image',src:b64,cap:f.name.replace(/\.[^.]+$/,'')});
+  }
+  renderSfGal();input.value='';
+}
+function addSvcGalUrl(){
+  const url=(document.getElementById('sf-gal-url')?.value||'').trim();
+  if(!url||!url.startsWith('http')){alert('Valid URL required');return;}
+  _sfGallery.push({type:'image',src:url,cap:''});
+  document.getElementById('sf-gal-url').value='';
+  renderSfGal();
+}
+function closeSvcForm(){document.getElementById('svc-form').classList.remove('open');}
+async function uploadSvcImg(input){
+  const f=input.files[0];if(!f)return;
+  const b64=await resizeImg(f,900,600,.82);
+  _sfImg=b64;
+  const ic=document.getElementById('sf-imgc');if(ic)ic.src=b64;
+  document.getElementById('sf-imgurl').value='✅ Image uploaded';
+}
+function setSvcImgUrl(){
+  const url=(document.getElementById('sf-imgurl')?.value||'').trim();
+  if(url&&url.startsWith('http')){
+    _sfImg=url;
+    const ic=document.getElementById('sf-imgc');if(ic)ic.src=url;
+  }
+}
+function saveSvc(){
+  const icon=document.getElementById('sf-icon').value.trim()||'🔧';
+  const name=document.getElementById('sf-name').value.trim();if(!name){alert('Service name required');return;}
+  const desc=document.getElementById('sf-desc').value.trim();
+  const tags=document.getElementById('sf-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const feats=document.getElementById('sf-feats').value.split('\n').map(f=>f.trim()).filter(Boolean);
+  const img=_sfImg||document.getElementById('sf-imgc')?.src||'';
+  const eid=document.getElementById('sf-eid').value;
+  if(eid){const idx=D.services.findIndex(x=>x.id===eid);if(idx>-1)D.services[idx]={...D.services[idx],icon,name,desc,tags,features:feats,img,gallery:_sfGallery};}
+  else{const id='s'+Date.now();D.services.push({id,icon,name,desc,tags,img,gallery:_sfGallery,features:feats});UPM[id]=[];}
+  _sfImg='';_sfGallery=[];
+  save();renderSite();renderAdminSvc();closeSvcForm();
+}
+function deleteSvc(id){if(!confirm('Delete this service?'))return;D.services=D.services.filter(s=>s.id!==id);delete UPM[id];save();renderSite();renderAdminSvc();}
+
+// ═══════════════════════════════════════════════
+// ADMIN PROJECTS
+// ═══════════════════════════════════════════════
+function renderAdminProj(){
+  document.getElementById('proj-count').textContent=D.projects.length;
+  document.getElementById('proj-gal').innerHTML=D.projects.map(p=>`
+    <div style="background:#0f0f18;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;position:relative">
+      <div style="position:relative;aspect-ratio:4/3;overflow:hidden">
+        <img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.background='#1a1a2e'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:8px;gap:5px">
+          <span style="background:rgba(201,147,58,.9);color:#07070a;font-size:.55rem;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content">${p.tag}</span>
+          <div style="font-size:.72rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.title}</div>
+        </div>
+        <button onclick="delProj('${p.id}')" style="position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(239,68,68,.9);border:none;border-radius:50%;color:#fff;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700">✕</button>
+      </div>
+      <div style="padding:10px;display:flex;flex-direction:column;gap:6px">
+        <input type="text" value="${p.title}" placeholder="Title" onchange="editProj('${p.id}','title',this.value)" style="width:100%;padding:6px 9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#f0ede8;font-family:'Plus Jakarta Sans',sans-serif;font-size:.75rem;outline:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+          <input type="text" value="${p.tag}" placeholder="Tag" onchange="editProj('${p.id}','tag',this.value)" style="padding:5px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#c9933a;font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;outline:none">
+          <input type="text" value="${p.sub}" placeholder="Location" onchange="editProj('${p.id}','sub',this.value)" style="padding:5px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#8a8a9a;font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;outline:none">
+        </div>
+        <label style="display:flex;align-items:center;justify-content:center;gap:5px;padding:6px;background:rgba(201,147,58,.08);border:1px solid rgba(201,147,58,.2);border-radius:7px;cursor:pointer;font-size:.68rem;color:#c9933a;font-weight:700">
+          🖼️ Replace Image
+          <input type="file" accept="image/*" style="display:none" onchange="replaceProj(this,'${p.id}')">
+        </label>
+      </div>
+    </div>`).join('');
+}
+async function uploadProjects(input){
+  const tag=document.getElementById('pf-tag')?.value||'Project';
+  const title=document.getElementById('pf-title')?.value||'';
+  const sub=document.getElementById('pf-sub')?.value||'Makwanpur';
+  for(const f of Array.from(input.files)){
+    if(!f.type.startsWith('image/'))continue;
+    const b64=await resizeImg(f,1200,800,.82);
+    D.projects.push({id:'p'+Date.now()+(Math.random()*9999|0),img:b64,tag,title:title||f.name.replace(/\.[^.]+$/,''),sub});
+  }
+  save();renderSite();renderAdminProj();input.value='';
+}
+async function replaceProj(input,id){
+  const f=input.files[0];if(!f)return;
+  const b64=await resizeImg(f,1200,800,.82);
+  const p=D.projects.find(x=>x.id===id);
+  if(p){p.img=b64;save();renderSite();renderAdminProj();}
+}
+function editProj(id,field,val){
+  const p=D.projects.find(x=>x.id===id);
+  if(p){p[field]=val;save();renderSite();}
+}
+function delProj(id){if(!confirm('Delete this project?'))return;D.projects=D.projects.filter(p=>p.id!==id);save();renderSite();renderAdminProj();}
+function editProjTitle(id,val){editProj(id,'title',val);}
+
+// ═══════════════════════════════════════════════
+// ADMIN TESTIMONIALS
+// ═══════════════════════════════════════════════
+function renderAdminTest(){
+  document.getElementById('test-list').innerHTML=D.testimonials.map(t=>`
+    <div class="apc">
+      <div class="apc-hdr"><h3>${t.init} ${t.name} <span style="font-size:.7rem;color:#c9933a">${'★'.repeat(t.stars||5)}</span></h3><div class="apc-acts"><button class="abtn" onclick="openEditTest('${t.id}')">✎ Edit</button><button class="dbtn" onclick="deleteTest('${t.id}')">🗑</button></div></div>
+      <p style="font-size:.79rem;color:#8a8a9a;font-style:italic">"${t.text.substring(0,110)}…"</p>
+      <p style="font-size:.71rem;color:#5a5a6a;margin-top:4px">— ${t.loc}</p>
+    </div>`).join('');
+}
+function openAddTest(){document.getElementById('test-form-ttl').textContent='Add Testimonial';['tf-text','tf-name','tf-loc','tf-init'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('tf-eid').value='';document.getElementById('test-form').classList.add('open');}
+function openEditTest(id){const t=D.testimonials.find(x=>x.id===id);if(!t)return;document.getElementById('test-form-ttl').textContent='Edit Testimonial';document.getElementById('tf-text').value=t.text;document.getElementById('tf-name').value=t.name;document.getElementById('tf-loc').value=t.loc;document.getElementById('tf-init').value=t.init;document.getElementById('tf-stars').value=t.stars||5;document.getElementById('tf-eid').value=id;document.getElementById('test-form').classList.add('open');}
+function closeTestForm(){document.getElementById('test-form').classList.remove('open');}
+function saveTest(){
+  const text=document.getElementById('tf-text').value.trim();if(!text){alert('Review text required');return;}
+  const name=document.getElementById('tf-name').value.trim()||'Client';
+  const loc=document.getElementById('tf-loc').value.trim()||'Hetauda';
+  const init=document.getElementById('tf-init').value.trim()||name[0];
+  const stars=+document.getElementById('tf-stars').value||5;
+  const eid=document.getElementById('tf-eid').value;
+  if(eid){const idx=D.testimonials.findIndex(x=>x.id===eid);if(idx>-1)D.testimonials[idx]={...D.testimonials[idx],text,name,loc,init,stars};}
+  else D.testimonials.push({id:'t'+Date.now(),text,name,loc,init,stars});
+  save();renderSite();renderAdminTest();closeTestForm();
+}
+function deleteTest(id){if(!confirm('Delete this testimonial?'))return;D.testimonials=D.testimonials.filter(t=>t.id!==id);save();renderSite();renderAdminTest();}
+
+// ═══════════════════════════════════════════════
+// ADMIN WHY US
+// ═══════════════════════════════════════════════
+function renderAdminWhy(){
+  document.getElementById('why-list').innerHTML=D.whyUs.map(w=>`
+    <div class="apc">
+      <div class="apc-hdr"><h3>${w.icon} ${w.title}</h3><div class="apc-acts"><button class="abtn" onclick="openEditWhy('${w.id}')">✎ Edit</button><button class="dbtn" onclick="deleteWhy('${w.id}')">🗑</button></div></div>
+      <p style="font-size:.79rem;color:#8a8a9a">${w.desc}</p>
+    </div>`).join('');
+}
+function openAddWhy(){document.getElementById('why-form-ttl').textContent='Add Point';['wf-icon','wf-title','wf-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('wf-eid').value='';document.getElementById('why-form').classList.add('open');}
+function openEditWhy(id){const w=D.whyUs.find(x=>x.id===id);if(!w)return;document.getElementById('why-form-ttl').textContent='Edit Point';document.getElementById('wf-icon').value=w.icon;document.getElementById('wf-title').value=w.title;document.getElementById('wf-desc').value=w.desc;document.getElementById('wf-eid').value=id;document.getElementById('why-form').classList.add('open');}
+function closeWhyForm(){document.getElementById('why-form').classList.remove('open');}
+function saveWhy(){
+  const icon=document.getElementById('wf-icon').value.trim()||'⭐';
+  const title=document.getElementById('wf-title').value.trim();if(!title){alert('Title required');return;}
+  const desc=document.getElementById('wf-desc').value.trim();
+  const eid=document.getElementById('wf-eid').value;
+  if(eid){const idx=D.whyUs.findIndex(x=>x.id===eid);if(idx>-1)D.whyUs[idx]={...D.whyUs[idx],icon,title,desc};}
+  else D.whyUs.push({id:'w'+Date.now(),icon,title,desc});
+  save();renderSite();renderAdminWhy();closeWhyForm();
+}
+function deleteWhy(id){if(!confirm('Delete this point?'))return;D.whyUs=D.whyUs.filter(w=>w.id!==id);save();renderSite();renderAdminWhy();}
+
+// ═══════════════════════════════════════════════
+// ADMIN CONTACT
+// ═══════════════════════════════════════════════
+function saveContact(){
+  const g=id=>document.getElementById(id)?.value.trim();
+  D.settings.phone1=g('c-ph1')||D.settings.phone1;D.settings.phone2=g('c-ph2')||D.settings.phone2;
+  D.settings.phone3=g('c-ph3')||D.settings.phone3;D.settings.wa=g('c-wa')||D.settings.wa;
+  D.settings.email=g('c-email')||D.settings.email;D.settings.address=g('c-addr')||D.settings.address;
+  D.settings.hours=g('c-hrs')||D.settings.hours;
+  D.settings.videoUrl=document.getElementById('c-video')?.value.trim()||'';
+  D.settings.facebook=document.getElementById('c-facebook')?.value.trim()||'';
+  D.settings.instagram=document.getElementById('c-instagram')?.value.trim()||'';
+  D.settings.tiktok=document.getElementById('c-tiktok')?.value.trim()||'';
+  save();renderSite();renderSocialFloat();showOk('contact-ok');
+}
+
+// ═══════════════════════════════════════════════
+// ADMIN SETTINGS
+// ═══════════════════════════════════════════════
+function saveSettings(){
+  const g=id=>document.getElementById(id)?.value.trim();
+  D.settings.company=g('s-company')||D.settings.company;
+  D.settings.sub=g('s-sub')||D.settings.sub;
+  D.settings.tagline=g('s-tagline')||D.settings.tagline;
+  const newEmail=g('s-email');
+  if(newEmail&&newEmail.includes('@'))D.adminEmail=newEmail;
+  const p1=g('s-pass1'),p2=g('s-pass2'),err=document.getElementById('s-perr');
+  if(p1||p2){if(p1!==p2){err.textContent='Passwords do not match!';err.style.display='block';return;}if(p1.length<6){err.textContent='Min 6 characters required.';err.style.display='block';return;}D.settings.adminPass=p1;err.style.display='none';document.getElementById('s-pass1').value='';document.getElementById('s-pass2').value='';}
+  save();renderSite();showOk('settings-ok');
+  document.getElementById('ld-name').textContent=D.settings.company;
+}
+function saveEmailJS(){
+  const s=document.getElementById('ejs-service')?.value.trim();
+  const t=document.getElementById('ejs-template')?.value.trim();
+  const k=document.getElementById('ejs-key')?.value.trim();
+  if(s)D.settings.ejsService=s;
+  if(t)D.settings.ejsTemplate=t;
+  if(k)D.settings.ejsKey=k;
+  save();showOk('ejs-ok');
+  // Update the _sendOTPEmail constants
+  window._ejsService=D.settings.ejsService||'';
+  window._ejsTemplate=D.settings.ejsTemplate||'';
+  window._ejsKey=D.settings.ejsKey||'';
+}
+async function testEmailJS(){
+  const email=D.adminEmail||D.settings.email;
+  const testOtp='TEST'+Math.floor(1000+Math.random()*9000);
+  await _sendOTPEmail(email,testOtp);
+}
+function populateEmailJS(){
+  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
+  fld('ejs-service',D.settings.ejsService||'');
+  fld('ejs-template',D.settings.ejsTemplate||'');
+  fld('ejs-key',D.settings.ejsKey||'');
+}
+function exportData(){const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prerak-backup-'+Date.now()+'.json';a.click();}
+function resetData(){D=JSON.parse(JSON.stringify(DEF));save();renderSite();populateForms();renderDashboard();showSec('dashboard');alert('✅ Reset to factory defaults!');}
+
+// ═══ DASHBOARD PIN CHANGE ═══
+function toggleCurPass(){
+  const el=document.getElementById('cur-pass-display');
+  const btn=document.getElementById('cur-pass-eye');
+  if(!el)return;
+  const showing=el.textContent===D.settings.adminPass;
+  el.textContent=showing?'••••••••':D.settings.adminPass;
+  if(btn)btn.innerHTML=showing?'👁️ View':'🙈 Hide';
+}
+function dpToggle(inputId,btnId){
+  const inp=document.getElementById(inputId);
+  const btn=document.getElementById(btnId);
+  if(!inp)return;
+  inp.type=inp.type==='password'?'text':'password';
+  if(btn)btn.textContent=inp.type==='password'?'👁️':'🙈';
+}
+function dpStrength(val){
+  const bar=document.getElementById('dp-fill');
+  const hint=document.getElementById('dp-hint');
+  if(!bar||!hint)return;
+  const len=val.length;
+  const hasUpper=/[A-Z]/.test(val);
+  const hasNum=/[0-9]/.test(val);
+  const hasSpec=/[^a-zA-Z0-9]/.test(val);
+  let score=0;
+  if(len>=6)score++;if(len>=8)score++;if(hasUpper)score++;if(hasNum)score++;if(hasSpec)score++;
+  const levels=[
+    {w:'0%',c:'transparent',t:''},
+    {w:'20%',c:'#ef4444',t:'Too short'},
+    {w:'40%',c:'#f97316',t:'Weak'},
+    {w:'60%',c:'#eab308',t:'Fair'},
+    {w:'80%',c:'#84cc16',t:'Good'},
+    {w:'100%',c:'#22c55e',t:'Strong ✓'}
+  ];
+  const lv=levels[Math.min(score,5)];
+  bar.style.width=lv.w;bar.style.background=lv.c;
+  hint.textContent=lv.t;hint.style.color=lv.c;
+}
+function dpMsg(txt,ok){
+  const el=document.getElementById('dp-msg');if(!el)return;
+  el.style.display='block';
+  el.style.background=ok?'rgba(34,197,94,.1)':'rgba(239,68,68,.1)';
+  el.style.border='1px solid '+(ok?'rgba(34,197,94,.25)':'rgba(239,68,68,.25)');
+  el.style.color=ok?'#22c55e':'#ef4444';
+  el.textContent=txt;
+  if(ok)setTimeout(()=>{el.style.display='none';dpClear();},2500);
+}
+function dpClear(){
+  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const bar=document.getElementById('dp-fill');if(bar){bar.style.width='0%';}
+  const hint=document.getElementById('dp-hint');if(hint)hint.textContent='';
+  const msg=document.getElementById('dp-msg');if(msg)msg.style.display='none';
+  ['dp-eye0','dp-eye1','dp-eye2'].forEach(id=>{const b=document.getElementById(id);if(b)b.textContent='👁️';});
+  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.type='password';});
+}
+function dpSave(){
+  const old=(document.getElementById('dp-old')?.value||'').trim();
+  const n1=(document.getElementById('dp-new1')?.value||'').trim();
+  const n2=(document.getElementById('dp-new2')?.value||'').trim();
+  if(!old){dpMsg('❌ Enter your current password','');return;}
+  if(old.toLowerCase()!==D.settings.adminPass.toLowerCase()){dpMsg('❌ Current password is wrong','');return;}
+  if(!n1||n1.length<6){dpMsg('❌ New password must be at least 6 characters','');return;}
+  if(n1!==n2){dpMsg('❌ Passwords do not match','');return;}
+  D.settings.adminPass=n1;save();
+  dpMsg('✅ Password updated successfully! Use new password next login.','ok');
+}
+
+// ═══════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeSvcModal();closeLb();close3DCard();}
+  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){
+    e.preventDefault();
+    // Only allow shortcut if FAB is visible (URL has admin key) or already admin
+    const fab=document.getElementById('admin-fab');
+    if(fab?.classList.contains('visible')||isAdmin){
+      isAdmin?openAdminPanel():openLogin();
+    }
+  }
+  if(document.getElementById('lb').classList.contains('open')){if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);}
+});
+
+// ═══════════════════════════════════════════════
+// 3D CARD EXPERIENCE
+// ═══════════════════════════════════════════════
+let _3dFlipped=false,_3dDrag=false,_3dRX=0,_3dRY=0,_3dSX=0,_3dSY=0,_3dPAF=null;
+
+function open3DCard(){
+  const ov=document.getElementById('card3d-ov');if(!ov)return;
+  _3dFlipped=false;_3dRX=0;_3dRY=-15;
+  const front=document.getElementById('card3d-front');
+  const back=document.getElementById('card3d-back');
+  if(front)_renderVCFront(front);
+  if(back)_renderVCBack(back);
+  const C=D.card,wa=document.getElementById('c3d-wa');
+  if(wa){const msg='📇 *'+C.cname+' '+C.csub+'*\n📞 '+C.ph1+'\n✉ '+C.email+'\n📍 '+C.addr;wa.href='https://wa.me/'+D.settings.wa+'?text='+encodeURIComponent(msg);}
+  ov.style.display='flex';document.body.classList.add('ns');
+  _start3DParticles();_update3D(true);
+  // bind events
+  const w=document.getElementById('card3d-wrap');
+  w.addEventListener('mousedown',_3dMD);w.addEventListener('touchstart',_3dTD,{passive:false});
+  window.addEventListener('mousemove',_3dMM);window.addEventListener('mouseup',_3dMU);
+  window.addEventListener('touchmove',_3dTM,{passive:false});window.addEventListener('touchend',_3dMU);
+}
+function close3DCard(){
+  const ov=document.getElementById('card3d-ov');if(!ov)return;
+  ov.style.display='none';document.body.classList.remove('ns');
+  cancelAnimationFrame(_3dPAF);_3dPAF=null;
+  const w=document.getElementById('card3d-wrap');
+  if(w){w.removeEventListener('mousedown',_3dMD);w.removeEventListener('touchstart',_3dTD);}
+  window.removeEventListener('mousemove',_3dMM);window.removeEventListener('mouseup',_3dMU);
+  window.removeEventListener('touchmove',_3dTM);window.removeEventListener('touchend',_3dMU);
+}
+function flip3DCard(){_3dFlipped=!_3dFlipped;_3dRY+=180;_update3D();}
+let _3dHolo=false,_3dAccent='#c9933a',_3dBg='#07070a';
+function _update3D(init){
+  const inner=document.getElementById('card3d-inner');
+  const shine=document.getElementById('card3d-shine');
+  const holo=document.getElementById('card3d-holo');
+  const shadow=document.getElementById('card3d-shadow');
+  if(!inner)return;
+  inner.style.transform='rotateX('+_3dRX+'deg) rotateY('+_3dRY+'deg)';
+  inner.style.transition=_3dDrag?'none':'transform .12s ease-out';
+  // dynamic shadow follows tilt
+  if(shadow){
+    const sx=Math.sin(_3dRY*Math.PI/180)*20;
+    const sy=Math.sin(_3dRX*Math.PI/180)*10;
+    shadow.style.transform='translateX('+sx+'px) translateY('+sy+'px)';
+    shadow.style.background='radial-gradient(ellipse,'+_3dAccent+'55,transparent 70%)';
+  }
+  // holographic shine layer
+  if(shine){
+    const a=(_3dRY%360)*Math.PI/180;
+    const p1=50+Math.sin(a)*40;const p2=60+Math.cos(a)*30;
+    shine.style.background='linear-gradient('+(_3dRY%360)+'deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) '+p1+'%,rgba(255,255,255,.05) '+p2+'%,rgba(255,255,255,0) 100%)';
+  }
+  // holographic rainbow layer when holo is on
+  if(holo&&_3dHolo){
+    const hue=(_3dRY*2)%360;
+    const hue2=(hue+120)%360;
+    const hue3=(hue+240)%360;
+    holo.style.background='linear-gradient('+(_3dRY%360)+'deg,hsla('+hue+'deg,100%,60%,.55) 0%,hsla('+hue2+'deg,100%,60%,.3) 50%,hsla('+hue3+'deg,100%,60%,.55) 100%)';
+    // also flash border color
+    const front=document.getElementById('card3d-front');
+    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px hsla('+hue+'deg,100%,60%,.4)';
+  } else if(holo){
+    holo.style.background='transparent';
+    const front=document.getElementById('card3d-front');
+    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+_3dAccent+'33';
+  }
+}
+function toggle3DHolo(){
+  _3dHolo=!_3dHolo;
+  const btn=document.getElementById('holo-btn');
+  const el=document.getElementById('card3d-holo');
+  if(btn){btn.style.background=_3dHolo?'linear-gradient(90deg,#ff00ff,#00ffff)':'linear-gradient(90deg,rgba(255,0,255,.2),rgba(0,255,255,.2))';btn.textContent=_3dHolo?'🌈 ON':'🌈 Holo';}
+  _update3D();
+}
+function set3DColor(accent,bg){
+  _3dAccent=accent;_3dBg=bg;
+  // update color buttons
+  document.querySelectorAll('.card3d-color-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  // re-render card faces with new accent color feel
+  const front=document.getElementById('card3d-front');
+  const back=document.getElementById('card3d-back');
+  if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+accent+'44';
+  if(back)back.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px '+accent+'33';
+  // update particle color
+  if(window._3dParticleColor)window._3dParticleColor=accent;
+  _update3D();
+}
+function _3dMD(e){_3dDrag=true;_3dSX=e.clientX;_3dSY=e.clientY;document.getElementById('card3d-inner').style.cursor='grabbing';}
+function _3dTD(e){e.preventDefault();_3dDrag=true;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;}
+function _3dMM(e){if(!_3dDrag)return;const dx=e.clientX-_3dSX,dy=e.clientY-_3dSY;_3dSX=e.clientX;_3dSY=e.clientY;_3dRY+=dx*.9;_3dRX-=dy*.5;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
+function _3dTM(e){if(!_3dDrag)return;e.preventDefault();const dx=e.touches[0].clientX-_3dSX,dy=e.touches[0].clientY-_3dSY;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;_3dRY+=dx*1.2;_3dRX-=dy*.7;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
+function _3dMU(){
+  _3dDrag=false;
+  const inner=document.getElementById('card3d-inner');if(inner)inner.style.cursor='grab';
+}
+function _start3DParticles(){
+  cancelAnimationFrame(_3dPAF);
+  const c=document.getElementById('card3d-particles');if(!c)return;
+  c.width=window.innerWidth;c.height=window.innerHeight;
+  const ctx=c.getContext('2d');
+  const pts=Array.from({length:70},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,o:Math.random()*.45+.05,hue:Math.random()*360}));
+  let frame=0;
+  function draw(){
+    _3dPAF=requestAnimationFrame(draw);frame++;
+    ctx.clearRect(0,0,c.width,c.height);
+    pts.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0||p.x>c.width)p.vx*=-1;
+      if(p.y<0||p.y>c.height)p.vy*=-1;
+      const pulse=p.o*(0.7+Math.sin(frame*.04+p.x)*.3);
+      // if holo mode, rainbow particles
+      if(_3dHolo){
+        p.hue=(p.hue+0.5)%360;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='hsla('+p.hue+',100%,70%,'+pulse+')';ctx.fill();
+      } else {
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='hsla(0,0%,100%,'+pulse*.35+')';ctx.fill();
+      }
+    });
+    if(!_3dDrag){_3dRY+=.2;_update3D();}
+  }
+  draw();
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.body.classList.remove('ns');
+renderSite();
+
+// ═══════════════════════════════════════════════
+// ADMIN ACCESS — 6 ADVANCED HIDDEN UNLOCK METHODS
+// All invisible to customers. Owner-only access.
+// ═══════════════════════════════════════════════
+(function initAdminAccess(){
+  function showFAB(){document.getElementById('admin-fab')?.classList.add('visible');}
+  function unlockAdmin(reason){
+    showFAB();
+    setTimeout(function(){openLogin();},150);
+    console.log('🔓 Admin unlocked via: '+reason);
+  }
+
+  // ─── Method 1: URL param / hash ───────────────────
+  // yoursite.com?admin  OR  yoursite.com#admin  OR  ?key=prerak
+  const params=new URLSearchParams(window.location.search);
+  const hash=window.location.hash.replace('#','').toLowerCase();
+  if(params.has('admin')||params.get('key')==='prerak'||hash==='admin'){
+    showFAB();return;
+  }
+
+  // ─── Method 2: Logo 5x quick tap ──────────────────
+  let tapCount=0,tapTimer=null;
+  function handleLogoTap(e){
+    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
+    if(!logoArea)return;
+    e.preventDefault();
+    tapCount++;
+    const mk=document.querySelector('.logo-mk');
+    if(mk){
+      mk.style.transform='scale(1.25)';mk.style.boxShadow='0 0 16px rgba(201,147,58,.8)';
+      setTimeout(()=>{mk.style.transform='';mk.style.boxShadow='';},150);
+    }
+    clearTimeout(tapTimer);
+    if(tapCount>=5){tapCount=0;unlockAdmin('5x logo tap');return;}
+    tapTimer=setTimeout(()=>{tapCount=0;},4000);
+  }
+  document.addEventListener('click',handleLogoTap);
+  document.addEventListener('touchstart',handleLogoTap,{passive:false});
+
+  // ─── Method 3: Konami-style keyboard code ──────────
+  // Type "PRERAK" anywhere on page (desktop)
+  let keyBuffer='';
+  const SECRET_WORD='PRERAK';
+  document.addEventListener('keydown',function(e){
+    // Only capture if not typing in input/textarea
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    if(e.key.length===1){
+      keyBuffer+=e.key.toUpperCase();
+      if(keyBuffer.length>SECRET_WORD.length)keyBuffer=keyBuffer.slice(-SECRET_WORD.length);
+      if(keyBuffer===SECRET_WORD){keyBuffer='';unlockAdmin('keyboard PRERAK');}
+    }
+  });
+
+  // ─── Method 4: Long-press logo (2 seconds) ─────────
+  // Mobile-friendly: press & hold the logo
+  let pressTimer=null;
+  function startLongPress(e){
+    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
+    if(!logoArea)return;
+    const mk=document.querySelector('.logo-mk');
+    pressTimer=setTimeout(function(){
+      if(mk){mk.style.background='rgba(201,147,58,.9)';setTimeout(()=>{mk.style.background='';},300);}
+      unlockAdmin('2s long press');
+    },2000);
+  }
+  function endLongPress(){clearTimeout(pressTimer);}
+  document.addEventListener('mousedown',startLongPress);
+  document.addEventListener('mouseup',endLongPress);
+  document.addEventListener('mouseleave',endLongPress);
+  document.addEventListener('touchstart',startLongPress,{passive:true});
+  document.addEventListener('touchend',endLongPress);
+
+  // ─── Method 5: Triple-click footer copyright ───────
+  // Click © footer text 3 times quickly
+  let footTaps=0,footTimer=null;
+  document.addEventListener('click',function(e){
+    const foot=e.target.closest('.site-footer,.footer-bottom,.copyright,footer');
+    if(!foot)return;
+    // Only trigger on actual text in footer bottom
+    const txt=foot.textContent||'';
+    if(!txt.includes('©')&&!txt.toLowerCase().includes('prerak'))return;
+    footTaps++;
+    clearTimeout(footTimer);
+    if(footTaps>=3){footTaps=0;unlockAdmin('3x footer click');return;}
+    footTimer=setTimeout(()=>{footTaps=0;},2500);
+  });
+
+  // ─── Method 6: Konami arrow sequence ───────────────
+  // ↑↑↓↓←→←→ then Enter (classic cheat code)
+  const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','Enter'];
+  let konamiIdx=0;
+  document.addEventListener('keydown',function(e){
+    if(e.key===KONAMI[konamiIdx]){
+      konamiIdx++;
+      if(konamiIdx===KONAMI.length){konamiIdx=0;unlockAdmin('Konami code');}
+    } else konamiIdx=0;
+  });
+
+  // ─── Method 7: Swipe pattern (Z shape) on mobile ───
+  // Draw Z shape on screen: right → diagonal-left → right
+  let swipeStart=null,swipePoints=[];
+  document.addEventListener('touchstart',function(e){
+    if(e.touches.length===1)swipeStart={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
+    swipePoints=[];
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!swipeStart||e.touches.length!==1)return;
+    swipePoints.push({x:e.touches[0].clientX,y:e.touches[0].clientY});
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(!swipeStart||swipePoints.length<8){swipeStart=null;return;}
+    const dur=Date.now()-swipeStart.t;
+    if(dur>3000||dur<400){swipeStart=null;return;}
+    // Analyze: need right-stroke, then down-left diagonal, then right
+    const n=swipePoints.length;
+    const q1=swipePoints[Math.floor(n*0.2)];
+    const q2=swipePoints[Math.floor(n*0.5)];
+    const q3=swipePoints[Math.floor(n*0.8)];
+    const dx1=q1.x-swipeStart.x,dx2=q3.x-q2.x,dy2=q3.y-q2.y;
+    const dxDiag=q2.x-q1.x,dyDiag=q2.y-q1.y;
+    // Z-shape: right stroke (dx1>60), diagonal down-left (dxDiag<-40 && dyDiag>40), right stroke (dx2>40)
+    if(dx1>60 && dxDiag<-40 && dyDiag>40 && dx2>40){
+      unlockAdmin('Z-swipe gesture');
+    }
+    swipeStart=null;
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
