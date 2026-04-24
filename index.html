@@ -4500,56 +4500,131 @@ document.body.classList.remove('ns');
 renderSite();
 
 // ═══════════════════════════════════════════════
-// ADMIN ACCESS — 3 WAYS (all hidden from public)
-// 1. URL hash:  prerak-final.html#admin
-// 2. URL param: prerak-final.html?admin
-// 3. Logo tap:  Tap logo 5x quickly (mobile/desktop)
+// ADMIN ACCESS — 6 ADVANCED HIDDEN UNLOCK METHODS
+// All invisible to customers. Owner-only access.
 // ═══════════════════════════════════════════════
 (function initAdminAccess(){
   function showFAB(){document.getElementById('admin-fab')?.classList.add('visible');}
+  function unlockAdmin(reason){
+    showFAB();
+    setTimeout(function(){openLogin();},150);
+    console.log('🔓 Admin unlocked via: '+reason);
+  }
 
-  // Check URL
+  // ─── Method 1: URL param / hash ───────────────────
+  // yoursite.com?admin  OR  yoursite.com#admin  OR  ?key=prerak
   const params=new URLSearchParams(window.location.search);
   const hash=window.location.hash.replace('#','').toLowerCase();
   if(params.has('admin')||params.get('key')==='prerak'||hash==='admin'){
     showFAB();return;
   }
 
-  // Secret logo tap: tap logo icon 5x within 4 seconds
+  // ─── Method 2: Logo 5x quick tap ──────────────────
   let tapCount=0,tapTimer=null;
-
   function handleLogoTap(e){
-    // Check if tap is on logo area (logo box, logo text, or nav-logo)
     const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
     if(!logoArea)return;
     e.preventDefault();
     tapCount++;
-
-    // Visual pulse feedback on logo (secret, subtle)
     const mk=document.querySelector('.logo-mk');
     if(mk){
-      mk.style.transform='scale(1.25)';
-      mk.style.boxShadow='0 0 16px rgba(201,147,58,.8)';
+      mk.style.transform='scale(1.25)';mk.style.boxShadow='0 0 16px rgba(201,147,58,.8)';
       setTimeout(()=>{mk.style.transform='';mk.style.boxShadow='';},150);
     }
-
     clearTimeout(tapTimer);
-
-    if(tapCount>=5){
-      tapCount=0;
-      // Brief flash before opening login
-      if(mk){mk.style.background='rgba(201,147,58,.9)';setTimeout(()=>{mk.style.background='';},300);}
-      setTimeout(()=>{showFAB();openLogin();},200);
-      return;
-    }
-
-    // Reset after 4 seconds of no taps
+    if(tapCount>=5){tapCount=0;unlockAdmin('5x logo tap');return;}
     tapTimer=setTimeout(()=>{tapCount=0;},4000);
   }
-
-  // Both click (desktop) and touchstart (mobile)
   document.addEventListener('click',handleLogoTap);
   document.addEventListener('touchstart',handleLogoTap,{passive:false});
+
+  // ─── Method 3: Konami-style keyboard code ──────────
+  // Type "PRERAK" anywhere on page (desktop)
+  let keyBuffer='';
+  const SECRET_WORD='PRERAK';
+  document.addEventListener('keydown',function(e){
+    // Only capture if not typing in input/textarea
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+    if(e.key.length===1){
+      keyBuffer+=e.key.toUpperCase();
+      if(keyBuffer.length>SECRET_WORD.length)keyBuffer=keyBuffer.slice(-SECRET_WORD.length);
+      if(keyBuffer===SECRET_WORD){keyBuffer='';unlockAdmin('keyboard PRERAK');}
+    }
+  });
+
+  // ─── Method 4: Long-press logo (2 seconds) ─────────
+  // Mobile-friendly: press & hold the logo
+  let pressTimer=null;
+  function startLongPress(e){
+    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
+    if(!logoArea)return;
+    const mk=document.querySelector('.logo-mk');
+    pressTimer=setTimeout(function(){
+      if(mk){mk.style.background='rgba(201,147,58,.9)';setTimeout(()=>{mk.style.background='';},300);}
+      unlockAdmin('2s long press');
+    },2000);
+  }
+  function endLongPress(){clearTimeout(pressTimer);}
+  document.addEventListener('mousedown',startLongPress);
+  document.addEventListener('mouseup',endLongPress);
+  document.addEventListener('mouseleave',endLongPress);
+  document.addEventListener('touchstart',startLongPress,{passive:true});
+  document.addEventListener('touchend',endLongPress);
+
+  // ─── Method 5: Triple-click footer copyright ───────
+  // Click © footer text 3 times quickly
+  let footTaps=0,footTimer=null;
+  document.addEventListener('click',function(e){
+    const foot=e.target.closest('.site-footer,.footer-bottom,.copyright,footer');
+    if(!foot)return;
+    // Only trigger on actual text in footer bottom
+    const txt=foot.textContent||'';
+    if(!txt.includes('©')&&!txt.toLowerCase().includes('prerak'))return;
+    footTaps++;
+    clearTimeout(footTimer);
+    if(footTaps>=3){footTaps=0;unlockAdmin('3x footer click');return;}
+    footTimer=setTimeout(()=>{footTaps=0;},2500);
+  });
+
+  // ─── Method 6: Konami arrow sequence ───────────────
+  // ↑↑↓↓←→←→ then Enter (classic cheat code)
+  const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','Enter'];
+  let konamiIdx=0;
+  document.addEventListener('keydown',function(e){
+    if(e.key===KONAMI[konamiIdx]){
+      konamiIdx++;
+      if(konamiIdx===KONAMI.length){konamiIdx=0;unlockAdmin('Konami code');}
+    } else konamiIdx=0;
+  });
+
+  // ─── Method 7: Swipe pattern (Z shape) on mobile ───
+  // Draw Z shape on screen: right → diagonal-left → right
+  let swipeStart=null,swipePoints=[];
+  document.addEventListener('touchstart',function(e){
+    if(e.touches.length===1)swipeStart={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
+    swipePoints=[];
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(!swipeStart||e.touches.length!==1)return;
+    swipePoints.push({x:e.touches[0].clientX,y:e.touches[0].clientY});
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(!swipeStart||swipePoints.length<8){swipeStart=null;return;}
+    const dur=Date.now()-swipeStart.t;
+    if(dur>3000||dur<400){swipeStart=null;return;}
+    // Analyze: need right-stroke, then down-left diagonal, then right
+    const n=swipePoints.length;
+    const q1=swipePoints[Math.floor(n*0.2)];
+    const q2=swipePoints[Math.floor(n*0.5)];
+    const q3=swipePoints[Math.floor(n*0.8)];
+    const dx1=q1.x-swipeStart.x,dx2=q3.x-q2.x,dy2=q3.y-q2.y;
+    const dxDiag=q2.x-q1.x,dyDiag=q2.y-q1.y;
+    // Z-shape: right stroke (dx1>60), diagonal down-left (dxDiag<-40 && dyDiag>40), right stroke (dx2>40)
+    if(dx1>60 && dxDiag<-40 && dyDiag>40 && dx2>40){
+      unlockAdmin('Z-swipe gesture');
+    }
+    swipeStart=null;
+  },{passive:true});
 })();
 </script>
 </body>
