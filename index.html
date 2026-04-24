@@ -622,12 +622,47 @@ body.admin-mode .site-nav{top:34px;}
 .cal-tpl.on,.cal-tpl:hover{border-color:var(--a);}
 .cal-tpl-prev{height:60px;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;letter-spacing:1.5px;color:#fff;}
 .cal-tpl-lbl{padding:5px;text-align:center;font-size:.58rem;color:#8a8a9a;background:var(--bg3);}
+/* ══ PRICING SECTION ══ */
+.pricing-sec{padding:80px 6%;background:var(--bg);}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:1200px;margin:48px auto 0;}
+.price-card{background:var(--bg2);border:1px solid var(--brd2);border-radius:var(--rl);padding:32px 28px;position:relative;transition:all .3s;}
+.price-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.22);border-color:rgba(201,147,58,.3);}
+.price-card.highlight{border:2px solid var(--a);background:linear-gradient(155deg,rgba(201,147,58,.08),var(--bg2));transform:scale(1.03);}
+.price-card.highlight::before{content:'★ MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--a);color:var(--bg);font-size:.58rem;font-weight:800;letter-spacing:2px;padding:5px 14px;border-radius:20px;white-space:nowrap;}
+.price-name{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--txt);margin-bottom:6px;}
+.price-amt{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--a);line-height:1;margin-top:14px;}
+.price-unit{font-size:.75rem;color:var(--mt);margin-left:4px;font-weight:500;}
+.price-features{list-style:none;margin:22px 0;padding:0;}
+.price-features li{padding:9px 0;border-bottom:1px solid var(--brd2);font-size:.8rem;color:var(--txt);display:flex;align-items:center;gap:10px;}
+.price-features li::before{content:'✓';color:var(--a);font-weight:700;font-size:.9rem;}
+.price-features li:last-child{border:none;}
+.price-btn{display:block;width:100%;text-align:center;padding:14px;background:var(--a);color:var(--bg);font-size:.82rem;font-weight:700;text-decoration:none;border-radius:12px;font-family:var(--fb);transition:all .25s;border:none;cursor:pointer;}
+.price-btn:hover{background:var(--ad);transform:translateY(-1px);box-shadow:0 8px 20px rgba(201,147,58,.35);}
+.price-card:not(.highlight) .price-btn{background:transparent;color:var(--a);border:1.5px solid var(--a);}
+.price-card:not(.highlight) .price-btn:hover{background:var(--a);color:var(--bg);}
+
+/* ══ FAQ SECTION ══ */
+.faq-sec{padding:80px 6%;background:var(--bg2);}
+.faq-wrap{max-width:860px;margin:48px auto 0;}
+.faq-item{background:var(--bg);border:1px solid var(--brd2);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:all .2s;}
+.faq-item:hover{border-color:rgba(201,147,58,.3);}
+.faq-item.open{border-color:rgba(201,147,58,.4);background:linear-gradient(155deg,rgba(201,147,58,.04),var(--bg));}
+.faq-q{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--txt);font-family:var(--fb);}
+.faq-q:hover{color:var(--a);}
+.faq-ico{width:28px;height:28px;border-radius:50%;background:rgba(201,147,58,.12);color:var(--a);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;flex-shrink:0;transition:transform .3s;}
+.faq-item.open .faq-ico{background:var(--a);color:var(--bg);transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:all .35s cubic-bezier(.16,1,.3,1);padding:0 22px;opacity:0;}
+.faq-item.open .faq-a{max-height:400px;padding:0 22px 20px;opacity:1;}
+.faq-a p{font-size:.82rem;color:var(--mt);line-height:1.8;}
 .mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:350;background:var(--bg2);border-top:1px solid var(--brd2);padding:10px 14px;gap:8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));}
 @media(max-width:600px){
   .mob-cta{display:flex;}
   body{padding-bottom:64px;}
   #btt{bottom:76px!important;}
   #quick-panel{bottom:80px!important;right:12px!important;}
+  .price-card.highlight{transform:scale(1);}
+  .pricing-sec,.faq-sec{padding:60px 5%;}
+  .price-card{padding:26px 22px;}
 }
 .mob-cta a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;border-radius:10px;font-size:.78rem;font-weight:700;text-align:center;}
 .mob-cta .mc-call{background:linear-gradient(135deg,var(--ad),var(--a));color:var(--bg);}
@@ -811,6 +846,8 @@ body.admin-mode .site-nav{top:34px;}
       <div class="ap-ni" onclick="showSec('projects')"><span class="ap-ni-ic">🏗️</span> Projects</div>
       <div class="ap-ni" onclick="showSec('testimonials')"><span class="ap-ni-ic">💬</span> Testimonials</div>
       <div class="ap-ni" onclick="showSec('whyus')"><span class="ap-ni-ic">⭐</span> Why Us</div>
+      <div class="ap-ni" onclick="showSec('pricing')"><span class="ap-ni-ic">💰</span> Pricing Plans</div>
+      <div class="ap-ni" onclick="showSec('faq')"><span class="ap-ni-ic">❓</span> FAQs</div>
       <div class="ap-ni" onclick="showSec('contact')"><span class="ap-ni-ic">📞</span> Contact Info</div>
       <div class="ap-ni" onclick="showSec('social')"><span class="ap-ni-ic">📱</span> Social Media</div>
       <div class="ap-ni" onclick="showSec('notices')"><span class="ap-ni-ic">📢</span> Notice Board</div>
@@ -1216,6 +1253,56 @@ body.admin-mode .site-nav{top:34px;}
       <div style="display:flex;gap:12px;align-items:center">
         <button class="af-save" onclick="saveSocial()">💾 Save Social Links</button>
         <span class="af-ok" id="social-ok">✅ Saved! Website मा update भयो।</span>
+      </div>
+    </div>
+
+    <!-- PRICING PLANS ADMIN -->
+    <div class="ap-sec" id="sec-pricing">
+      <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
+      <div class="ap-hdr"><h2>💰 Pricing Plans</h2><p>Manage your pricing packages — customer transparency builds trust</p></div>
+      <div class="apc" style="border-left:3px solid var(--a)">
+        <div class="apc-hdr"><h3 id="pf-ttl">➕ Add / Edit Plan</h3></div>
+        <div class="afr">
+          <div class="afg"><label>Plan Name</label><input type="text" id="pf-name" placeholder="Premium Construction"></div>
+          <div class="afg"><label>Price</label><input type="text" id="pf-price" placeholder="NPR 2,500"></div>
+          <div class="afg"><label>Unit</label><input type="text" id="pf-unit" placeholder="/sq ft"></div>
+        </div>
+        <div class="afg"><label>Features (one per line)</label><textarea id="pf-features" rows="4" placeholder="Premium RCC + Steel&#10;Designer finishing&#10;5 year warranty"></textarea></div>
+        <div class="afr">
+          <div class="afg"><label>Button Text</label><input type="text" id="pf-cta" placeholder="Get Quote" value="Get Quote"></div>
+          <div class="afg"><label><input type="checkbox" id="pf-highlight" style="width:auto;margin-right:8px"> Mark as ★ Most Popular</label></div>
+        </div>
+        <input type="hidden" id="pf-eid">
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="af-save" onclick="savePricing()">💾 Save Plan</button>
+          <button class="dbtn" onclick="clearPricingForm()">Clear</button>
+          <span class="af-ok" id="pricing-ok">✅ Saved!</span>
+        </div>
+      </div>
+      <div class="apc">
+        <div class="apc-hdr"><h3>📋 All Plans</h3></div>
+        <div id="pricing-list"></div>
+      </div>
+    </div>
+
+    <!-- FAQ ADMIN -->
+    <div class="ap-sec" id="sec-faq">
+      <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
+      <div class="ap-hdr"><h2>❓ FAQs — Frequently Asked Questions</h2><p>Answer common customer questions — reduce sales friction</p></div>
+      <div class="apc" style="border-left:3px solid var(--a)">
+        <div class="apc-hdr"><h3 id="qf-ttl">➕ Add / Edit FAQ</h3></div>
+        <div class="afg"><label>❓ Question</label><input type="text" id="qf-q" placeholder="कति दिनमा काम सुरु हुन्छ?"></div>
+        <div class="afg"><label>💬 Answer</label><textarea id="qf-a" rows="3" placeholder="Site visit पछि 3-7 दिनभित्र काम सुरु गर्छौं।"></textarea></div>
+        <input type="hidden" id="qf-eid">
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="af-save" onclick="saveFAQ()">💾 Save FAQ</button>
+          <button class="dbtn" onclick="clearFAQForm()">Clear</button>
+          <span class="af-ok" id="faq-ok">✅ Saved!</span>
+        </div>
+      </div>
+      <div class="apc">
+        <div class="apc-hdr"><h3>📋 All FAQs</h3></div>
+        <div id="faq-list"></div>
       </div>
     </div>
 
@@ -1640,7 +1727,20 @@ const DEF={
   },
   adminEmail:'asrayacreate.ac@gmail.com',
   notices:[],
-  calServices:null
+  calServices:null,
+  faqs:[
+    {id:'q1',q:'कति दिनमा काम सुरु हुन्छ?',a:'Site visit पछि 3-7 दिनभित्र काम सुरु गर्छौं। Urgent project को लागि priority service पनि उपलब्ध छ।'},
+    {id:'q2',q:'Free site visit + quotation दिनुहुन्छ?',a:'हो! Hetauda र Makwanpur जिल्लामा नि:शुल्क site visit र detailed quotation दिन्छौं। Call/WhatsApp गर्नुस्।'},
+    {id:'q3',q:'कुन कुन areas मा service दिनुहुन्छ?',a:'Hetauda-2, Makwanpur, Chitwan, Bara, Parsa, र आसपासका जिल्लाहरूमा सेवा पुर्‍याउँछौं।'},
+    {id:'q4',q:'Prefab home को warranty कति वर्ष?',a:'Structure मा 10 वर्ष warranty र finishing मा 2 वर्ष। Free annual inspection पनि छ।'},
+    {id:'q5',q:'Payment कसरी गर्नुपर्छ?',a:'Flexible payment: 30% advance, 40% मध्यमा, 30% completion पछि। Bank transfer, eSewa, Khalti accepted।'},
+    {id:'q6',q:'Minimum project size कति?',a:'Construction को लागि minimum 500 sq ft। Renovation/interior को लागि कुनै minimum छैन।'}
+  ],
+  pricing:[
+    {id:'p1',name:'Basic Construction',price:'NPR 1,800',unit:'/sq ft',features:['Standard RCC structure','Basic finishing','1 year warranty','Site supervision'],highlight:false,cta:'Get Quote'},
+    {id:'p2',name:'Premium Construction',price:'NPR 2,500',unit:'/sq ft',features:['Premium RCC + Steel','Designer finishing','5 year warranty','Full project management','Interior consultation'],highlight:true,cta:'Most Popular'},
+    {id:'p3',name:'Prefab Homes',price:'NPR 1,200',unit:'/sq ft',features:['Factory-made quality','30-60 day delivery','Earthquake resistant','Modular design'],highlight:false,cta:'Learn More'}
+  ]
 };
 
 // ═══════════════════════════════════════════════
@@ -1654,6 +1754,8 @@ if(!D)D=JSON.parse(JSON.stringify(DEF));
 // ensure new fields exist on older saves
 if(!D.card)D.card=JSON.parse(JSON.stringify(DEF.card));
 if(!D.notices)D.notices=[];
+if(!D.faqs)D.faqs=JSON.parse(JSON.stringify(DEF.faqs));
+if(!D.pricing)D.pricing=JSON.parse(JSON.stringify(DEF.pricing));
 if(!D.adminEmail)D.adminEmail=DEF.adminEmail;
 if(!D.settings.facebook)D.settings.facebook='';
 if(!D.settings.instagram)D.settings.instagram='';
@@ -1733,6 +1835,8 @@ function renderSite(){
     <ul class="nav-links">
       <li><a href="#services" onclick="mClose()" data-en="Services" data-ne="सेवाहरू">Services</a></li>
       <li><a href="#projects" onclick="mClose()" data-en="Projects" data-ne="परियोजनाहरू">Projects</a></li>
+      <li><a href="#pricing" onclick="mClose()" data-en="Pricing" data-ne="मूल्य">Pricing</a></li>
+      <li><a href="#faq" onclick="mClose()" data-en="FAQ" data-ne="प्रश्न">FAQ</a></li>
       <li><a href="#why-us" onclick="mClose()" data-en="About" data-ne="हाम्रोबारे">About</a></li>
       <li><a href="#contact" onclick="mClose()" data-en="Contact" data-ne="सम्पर्क">Contact</a></li>
       <li><a href="#np-calendar" onclick="mClose()" data-en="Calendar / पात्रो" data-ne="पात्रो">Calendar / पात्रो</a></li>
@@ -1813,6 +1917,8 @@ function renderSite(){
   </section>
   ${renderVCSection()}
   ${renderCalendarSection()}
+  ${renderPricingSection()}
+  ${renderFAQSection()}
   ${renderVideoSection()}
   <section class="cta-sec reveal">
     <div class="cta-in">
@@ -2414,6 +2520,57 @@ function downloadFullCalendar(){
 // ═══════════════════════════════════════════════
 // VIDEO SECTION
 // ═══════════════════════════════════════════════
+function renderPricingSection(){
+  const isNe=window._lang==='ne';
+  const S=D.settings;
+  if(!D.pricing||!D.pricing.length)return '';
+  const cards=D.pricing.map(function(p){
+    const featList=p.features.map(f=>'<li>'+f+'</li>').join('');
+    const btn='<a href="https://wa.me/'+S.wa+'?text='+encodeURIComponent((isNe?'नमस्ते! ':'Hi! ')+p.name+' को बारेमा जानकारी चाहिन्छ।')+'" target="_blank" class="price-btn">'+p.cta+' →</a>';
+    return '<div class="price-card '+(p.highlight?'highlight':'')+'">'
+      +'<div class="price-name">'+p.name+'</div>'
+      +'<div class="price-amt">'+p.price+'<span class="price-unit">'+p.unit+'</span></div>'
+      +'<ul class="price-features">'+featList+'</ul>'
+      +btn
+      +'</div>';
+  }).join('');
+  return '<section class="pricing-sec reveal" id="pricing">'
+    +'<div style="text-align:center;margin-bottom:14px">'
+    +'<div class="sec-ey" style="justify-content:center"><span>'+(isNe?'मूल्य तालिका':'Pricing')+'</span></div>'
+    +'<h2 class="sec-h" style="text-align:center">'+(isNe?'पारदर्शी <em>मूल्य</em>':'Transparent <em>Pricing</em>')+'</h2>'
+    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:520px;margin:0 auto;line-height:1.7">'+(isNe?'कुनै लुकेको शुल्क छैन — आफ्नो बजेट अनुसार package छान्नुस्':'No hidden charges — choose the package that fits your budget')+'</p>'
+    +'</div>'
+    +'<div class="pricing-grid">'+cards+'</div>'
+    +'</section>';
+}
+
+function renderFAQSection(){
+  const isNe=window._lang==='ne';
+  if(!D.faqs||!D.faqs.length)return '';
+  const items=D.faqs.map(function(f,i){
+    return '<div class="faq-item" id="faq-'+f.id+'">'
+      +'<div class="faq-q" onclick="toggleFAQ(\''+f.id+'\')"><span>'+f.q+'</span><span class="faq-ico">+</span></div>'
+      +'<div class="faq-a"><p>'+f.a+'</p></div>'
+      +'</div>';
+  }).join('');
+  return '<section class="faq-sec reveal" id="faq">'
+    +'<div style="text-align:center;margin-bottom:14px">'
+    +'<div class="sec-ey" style="justify-content:center"><span>FAQ</span></div>'
+    +'<h2 class="sec-h" style="text-align:center">'+(isNe?'बारम्बार सोधिने <em>प्रश्नहरू</em>':'Frequently Asked <em>Questions</em>')+'</h2>'
+    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:480px;margin:0 auto">'+(isNe?'तपाईंको प्रश्नको उत्तर यहाँ':'Got questions? We\'ve got answers')+'</p>'
+    +'</div>'
+    +'<div class="faq-wrap">'+items+'</div>'
+    +'</section>';
+}
+
+function toggleFAQ(id){
+  const el=document.getElementById('faq-'+id);
+  if(!el)return;
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));
+  if(!isOpen)el.classList.add('open');
+}
+
 function renderVideoSection(){
   const isNe=window._lang==='ne';
   const vid=D.settings.videoUrl||'';
@@ -3086,7 +3243,7 @@ function delProjConfirm(id){
 }
 
 function showSec(n){
-  document.querySelectorAll('.ap-ni').forEach((el,i)=>{const m=['dashboard','templates','hero','services','projects','testimonials','whyus','contact','social','notices','calendar','visitcard','settings'];el.classList.toggle('on',m[i]===n);});
+  document.querySelectorAll('.ap-ni').forEach((el,i)=>{const m=['dashboard','templates','hero','services','projects','testimonials','whyus','pricing','faq','contact','social','notices','calendar','visitcard','settings'];el.classList.toggle('on',m[i]===n);});
   document.querySelectorAll('.ap-sec').forEach(el=>el.classList.remove('on'));
   document.getElementById('sec-'+n)?.classList.add('on');
   if(n==='services')renderAdminSvc();
@@ -3097,6 +3254,8 @@ function showSec(n){
   if(n==='social')renderSocialAdmin();
   if(n==='notices')renderNoticeAdmin();
   if(n==='calendar')renderCalAdmin();
+  if(n==='pricing')renderPricingAdmin();
+  if(n==='faq')renderFAQAdmin();
 }
 // ═══ PUBLIC QUICK PANEL ═══
 let _qpOpen=false;
@@ -3432,6 +3591,92 @@ function loadFestTemplate(key){
   document.getElementById('sec-notices').scrollTop=0;
 }
 
+// ═══ PRICING ADMIN ═══
+function renderPricingAdmin(){
+  const list=document.getElementById('pricing-list');if(!list)return;
+  if(!D.pricing||!D.pricing.length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No pricing plans yet.</p>';return;}
+  list.innerHTML=D.pricing.map(function(p){
+    return '<div class="nc"'+(p.highlight?' style="border-color:rgba(201,147,58,.4);background:rgba(201,147,58,.04)"':'')+'>'
+      +(p.highlight?'<span class="nc-status nc-on">★ Popular</span>':'')
+      +'<div style="font-size:.95rem;font-weight:700;color:var(--txt);margin-bottom:4px">'+p.name+'</div>'
+      +'<div style="font-size:1.2rem;font-weight:700;color:var(--a);margin-bottom:8px">'+p.price+'<span style="font-size:.7rem;color:var(--mt);margin-left:4px">'+p.unit+'</span></div>'
+      +'<div style="font-size:.7rem;color:#8a8a9a;margin-bottom:10px">'+p.features.length+' features · Button: "'+p.cta+'"</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="abtn" onclick="editPricing(\''+p.id+'\')">✎ Edit</button>'
+      +'<button class="dbtn" onclick="deletePricing(\''+p.id+'\')">🗑 Delete</button>'
+      +'</div></div>';
+  }).join('');
+}
+function savePricing(){
+  const name=document.getElementById('pf-name')?.value.trim();if(!name){alert('Plan name required');return;}
+  const price=document.getElementById('pf-price')?.value.trim()||'';
+  const unit=document.getElementById('pf-unit')?.value.trim()||'/sq ft';
+  const featText=document.getElementById('pf-features')?.value||'';
+  const features=featText.split('\n').map(l=>l.trim()).filter(Boolean);
+  const cta=document.getElementById('pf-cta')?.value.trim()||'Get Quote';
+  const highlight=document.getElementById('pf-highlight')?.checked||false;
+  const eid=document.getElementById('pf-eid')?.value||'';
+  if(highlight){D.pricing.forEach(p=>p.highlight=false);}
+  if(eid){const idx=D.pricing.findIndex(x=>x.id===eid);if(idx>-1)D.pricing[idx]={...D.pricing[idx],name,price,unit,features,cta,highlight};}
+  else{D.pricing.push({id:'p'+Date.now(),name,price,unit,features,cta,highlight});}
+  save();renderSite();renderPricingAdmin();clearPricingForm();showOk('pricing-ok');
+}
+function clearPricingForm(){
+  ['pf-name','pf-price','pf-unit','pf-features','pf-cta','pf-eid'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const cb=document.getElementById('pf-highlight');if(cb)cb.checked=false;
+  const cta=document.getElementById('pf-cta');if(cta)cta.value='Get Quote';
+  document.getElementById('pf-ttl').textContent='➕ Add New Plan';
+}
+function editPricing(id){
+  const p=D.pricing.find(x=>x.id===id);if(!p)return;
+  document.getElementById('pf-name').value=p.name;
+  document.getElementById('pf-price').value=p.price;
+  document.getElementById('pf-unit').value=p.unit;
+  document.getElementById('pf-features').value=p.features.join('\n');
+  document.getElementById('pf-cta').value=p.cta;
+  document.getElementById('pf-highlight').checked=p.highlight||false;
+  document.getElementById('pf-eid').value=p.id;
+  document.getElementById('pf-ttl').textContent='✎ Edit Plan';
+  document.getElementById('sec-pricing').scrollTop=0;
+}
+function deletePricing(id){if(!confirm('Delete this plan?'))return;D.pricing=D.pricing.filter(x=>x.id!==id);save();renderSite();renderPricingAdmin();}
+
+// ═══ FAQ ADMIN ═══
+function renderFAQAdmin(){
+  const list=document.getElementById('faq-list');if(!list)return;
+  if(!D.faqs||!D.faqs.length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No FAQs yet.</p>';return;}
+  list.innerHTML=D.faqs.map(function(f){
+    return '<div class="nc">'
+      +'<div style="font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:6px">❓ '+f.q+'</div>'
+      +'<div style="font-size:.75rem;color:var(--mt);line-height:1.6;margin-bottom:10px">'+f.a+'</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button class="abtn" onclick="editFAQ(\''+f.id+'\')">✎ Edit</button>'
+      +'<button class="dbtn" onclick="deleteFAQ(\''+f.id+'\')">🗑 Delete</button>'
+      +'</div></div>';
+  }).join('');
+}
+function saveFAQ(){
+  const q=document.getElementById('qf-q')?.value.trim();if(!q){alert('Question required');return;}
+  const a=document.getElementById('qf-a')?.value.trim();if(!a){alert('Answer required');return;}
+  const eid=document.getElementById('qf-eid')?.value||'';
+  if(eid){const idx=D.faqs.findIndex(x=>x.id===eid);if(idx>-1)D.faqs[idx]={id:eid,q,a};}
+  else{D.faqs.push({id:'q'+Date.now(),q,a});}
+  save();renderSite();renderFAQAdmin();clearFAQForm();showOk('faq-ok');
+}
+function clearFAQForm(){
+  ['qf-q','qf-a','qf-eid'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('qf-ttl').textContent='➕ Add New FAQ';
+}
+function editFAQ(id){
+  const f=D.faqs.find(x=>x.id===id);if(!f)return;
+  document.getElementById('qf-q').value=f.q;
+  document.getElementById('qf-a').value=f.a;
+  document.getElementById('qf-eid').value=f.id;
+  document.getElementById('qf-ttl').textContent='✎ Edit FAQ';
+  document.getElementById('sec-faq').scrollTop=0;
+}
+function deleteFAQ(id){if(!confirm('Delete this FAQ?'))return;D.faqs=D.faqs.filter(x=>x.id!==id);save();renderSite();renderFAQAdmin();}
+
 // ═══ CALENDAR ADMIN ═══
 function renderCalAdmin(){
   const list=document.getElementById('cal-admin-list');if(!list)return;
@@ -3620,6 +3865,8 @@ function renderDashboard(){
     {icon:'🏗️',label:'Projects',val:D.projects.length,c:'#22c55e'},
     {icon:'💬',label:'Testimonials',val:D.testimonials.length,c:'#3b82f6'},
     {icon:'⭐',label:'Why Us',val:D.whyUs.length,c:'#a855f7'},
+    {icon:'💰',label:'Pricing',val:(D.pricing||[]).length,c:'#f59e0b'},
+    {icon:'❓',label:'FAQs',val:(D.faqs||[]).length,c:'#06b6d4'},
     {icon:'📢',label:'Notices',val:(D.notices||[]).length,c:'#f97316'}
   ].map(s=>`<div class="dash-stat"><div style="font-size:1.6rem;margin-bottom:6px">${s.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:${s.c};line-height:1">${s.val}</div><div style="font-size:.67rem;color:#8a8a9a;text-transform:uppercase;letter-spacing:1.5px;margin-top:3px">${s.label}</div></div>`).join('');
   const t=D.meta.template||'dark';
