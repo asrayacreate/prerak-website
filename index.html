@@ -11,15 +11,15 @@
 <style>
 /* ══ TEMPLATE VARS ══ */
 :root,[data-t=""],[data-t="dark"]{
-  --bg:#07070a;--bg2:#0f0f14;--bg3:#16161e;
-  --a:#c9933a;--al:#e8b86d;--ad:#9a6f28;
-  --txt:#f0ede8;--mt:#8a8a9a;--mt2:#5a5a6a;
-  --brd:rgba(201,147,58,.15);--brd2:rgba(255,255,255,.07);
-  --cbg:#0f0f14;--ibg:rgba(255,255,255,.04);
-  --nb:rgba(7,7,10,.94);--sh:0 0 40px rgba(201,147,58,.18);
+  --bg:#1e1e2e;--bg2:#2a2a3d;--bg3:#363650;
+  --a:#f0b848;--al:#f6cc6c;--ad:#d19830;
+  --txt:#ffffff;--mt:#c4c4d4;--mt2:#9090a8;
+  --brd:rgba(240,184,72,.28);--brd2:rgba(255,255,255,.14);
+  --cbg:#2a2a3d;--ibg:rgba(255,255,255,.08);
+  --nb:rgba(30,30,46,.95);--sh:0 0 50px rgba(240,184,72,.25);
   --r:14px;--rl:20px;--rb:30px;
   --fd:'Cormorant Garamond',serif;--fb:'Plus Jakarta Sans',sans-serif;
-  --st-bg:linear-gradient(135deg,#9a6f28,#c9933a,#9a6f28);
+  --st-bg:linear-gradient(135deg,#d19830,#f0b848,#d19830);
   --st-txt:#07070a;--hero-vig:rgba(7,7,10,0.55);
 }
 [data-t="corporate"]{
@@ -78,7 +78,7 @@ img{display:block;max-width:100%;}
 .th-btn:hover::before{opacity:1;}
 
 /* ══ NAV ══ */
-.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;transition:all .4s;border-bottom:1px solid rgba(201,147,58,.12);background:rgba(6,6,14,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.site-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 6%;display:flex;align-items:center;justify-content:space-between;transition:all .4s;border-bottom:1px solid rgba(240,184,72,.25);background:rgba(40,40,60,.95);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);box-shadow:0 6px 24px rgba(0,0,0,.3);}
 .site-nav.sc{padding:10px 6%;background:var(--nb);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd2);}
 .nav-logo{display:flex;align-items:center;gap:10px;}
 .logo-mk{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(201,147,58,.4),0 0 0 2px rgba(201,147,58,.25);background:#fff;overflow:hidden;flex-shrink:0;transition:all .3s;perspective:800px;position:relative;cursor:pointer;}
@@ -98,7 +98,7 @@ img{display:block;max-width:100%;}
 .logo-mk.no-img{background:linear-gradient(135deg,var(--ad),var(--a));}
 
 /* Pop-out header effect */
-.site-nav.sc{margin:8px 12px 0;border-radius:20px;width:calc(100% - 24px);left:0;right:0;box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 0 1px rgba(201,147,58,.2) !important;background:rgba(8,8,18,.95) !important;backdrop-filter:blur(28px) saturate(1.3) !important;-webkit-backdrop-filter:blur(28px) saturate(1.3) !important;border-bottom:none !important;}
+.site-nav.sc{margin:8px 12px 0;border-radius:20px;width:calc(100% - 24px);left:0;right:0;box-shadow:0 10px 40px rgba(0,0,0,.4),0 0 0 1px rgba(240,184,72,.35) !important;background:rgba(46,46,68,.96) !important;backdrop-filter:blur(28px) saturate(1.4) !important;-webkit-backdrop-filter:blur(28px) saturate(1.4) !important;border-bottom:none !important;}
 .site-nav.sc::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(201,147,58,.4),transparent 40%,transparent 60%,rgba(34,197,94,.3));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
 .site-nav .ln{color:#fff !important;text-shadow:0 2px 6px rgba(0,0,0,.4);}
 .site-nav.sc .ln{background:linear-gradient(135deg,#e8b86d,var(--a));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
@@ -622,32 +622,32 @@ body.admin-mode .site-nav{top:34px;}
 .cal-split{display:grid;grid-template-columns:1fr 1fr;gap:0;background:transparent;}
 .cal-split-right{background:var(--bg2);padding:20px 4%;display:flex;flex-direction:column;gap:14px;}
 @media(max-width:768px){.cal-split{grid-template-columns:1fr;}.cal-split-right{padding:18px 4%;}}
-/* ══ NOTICE BOARD — elegant bar below nav, always visible while scrolling ══ */
-#nb-wrap{position:fixed;top:84px;left:0;right:0;z-index:190;display:none;animation:nbSlide .4s cubic-bezier(.16,1,.3,1);}
-.site-nav.sc ~ #nb-wrap,body.has-nav-sc #nb-wrap{top:66px;}
+/* ══ NOTICE BOARD — always visible, follows nav smoothly ══ */
+#nb-wrap{position:fixed;top:76px;left:0;right:0;z-index:190;display:none;animation:nbSlide .4s cubic-bezier(.16,1,.3,1);transition:top .35s cubic-bezier(.23,1,.32,1);}
+body.has-nav-sc #nb-wrap{top:68px;}
 #nb-wrap.active{display:block;}
 @keyframes nbSlide{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
-.nb-inner{background:linear-gradient(90deg,rgba(12,12,22,.97),rgba(20,14,30,.97));border-top:1px solid rgba(201,147,58,.25);border-bottom:1px solid rgba(201,147,58,.4);backdrop-filter:blur(22px);box-shadow:0 6px 20px rgba(0,0,0,.35);}
-.nb-ticker{display:flex;align-items:center;height:42px;max-width:100%;}
-.nb-label{padding:0 16px;background:linear-gradient(135deg,var(--ad),var(--a));color:#07070a;font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap;height:42px;display:flex;align-items:center;flex-shrink:0;gap:6px;position:relative;}
+.nb-inner{background:linear-gradient(90deg,rgba(22,22,34,.97),rgba(30,22,40,.97));border-top:1px solid rgba(212,160,74,.3);border-bottom:1px solid rgba(212,160,74,.45);backdrop-filter:blur(22px);box-shadow:0 6px 24px rgba(0,0,0,.4);}
+.nb-ticker{display:flex;align-items:center;height:44px;max-width:100%;}
+.nb-label{padding:0 16px;background:linear-gradient(135deg,var(--ad),var(--a));color:#131320;font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap;height:44px;display:flex;align-items:center;flex-shrink:0;gap:6px;position:relative;}
 .nb-label::after{content:'';position:absolute;right:-12px;top:0;bottom:0;width:12px;background:linear-gradient(90deg,var(--a),transparent);}
-.nb-scroll{flex:1;overflow:hidden;height:42px;display:flex;align-items:center;padding-left:16px;}
+.nb-scroll{flex:1;overflow:hidden;height:44px;display:flex;align-items:center;padding-left:16px;}
 .nb-track{display:flex;gap:60px;animation:nbScroll 32s linear infinite;white-space:nowrap;}
 .nb-track:hover{animation-play-state:paused;}
 @keyframes nbScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.nb-item{display:inline-flex;align-items:center;gap:9px;font-size:.8rem;color:rgba(255,255,255,.95);font-weight:600;cursor:pointer;transition:color .2s;}
+.nb-item{display:inline-flex;align-items:center;gap:9px;font-size:.82rem;color:rgba(255,255,255,.98);font-weight:600;cursor:pointer;transition:color .2s;}
 .nb-item:hover{color:var(--a);}
-.nb-item .ni{font-size:1.05rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
-.nb-item b{color:#e8b86d;font-weight:600;}
-.nb-close{padding:0 14px;background:none;border:none;color:rgba(255,255,255,.45);cursor:pointer;font-size:.95rem;flex-shrink:0;height:42px;transition:all .2s;border-left:1px solid rgba(255,255,255,.08);}
-.nb-close:hover{color:#fff;background:rgba(255,255,255,.05);}
+.nb-item .ni{font-size:1.08rem;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));}
+.nb-item b{color:var(--al);font-weight:600;}
+.nb-close{padding:0 14px;background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:.95rem;flex-shrink:0;height:44px;transition:all .2s;border-left:1px solid rgba(255,255,255,.1);}
+.nb-close:hover{color:#fff;background:rgba(255,255,255,.08);}
 @media(max-width:600px){
-  #nb-wrap{top:68px;}
-  .site-nav.sc ~ #nb-wrap,body.has-nav-sc #nb-wrap{top:56px;}
-  .nb-ticker{height:36px;}
-  .nb-label{height:36px;font-size:.55rem;padding:0 12px;letter-spacing:2px;}
-  .nb-scroll{height:36px;padding-left:12px;}
-  .nb-close{height:36px;padding:0 10px;}
+  #nb-wrap{top:64px;}
+  body.has-nav-sc #nb-wrap{top:56px;}
+  .nb-ticker{height:38px;}
+  .nb-label{height:38px;font-size:.55rem;padding:0 12px;letter-spacing:2px;}
+  .nb-scroll{height:38px;padding-left:12px;}
+  .nb-close{height:38px;padding:0 10px;}
   .nb-item{font-size:.72rem;}
   .nb-item .ni{font-size:.92rem;}
 }
@@ -4541,466 +4541,4 @@ async function replaceProj(input,id){
   const p=D.projects.find(x=>x.id===id);
   if(p){p.img=b64;save();renderSite();renderAdminProj();}
 }
-function editProj(id,field,val){
-  const p=D.projects.find(x=>x.id===id);
-  if(p){p[field]=val;save();renderSite();}
-}
-function delProj(id){if(!confirm('Delete this project?'))return;D.projects=D.projects.filter(p=>p.id!==id);save();renderSite();renderAdminProj();}
-function editProjTitle(id,val){editProj(id,'title',val);}
-
-// ═══════════════════════════════════════════════
-// ADMIN TESTIMONIALS
-// ═══════════════════════════════════════════════
-function renderAdminTest(){
-  document.getElementById('test-list').innerHTML=D.testimonials.map(t=>`
-    <div class="apc">
-      <div class="apc-hdr"><h3>${t.init} ${t.name} <span style="font-size:.7rem;color:#c9933a">${'★'.repeat(t.stars||5)}</span></h3><div class="apc-acts"><button class="abtn" onclick="openEditTest('${t.id}')">✎ Edit</button><button class="dbtn" onclick="deleteTest('${t.id}')">🗑</button></div></div>
-      <p style="font-size:.79rem;color:#8a8a9a;font-style:italic">"${t.text.substring(0,110)}…"</p>
-      <p style="font-size:.71rem;color:#5a5a6a;margin-top:4px">— ${t.loc}</p>
-    </div>`).join('');
-}
-function openAddTest(){document.getElementById('test-form-ttl').textContent='Add Testimonial';['tf-text','tf-name','tf-loc','tf-init'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('tf-eid').value='';document.getElementById('test-form').classList.add('open');}
-function openEditTest(id){const t=D.testimonials.find(x=>x.id===id);if(!t)return;document.getElementById('test-form-ttl').textContent='Edit Testimonial';document.getElementById('tf-text').value=t.text;document.getElementById('tf-name').value=t.name;document.getElementById('tf-loc').value=t.loc;document.getElementById('tf-init').value=t.init;document.getElementById('tf-stars').value=t.stars||5;document.getElementById('tf-eid').value=id;document.getElementById('test-form').classList.add('open');}
-function closeTestForm(){document.getElementById('test-form').classList.remove('open');}
-function saveTest(){
-  const text=document.getElementById('tf-text').value.trim();if(!text){alert('Review text required');return;}
-  const name=document.getElementById('tf-name').value.trim()||'Client';
-  const loc=document.getElementById('tf-loc').value.trim()||'Hetauda';
-  const init=document.getElementById('tf-init').value.trim()||name[0];
-  const stars=+document.getElementById('tf-stars').value||5;
-  const eid=document.getElementById('tf-eid').value;
-  if(eid){const idx=D.testimonials.findIndex(x=>x.id===eid);if(idx>-1)D.testimonials[idx]={...D.testimonials[idx],text,name,loc,init,stars};}
-  else D.testimonials.push({id:'t'+Date.now(),text,name,loc,init,stars});
-  save();renderSite();renderAdminTest();closeTestForm();
-}
-function deleteTest(id){if(!confirm('Delete this testimonial?'))return;D.testimonials=D.testimonials.filter(t=>t.id!==id);save();renderSite();renderAdminTest();}
-
-// ═══════════════════════════════════════════════
-// ADMIN WHY US
-// ═══════════════════════════════════════════════
-function renderAdminWhy(){
-  document.getElementById('why-list').innerHTML=D.whyUs.map(w=>`
-    <div class="apc">
-      <div class="apc-hdr"><h3>${w.icon} ${w.title}</h3><div class="apc-acts"><button class="abtn" onclick="openEditWhy('${w.id}')">✎ Edit</button><button class="dbtn" onclick="deleteWhy('${w.id}')">🗑</button></div></div>
-      <p style="font-size:.79rem;color:#8a8a9a">${w.desc}</p>
-    </div>`).join('');
-}
-function openAddWhy(){document.getElementById('why-form-ttl').textContent='Add Point';['wf-icon','wf-title','wf-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('wf-eid').value='';document.getElementById('why-form').classList.add('open');}
-function openEditWhy(id){const w=D.whyUs.find(x=>x.id===id);if(!w)return;document.getElementById('why-form-ttl').textContent='Edit Point';document.getElementById('wf-icon').value=w.icon;document.getElementById('wf-title').value=w.title;document.getElementById('wf-desc').value=w.desc;document.getElementById('wf-eid').value=id;document.getElementById('why-form').classList.add('open');}
-function closeWhyForm(){document.getElementById('why-form').classList.remove('open');}
-function saveWhy(){
-  const icon=document.getElementById('wf-icon').value.trim()||'⭐';
-  const title=document.getElementById('wf-title').value.trim();if(!title){alert('Title required');return;}
-  const desc=document.getElementById('wf-desc').value.trim();
-  const eid=document.getElementById('wf-eid').value;
-  if(eid){const idx=D.whyUs.findIndex(x=>x.id===eid);if(idx>-1)D.whyUs[idx]={...D.whyUs[idx],icon,title,desc};}
-  else D.whyUs.push({id:'w'+Date.now(),icon,title,desc});
-  save();renderSite();renderAdminWhy();closeWhyForm();
-}
-function deleteWhy(id){if(!confirm('Delete this point?'))return;D.whyUs=D.whyUs.filter(w=>w.id!==id);save();renderSite();renderAdminWhy();}
-
-// ═══════════════════════════════════════════════
-// ADMIN CONTACT
-// ═══════════════════════════════════════════════
-function saveContact(){
-  const g=id=>document.getElementById(id)?.value.trim();
-  D.settings.phone1=g('c-ph1')||D.settings.phone1;D.settings.phone2=g('c-ph2')||D.settings.phone2;
-  D.settings.phone3=g('c-ph3')||D.settings.phone3;D.settings.wa=g('c-wa')||D.settings.wa;
-  D.settings.email=g('c-email')||D.settings.email;D.settings.address=g('c-addr')||D.settings.address;
-  D.settings.hours=g('c-hrs')||D.settings.hours;
-  D.settings.videoUrl=document.getElementById('c-video')?.value.trim()||'';
-  D.settings.facebook=document.getElementById('c-facebook')?.value.trim()||'';
-  D.settings.instagram=document.getElementById('c-instagram')?.value.trim()||'';
-  D.settings.tiktok=document.getElementById('c-tiktok')?.value.trim()||'';
-  save();renderSite();renderSocialFloat();showOk('contact-ok');
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN SETTINGS
-// ═══════════════════════════════════════════════
-function saveSettings(){
-  const g=id=>document.getElementById(id)?.value.trim();
-  D.settings.company=g('s-company')||D.settings.company;
-  D.settings.sub=g('s-sub')||D.settings.sub;
-  D.settings.tagline=g('s-tagline')||D.settings.tagline;
-  const newEmail=g('s-email');
-  if(newEmail&&newEmail.includes('@'))D.adminEmail=newEmail;
-  const p1=g('s-pass1'),p2=g('s-pass2'),err=document.getElementById('s-perr');
-  if(p1||p2){if(p1!==p2){err.textContent='Passwords do not match!';err.style.display='block';return;}if(p1.length<6){err.textContent='Min 6 characters required.';err.style.display='block';return;}D.settings.adminPass=p1;err.style.display='none';document.getElementById('s-pass1').value='';document.getElementById('s-pass2').value='';}
-  save();renderSite();showOk('settings-ok');
-  document.getElementById('ld-name').textContent=D.settings.company;
-}
-function saveEmailJS(){
-  const s=document.getElementById('ejs-service')?.value.trim();
-  const t=document.getElementById('ejs-template')?.value.trim();
-  const k=document.getElementById('ejs-key')?.value.trim();
-  if(s)D.settings.ejsService=s;
-  if(t)D.settings.ejsTemplate=t;
-  if(k)D.settings.ejsKey=k;
-  save();showOk('ejs-ok');
-  // Update the _sendOTPEmail constants
-  window._ejsService=D.settings.ejsService||'';
-  window._ejsTemplate=D.settings.ejsTemplate||'';
-  window._ejsKey=D.settings.ejsKey||'';
-}
-async function testEmailJS(){
-  const email=D.adminEmail||D.settings.email;
-  const testOtp='TEST'+Math.floor(1000+Math.random()*9000);
-  await _sendOTPEmail(email,testOtp);
-}
-function populateEmailJS(){
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('ejs-service',D.settings.ejsService||'');
-  fld('ejs-template',D.settings.ejsTemplate||'');
-  fld('ejs-key',D.settings.ejsKey||'');
-}
-function exportData(){const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prerak-backup-'+Date.now()+'.json';a.click();}
-function resetData(){D=JSON.parse(JSON.stringify(DEF));save();renderSite();populateForms();renderDashboard();showSec('dashboard');alert('✅ Reset to factory defaults!');}
-
-// ═══ DASHBOARD PIN CHANGE ═══
-function toggleCurPass(){
-  const el=document.getElementById('cur-pass-display');
-  const btn=document.getElementById('cur-pass-eye');
-  if(!el)return;
-  const showing=el.textContent===D.settings.adminPass;
-  el.textContent=showing?'••••••••':D.settings.adminPass;
-  if(btn)btn.innerHTML=showing?'👁️ View':'🙈 Hide';
-}
-function dpToggle(inputId,btnId){
-  const inp=document.getElementById(inputId);
-  const btn=document.getElementById(btnId);
-  if(!inp)return;
-  inp.type=inp.type==='password'?'text':'password';
-  if(btn)btn.textContent=inp.type==='password'?'👁️':'🙈';
-}
-function dpStrength(val){
-  const bar=document.getElementById('dp-fill');
-  const hint=document.getElementById('dp-hint');
-  if(!bar||!hint)return;
-  const len=val.length;
-  const hasUpper=/[A-Z]/.test(val);
-  const hasNum=/[0-9]/.test(val);
-  const hasSpec=/[^a-zA-Z0-9]/.test(val);
-  let score=0;
-  if(len>=6)score++;if(len>=8)score++;if(hasUpper)score++;if(hasNum)score++;if(hasSpec)score++;
-  const levels=[
-    {w:'0%',c:'transparent',t:''},
-    {w:'20%',c:'#ef4444',t:'Too short'},
-    {w:'40%',c:'#f97316',t:'Weak'},
-    {w:'60%',c:'#eab308',t:'Fair'},
-    {w:'80%',c:'#84cc16',t:'Good'},
-    {w:'100%',c:'#22c55e',t:'Strong ✓'}
-  ];
-  const lv=levels[Math.min(score,5)];
-  bar.style.width=lv.w;bar.style.background=lv.c;
-  hint.textContent=lv.t;hint.style.color=lv.c;
-}
-function dpMsg(txt,ok){
-  const el=document.getElementById('dp-msg');if(!el)return;
-  el.style.display='block';
-  el.style.background=ok?'rgba(34,197,94,.1)':'rgba(239,68,68,.1)';
-  el.style.border='1px solid '+(ok?'rgba(34,197,94,.25)':'rgba(239,68,68,.25)');
-  el.style.color=ok?'#22c55e':'#ef4444';
-  el.textContent=txt;
-  if(ok)setTimeout(()=>{el.style.display='none';dpClear();},2500);
-}
-function dpClear(){
-  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const bar=document.getElementById('dp-fill');if(bar){bar.style.width='0%';}
-  const hint=document.getElementById('dp-hint');if(hint)hint.textContent='';
-  const msg=document.getElementById('dp-msg');if(msg)msg.style.display='none';
-  ['dp-eye0','dp-eye1','dp-eye2'].forEach(id=>{const b=document.getElementById(id);if(b)b.textContent='👁️';});
-  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.type='password';});
-}
-function dpSave(){
-  const old=(document.getElementById('dp-old')?.value||'').trim();
-  const n1=(document.getElementById('dp-new1')?.value||'').trim();
-  const n2=(document.getElementById('dp-new2')?.value||'').trim();
-  if(!old){dpMsg('❌ Enter your current password','');return;}
-  if(old.toLowerCase()!==D.settings.adminPass.toLowerCase()){dpMsg('❌ Current password is wrong','');return;}
-  if(!n1||n1.length<6){dpMsg('❌ New password must be at least 6 characters','');return;}
-  if(n1!==n2){dpMsg('❌ Passwords do not match','');return;}
-  D.settings.adminPass=n1;save();
-  dpMsg('✅ Password updated successfully! Use new password next login.','ok');
-}
-
-// ═══════════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSvcModal();closeLb();close3DCard();}
-  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){
-    e.preventDefault();
-    // Only allow shortcut if FAB is visible (URL has admin key) or already admin
-    const fab=document.getElementById('admin-fab');
-    if(fab?.classList.contains('visible')||isAdmin){
-      isAdmin?openAdminPanel():openLogin();
-    }
-  }
-  if(document.getElementById('lb').classList.contains('open')){if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);}
-});
-
-// ═══════════════════════════════════════════════
-// 3D CARD EXPERIENCE
-// ═══════════════════════════════════════════════
-let _3dFlipped=false,_3dDrag=false,_3dRX=0,_3dRY=0,_3dSX=0,_3dSY=0,_3dPAF=null;
-
-function open3DCard(){
-  const ov=document.getElementById('card3d-ov');if(!ov)return;
-  _3dFlipped=false;_3dRX=0;_3dRY=-15;
-  const front=document.getElementById('card3d-front');
-  const back=document.getElementById('card3d-back');
-  if(front)_renderVCFront(front);
-  if(back)_renderVCBack(back);
-  const C=D.card,wa=document.getElementById('c3d-wa');
-  if(wa){const msg='📇 *'+C.cname+' '+C.csub+'*\n📞 '+C.ph1+'\n✉ '+C.email+'\n📍 '+C.addr;wa.href='https://wa.me/'+D.settings.wa+'?text='+encodeURIComponent(msg);}
-  ov.style.display='flex';document.body.classList.add('ns');
-  _start3DParticles();_update3D(true);
-  // bind events
-  const w=document.getElementById('card3d-wrap');
-  w.addEventListener('mousedown',_3dMD);w.addEventListener('touchstart',_3dTD,{passive:false});
-  window.addEventListener('mousemove',_3dMM);window.addEventListener('mouseup',_3dMU);
-  window.addEventListener('touchmove',_3dTM,{passive:false});window.addEventListener('touchend',_3dMU);
-}
-function close3DCard(){
-  const ov=document.getElementById('card3d-ov');if(!ov)return;
-  ov.style.display='none';document.body.classList.remove('ns');
-  cancelAnimationFrame(_3dPAF);_3dPAF=null;
-  const w=document.getElementById('card3d-wrap');
-  if(w){w.removeEventListener('mousedown',_3dMD);w.removeEventListener('touchstart',_3dTD);}
-  window.removeEventListener('mousemove',_3dMM);window.removeEventListener('mouseup',_3dMU);
-  window.removeEventListener('touchmove',_3dTM);window.removeEventListener('touchend',_3dMU);
-}
-function flip3DCard(){_3dFlipped=!_3dFlipped;_3dRY+=180;_update3D();}
-let _3dHolo=false,_3dAccent='#c9933a',_3dBg='#07070a';
-function _update3D(init){
-  const inner=document.getElementById('card3d-inner');
-  const shine=document.getElementById('card3d-shine');
-  const holo=document.getElementById('card3d-holo');
-  const shadow=document.getElementById('card3d-shadow');
-  if(!inner)return;
-  inner.style.transform='rotateX('+_3dRX+'deg) rotateY('+_3dRY+'deg)';
-  inner.style.transition=_3dDrag?'none':'transform .12s ease-out';
-  // dynamic shadow follows tilt
-  if(shadow){
-    const sx=Math.sin(_3dRY*Math.PI/180)*20;
-    const sy=Math.sin(_3dRX*Math.PI/180)*10;
-    shadow.style.transform='translateX('+sx+'px) translateY('+sy+'px)';
-    shadow.style.background='radial-gradient(ellipse,'+_3dAccent+'55,transparent 70%)';
-  }
-  // holographic shine layer
-  if(shine){
-    const a=(_3dRY%360)*Math.PI/180;
-    const p1=50+Math.sin(a)*40;const p2=60+Math.cos(a)*30;
-    shine.style.background='linear-gradient('+(_3dRY%360)+'deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) '+p1+'%,rgba(255,255,255,.05) '+p2+'%,rgba(255,255,255,0) 100%)';
-  }
-  // holographic rainbow layer when holo is on
-  if(holo&&_3dHolo){
-    const hue=(_3dRY*2)%360;
-    const hue2=(hue+120)%360;
-    const hue3=(hue+240)%360;
-    holo.style.background='linear-gradient('+(_3dRY%360)+'deg,hsla('+hue+'deg,100%,60%,.55) 0%,hsla('+hue2+'deg,100%,60%,.3) 50%,hsla('+hue3+'deg,100%,60%,.55) 100%)';
-    // also flash border color
-    const front=document.getElementById('card3d-front');
-    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px hsla('+hue+'deg,100%,60%,.4)';
-  } else if(holo){
-    holo.style.background='transparent';
-    const front=document.getElementById('card3d-front');
-    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+_3dAccent+'33';
-  }
-}
-function toggle3DHolo(){
-  _3dHolo=!_3dHolo;
-  const btn=document.getElementById('holo-btn');
-  const el=document.getElementById('card3d-holo');
-  if(btn){btn.style.background=_3dHolo?'linear-gradient(90deg,#ff00ff,#00ffff)':'linear-gradient(90deg,rgba(255,0,255,.2),rgba(0,255,255,.2))';btn.textContent=_3dHolo?'🌈 ON':'🌈 Holo';}
-  _update3D();
-}
-function set3DColor(accent,bg){
-  _3dAccent=accent;_3dBg=bg;
-  // update color buttons
-  document.querySelectorAll('.card3d-color-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  // re-render card faces with new accent color feel
-  const front=document.getElementById('card3d-front');
-  const back=document.getElementById('card3d-back');
-  if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+accent+'44';
-  if(back)back.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px '+accent+'33';
-  // update particle color
-  if(window._3dParticleColor)window._3dParticleColor=accent;
-  _update3D();
-}
-function _3dMD(e){_3dDrag=true;_3dSX=e.clientX;_3dSY=e.clientY;document.getElementById('card3d-inner').style.cursor='grabbing';}
-function _3dTD(e){e.preventDefault();_3dDrag=true;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;}
-function _3dMM(e){if(!_3dDrag)return;const dx=e.clientX-_3dSX,dy=e.clientY-_3dSY;_3dSX=e.clientX;_3dSY=e.clientY;_3dRY+=dx*.9;_3dRX-=dy*.5;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
-function _3dTM(e){if(!_3dDrag)return;e.preventDefault();const dx=e.touches[0].clientX-_3dSX,dy=e.touches[0].clientY-_3dSY;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;_3dRY+=dx*1.2;_3dRX-=dy*.7;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
-function _3dMU(){
-  _3dDrag=false;
-  const inner=document.getElementById('card3d-inner');if(inner)inner.style.cursor='grab';
-}
-function _start3DParticles(){
-  cancelAnimationFrame(_3dPAF);
-  const c=document.getElementById('card3d-particles');if(!c)return;
-  c.width=window.innerWidth;c.height=window.innerHeight;
-  const ctx=c.getContext('2d');
-  const pts=Array.from({length:70},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,o:Math.random()*.45+.05,hue:Math.random()*360}));
-  let frame=0;
-  function draw(){
-    _3dPAF=requestAnimationFrame(draw);frame++;
-    ctx.clearRect(0,0,c.width,c.height);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>c.width)p.vx*=-1;
-      if(p.y<0||p.y>c.height)p.vy*=-1;
-      const pulse=p.o*(0.7+Math.sin(frame*.04+p.x)*.3);
-      // if holo mode, rainbow particles
-      if(_3dHolo){
-        p.hue=(p.hue+0.5)%360;
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='hsla('+p.hue+',100%,70%,'+pulse+')';ctx.fill();
-      } else {
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='hsla(0,0%,100%,'+pulse*.35+')';ctx.fill();
-      }
-    });
-    if(!_3dDrag){_3dRY+=.2;_update3D();}
-  }
-  draw();
-}
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-document.body.classList.remove('ns');
-renderSite();
-
-// ═══════════════════════════════════════════════
-// ADMIN ACCESS — 6 ADVANCED HIDDEN UNLOCK METHODS
-// All invisible to customers. Owner-only access.
-// ═══════════════════════════════════════════════
-(function initAdminAccess(){
-  function showFAB(){document.getElementById('admin-fab')?.classList.add('visible');}
-  function unlockAdmin(reason){
-    showFAB();
-    setTimeout(function(){openLogin();},150);
-    console.log('🔓 Admin unlocked via: '+reason);
-  }
-
-  // ─── Method 1: URL param / hash ───────────────────
-  // yoursite.com?admin  OR  yoursite.com#admin  OR  ?key=prerak
-  const params=new URLSearchParams(window.location.search);
-  const hash=window.location.hash.replace('#','').toLowerCase();
-  if(params.has('admin')||params.get('key')==='prerak'||hash==='admin'){
-    showFAB();return;
-  }
-
-  // ─── Method 2: Logo 5x quick tap ──────────────────
-  let tapCount=0,tapTimer=null;
-  function handleLogoTap(e){
-    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
-    if(!logoArea)return;
-    e.preventDefault();
-    tapCount++;
-    const mk=document.querySelector('.logo-mk');
-    if(mk){
-      mk.style.transform='scale(1.25)';mk.style.boxShadow='0 0 16px rgba(201,147,58,.8)';
-      setTimeout(()=>{mk.style.transform='';mk.style.boxShadow='';},150);
-    }
-    clearTimeout(tapTimer);
-    if(tapCount>=5){tapCount=0;unlockAdmin('5x logo tap');return;}
-    tapTimer=setTimeout(()=>{tapCount=0;},4000);
-  }
-  document.addEventListener('click',handleLogoTap);
-  document.addEventListener('touchstart',handleLogoTap,{passive:false});
-
-  // ─── Method 3: Konami-style keyboard code ──────────
-  // Type "PRERAK" anywhere on page (desktop)
-  let keyBuffer='';
-  const SECRET_WORD='PRERAK';
-  document.addEventListener('keydown',function(e){
-    // Only capture if not typing in input/textarea
-    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
-    if(e.key.length===1){
-      keyBuffer+=e.key.toUpperCase();
-      if(keyBuffer.length>SECRET_WORD.length)keyBuffer=keyBuffer.slice(-SECRET_WORD.length);
-      if(keyBuffer===SECRET_WORD){keyBuffer='';unlockAdmin('keyboard PRERAK');}
-    }
-  });
-
-  // ─── Method 4: Long-press logo (2 seconds) ─────────
-  // Mobile-friendly: press & hold the logo
-  let pressTimer=null;
-  function startLongPress(e){
-    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
-    if(!logoArea)return;
-    const mk=document.querySelector('.logo-mk');
-    pressTimer=setTimeout(function(){
-      if(mk){mk.style.background='rgba(201,147,58,.9)';setTimeout(()=>{mk.style.background='';},300);}
-      unlockAdmin('2s long press');
-    },2000);
-  }
-  function endLongPress(){clearTimeout(pressTimer);}
-  document.addEventListener('mousedown',startLongPress);
-  document.addEventListener('mouseup',endLongPress);
-  document.addEventListener('mouseleave',endLongPress);
-  document.addEventListener('touchstart',startLongPress,{passive:true});
-  document.addEventListener('touchend',endLongPress);
-
-  // ─── Method 5: Triple-click footer copyright ───────
-  // Click © footer text 3 times quickly
-  let footTaps=0,footTimer=null;
-  document.addEventListener('click',function(e){
-    const foot=e.target.closest('.site-footer,.footer-bottom,.copyright,footer');
-    if(!foot)return;
-    // Only trigger on actual text in footer bottom
-    const txt=foot.textContent||'';
-    if(!txt.includes('©')&&!txt.toLowerCase().includes('prerak'))return;
-    footTaps++;
-    clearTimeout(footTimer);
-    if(footTaps>=3){footTaps=0;unlockAdmin('3x footer click');return;}
-    footTimer=setTimeout(()=>{footTaps=0;},2500);
-  });
-
-  // ─── Method 6: Konami arrow sequence ───────────────
-  // ↑↑↓↓←→←→ then Enter (classic cheat code)
-  const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','Enter'];
-  let konamiIdx=0;
-  document.addEventListener('keydown',function(e){
-    if(e.key===KONAMI[konamiIdx]){
-      konamiIdx++;
-      if(konamiIdx===KONAMI.length){konamiIdx=0;unlockAdmin('Konami code');}
-    } else konamiIdx=0;
-  });
-
-  // ─── Method 7: Swipe pattern (Z shape) on mobile ───
-  // Draw Z shape on screen: right → diagonal-left → right
-  let swipeStart=null,swipePoints=[];
-  document.addEventListener('touchstart',function(e){
-    if(e.touches.length===1)swipeStart={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
-    swipePoints=[];
-  },{passive:true});
-  document.addEventListener('touchmove',function(e){
-    if(!swipeStart||e.touches.length!==1)return;
-    swipePoints.push({x:e.touches[0].clientX,y:e.touches[0].clientY});
-  },{passive:true});
-  document.addEventListener('touchend',function(e){
-    if(!swipeStart||swipePoints.length<8){swipeStart=null;return;}
-    const dur=Date.now()-swipeStart.t;
-    if(dur>3000||dur<400){swipeStart=null;return;}
-    // Analyze: need right-stroke, then down-left diagonal, then right
-    const n=swipePoints.length;
-    const q1=swipePoints[Math.floor(n*0.2)];
-    const q2=swipePoints[Math.floor(n*0.5)];
-    const q3=swipePoints[Math.floor(n*0.8)];
-    const dx1=q1.x-swipeStart.x,dx2=q3.x-q2.x,dy2=q3.y-q2.y;
-    const dxDiag=q2.x-q1.x,dyDiag=q2.y-q1.y;
-    // Z-shape: right stroke (dx1>60), diagonal down-left (dxDiag<-40 && dyDiag>40), right stroke (dx2>40)
-    if(dx1>60 && dxDiag<-40 && dyDiag>40 && dx2>40){
-      unlockAdmin('Z-swipe gesture');
-    }
-    swipeStart=null;
-  },{passive:true});
-})();
-</script>
-</body>
-</html>
+fun
