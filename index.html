@@ -903,7 +903,10 @@ body.admin-mode .site-nav{top:34px;}
         <div style="margin-top:10px;padding:10px 12px;background:rgba(59,130,246,.06);border-radius:8px;font-size:.64rem;color:#6b7280;line-height:1.8">
           Setup steps: 1) emailjs.com मा free account बनाउनुस् 2) Email service add गर्नुस् (Gmail) 3) Template बनाउनुस् — variables: <code style="color:#93c5fd">to_email, otp_code, company</code> 4) IDs माथि paste गर्नुस्
         </div>
-      </div><span style="font-size:.65rem;color:#5a5a6a;background:rgba(255,255,255,.05);padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.07)">Security</span></div>
+      </div>
+      <!-- PIN CHANGE WIDGET — built-in on dashboard -->
+      <div class="apc" style="border-left:3px solid #c9933a">
+        <div class="apc-hdr"><h3>🔐 Change Admin Password</h3><span style="font-size:.65rem;color:#5a5a6a;background:rgba(255,255,255,.05);padding:3px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.07)">Security</span></div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:end">
           <div>
             <label style="display:block;font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;color:#8a8a9a;margin-bottom:6px;font-weight:600">Current Password</label>
@@ -3097,50 +3100,55 @@ function _maskEmail(e){
 
 async function _sendOTPEmail(email,otp){
   const demoBox=document.getElementById('otp-demo-box');
-  // Show sending state
-  if(demoBox){demoBox.style.display='block';demoBox.innerHTML='<b>📤 Sending OTP to '+_maskEmail(email)+'...</b>';}
+  if(demoBox){demoBox.style.display='block';demoBox.innerHTML='<b style="color:#60a5fa">📤 Sending OTP to '+_maskEmail(email)+'...</b>';}
 
-  // Method 1: EmailJS (free email service - works from browser)
-  // To enable real email: go to emailjs.com, create account, get service/template/public key
-  const EMAILJS_SERVICE=D.settings.ejsService||'service_bvxfr3q';
-  const EMAILJS_TEMPLATE=D.settings.ejsTemplate||'template_otp';
-  const EMAILJS_KEY=D.settings.ejsKey||'YOUR_PUBLIC_KEY';
+  const EMAILJS_SERVICE=(D.settings.ejsService||'').trim();
+  const EMAILJS_TEMPLATE=(D.settings.ejsTemplate||'').trim();
+  const EMAILJS_KEY=(D.settings.ejsKey||'').trim();
 
-  if(EMAILJS_KEY!=='YOUR_PUBLIC_KEY'){
+  const isConfigured=EMAILJS_SERVICE && EMAILJS_TEMPLATE && EMAILJS_KEY;
+
+  if(isConfigured){
     try{
-      // Load EmailJS if not loaded
       if(!window.emailjs){
         await new Promise(function(res,rej){
           const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
           s.onload=res;s.onerror=rej;document.head.appendChild(s);
         });
-        window.emailjs.init({publicKey:EMAILJS_KEY});
       }
+      if(window.emailjs.init)window.emailjs.init({publicKey:EMAILJS_KEY});
       await window.emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,{
         to_email:email,
         otp_code:otp,
         company:'PRERAK Construction & Prefab Homes',
-        expires:'5 minutes'
+        expires:'5 minutes',
+        message:'Your OTP for PRERAK Admin login is: '+otp+'. Valid for 5 minutes.'
       });
-      if(demoBox){demoBox.style.display='block';demoBox.innerHTML='<b style="color:#22c55e">✅ OTP sent to '+_maskEmail(email)+'</b><br><span style="font-size:.65rem;opacity:.7">Check your email inbox/spam</span>';}
+      if(demoBox){
+        demoBox.style.display='block';
+        demoBox.innerHTML='<b style="color:#22c55e">✅ OTP sent to '+_maskEmail(email)+'</b><br>'
+          +'<span style="font-size:.65rem;opacity:.8">📧 Check your email inbox/spam folder</span><br>'
+          +'<span style="font-size:.58rem;opacity:.6">Didn\'t receive? Click Resend below</span>';
+      }
       return;
-    }catch(e){console.log('EmailJS error:',e);}
+    }catch(e){
+      console.log('EmailJS error:',e);
+      if(demoBox){
+        demoBox.innerHTML='<b style="color:#ef4444">❌ Email failed to send</b><br>'
+          +'<span style="font-size:.62rem;opacity:.8">Check EmailJS settings in Admin → Dashboard</span><br>'
+          +'<b style="color:#fbbf24">Your OTP: <span style="font-size:1.4rem;letter-spacing:4px;color:#fff">'+otp+'</span></b>';
+      }
+      return;
+    }
   }
 
-  // Method 2: mailto fallback — opens email app
-  const subject=encodeURIComponent('PRERAK Admin OTP: '+otp);
-  const body=encodeURIComponent('Your PRERAK Admin Login OTP is: '+otp+'\n\nValid for 5 minutes.\nDo not share this code.\n\n— PRERAK Security System');
-  const mailtoLink='mailto:'+email+'?subject='+subject+'&body='+body;
-
-  // Auto-open mail app
-  const a=document.createElement('a');a.href=mailtoLink;a.click();
-
+  // Fallback: EmailJS not configured — show OTP directly (first-time setup)
   if(demoBox){
     demoBox.style.display='block';
-    demoBox.innerHTML='<b style="color:#60a5fa">📧 Email app खुल्यो!</b><br>'
-      +'OTP: <b style="font-size:1.5rem;letter-spacing:5px;color:#fff">'+otp+'</b><br>'
-      +'<span style="font-size:.62rem;opacity:.7">Email app मा send गर्नुस् वा माथिको OTP copy गर्नुस्</span><br>'
-      +'<span style="font-size:.58rem;color:#fbbf24">💡 Real email को लागि Admin Settings मा EmailJS setup गर्नुस्</span>';
+    demoBox.innerHTML='<div style="padding:8px 10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:8px;margin-bottom:10px;font-size:.64rem;color:#fbbf24;line-height:1.6">⚠️ <b>EmailJS not configured yet</b><br>OTP via email मा पाउन Dashboard मा EmailJS Service ID, Template ID र Public Key save गर्नुस्।</div>'
+      +'<div style="text-align:center"><span style="font-size:.7rem;opacity:.7;letter-spacing:1px">📱 YOUR OTP CODE:</span><br>'
+      +'<b style="font-size:2rem;letter-spacing:7px;color:#c9933a;font-weight:800">'+otp+'</b><br>'
+      +'<span style="font-size:.58rem;opacity:.6">Valid for 5 minutes</span></div>';
   }
 }
 
