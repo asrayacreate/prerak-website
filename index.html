@@ -2457,18 +2457,30 @@ function renderSite(){
         <div id="form-ok"><div style="font-size:2rem;margin-bottom:8px">✅</div><strong>Message Sent!</strong><br><span style="color:var(--mt);font-size:.8rem">We'll contact you within 2 hours.</span></div>
       </div>
     </div>
-    <!-- PRERAK Office Map — Real Google Maps Embed -->
+    <!-- PRERAK Office Map — Street View + Map + Satellite -->
     <div style="margin-top:36px;border-radius:14px;overflow:hidden;border:1px solid var(--brd2);box-shadow:0 12px 32px rgba(0,0,0,.22);position:relative;background:#0f1419;">
+      <!-- Map tabs -->
+      <div style="display:flex;background:linear-gradient(135deg,#1a1a2e,#131320);border-bottom:1px solid var(--brd2);padding:8px 8px 0;gap:4px;">
+        <button onclick="swMap('street')" id="mtab-street" class="map-tab active" style="flex:1;padding:10px 14px;background:var(--a);color:#131320;border:none;border-radius:8px 8px 0 0;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;">👁️ Street View</button>
+        <button onclick="swMap('map')" id="mtab-map" class="map-tab" style="flex:1;padding:10px 14px;background:rgba(255,255,255,.06);color:#fff;border:none;border-radius:8px 8px 0 0;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;">🗺️ Map</button>
+        <button onclick="swMap('satellite')" id="mtab-satellite" class="map-tab" style="flex:1;padding:10px 14px;background:rgba(255,255,255,.06);color:#fff;border:none;border-radius:8px 8px 0 0;font-weight:700;font-size:.72rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px;">🛰️ Satellite</button>
+      </div>
       <div style="position:relative;height:420px;">
-        <iframe 
-          src="https://maps.google.com/maps?q=Prerak+Construction+%26+Prefab+Homes+Pvt+Ltd+Hetauda&t=m&z=17&output=embed&iwloc=near" 
-          width="100%" 
-          height="100%" 
-          style="border:0;display:block;filter:saturate(1.1);" 
-          loading="lazy" 
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen>
-        </iframe>
+        <!-- Street View (default) -->
+        <iframe id="mapframe-street"
+          src="https://www.google.com/maps/embed?pb=!4v1777045757196!6m8!1m7!1sWF3g9Dr3q4oNGEAVEWsWUA!2m2!1d27.4299192518583!2d85.035731896535!3f338.0754973999006!4f2.2284414507880257!5f2.2348255609509344"
+          width="100%" height="100%" style="border:0;display:block;"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <!-- Map View (hidden) -->
+        <iframe id="mapframe-map"
+          src="https://maps.google.com/maps?q=27.4299192518583,85.035731896535&t=m&z=18&output=embed&iwloc=near"
+          width="100%" height="100%" style="border:0;display:none;position:absolute;top:0;left:0;"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <!-- Satellite View (hidden) -->
+        <iframe id="mapframe-satellite"
+          src="https://maps.google.com/maps?q=27.4299192518583,85.035731896535&t=k&z=19&output=embed&iwloc=near"
+          width="100%" height="100%" style="border:0;display:none;position:absolute;top:0;left:0;"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
         <!-- Find Us badge overlay -->
         <div style="position:absolute;top:14px;left:16px;z-index:3;background:var(--a);color:#131320;font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(0,0,0,.35);display:flex;align-items:center;gap:6px;pointer-events:none">
           📍 PRERAK Office
@@ -2480,10 +2492,10 @@ function renderSite(){
       </div>
       <!-- Action buttons below map -->
       <div style="display:flex;gap:10px;padding:14px;background:linear-gradient(135deg,#1a1a2e,#131320);border-top:1px solid var(--brd2);flex-wrap:wrap;justify-content:center">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=27.4282559,85.0362385" target="_blank" rel="noopener" style="background:#4285f4;color:#fff;font-size:.72rem;font-weight:700;padding:10px 20px;border-radius:22px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(66,133,244,.4);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=27.4299192518583,85.035731896535" target="_blank" rel="noopener" style="background:#4285f4;color:#fff;font-size:.72rem;font-weight:700;padding:10px 20px;border-radius:22px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(66,133,244,.4);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
           🧭 Get Directions
         </a>
-        <a href="https://www.google.com/maps/place/27.4282559,85.0362385/@27.4282559,85.0362385,18z" target="_blank" rel="noopener" style="background:var(--a);color:#131320;font-size:.72rem;font-weight:700;padding:10px 20px;border-radius:22px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(255,204,77,.4);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+        <a href="https://www.google.com/maps/place/Prerak+Construction+%26+Prefab+Homes+Pvt.+Ltd./@27.4299192518583,85.035731896535,18z" target="_blank" rel="noopener" style="background:var(--a);color:#131320;font-size:.72rem;font-weight:700;padding:10px 20px;border-radius:22px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(255,204,77,.4);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
           🗺️ Open in Maps
         </a>
         <a href="tel:9855069733" style="background:#22c55e;color:#fff;font-size:.72rem;font-weight:700;padding:10px 20px;border-radius:22px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(34,197,94,.4);text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
@@ -3040,6 +3052,18 @@ function downloadFullCalendar(){
 // ═══════════════════════════════════════════════
 // ═══ QUOTE REQUEST SYSTEM ═══
 let _quotePlanId='';
+function swMap(view){
+  ['street','map','satellite'].forEach(v=>{
+    const f=document.getElementById('mapframe-'+v);
+    const t=document.getElementById('mtab-'+v);
+    if(f)f.style.display=(v===view)?'block':'none';
+    if(t){
+      if(v===view){t.style.background='var(--a)';t.style.color='#131320';}
+      else{t.style.background='rgba(255,255,255,.06)';t.style.color='#fff';}
+    }
+  });
+}
+
 function openQuoteForm(planId){
   _quotePlanId=planId||'';
   const plan=(D.pricing||[]).find(p=>p.id===planId);
