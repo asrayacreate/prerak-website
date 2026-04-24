@@ -641,19 +641,46 @@ body.admin-mode .site-nav{top:34px;}
 .price-card:not(.highlight) .price-btn{background:transparent;color:var(--a);border:1.5px solid var(--a);}
 .price-card:not(.highlight) .price-btn:hover{background:var(--a);color:var(--bg);}
 
-/* ══ FAQ SECTION ══ */
-.faq-sec{padding:80px 6%;background:var(--bg2);}
-.faq-wrap{max-width:860px;margin:48px auto 0;}
-.faq-item{background:var(--bg);border:1px solid var(--brd2);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:all .2s;}
-.faq-item:hover{border-color:rgba(201,147,58,.3);}
-.faq-item.open{border-color:rgba(201,147,58,.4);background:linear-gradient(155deg,rgba(201,147,58,.04),var(--bg));}
-.faq-q{padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;font-size:.92rem;font-weight:600;color:var(--txt);font-family:var(--fb);}
-.faq-q:hover{color:var(--a);}
-.faq-ico{width:28px;height:28px;border-radius:50%;background:rgba(201,147,58,.12);color:var(--a);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;flex-shrink:0;transition:transform .3s;}
-.faq-item.open .faq-ico{background:var(--a);color:var(--bg);transform:rotate(45deg);}
-.faq-a{max-height:0;overflow:hidden;transition:all .35s cubic-bezier(.16,1,.3,1);padding:0 22px;opacity:0;}
-.faq-item.open .faq-a{max-height:400px;padding:0 22px 20px;opacity:1;}
-.faq-a p{font-size:.82rem;color:var(--mt);line-height:1.8;}
+/* ══ FAQ SECTION — Beautiful Modern Design ══ */
+.faq-sec{padding:90px 6%;background:var(--bg2);position:relative;overflow:hidden;}
+.faq-sec::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(201,147,58,.08),transparent 70%);pointer-events:none;}
+.faq-sec::after{content:'';position:absolute;bottom:-80px;left:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(201,147,58,.05),transparent 70%);pointer-events:none;}
+.faq-wrap{max-width:900px;margin:48px auto 0;position:relative;z-index:1;}
+.faq-item{background:var(--bg);border:1px solid var(--brd2);border-radius:18px;margin-bottom:14px;overflow:hidden;transition:all .3s cubic-bezier(.16,1,.3,1);position:relative;}
+.faq-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,transparent,var(--a),transparent);opacity:0;transition:opacity .3s;}
+.faq-item:hover{border-color:rgba(201,147,58,.35);transform:translateX(3px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.faq-item:hover::before{opacity:1;}
+.faq-item.open{border-color:rgba(201,147,58,.5);background:linear-gradient(145deg,rgba(201,147,58,.06),var(--bg) 40%);box-shadow:0 12px 32px rgba(201,147,58,.12);transform:translateX(3px);}
+.faq-item.open::before{opacity:1;}
+.faq-q{padding:22px 24px;display:flex;align-items:center;gap:16px;cursor:pointer;font-size:.95rem;font-weight:600;color:var(--txt);font-family:var(--fb);line-height:1.4;}
+.faq-emoji{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(201,147,58,.12),rgba(201,147,58,.05));display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;transition:all .3s;border:1px solid rgba(201,147,58,.15);}
+.faq-item.open .faq-emoji{background:linear-gradient(135deg,var(--a),var(--ad));border-color:var(--a);transform:scale(1.08);box-shadow:0 6px 18px rgba(201,147,58,.35);}
+.faq-q-text{flex:1;}
+.faq-ico{width:30px;height:30px;border-radius:50%;background:rgba(201,147,58,.08);color:var(--a);display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:400;flex-shrink:0;transition:all .35s cubic-bezier(.16,1,.3,1);border:1px solid rgba(201,147,58,.2);}
+.faq-item.open .faq-ico{background:var(--a);color:var(--bg);transform:rotate(135deg);border-color:var(--a);box-shadow:0 4px 12px rgba(201,147,58,.4);}
+.faq-a{max-height:0;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1);padding:0 24px 0 82px;opacity:0;}
+.faq-item.open .faq-a{max-height:500px;padding:0 24px 22px 82px;opacity:1;}
+.faq-a p{font-size:.84rem;color:var(--mt);line-height:1.85;padding-top:4px;border-top:1px dashed rgba(201,147,58,.18);padding-top:14px;margin-top:4px;}
+.faq-hero{text-align:center;margin-bottom:20px;}
+.faq-hero .faq-big-icon{font-size:3rem;margin-bottom:12px;filter:drop-shadow(0 4px 12px rgba(201,147,58,.4));animation:faqBounce 3s ease-in-out infinite;}
+@keyframes faqBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.faq-cta{text-align:center;margin-top:40px;padding:28px;background:linear-gradient(135deg,rgba(201,147,58,.08),rgba(201,147,58,.02));border:1px solid rgba(201,147,58,.2);border-radius:18px;}
+.faq-cta h4{font-family:var(--fd);font-size:1.2rem;font-weight:600;color:var(--txt);margin-bottom:6px;}
+.faq-cta p{color:var(--mt);font-size:.82rem;margin-bottom:16px;}
+.faq-cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.faq-cta-btn{padding:11px 22px;border-radius:26px;font-size:.78rem;font-weight:700;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:7px;font-family:var(--fb);}
+.faq-cta-btn.wa{background:#25D366;color:#fff;box-shadow:0 6px 18px rgba(37,211,102,.35);}
+.faq-cta-btn.wa:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(37,211,102,.5);}
+.faq-cta-btn.call{background:var(--a);color:var(--bg);box-shadow:0 6px 18px rgba(201,147,58,.35);}
+.faq-cta-btn.call:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(201,147,58,.5);}
+@media(max-width:600px){
+  .faq-q{padding:16px 18px;gap:12px;font-size:.85rem;}
+  .faq-emoji{width:36px;height:36px;font-size:1.1rem;}
+  .faq-a{padding:0 18px 0 66px;}
+  .faq-item.open .faq-a{padding:0 18px 18px 66px;}
+  .faq-a p{font-size:.78rem;}
+  .faq-ico{width:26px;height:26px;font-size:1rem;}
+}
 .mob-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:350;background:var(--bg2);border-top:1px solid var(--brd2);padding:10px 14px;gap:8px;padding-bottom:calc(10px + env(safe-area-inset-bottom));}
 @media(max-width:600px){
   .mob-cta{display:flex;}
@@ -1687,7 +1714,7 @@ body.admin-mode .site-nav{top:34px;}
 // ═══════════════════════════════════════════════
 const DEF={
   meta:{template:'dark'},
-  settings:{company:'PRERAK',sub:'Construction & Prefab Homes',tagline:'Serving Nepal nationwide — building dreams since 2012. 🇳🇵',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Kantirajpath, Hetauda-2\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
+  settings:{company:'PRERAK',sub:'Construction & Prefab Homes',tagline:'Serving Nepal nationwide — building dreams since 2012. 🇳🇵',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Kantirajpath, Hetauda-2\n(Radha Krishna Hardwares को पश्चिम)\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
   hero:{eyebrow:'Hetauda, Makwanpur, Nepal',line1:'Building Your',line2:'Dreams',line3:'Into Reality',sub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",btn1:'🏗️ Get Free Quote',btn2:'Explore Services →',bgImg:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80',stats:[{num:'500+',label:'Projects Done'},{num:'10+',label:'Years Experience'},{num:'100%',label:'Satisfaction'}]},
   services:[
     {id:'s1',icon:'🏗️',name:'Construction Works',desc:'Complete construction from foundation to finishing. Residential homes, commercial buildings, RCC structures and prefab houses — all under one roof.',tags:['Residential','Commercial','RCC','Prefab'],img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80',gallery:[{type:'image',src:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80',cap:'Foundation Work'},{type:'image',src:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80',cap:'RCC Structure'}],features:['Foundation to finishing','RCC structure design','Prefab & modular homes','Commercial buildings','Renovation & repair']},
@@ -1725,7 +1752,7 @@ const DEF={
     tagline:'Serving Nepal nationwide — building dreams since 2012. 🇳🇵',
     web:'www.prerakmultipurpose.com.np',
     ph1:'9855069733',ph2:'9801069733',
-    email:'prerakconstrucion21@gmail.com',addr:'Kantirajpath, Hetauda-2, Makwanpur, Nepal',
+    email:'prerakconstrucion21@gmail.com',addr:'Kantirajpath, Hetauda-2 (near R.K. Hardwares)',
     logo:'',style:'dark'
   },
   adminEmail:'asrayacreate.ac@gmail.com',
@@ -1963,18 +1990,28 @@ function renderSite(){
         <div id="form-ok"><div style="font-size:2rem;margin-bottom:8px">✅</div><strong>Message Sent!</strong><br><span style="color:var(--mt);font-size:.8rem">We'll contact you within 2 hours.</span></div>
       </div>
     </div>
-    <!-- Google Maps -->
-    <div style="margin-top:36px;border-radius:14px;overflow:hidden;border:1px solid var(--brd2);height:320px;position:relative;box-shadow:0 8px 28px rgba(0,0,0,.18);">
-      <div style="position:absolute;top:12px;left:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(201,147,58,.4)">📍 Find Us</div>
+    <!-- Google Maps — PRERAK Office: Near Radha Krishna Mandir, Kantirajpath, Hetauda-2 -->
+    <div style="margin-top:36px;border-radius:14px;overflow:hidden;border:1px solid var(--brd2);height:380px;position:relative;box-shadow:0 12px 32px rgba(0,0,0,.22);">
+      <div style="position:absolute;top:14px;left:16px;z-index:3;background:var(--a);color:var(--bg);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(201,147,58,.5);display:flex;align-items:center;gap:6px">
+        📍 Find Us
+      </div>
+      <div style="position:absolute;top:14px;right:16px;z-index:3;background:rgba(10,10,20,.88);backdrop-filter:blur(10px);color:#fff;font-size:.65rem;font-weight:600;padding:6px 12px;border-radius:20px;border:1px solid rgba(201,147,58,.35);max-width:220px;text-align:right;line-height:1.4">
+        🏪 Radha Krishna Hardwares<br>पश्चिम 1 shop पछि
+      </div>
       <iframe
-        src="https://www.google.com/maps?q=Kantirajpath,+Hetauda-2,+Makwanpur,+Nepal&output=embed"
-        width="100%" height="320" style="border:0;display:block;border-radius:14px;filter:grayscale(15%) contrast(1.05);"
+        src="https://www.google.com/maps?q=27.4263,85.0425&z=18&output=embed"
+        width="100%" height="380" style="border:0;display:block;border-radius:14px;"
         allowfullscreen loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
-        title="PRERAK Construction & Prefab Homes — Kantirajpath, Hetauda-2"></iframe>
-      <a href="https://www.google.com/maps/search/?api=1&query=Kantirajpath,+Hetauda-2,+Makwanpur,+Nepal" target="_blank" rel="noopener" style="position:absolute;bottom:14px;right:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.68rem;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(201,147,58,.5)">
-        🗺️ Open in Google Maps →
-      </a>
+        title="PRERAK Construction & Prefab Homes — Near R.K. Hardwares, Kantirajpath, Hetauda-2"></iframe>
+      <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=27.4263,85.0425" target="_blank" rel="noopener" style="background:#4285f4;color:#fff;font-size:.68rem;font-weight:700;padding:9px 18px;border-radius:20px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(66,133,244,.5)">
+          🧭 Directions
+        </a>
+        <a href="https://www.google.com/maps/place/27.4263,85.0425" target="_blank" rel="noopener" style="background:var(--a);color:var(--bg);font-size:.68rem;font-weight:700;padding:9px 18px;border-radius:20px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(201,147,58,.5)">
+          🗺️ Open Maps
+        </a>
+      </div>
     </div>
   </section>
   <footer class="site-footer">
@@ -2550,19 +2587,49 @@ function renderPricingSection(){
 function renderFAQSection(){
   const isNe=window._lang==='ne';
   if(!D.faqs||!D.faqs.length)return '';
+  const S=D.settings;
+  // Smart emoji mapping based on question keywords
+  const emojiMap={
+    'दिन':'⏰','दिनमा':'⏰','कति':'⏰','काम':'⏰','time':'⏰','day':'⏰','start':'⏰',
+    'site visit':'🏗️','visit':'🏗️','quotation':'💬','free':'🎁',
+    'area':'🗺️','areas':'🗺️','service':'🗺️','नेपाल':'🇳🇵','service area':'🗺️',
+    'warranty':'🛡️','prefab':'🏡','home':'🏡',
+    'payment':'💳','पैसा':'💳','paisa':'💳',
+    'size':'📐','minimum':'📐','project':'📐',
+    'team':'👷','experience':'⭐','quality':'✨','material':'🧱'
+  };
+  function getEmoji(q,idx){
+    const ql=q.toLowerCase();
+    for(const key in emojiMap){if(ql.includes(key))return emojiMap[key];}
+    return ['💡','❓','🔑','✨','📌','💎'][idx%6];
+  }
   const items=D.faqs.map(function(f,i){
+    const emoji=getEmoji(f.q,i);
     return '<div class="faq-item" id="faq-'+f.id+'">'
-      +'<div class="faq-q" onclick="toggleFAQ(\''+f.id+'\')"><span>'+f.q+'</span><span class="faq-ico">+</span></div>'
+      +'<div class="faq-q" onclick="toggleFAQ(\''+f.id+'\')">'
+      +'<div class="faq-emoji">'+emoji+'</div>'
+      +'<div class="faq-q-text">'+f.q+'</div>'
+      +'<div class="faq-ico">+</div>'
+      +'</div>'
       +'<div class="faq-a"><p>'+f.a+'</p></div>'
       +'</div>';
   }).join('');
   return '<section class="faq-sec reveal" id="faq">'
-    +'<div style="text-align:center;margin-bottom:14px">'
-    +'<div class="sec-ey" style="justify-content:center"><span>FAQ</span></div>'
+    +'<div class="faq-hero">'
+    +'<div class="faq-big-icon">💭</div>'
+    +'<div class="sec-ey" style="justify-content:center"><span>'+(isNe?'प्रश्नोत्तर':'Questions & Answers')+'</span></div>'
     +'<h2 class="sec-h" style="text-align:center">'+(isNe?'बारम्बार सोधिने <em>प्रश्नहरू</em>':'Frequently Asked <em>Questions</em>')+'</h2>'
-    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:480px;margin:0 auto">'+(isNe?'तपाईंको प्रश्नको उत्तर यहाँ':'Got questions? We\'ve got answers')+'</p>'
+    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:480px;margin:12px auto 0;line-height:1.7">'+(isNe?'तपाईंका सबै जिज्ञासाहरूको उत्तर यहाँ 🙏':'Got questions? We\'ve got answers 🙏')+'</p>'
     +'</div>'
     +'<div class="faq-wrap">'+items+'</div>'
+    +'<div class="faq-cta">'
+    +'<h4>🤔 '+(isNe?'अरू कुनै प्रश्न छ?':'Have more questions?')+'</h4>'
+    +'<p>'+(isNe?'हामीलाई call वा WhatsApp गर्नुस् — तुरुन्त जवाफ दिन्छौं!':'Call or WhatsApp us — we reply instantly!')+'</p>'
+    +'<div class="faq-cta-btns">'
+    +'<a href="https://wa.me/'+S.wa+'?text='+encodeURIComponent(isNe?'नमस्ते! मेरो प्रश्न छ।':'Hi! I have a question.')+'" target="_blank" class="faq-cta-btn wa">💬 WhatsApp</a>'
+    +'<a href="tel:'+S.phone1+'" class="faq-cta-btn call">📞 '+S.phone1+'</a>'
+    +'</div>'
+    +'</div>'
     +'</section>';
 }
 
