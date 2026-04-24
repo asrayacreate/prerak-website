@@ -792,7 +792,24 @@ body.admin-mode .site-nav{top:34px;}
   padding:22px 0 18px;margin-bottom:24px;
   border-top:1px solid rgba(34,197,94,.15);
   border-bottom:1px solid rgba(220,38,38,.12);
-  position:relative;
+  position:relative;text-align:center;
+}
+.price-greeting{
+  font-size:.6rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:#22c55e;margin-bottom:8px;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.2);border-radius:20px;
+  animation:greetingPulse 2.5s ease-in-out infinite;
+}
+@keyframes greetingPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.3);}
+  50%{box-shadow:0 0 0 6px rgba(34,197,94,0);}
+}
+.price-card.highlight .price-greeting{
+  background:linear-gradient(135deg,rgba(34,197,94,.12),rgba(220,38,38,.1));
+  border-color:rgba(220,38,38,.3);
+  color:#fca5a5;
 }
 .price-amt-wrap::before{
   content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
@@ -2003,9 +2020,9 @@ const DEF={
     {id:'q6',q:'Minimum project size कति?',a:'Construction को लागि minimum 500 sq ft। Renovation/interior को लागि कुनै minimum छैन।'}
   ],
   pricing:[
-    {id:'p1',icon:'🏗️',name:'Basic Construction',sub:'Essentials Package',price:'Starting NPR 1,800',unit:'/sq ft',features:['Standard RCC structure','Basic finishing','1 year warranty','Site supervision'],highlight:false,cta:'Get Quote'},
-    {id:'p2',icon:'💎',name:'Premium Construction',sub:'Best Value',price:'Starting NPR 2,500',unit:'/sq ft',features:['Premium RCC + Steel','Designer finishing','5 year warranty','Full project management','Interior consultation'],highlight:true,cta:'Most Popular'},
-    {id:'p3',icon:'🏠',name:'Prefab Homes',sub:'Quick Delivery',price:'Starting NPR 1,200',unit:'/sq ft',features:['Factory-made quality','30-60 day delivery','Earthquake resistant','Modular design'],highlight:false,cta:'Learn More'}
+    {id:'p1',icon:'🏗️',name:'Basic Construction',sub:'Essentials Package',price:'NPR 1,800',unit:'/sq ft',features:['Standard RCC structure','Basic finishing','1 year warranty','Site supervision'],highlight:false,cta:'Get Quote'},
+    {id:'p2',icon:'💎',name:'Premium Construction',sub:'Best Value',price:'NPR 2,500',unit:'/sq ft',features:['Premium RCC + Steel','Designer finishing','5 year warranty','Full project management','Interior consultation'],highlight:true,cta:'Most Popular'},
+    {id:'p3',icon:'🏠',name:'Prefab Homes',sub:'Quick Delivery',price:'NPR 1,200',unit:'/sq ft',features:['Factory-made quality','30-60 day delivery','Earthquake resistant','Modular design'],highlight:false,cta:'Learn More'}
   ]
 };
 
@@ -2845,6 +2862,7 @@ function renderPricingSection(){
       +'<div class="price-name">'+p.name+'</div>'
       +(p.sub?'<div class="price-sub">'+p.sub+'</div>':'')
       +'<div class="price-amt-wrap">'
+      +'<div class="price-greeting">✨ '+(isNe?'बाट सुरु':'Starting from')+'</div>'
       +'<span class="price-amt">'+p.price+'<span class="price-unit">'+p.unit+'</span></span>'
       +'</div>'
       +'<ul class="price-features">'+featList+'</ul>'
