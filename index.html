@@ -567,10 +567,43 @@ body.admin-mode .svc-card:hover::after{opacity:1;}
 /* Push content down when admin bar visible */
 body.admin-mode .site-nav{top:34px;}
 /* ══ NEPALI FLAG ══ */
-.np-flag{display:inline-flex;align-items:center;margin-left:8px;cursor:pointer;flex-shrink:0;transition:transform .25s;position:relative;}
-.np-flag:hover{transform:scale(1.15);}
-.np-flag:hover::after{content:'Click!';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.52rem;font-weight:700;color:var(--a);background:rgba(0,0,0,.8);padding:2px 6px;border-radius:4px;white-space:nowrap;pointer-events:none;animation:fpop .3s;}
-@keyframes fpop{from{opacity:0;transform:translateX(-50%) translateY(4px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+/* 🇳🇵 Nav Flag Wrap — eye-catching + always visible label */
+.np-flag-wrap{position:relative;display:inline-flex;align-items:center;gap:8px;margin-left:10px;padding:4px 10px 4px 6px;border-radius:26px;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);background:linear-gradient(135deg,rgba(220,38,38,.15),rgba(255,204,77,.12));border:1.5px solid rgba(255,204,77,.35);flex-shrink:0;}
+.np-flag-wrap::before{content:'';position:absolute;inset:-3px;border-radius:28px;background:linear-gradient(135deg,rgba(220,38,38,.4),rgba(255,204,77,.4));opacity:.5;z-index:-1;filter:blur(6px);animation:npwGlow 2.4s ease-in-out infinite;}
+@keyframes npwGlow{0%,100%{opacity:.3;transform:scale(.96);}50%{opacity:.75;transform:scale(1.04);}}
+.np-flag-wrap:hover{transform:translateY(-2px) scale(1.04);border-color:rgba(255,204,77,.8);background:linear-gradient(135deg,rgba(220,38,38,.28),rgba(255,204,77,.22));box-shadow:0 10px 28px rgba(220,38,38,.35);}
+.np-flag{display:inline-flex;align-items:center;flex-shrink:0;transition:transform .3s;}
+.np-flag canvas{filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));}
+.np-flag-wrap:hover .np-flag{transform:scale(1.08) rotate(-2deg);}
+
+.np-label{display:flex;flex-direction:column;align-items:flex-start;line-height:1;flex-shrink:0;}
+.np-label-ne{font-family:var(--fd);font-size:.72rem;font-weight:700;color:#ffcc4d;letter-spacing:-.2px;text-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap;}
+.np-label-en{font-size:.54rem;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.6px;text-transform:uppercase;margin-top:2px;white-space:nowrap;}
+
+.np-click-badge{position:absolute;top:-10px;right:-8px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;font-size:.55rem;font-weight:800;padding:3px 8px;border-radius:10px;letter-spacing:.5px;box-shadow:0 4px 12px rgba(220,38,38,.6);animation:npBadgeBounce 1.8s ease-in-out infinite;white-space:nowrap;border:1px solid rgba(255,255,255,.25);z-index:2;}
+@keyframes npBadgeBounce{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-4px) rotate(4deg);}}
+
+/* Big hover popout */
+.np-hover-popout{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-8px);background:linear-gradient(160deg,rgba(15,15,35,.98),rgba(30,10,40,.98));backdrop-filter:blur(22px);border:1.5px solid rgba(255,204,77,.5);border-radius:16px;padding:18px 22px;min-width:240px;text-align:center;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.4,0,.2,1);z-index:1000;box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 1px rgba(255,204,77,.3);}
+.np-hover-popout::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%) rotate(45deg);width:14px;height:14px;background:linear-gradient(160deg,rgba(15,15,35,.98),rgba(30,10,40,.98));border-top:1.5px solid rgba(255,204,77,.5);border-left:1.5px solid rgba(255,204,77,.5);}
+.np-flag-wrap:hover .np-hover-popout{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.np-popout-flag{font-size:2.4rem;margin-bottom:6px;animation:flagBob 2s ease-in-out infinite;filter:drop-shadow(0 4px 12px rgba(255,204,77,.4));}
+.np-popout-title{font-family:var(--fd);font-size:1.15rem;font-weight:800;background:linear-gradient(90deg,#ffcc4d,#ff6b6b,#ffcc4d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px;}
+.np-popout-sub{font-size:.68rem;color:rgba(255,255,255,.75);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:10px;}
+.np-popout-desc{font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:12px;font-style:italic;}
+.np-popout-cta{display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#ffcc4d,#e5a526);color:#131320;border-radius:20px;font-weight:800;font-size:.72rem;letter-spacing:.5px;box-shadow:0 6px 18px rgba(255,204,77,.4);animation:npCtaPulse 1.8s ease-in-out infinite;}
+@keyframes npCtaPulse{0%,100%{box-shadow:0 6px 18px rgba(255,204,77,.4);}50%{box-shadow:0 6px 24px rgba(255,204,77,.7);transform:scale(1.05);}}
+
+@media(max-width:900px){
+  .np-label{display:none;}
+  .np-flag-wrap{padding:4px 6px;gap:0;}
+  .np-click-badge{font-size:.48rem;padding:2px 6px;top:-8px;right:-6px;}
+}
+@media(max-width:600px){
+  .np-hover-popout{min-width:200px;padding:14px 16px;left:auto;right:0;transform:translateX(0) translateY(-8px);}
+  .np-hover-popout::before{left:auto;right:30px;}
+  .np-flag-wrap:hover .np-hover-popout{transform:translateX(0) translateY(0);}
+}
 .np-flag canvas{filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));}
 /* ══ LANGUAGE SWITCHER ══ */
 .lang-sw{display:flex;gap:3px;background:rgba(255,255,255,.08);border:1px solid var(--brd2);border-radius:20px;padding:3px;flex-shrink:0}
@@ -807,6 +840,154 @@ body.has-nav-sc #nb-wrap{top:68px;}
   .flag-closing-flag{font-size:3rem;}
   .flag-fact{font-size:.78rem;}
   .flag-close{top:12px;right:12px;width:40px;height:40px;}
+}
+
+/* ══ SPA Screens (Home/Category/Detail) ══ */
+.flag-screen{display:none;animation:flagScreenIn .4s ease-out;}
+.flag-screen-active{display:block;}
+@keyframes flagScreenIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* Home screen hero welcome */
+.flag-hero-welcome{text-align:center;padding:50px 20px 30px;max-width:800px;margin:0 auto;}
+.flag-welcome-badge{display:inline-block;padding:6px 16px;background:linear-gradient(135deg,rgba(220,38,38,.3),rgba(255,204,77,.25));border:1px solid rgba(255,204,77,.5);border-radius:20px;font-size:.65rem;font-weight:800;letter-spacing:3px;color:#ffcc4d;margin-bottom:18px;}
+.flag-hero-welcome h1{font-family:var(--fd);font-size:3.2rem;color:#fff;font-weight:800;background:linear-gradient(90deg,#ffcc4d,#ff6b6b,#ffcc4d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;text-shadow:0 4px 30px rgba(255,204,77,.3);}
+.flag-hero-welcome h2{font-size:1.3rem;color:rgba(255,255,255,.85);font-weight:600;margin-bottom:14px;font-style:italic;}
+.flag-hero-welcome>p{font-size:.8rem;color:rgba(255,255,255,.6);margin-bottom:24px;}
+.flag-search-wrap{position:relative;max-width:500px;margin:0 auto;}
+#flag-search{width:100%;padding:14px 20px;border-radius:30px;border:2px solid rgba(255,204,77,.3);background:rgba(0,0,0,.55);color:#fff;font-size:.88rem;backdrop-filter:blur(20px);outline:none;transition:all .25s;font-family:inherit;}
+#flag-search::placeholder{color:rgba(255,255,255,.5);}
+#flag-search:focus{border-color:rgba(255,204,77,.7);box-shadow:0 0 0 4px rgba(255,204,77,.15);background:rgba(0,0,0,.7);}
+#flag-search-results{position:absolute;top:calc(100% + 8px);left:0;right:0;background:rgba(15,15,30,.98);backdrop-filter:blur(20px);border:1px solid rgba(255,204,77,.3);border-radius:14px;max-height:340px;overflow-y:auto;z-index:10;display:none;box-shadow:0 20px 50px rgba(0,0,0,.6);}
+#flag-search-results.show{display:block;}
+.flag-sres{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .2s;}
+.flag-sres:hover{background:rgba(255,204,77,.1);}
+.flag-sres:last-child{border-bottom:none;}
+.flag-sres-ic{font-size:1.4rem;}
+.flag-sres-txt{flex:1;}
+.flag-sres-ttl{color:#fff;font-weight:700;font-size:.85rem;}
+.flag-sres-cat{color:#ffcc4d;font-size:.65rem;letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+
+/* Stats Ribbon */
+.flag-stats-ribbon{display:flex;gap:10px;padding:10px 20px;max-width:1000px;margin:0 auto;overflow-x:auto;scrollbar-width:none;justify-content:center;flex-wrap:wrap;}
+.flag-stats-ribbon::-webkit-scrollbar{display:none;}
+.flag-stat-pill{flex-shrink:0;padding:10px 18px;background:rgba(255,255,255,.06);backdrop-filter:blur(14px);border:1px solid rgba(255,204,77,.2);border-radius:30px;display:flex;flex-direction:column;align-items:center;min-width:90px;}
+.flag-stat-pill b{font-family:var(--fd);font-size:1.4rem;color:#ffcc4d;line-height:1;}
+.flag-stat-pill span{font-size:.58rem;color:rgba(255,255,255,.65);letter-spacing:1px;text-transform:uppercase;margin-top:2px;}
+
+/* Categories Grid (12 tiles - 4x3 on desktop, 2x6 on mobile) */
+.flag-cats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-cat-tile{position:relative;background:linear-gradient(155deg,rgba(255,255,255,.08),rgba(255,255,255,.02));backdrop-filter:blur(20px);border:1.5px solid rgba(255,204,77,.2);border-radius:18px;padding:24px 18px;text-align:center;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);overflow:hidden;}
+.flag-cat-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--cat-color,#ffcc4d);opacity:.6;}
+.flag-cat-tile::after{content:'→';position:absolute;bottom:14px;right:18px;font-size:1.2rem;color:#ffcc4d;opacity:0;transition:all .25s;}
+.flag-cat-tile:hover{transform:translateY(-6px);border-color:var(--cat-color,#ffcc4d);box-shadow:0 20px 40px rgba(0,0,0,.4),0 0 0 1px var(--cat-color,#ffcc4d);background:linear-gradient(155deg,rgba(255,204,77,.12),rgba(255,255,255,.02));}
+.flag-cat-tile:hover::after{opacity:1;transform:translateX(4px);}
+.flag-cat-icon{font-size:2.8rem;margin-bottom:10px;filter:drop-shadow(0 6px 16px rgba(255,204,77,.3));}
+.flag-cat-name-ne{font-family:var(--fd);font-size:1.1rem;color:#fff;font-weight:700;margin-bottom:3px;}
+.flag-cat-name-en{font-size:.72rem;color:rgba(255,255,255,.65);letter-spacing:.5px;}
+.flag-cat-count{margin-top:10px;display:inline-block;font-size:.6rem;background:rgba(255,204,77,.15);color:#ffcc4d;padding:3px 10px;border-radius:10px;font-weight:700;letter-spacing:1px;}
+.flag-cat-soon{margin-top:10px;display:inline-block;font-size:.58rem;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
+
+/* Navigation bar for Category/Detail screens */
+.flag-nav-bar{position:sticky;top:88px;z-index:20;display:flex;align-items:center;gap:14px;padding:14px 30px;background:rgba(10,10,26,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,204,77,.2);margin-bottom:10px;}
+.flag-back-btn{background:rgba(255,204,77,.15);color:#ffcc4d;border:1px solid rgba(255,204,77,.3);padding:8px 16px;border-radius:20px;cursor:pointer;font-size:.8rem;font-weight:700;transition:all .2s;font-family:inherit;}
+.flag-back-btn:hover{background:rgba(255,204,77,.25);transform:translateX(-3px);}
+.flag-breadcrumb{font-size:.72rem;color:rgba(255,255,255,.6);letter-spacing:1px;}
+.flag-breadcrumb b{color:#ffcc4d;}
+
+/* Category Hero */
+.flag-cat-hero{text-align:center;padding:30px 20px;max-width:900px;margin:0 auto;}
+.flag-cat-hero .hero-ic{font-size:4rem;margin-bottom:10px;filter:drop-shadow(0 6px 20px rgba(255,204,77,.4));}
+.flag-cat-hero h2{font-family:var(--fd);font-size:2rem;color:#fff;margin-bottom:6px;}
+.flag-cat-hero .hero-sub{font-size:.85rem;color:rgba(255,255,255,.7);margin-bottom:14px;}
+.flag-cat-hero .hero-desc{font-size:.78rem;color:rgba(255,255,255,.55);max-width:600px;margin:0 auto;line-height:1.6;}
+
+/* Items Grid */
+.flag-items-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;padding:10px 40px 40px;max-width:1200px;margin:0 auto;}
+.flag-item-card{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .3s;}
+.flag-item-card:hover{transform:translateY(-5px);border-color:rgba(255,204,77,.4);box-shadow:0 15px 35px rgba(0,0,0,.4);}
+.flag-item-img{width:100%;height:160px;background-size:cover;background-position:center;background-color:#222;position:relative;}
+.flag-item-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.7) 100%);}
+.flag-item-body{padding:14px 16px;}
+.flag-item-body h4{color:#fff;font-size:1rem;margin-bottom:2px;font-family:var(--fd);}
+.flag-item-body .it-ne{color:#ffcc4d;font-size:.78rem;font-weight:600;margin-bottom:6px;}
+.flag-item-body p{color:rgba(255,255,255,.6);font-size:.72rem;line-height:1.5;}
+
+.flag-coming-soon{padding:80px 40px;text-align:center;max-width:600px;margin:0 auto;}
+.flag-coming-soon .cs-ic{font-size:4rem;margin-bottom:16px;opacity:.6;animation:flagBob 2s ease-in-out infinite;}
+.flag-coming-soon h3{font-family:var(--fd);color:#ffcc4d;font-size:1.6rem;margin-bottom:10px;}
+.flag-coming-soon p{color:rgba(255,255,255,.65);font-size:.85rem;line-height:1.6;margin-bottom:24px;}
+
+/* Detail Screen */
+#flag-detail-body{max-width:900px;margin:0 auto;padding:0 20px 60px;}
+.flag-det-hero{position:relative;border-radius:20px;overflow:hidden;margin-bottom:24px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.flag-det-hero-img{width:100%;height:400px;background-size:cover;background-position:center;background-color:#222;}
+.flag-det-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.95) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:40px;}
+.flag-det-hero-overlay h1{font-family:var(--fd);font-size:2.6rem;color:#fff;margin-bottom:4px;text-shadow:0 4px 20px rgba(0,0,0,.7);}
+.flag-det-hero-overlay .det-ne{font-size:1.4rem;color:#ffcc4d;font-weight:700;margin-bottom:6px;}
+.flag-det-hero-overlay .det-sub{font-size:.95rem;color:rgba(255,255,255,.85);font-style:italic;}
+
+.flag-det-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
+.flag-det-stat{background:rgba(255,255,255,.06);backdrop-filter:blur(14px);border:1px solid rgba(255,204,77,.25);border-radius:12px;padding:14px;text-align:center;}
+.flag-det-stat .sl{font-size:.6rem;color:#ffcc4d;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+.flag-det-stat .sv{font-family:var(--fd);font-size:1.15rem;color:#fff;font-weight:700;}
+
+.flag-det-section{background:rgba(255,255,255,.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;margin-bottom:18px;}
+.flag-det-section h3{color:#ffcc4d;font-family:var(--fd);font-size:1.3rem;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.flag-det-section p{color:rgba(255,255,255,.82);font-size:.88rem;line-height:1.75;margin-bottom:10px;}
+.flag-det-section p:last-child{margin-bottom:0;}
+.flag-det-section ul{padding-left:22px;color:rgba(255,255,255,.82);font-size:.85rem;line-height:1.8;}
+.flag-det-section ul li{margin-bottom:6px;}
+
+.flag-det-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
+.flag-det-gallery img{width:100%;height:140px;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform .3s;}
+.flag-det-gallery img:hover{transform:scale(1.03);}
+
+.flag-det-video{position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.4);}
+.flag-det-video iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+
+.flag-det-map{height:380px;border-radius:12px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,.4);}
+.flag-det-map iframe{width:100%;height:100%;border:none;}
+
+.flag-det-facts{display:grid;gap:10px;}
+.flag-det-fact{background:linear-gradient(90deg,rgba(255,204,77,.1),transparent);border-left:3px solid #ffcc4d;padding:12px 18px;border-radius:0 10px 10px 0;color:#fff;font-size:.85rem;}
+.flag-det-fact b{color:#ffcc4d;}
+
+/* Floating Nepal Pill (bottom-right) */
+.nepal-pill{position:fixed;bottom:80px;right:20px;z-index:300;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:10px 16px;border-radius:30px;font-size:.72rem;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(220,38,38,.5),0 0 0 3px rgba(255,204,77,.3);display:flex;align-items:center;gap:6px;border:none;transition:all .25s;letter-spacing:.5px;}
+.nepal-pill:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 30px rgba(220,38,38,.65),0 0 0 3px rgba(255,204,77,.5);}
+.nepal-pill .pp-flag{font-size:1.1rem;animation:flagBob 2.5s ease-in-out infinite;}
+@media(max-width:600px){.nepal-pill{bottom:72px;right:12px;padding:8px 13px;font-size:.66rem;}}
+
+/* Welcome Toast (shows once per session) */
+.nepal-toast{position:fixed;top:100px;right:20px;z-index:9500;background:linear-gradient(135deg,rgba(220,38,38,.95),rgba(153,27,27,.95));backdrop-filter:blur(20px);color:#fff;padding:14px 18px 14px 20px;border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.5);border:1px solid rgba(255,204,77,.4);display:none;max-width:280px;animation:toastIn .5s cubic-bezier(.23,1,.32,1);}
+.nepal-toast.show{display:block;}
+@keyframes toastIn{from{opacity:0;transform:translateX(100%);}to{opacity:1;transform:translateX(0);}}
+.nepal-toast .tt{font-size:.72rem;font-weight:700;color:#ffcc4d;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
+.nepal-toast .tb{font-size:.82rem;line-height:1.4;margin-bottom:8px;}
+.nepal-toast .tcls{position:absolute;top:6px;right:8px;background:transparent;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:1rem;padding:2px 6px;}
+.nepal-toast .tcls:hover{color:#fff;}
+@media(max-width:600px){.nepal-toast{top:90px;right:10px;left:10px;max-width:none;}}
+
+@media(max-width:600px){
+  .flag-hero-welcome{padding:40px 16px 20px;}
+  .flag-hero-welcome h1{font-size:2.2rem;}
+  .flag-hero-welcome h2{font-size:1rem;}
+  .flag-cats-grid{grid-template-columns:repeat(2,1fr);padding:16px;gap:10px;}
+  .flag-cat-tile{padding:18px 12px;}
+  .flag-cat-icon{font-size:2.2rem;}
+  .flag-cat-name-ne{font-size:.9rem;}
+  .flag-cat-name-en{font-size:.64rem;}
+  .flag-stats-ribbon{padding:10px 16px;gap:8px;}
+  .flag-stat-pill{padding:8px 12px;min-width:75px;}
+  .flag-stat-pill b{font-size:1.1rem;}
+  .flag-nav-bar{padding:10px 16px;top:64px;}
+  .flag-det-hero-img{height:260px;}
+  .flag-det-hero-overlay{padding:22px;}
+  .flag-det-hero-overlay h1{font-size:1.6rem;}
+  .flag-det-hero-overlay .det-ne{font-size:1.05rem;}
+  .flag-items-grid{padding:10px 16px 30px;}
+  #flag-detail-body{padding:0 12px 40px;}
+  .flag-det-section{padding:18px;}
 }
 
 /* ══ QUOTE REQUEST MODAL ══ */
@@ -1232,6 +1413,19 @@ body.has-nav-sc #nb-wrap{top:68px;}
   <canvas id="card3d-particles" style="position:fixed;inset:0;pointer-events:none;z-index:-1"></canvas>
 </div>
 
+<!-- 🇳🇵 Floating Nepal Pill (always accessible) -->
+<button class="nepal-pill" id="nepal-pill" onclick="openFlagModal()" title="Explore Nepal">
+  <span class="pp-flag">🇳🇵</span> Explore Nepal
+</button>
+
+<!-- 🇳🇵 One-time Welcome Toast -->
+<div class="nepal-toast" id="nepal-toast">
+  <button class="tcls" onclick="dismissNepalToast()">✕</button>
+  <div class="tt">👋 Welcome!</div>
+  <div class="tb">Discover Nepal's rich heritage — click our flag 🇳🇵 to explore temples, mountains, culture & more!</div>
+  <button class="flag-cta-btn" style="padding:8px 16px;font-size:.72rem;" onclick="openFlagModal();dismissNepalToast();">Explore Now →</button>
+</div>
+
 <!-- 🇳🇵 NEPAL FLAG FULLSCREEN MODAL -->
 <div id="flag-modal" class="flag-overlay">
   <button class="flag-close" onclick="closeFlagModal()" title="Close">✕</button>
@@ -1258,273 +1452,117 @@ body.has-nav-sc #nb-wrap{top:68px;}
     <div class="flag-bg-overlay"></div>
   </div>
 
-  <!-- Scroll content starts here -->
+  <!-- Nepal Digital Identity SPA -->
   <div class="flag-content-wrap">
 
-  <!-- Scrolling Facts Ticker -->
+  <!-- Scrolling Facts Ticker (always visible at top) -->
   <div class="flag-facts-wrap">
     <div class="flag-facts-track" id="flag-facts-track">
       <span class="flag-fact">🏔️ <b>Mount Everest</b> — World's highest peak (8,848.86 m)</span>
       <span class="flag-fact">🦏 <b>One-horned Rhino</b> — Chitwan National Park</span>
-      <span class="flag-fact">🐅 <b>Royal Bengal Tiger</b> — Nepal's pride</span>
-      <span class="flag-fact">🏛️ <b>Pashupatinath</b> — UNESCO World Heritage</span>
+      <span class="flag-fact">🕉️ <b>Pashupatinath</b> — UNESCO World Heritage</span>
       <span class="flag-fact">☸️ <b>Lumbini</b> — Birthplace of Lord Buddha</span>
       <span class="flag-fact">🎭 <b>Kathmandu Durbar Square</b> — Royal heritage</span>
-      <span class="flag-fact">🏔️ <b>Annapurna</b> — World's 10th highest</span>
       <span class="flag-fact">🌊 <b>Rara Lake</b> — Queen of Lakes</span>
-      <span class="flag-fact">🎨 <b>Bhaktapur</b> — City of Devotees</span>
-      <span class="flag-fact">🏯 <b>Patan</b> — City of Fine Arts</span>
-      <span class="flag-fact">🌿 <b>Sagarmatha National Park</b> — UNESCO site</span>
-      <span class="flag-fact">🦌 <b>Danphe</b> — National Bird (Himalayan Monal)</span>
-      <span class="flag-fact">🌸 <b>Rhododendron</b> — National Flower (Lali Gurans)</span>
-      <span class="flag-fact">🐄 <b>Cow</b> — National Animal</span>
-      <span class="flag-fact">📜 <b>Only non-rectangular</b> national flag in the world!</span>
-      <span class="flag-fact">🕉️ <b>Crimson Red</b> — color of Rhododendron</span>
-      <span class="flag-fact">☀️ <b>Sun & Moon</b> — hope that nation lasts as long as celestial bodies</span>
-      <span class="flag-fact">🗻 <b>Gorkha warriors</b> — legendary bravery worldwide</span>
-      <span class="flag-fact">🙏 <b>Namaste</b> — traditional greeting of respect</span>
-      <span class="flag-fact">🏗️ <b>PRERAK Construction</b> — serving Nepal since 2012!</span>
+      <span class="flag-fact">🦌 <b>Danphe</b> — National Bird</span>
+      <span class="flag-fact">🌸 <b>Lali Gurans</b> — National Flower</span>
+      <span class="flag-fact">📜 <b>Only non-rectangular</b> flag in the world!</span>
+      <span class="flag-fact">☀️ <b>Sun & Moon</b> on our sacred flag</span>
+      <span class="flag-fact">🗻 <b>Gorkha warriors</b> — legendary bravery</span>
+      <span class="flag-fact">🙏 <b>Namaste</b> — traditional greeting</span>
+      <span class="flag-fact">🏗️ <b>PRERAK Construction</b> — since 2012</span>
     </div>
   </div>
 
-  <!-- Key Stats Grid -->
-  <div class="flag-section-title">
-    <h3>🇳🇵 Nepal at a Glance · नेपाल एक नजरमा</h3>
-    <p>Facts & Figures</p>
-  </div>
-  <div class="flag-info-grid">
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🏔️</div>
-      <div class="flag-info-lbl">Highest Peak</div>
-      <div class="flag-info-val">8,848 m</div>
-      <div class="flag-info-sub">Mount Everest</div>
+  <!-- SCREEN: HOME (Default) -->
+  <div id="flag-screen-home" class="flag-screen flag-screen-active">
+    <div class="flag-hero-welcome">
+      <div class="flag-welcome-badge">🇳🇵 DIGITAL IDENTITY</div>
+      <h1>नेपाल चिनारी</h1>
+      <h2>The Soul of Nepal</h2>
+      <p>Explore 12 categories · 100+ wonders · Rich heritage · Ancient civilization</p>
+      <div class="flag-search-wrap">
+        <input type="text" id="flag-search" placeholder="🔍 Search: Everest, Pashupatinath, Dashain..." oninput="flagSearch(this.value)">
+        <div id="flag-search-results"></div>
+      </div>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🗺️</div>
-      <div class="flag-info-lbl">Total Area</div>
-      <div class="flag-info-val">147,516 km²</div>
-      <div class="flag-info-sub">7 Provinces · 77 Districts</div>
+
+    <!-- Quick Stats Ribbon -->
+    <div class="flag-stats-ribbon">
+      <div class="flag-stat-pill"><b>8</b><span>8000m Peaks</span></div>
+      <div class="flag-stat-pill"><b>10</b><span>UNESCO Sites</span></div>
+      <div class="flag-stat-pill"><b>123+</b><span>Languages</span></div>
+      <div class="flag-stat-pill"><b>125+</b><span>Ethnic Groups</span></div>
+      <div class="flag-stat-pill"><b>30M</b><span>Population</span></div>
+      <div class="flag-stat-pill"><b>7</b><span>Provinces</span></div>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">👥</div>
-      <div class="flag-info-lbl">Population</div>
-      <div class="flag-info-val">30M+</div>
-      <div class="flag-info-sub">125+ ethnic groups</div>
+
+    <!-- 12 Category Tiles -->
+    <div class="flag-section-title">
+      <h3>📂 Explore Categories</h3>
+      <p>Click any category to dive deeper</p>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🗣️</div>
-      <div class="flag-info-lbl">Languages</div>
-      <div class="flag-info-val">123+</div>
-      <div class="flag-info-sub">Nepali is official</div>
+    <div class="flag-cats-grid" id="flag-cats-grid"></div>
+
+    <!-- Quick facts section -->
+    <div class="flag-section-title">
+      <h3>💡 Did You Know?</h3>
+      <p>Amazing facts about Nepal</p>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🏔️</div>
-      <div class="flag-info-lbl">8000m Peaks</div>
-      <div class="flag-info-val">8 of 14</div>
-      <div class="flag-info-sub">World's highest mountains</div>
+    <div class="flag-did-you-know">
+      <div class="flag-dyk">✨ Nepal is the <b>only country</b> with a non-rectangular national flag</div>
+      <div class="flag-dyk">🏔️ <b>8 of 14</b> world's highest peaks are in Nepal</div>
+      <div class="flag-dyk">📅 Nepal follows <b>Bikram Sambat</b> — 56.7 years ahead of AD</div>
+      <div class="flag-dyk">🙏 Nepal is the <b>birthplace of Lord Buddha</b> (Lumbini)</div>
+      <div class="flag-dyk">🇳🇵 Nepal has <b>never been colonized</b> in its history</div>
+      <div class="flag-dyk">⛰️ Everest grows <b>4mm taller</b> every year</div>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🕉️</div>
-      <div class="flag-info-lbl">UNESCO Sites</div>
-      <div class="flag-info-val">10 Heritage</div>
-      <div class="flag-info-sub">Cultural & Natural</div>
+
+    <!-- National Anthem -->
+    <div class="flag-anthem">
+      <div class="flag-anthem-title">🎵 राष्ट्रिय गान · National Anthem</div>
+      <div class="flag-anthem-text">
+        "सयौं थुँगा फूलका हामी, एउटै माला नेपाली।<br>
+        सार्वभौम भई फैलिएका, मेची-महाकाली॥"
+      </div>
+      <div class="flag-anthem-trans">
+        "Woven from hundreds of flowers, we are one garland — Nepali.<br>
+        Sovereign, spread from Mechi to Mahakali."
+      </div>
+      <div class="flag-anthem-credit">— Byakul Maila · Amber Gurung</div>
     </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">💰</div>
-      <div class="flag-info-lbl">Currency</div>
-      <div class="flag-info-val">NPR</div>
-      <div class="flag-info-sub">Nepalese Rupee ₨</div>
-    </div>
-    <div class="flag-info-card">
-      <div class="flag-info-icon">🏛️</div>
-      <div class="flag-info-lbl">Capital</div>
-      <div class="flag-info-val">Kathmandu</div>
-      <div class="flag-info-sub">काठमाडौं</div>
+
+    <!-- Closing -->
+    <div class="flag-closing">
+      <div class="flag-closing-flag">🇳🇵</div>
+      <h3>जय नेपाल! · Jaya Nepal!</h3>
+      <p>Proudly Nepali · Proudly PRERAK Construction & Prefab Homes</p>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-top:-18px;margin-bottom:24px;">Building dreams for Nepal since 2012</p>
+      <button class="flag-cta-btn" onclick="closeFlagModal()">Continue to Website →</button>
     </div>
   </div>
 
-  <!-- National Symbols -->
-  <div class="flag-section-title">
-    <h3>🏵️ National Symbols · राष्ट्रिय चिन्हहरू</h3>
-    <p>Sacred emblems of our nation</p>
-  </div>
-  <div class="flag-symbols-grid">
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🌸</div>
-      <div class="flag-symbol-name">National Flower</div>
-      <div class="flag-symbol-np">लालीगुराँस</div>
-      <div class="flag-symbol-en">Rhododendron</div>
+  <!-- SCREEN: CATEGORY -->
+  <div id="flag-screen-category" class="flag-screen">
+    <div class="flag-nav-bar">
+      <button class="flag-back-btn" onclick="flagShowHome()">← Home</button>
+      <div class="flag-breadcrumb" id="flag-cat-crumb">Home</div>
     </div>
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🦌</div>
-      <div class="flag-symbol-name">National Bird</div>
-      <div class="flag-symbol-np">डाँफे</div>
-      <div class="flag-symbol-en">Himalayan Monal</div>
-    </div>
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🐄</div>
-      <div class="flag-symbol-name">National Animal</div>
-      <div class="flag-symbol-np">गाई</div>
-      <div class="flag-symbol-en">Cow</div>
-    </div>
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🎨</div>
-      <div class="flag-symbol-name">National Colors</div>
-      <div class="flag-symbol-np">रातो र निलो</div>
-      <div class="flag-symbol-en">Crimson Red & Blue</div>
-    </div>
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🎵</div>
-      <div class="flag-symbol-name">National Anthem</div>
-      <div class="flag-symbol-np">सयौं थुँगा फूलका हामी</div>
-      <div class="flag-symbol-en">Sayaun Thunga Phool Ka</div>
-    </div>
-    <div class="flag-symbol-card">
-      <div class="flag-symbol-emoji">🗣️</div>
-      <div class="flag-symbol-name">National Language</div>
-      <div class="flag-symbol-np">नेपाली</div>
-      <div class="flag-symbol-en">Nepali (Devanagari)</div>
-    </div>
+    <div class="flag-cat-hero" id="flag-cat-hero"></div>
+    <div class="flag-items-grid" id="flag-items-grid"></div>
   </div>
 
-  <!-- 7 Provinces -->
-  <div class="flag-section-title">
-    <h3>🗺️ Seven Provinces · सात प्रदेश</h3>
-    <p>Nepal's administrative divisions</p>
-  </div>
-  <div class="flag-provinces-grid">
-    <div class="flag-prov"><span class="prov-num">1</span><div><b>Koshi Province</b><br><small>कोशी प्रदेश · Biratnagar</small></div></div>
-    <div class="flag-prov"><span class="prov-num">2</span><div><b>Madhesh Province</b><br><small>मधेश प्रदेश · Janakpur</small></div></div>
-    <div class="flag-prov"><span class="prov-num">3</span><div><b>Bagmati Province</b><br><small>बागमती प्रदेश · Hetauda</small><span class="prov-star">⭐ Our Home</span></div></div>
-    <div class="flag-prov"><span class="prov-num">4</span><div><b>Gandaki Province</b><br><small>गण्डकी प्रदेश · Pokhara</small></div></div>
-    <div class="flag-prov"><span class="prov-num">5</span><div><b>Lumbini Province</b><br><small>लुम्बिनी प्रदेश · Deukhuri</small></div></div>
-    <div class="flag-prov"><span class="prov-num">6</span><div><b>Karnali Province</b><br><small>कर्णाली प्रदेश · Birendranagar</small></div></div>
-    <div class="flag-prov"><span class="prov-num">7</span><div><b>Sudurpashchim</b><br><small>सुदूरपश्चिम · Dhangadhi</small></div></div>
-  </div>
-
-  <!-- Famous Places -->
-  <div class="flag-section-title">
-    <h3>🏛️ Famous Places · प्रसिद्ध स्थलहरू</h3>
-    <p>Must-visit destinations of Nepal</p>
-  </div>
-  <div class="flag-places-grid">
-    <div class="flag-place">🏔️ <b>Everest Base Camp</b><br><small>Solukhumbu</small></div>
-    <div class="flag-place">🕉️ <b>Pashupatinath Temple</b><br><small>Kathmandu</small></div>
-    <div class="flag-place">☸️ <b>Lumbini</b><br><small>Birthplace of Buddha</small></div>
-    <div class="flag-place">🏯 <b>Kathmandu Durbar Square</b><br><small>Hanuman Dhoka</small></div>
-    <div class="flag-place">🎨 <b>Bhaktapur Durbar Square</b><br><small>Medieval city</small></div>
-    <div class="flag-place">🌅 <b>Pokhara · Phewa Lake</b><br><small>Lake city</small></div>
-    <div class="flag-place">🦏 <b>Chitwan National Park</b><br><small>Wildlife safari</small></div>
-    <div class="flag-place">🏛️ <b>Swayambhunath</b><br><small>Monkey Temple</small></div>
-    <div class="flag-place">🏛️ <b>Boudhanath Stupa</b><br><small>Largest stupa</small></div>
-    <div class="flag-place">🌊 <b>Rara Lake</b><br><small>Queen of lakes · Mugu</small></div>
-    <div class="flag-place">🏔️ <b>Annapurna Circuit</b><br><small>Trekking paradise</small></div>
-    <div class="flag-place">🙏 <b>Muktinath Temple</b><br><small>Mustang</small></div>
-  </div>
-
-  <!-- Cultural Heritage -->
-  <div class="flag-section-title">
-    <h3>🎭 Culture & Festivals · संस्कृति र चाडपर्व</h3>
-    <p>Richness of Nepali traditions</p>
-  </div>
-  <div class="flag-festivals-grid">
-    <div class="flag-fest">
-      <div class="fest-icon">🪔</div>
-      <div class="fest-name">Dashain</div>
-      <div class="fest-np">दशैं</div>
-      <div class="fest-desc">15-day festival · Victory of good</div>
+  <!-- SCREEN: DETAIL -->
+  <div id="flag-screen-detail" class="flag-screen">
+    <div class="flag-nav-bar">
+      <button class="flag-back-btn" onclick="flagBackToCategory()">← Back</button>
+      <div class="flag-breadcrumb" id="flag-det-crumb">Home</div>
     </div>
-    <div class="flag-fest">
-      <div class="fest-icon">🎆</div>
-      <div class="fest-name">Tihar</div>
-      <div class="fest-np">तिहार</div>
-      <div class="fest-desc">Festival of lights · 5 days</div>
-    </div>
-    <div class="flag-fest">
-      <div class="fest-icon">🎨</div>
-      <div class="fest-name">Holi</div>
-      <div class="fest-np">होली</div>
-      <div class="fest-desc">Festival of colors</div>
-    </div>
-    <div class="flag-fest">
-      <div class="fest-icon">🎊</div>
-      <div class="fest-name">Nepali New Year</div>
-      <div class="fest-np">नयाँ वर्ष</div>
-      <div class="fest-desc">Bikram Sambat calendar</div>
-    </div>
-    <div class="flag-fest">
-      <div class="fest-icon">🎪</div>
-      <div class="fest-name">Indra Jatra</div>
-      <div class="fest-np">इन्द्र जात्रा</div>
-      <div class="fest-desc">Living Goddess Kumari</div>
-    </div>
-    <div class="flag-fest">
-      <div class="fest-icon">☸️</div>
-      <div class="fest-name">Buddha Jayanti</div>
-      <div class="fest-np">बुद्ध जयन्ती</div>
-      <div class="fest-desc">Birth of Lord Buddha</div>
-    </div>
-  </div>
-
-  <!-- Famous Personalities -->
-  <div class="flag-section-title">
-    <h3>⭐ Proud Nepalis · गर्विला नेपाली</h3>
-    <p>Legends who brought glory to Nepal</p>
-  </div>
-  <div class="flag-heroes-grid">
-    <div class="flag-hero">👑 <b>Prithvi Narayan Shah</b><br><small>Unifier of Nepal (1743-1775)</small></div>
-    <div class="flag-hero">🏔️ <b>Tenzing Norgay Sherpa</b><br><small>First to summit Everest (1953)</small></div>
-    <div class="flag-hero">📖 <b>Bhanubhakta Acharya</b><br><small>Adi Kavi · Father of Nepali literature</small></div>
-    <div class="flag-hero">⚔️ <b>Bhimsen Thapa</b><br><small>Mukhtiyar · Military leader</small></div>
-    <div class="flag-hero">🏔️ <b>Pasang Lhamu Sherpa</b><br><small>First Nepali woman on Everest</small></div>
-    <div class="flag-hero">☸️ <b>Lord Buddha</b><br><small>Born in Lumbini · Light of Asia</small></div>
-  </div>
-
-  <!-- National Anthem -->
-  <div class="flag-anthem">
-    <div class="flag-anthem-title">🎵 राष्ट्रिय गान · National Anthem</div>
-    <div class="flag-anthem-text">
-      "सयौं थुँगा फूलका हामी, एउटै माला नेपाली।<br>
-      सार्वभौम भई फैलिएका, मेची-महाकाली॥"
-    </div>
-    <div class="flag-anthem-trans">
-      "Woven from hundreds of flowers, we are one garland — Nepali.<br>
-      Sovereign, spread from Mechi to Mahakali."
-    </div>
-    <div class="flag-anthem-credit">— Byakul Maila (lyrics) · Amber Gurung (composer)</div>
-  </div>
-
-  <!-- Fun Facts -->
-  <div class="flag-section-title">
-    <h3>💡 Amazing Facts · रोचक तथ्यहरू</h3>
-    <p>Did you know?</p>
-  </div>
-  <div class="flag-did-you-know">
-    <div class="flag-dyk">✨ Nepal is the <b>only country</b> with a non-rectangular national flag</div>
-    <div class="flag-dyk">🏔️ <b>8 of 14</b> world's highest peaks (above 8,000m) are in Nepal</div>
-    <div class="flag-dyk">📅 Nepal follows <b>Bikram Sambat</b> — 56.7 years ahead of AD calendar</div>
-    <div class="flag-dyk">🙏 Nepal is the <b>birthplace of Lord Buddha</b> (Lumbini)</div>
-    <div class="flag-dyk">🇳🇵 Nepal has <b>never been colonized</b> in its history</div>
-    <div class="flag-dyk">⛰️ Everest grows <b>4mm taller</b> every year due to tectonic activity</div>
-    <div class="flag-dyk">🎖️ <b>Gurkha soldiers</b> serve in armies worldwide — legendary bravery</div>
-    <div class="flag-dyk">🌸 Nepal has <b>6,500+ flowering plant species</b> — biodiversity hotspot</div>
-  </div>
-
-  <!-- Closing Message -->
-  <div class="flag-closing">
-    <div class="flag-closing-flag">🇳🇵</div>
-    <h3>जय नेपाल! · Jaya Nepal!</h3>
-    <p>Proudly Nepali · Proudly PRERAK Construction & Prefab Homes</p>
-    <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-top:-18px;margin-bottom:24px;">Building dreams for Nepal since 2012</p>
-    <button class="flag-cta-btn" onclick="closeFlagModal()">Continue to Website →</button>
+    <div id="flag-detail-body"></div>
   </div>
 
   </div><!-- /flag-content-wrap -->
 
-  <!-- Scroll hint -->
-  <div class="flag-scroll-hint" id="flag-scroll-hint">
-    <div>↓ Scroll to learn more</div>
-  </div>
 </div>
 
 <!-- QUOTE REQUEST MODAL -->
@@ -2757,7 +2795,21 @@ function renderSite(){
     <a href="#" class="nav-logo">
       <div class="logo-mk" title="PRERAK Construction"><div class="logo-mk-inner"><img src="${PRERAK_LOGO}" alt="PRERAK" /><div class="logo-mk-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-8h6v8"/><path d="M12 3v3"/><circle cx="7" cy="14" r=".5" fill="currentColor"/><circle cx="17" cy="14" r=".5" fill="currentColor"/></svg></div></div></div>
       <div class="logo-txt"><div class="ln">${S.company}</div><div class="ls">${S.sub}</div></div>
-      <div class="np-flag" onclick="openFlagModal()" title="Click to see Live Nepal Flag"><canvas id="np-flag-canvas" width="40" height="52" style="display:block"></canvas></div>
+      <div class="np-flag-wrap" onclick="openFlagModal()" title="Click to explore Nepal's Digital Identity">
+        <div class="np-flag"><canvas id="np-flag-canvas" width="40" height="52" style="display:block"></canvas></div>
+        <div class="np-label">
+          <div class="np-label-ne">नेपाली चिनारी</div>
+          <div class="np-label-en">Nepal · Explore</div>
+        </div>
+        <div class="np-click-badge">👆 Click</div>
+        <div class="np-hover-popout">
+          <div class="np-popout-flag">🇳🇵</div>
+          <div class="np-popout-title">नेपाली चिनारी</div>
+          <div class="np-popout-sub">Digital Identity of Nepal</div>
+          <div class="np-popout-desc">Explore 12 categories<br>Mountains · Temples · Culture · Heritage</div>
+          <div class="np-popout-cta">Click Here to Explore →</div>
+        </div>
+      </div>
     </a>
     <ul class="nav-links">
       <li><a href="#services" onclick="mClose()" data-en="Services" data-ne="सेवाहरू">Services</a></li>
@@ -3480,6 +3532,69 @@ let _quotePlanId='';
 // ═══ 🇳🇵 NEPAL FLAG FULLSCREEN MODAL ═══
 let _flagBigRAF=null,_flagTimeInt=null,_flagParticlesStarted=false;
 
+// ═══ 🇳🇵 NEPAL DIGITAL IDENTITY — SPA DATA & LOGIC ═══
+
+// ── Nepal Data (grows over time) ──
+const NEPAL_DATA={
+  categories:[
+    {id:'mountains',icon:'🏔️',ne:'पहाड र हिमाल',en:'Mountains & Peaks',desc:'The world\'s highest peaks including Everest, 8 of 14 above 8,000m',color:'#667eea',items:15,phase:1},
+    {id:'temples',icon:'🛕',ne:'हिन्दू मन्दिर',en:'Hindu Temples',desc:'Sacred Hindu shrines including Pashupatinath, Manakamana, Muktinath',color:'#f093fb',items:12,phase:2},
+    {id:'buddhist',icon:'☸️',ne:'बौद्ध स्थल',en:'Buddhist Heritage',desc:'Lumbini, Boudhanath, Swayambhu — sacred Buddhist sites',color:'#ffb347',items:8,phase:2},
+    {id:'historical',icon:'🏯',ne:'ऐतिहासिक स्मारक',en:'Historical Sites',desc:'Ancient palaces, Durbar Squares, and royal monuments',color:'#c94b4b',items:10,phase:3},
+    {id:'lakes',icon:'🌊',ne:'ताल र नदी',en:'Lakes & Rivers',desc:'Rara, Tilicho, Phewa, Gosaikunda — nature\'s blue jewels',color:'#4facfe',items:12,phase:3},
+    {id:'wildlife',icon:'🦌',ne:'वन्यजन्तु',en:'Wildlife & Parks',desc:'Tigers, Rhinos, Red Pandas — National Parks & Reserves',color:'#43e97b',items:10,phase:4},
+    {id:'festivals',icon:'🎊',ne:'चाडपर्व',en:'Festivals',desc:'Dashain, Tihar, Indra Jatra, Holi — celebration of faith',color:'#fa709a',items:10,phase:4},
+    {id:'culture',icon:'🎭',ne:'संस्कृति र जाति',en:'Culture & Ethnicity',desc:'125+ ethnic groups, rich traditions, unique identities',color:'#fee140',items:8,phase:5},
+    {id:'provinces',icon:'🗺️',ne:'सात प्रदेश',en:'Seven Provinces',desc:'From Koshi to Sudurpashchim — Nepal\'s diverse regions',color:'#a8edea',items:7,phase:5},
+    {id:'people',icon:'🏆',ne:'प्रसिद्ध नेपाली',en:'Famous Nepalis',desc:'Buddha, Tenzing, Bhanubhakta — legends of Nepal',color:'#ffecd2',items:15,phase:6},
+    {id:'food',icon:'🍜',ne:'खानपान',en:'Cuisine & Food',desc:'Dal Bhat, Momo, Sel Roti, Thukpa — flavors of Nepal',color:'#ff9a9e',items:10,phase:6},
+    {id:'music',icon:'🎵',ne:'संगीत र कला',en:'Music & Art',desc:'Folk dance, Madal, Sarangi — sounds of the mountains',color:'#e0c3fc',items:8,phase:7}
+  ],
+  items:{
+    mountains:[
+      {
+        id:'everest',
+        ne:'सगरमाथा',
+        en:'Mount Everest',
+        sub:'World\'s Highest Peak · Chomolungma',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1280px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg',
+        gallery:[
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Everest_kalapatthar_crop.jpg/1024px-Everest_kalapatthar_crop.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Mount_Everest_from_Gokyo_Ri_November_5%2C_2012_Cropped.jpg/1024px-Mount_Everest_from_Gokyo_Ri_November_5%2C_2012_Cropped.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Mt._Everest_from_Gokyo_Ri.jpg/1024px-Mt._Everest_from_Gokyo_Ri.jpg'
+        ],
+        stats:[
+          {l:'Height',v:'8,848.86 m'},
+          {l:'Rank',v:'#1 World'},
+          {l:'Location',v:'Solukhumbu'},
+          {l:'Province',v:'Koshi'},
+          {l:'First Summit',v:'29 May 1953'},
+          {l:'Nepali Name',v:'सगरमाथा'}
+        ],
+        description:'<p>Mount Everest, known as <b>सगरमाथा (Sagarmatha)</b> in Nepali and <b>Chomolungma</b> in Tibetan, stands as the crown jewel of Nepal and the highest mountain on Earth. Located on the border between Nepal and the Tibet Autonomous Region of China, it rises to a majestic 8,848.86 meters (29,031.7 feet) above sea level.</p><p>The mountain is part of the Mahalangur Himal sub-range of the Himalayas and lies within Sagarmatha National Park, a UNESCO World Heritage Site. Every year, hundreds of mountaineers from around the world attempt to summit this legendary peak, testing the limits of human endurance.</p><p>For the Sherpa people who live in its shadow, Everest is not just a mountain — it is a sacred deity, a source of livelihood, and an eternal symbol of their spiritual and cultural heritage.</p>',
+        history:'<p>The first recorded successful ascent of Mount Everest was on <b>29 May 1953</b> by Sir Edmund Hillary of New Zealand and Tenzing Norgay Sherpa of Nepal. Their historic achievement inspired generations of climbers and put Nepal firmly on the world map.</p><p>The mountain was named after Sir George Everest, the British Surveyor General of India, in 1865. However, locals have known it by its indigenous names for centuries — reflecting a deep spiritual connection to the peak.</p><p>Since 1953, over 6,000 climbers have successfully summited Everest, though the mountain has also claimed hundreds of lives, earning its reputation as both beautiful and dangerous.</p>',
+        facts:[
+          '📏 Everest grows approximately <b>4mm taller every year</b> due to tectonic activity pushing the Indian plate into the Eurasian plate',
+          '🌡️ Temperatures at the summit can drop to <b>-60°C</b> with winds over 200 km/h',
+          '👥 Over <b>6,000 climbers</b> have reached the summit since 1953',
+          '⏱️ The fastest ascent from base camp to summit is just <b>10 hours 56 minutes</b>',
+          '🦅 The summit has <b>one-third the oxygen</b> of sea level — called the "Death Zone" above 8,000m',
+          '🙏 Locally revered as the home of <b>Miyolangsangma</b>, a Buddhist goddess of giving',
+          '🏕️ Base Camp sits at <b>5,364m</b> — accessible via a 2-week trek',
+          '📱 Climbers can now get <b>4G signal</b> at Base Camp since 2010'
+        ],
+        howToVisit:'<p><b>Everest Base Camp Trek</b> is the most popular way to experience Everest\'s majesty without climbing it. The trek takes 12-14 days round trip.</p><ul><li><b>Start:</b> Fly Kathmandu → Lukla (35 min flight)</li><li><b>Duration:</b> 12-14 days trek (round trip)</li><li><b>Max altitude:</b> 5,545m (Kala Patthar viewpoint)</li><li><b>Best seasons:</b> March-May (Spring) & Sep-Nov (Autumn)</li><li><b>Difficulty:</b> Moderate to challenging</li><li><b>Permits needed:</b> TIMS Card + Sagarmatha NP entry</li></ul>',
+        bestTime:'<p><b>Spring (March-May)</b> — Clear views, moderate temperatures, rhododendron blooms at lower altitudes. Peak climbing season.</p><p><b>Autumn (September-November)</b> — Crystal clear skies, stable weather, excellent visibility. The most popular trekking season.</p><p><b>Avoid:</b> Monsoon (June-August) and deep winter (December-February) for trekking.</p>',
+        video:'QL3SeFVq5lE',
+        mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113957.74!2d86.84!3d27.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e8584b53197c81%3A0x4a2ee3d57296680f!2sMount%20Everest!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp'
+      }
+    ]
+  }
+};
+
+// ── SPA State ──
+let _flagNav={screen:'home',category:null,item:null};
+
 function openFlagModal(){
   const m=document.getElementById('flag-modal');
   if(!m)return;
@@ -3489,13 +3604,9 @@ function openFlagModal(){
   startBigFlag();
   startFlagTime();
   startFlagParticles();
-  // Auto-scroll hint fade out
-  setTimeout(()=>{const h=document.getElementById('flag-scroll-hint');if(h)h.style.display='none';},6000);
-  // Listen to scroll inside modal
-  m.addEventListener('scroll',()=>{
-    const h=document.getElementById('flag-scroll-hint');
-    if(h && m.scrollTop>50)h.style.display='none';
-  });
+  flagRenderCategories();
+  flagShowHome();
+  dismissNepalToast();
 }
 
 function closeFlagModal(){
@@ -3648,6 +3759,190 @@ function startBigFlag(){
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape' && document.getElementById('flag-modal')?.classList.contains('open'))closeFlagModal();
 });
+
+// ── SPA Navigation Functions ──
+function flagShowScreen(id){
+  document.querySelectorAll('.flag-screen').forEach(s=>s.classList.remove('flag-screen-active'));
+  const el=document.getElementById('flag-screen-'+id);
+  if(el){el.classList.add('flag-screen-active');}
+  const m=document.getElementById('flag-modal');
+  if(m)m.scrollTop=0;
+}
+
+function flagShowHome(){
+  _flagNav={screen:'home',category:null,item:null};
+  flagShowScreen('home');
+}
+
+function flagRenderCategories(){
+  const grid=document.getElementById('flag-cats-grid');
+  if(!grid)return;
+  grid.innerHTML=NEPAL_DATA.categories.map(c=>{
+    const hasItems=NEPAL_DATA.items[c.id]&&NEPAL_DATA.items[c.id].length>0;
+    const badge=hasItems?`<div class="flag-cat-count">${NEPAL_DATA.items[c.id].length} items</div>`:`<div class="flag-cat-soon">Coming Soon · Phase ${c.phase}</div>`;
+    return `<div class="flag-cat-tile" style="--cat-color:${c.color}" onclick="flagOpenCategory('${c.id}')">
+      <div class="flag-cat-icon">${c.icon}</div>
+      <div class="flag-cat-name-ne">${c.ne}</div>
+      <div class="flag-cat-name-en">${c.en}</div>
+      ${badge}
+    </div>`;
+  }).join('');
+}
+
+function flagOpenCategory(catId){
+  const cat=NEPAL_DATA.categories.find(c=>c.id===catId);
+  if(!cat)return;
+  _flagNav={screen:'category',category:catId,item:null};
+  // Render hero
+  const hero=document.getElementById('flag-cat-hero');
+  hero.innerHTML=`<div class="hero-ic">${cat.icon}</div>
+    <h2>${cat.ne}</h2>
+    <div class="hero-sub">${cat.en}</div>
+    <div class="hero-desc">${cat.desc}</div>`;
+  // Render breadcrumb
+  document.getElementById('flag-cat-crumb').innerHTML='Home › <b>'+cat.en+'</b>';
+  // Render items or coming soon
+  const grid=document.getElementById('flag-items-grid');
+  const items=NEPAL_DATA.items[catId]||[];
+  if(items.length===0){
+    grid.innerHTML=`<div class="flag-coming-soon" style="grid-column:1/-1">
+      <div class="cs-ic">${cat.icon}</div>
+      <h3>Coming Soon!</h3>
+      <p>This category is being prepared with detailed information, photos, and videos. Check back soon to explore <b>${cat.en}</b> (${cat.ne}).</p>
+      <p style="font-size:.72rem;color:rgba(255,204,77,.7);">Planned for Phase ${cat.phase} · Will include ${cat.items}+ items</p>
+      <button class="flag-cta-btn" onclick="flagShowHome()">← Back to Categories</button>
+    </div>`;
+  }else{
+    grid.innerHTML=items.map(it=>`<div class="flag-item-card" onclick="flagOpenItem('${catId}','${it.id}')">
+      <div class="flag-item-img" style="background-image:url('${it.hero}')"></div>
+      <div class="flag-item-body">
+        <h4>${it.en}</h4>
+        <div class="it-ne">${it.ne}</div>
+        <p>${it.sub}</p>
+      </div>
+    </div>`).join('');
+  }
+  flagShowScreen('category');
+}
+
+function flagOpenItem(catId,itemId){
+  const item=(NEPAL_DATA.items[catId]||[]).find(i=>i.id===itemId);
+  const cat=NEPAL_DATA.categories.find(c=>c.id===catId);
+  if(!item||!cat)return;
+  _flagNav={screen:'detail',category:catId,item:itemId};
+  document.getElementById('flag-det-crumb').innerHTML='Home › '+cat.en+' › <b>'+item.en+'</b>';
+  const body=document.getElementById('flag-detail-body');
+  const statsHtml=item.stats.map(s=>`<div class="flag-det-stat"><div class="sl">${s.l}</div><div class="sv">${s.v}</div></div>`).join('');
+  const galleryHtml=(item.gallery||[]).map(img=>`<img src="${img}" alt="" loading="lazy" onclick="window.open('${img}','_blank')">`).join('');
+  const factsHtml=(item.facts||[]).map(f=>`<div class="flag-det-fact">${f}</div>`).join('');
+  body.innerHTML=`
+    <div class="flag-det-hero">
+      <div class="flag-det-hero-img" style="background-image:url('${item.hero}')"></div>
+      <div class="flag-det-hero-overlay">
+        <div class="det-ne">${item.ne}</div>
+        <h1>${item.en}</h1>
+        <div class="det-sub">${item.sub}</div>
+      </div>
+    </div>
+    <div class="flag-det-stats">${statsHtml}</div>
+    <div class="flag-det-section"><h3>📖 Overview</h3>${item.description||''}</div>
+    ${item.history?`<div class="flag-det-section"><h3>📜 History</h3>${item.history}</div>`:''}
+    ${galleryHtml?`<div class="flag-det-section"><h3>📸 Photo Gallery</h3><div class="flag-det-gallery">${galleryHtml}</div></div>`:''}
+    ${item.video?`<div class="flag-det-section"><h3>🎬 Video</h3><div class="flag-det-video"><iframe src="https://www.youtube.com/embed/${item.video}" allowfullscreen loading="lazy"></iframe></div></div>`:''}
+    ${item.howToVisit?`<div class="flag-det-section"><h3>🧳 How to Visit</h3>${item.howToVisit}</div>`:''}
+    ${item.bestTime?`<div class="flag-det-section"><h3>🌤️ Best Time to Visit</h3>${item.bestTime}</div>`:''}
+    ${factsHtml?`<div class="flag-det-section"><h3>💡 Amazing Facts</h3><div class="flag-det-facts">${factsHtml}</div></div>`:''}
+    ${item.mapEmbed?`<div class="flag-det-section"><h3>📍 Location</h3><div class="flag-det-map"><iframe src="${item.mapEmbed}" loading="lazy" allowfullscreen></iframe></div></div>`:''}
+    <div style="text-align:center;padding:20px;">
+      <button class="flag-cta-btn" onclick="flagBackToCategory()">← Back to ${cat.en}</button>
+    </div>
+  `;
+  flagShowScreen('detail');
+}
+
+function flagBackToCategory(){
+  if(_flagNav.category)flagOpenCategory(_flagNav.category);
+  else flagShowHome();
+}
+
+// ── Search ──
+function flagSearch(q){
+  const res=document.getElementById('flag-search-results');
+  if(!res)return;
+  q=(q||'').trim().toLowerCase();
+  if(q.length<2){res.classList.remove('show');return;}
+  const matches=[];
+  // Search items
+  Object.keys(NEPAL_DATA.items).forEach(catId=>{
+    NEPAL_DATA.items[catId].forEach(it=>{
+      if(it.en.toLowerCase().includes(q)||it.ne.includes(q)||(it.sub||'').toLowerCase().includes(q)){
+        const cat=NEPAL_DATA.categories.find(c=>c.id===catId);
+        matches.push({type:'item',cat,item:it,catId});
+      }
+    });
+  });
+  // Search categories
+  NEPAL_DATA.categories.forEach(c=>{
+    if(c.en.toLowerCase().includes(q)||c.ne.includes(q)){
+      matches.push({type:'cat',cat:c});
+    }
+  });
+  if(matches.length===0){
+    res.innerHTML='<div class="flag-sres"><div class="flag-sres-ic">🔍</div><div class="flag-sres-txt"><div class="flag-sres-ttl">No results for "'+q+'"</div><div class="flag-sres-cat">Try: Everest, Pashupatinath, Dashain</div></div></div>';
+  }else{
+    res.innerHTML=matches.slice(0,8).map(m=>{
+      if(m.type==='item'){
+        return `<div class="flag-sres" onclick="flagOpenItem('${m.catId}','${m.item.id}');document.getElementById('flag-search').value='';document.getElementById('flag-search-results').classList.remove('show');">
+          <div class="flag-sres-ic">${m.cat.icon}</div>
+          <div class="flag-sres-txt"><div class="flag-sres-ttl">${m.item.en} · ${m.item.ne}</div><div class="flag-sres-cat">${m.cat.en}</div></div>
+        </div>`;
+      }else{
+        return `<div class="flag-sres" onclick="flagOpenCategory('${m.cat.id}');document.getElementById('flag-search').value='';document.getElementById('flag-search-results').classList.remove('show');">
+          <div class="flag-sres-ic">${m.cat.icon}</div>
+          <div class="flag-sres-txt"><div class="flag-sres-ttl">${m.cat.ne} · ${m.cat.en}</div><div class="flag-sres-cat">Category</div></div>
+        </div>`;
+      }
+    }).join('');
+  }
+  res.classList.add('show');
+}
+// Hide search results on outside click
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.flag-search-wrap')){
+    const r=document.getElementById('flag-search-results');
+    if(r)r.classList.remove('show');
+  }
+});
+
+// ── One-time Welcome Toast ──
+function showNepalToast(){
+  if(sessionStorage.getItem('nepal_toast_shown'))return;
+  setTimeout(()=>{
+    const t=document.getElementById('nepal-toast');
+    if(t && !document.getElementById('flag-modal')?.classList.contains('open')){
+      t.classList.add('show');
+      sessionStorage.setItem('nepal_toast_shown','1');
+      // Auto-dismiss after 12 seconds
+      setTimeout(dismissNepalToast,12000);
+    }
+  },6000);
+}
+function dismissNepalToast(){
+  const t=document.getElementById('nepal-toast');
+  if(t)t.classList.remove('show');
+}
+// Show toast on load
+document.addEventListener('DOMContentLoaded',()=>setTimeout(showNepalToast,100));
+
+// Hide floating pill when flag modal open
+(function pillObs(){
+  const pill=document.getElementById('nepal-pill');
+  if(!pill)return;
+  setInterval(()=>{
+    const m=document.getElementById('flag-modal');
+    pill.style.display=(m&&m.classList.contains('open'))?'none':'flex';
+  },500);
+})();
 
 function swMap(view){
   ['map','satellite'].forEach(v=>{
@@ -4242,1635 +4537,4 @@ function addUQ(f,idx){const url=URL.createObjectURL(f);const isV=f.type.startsWi
 function rmUQ(idx){pendFiles[idx]=null;document.getElementById('uq-'+idx)?.remove();if(pendFiles.every(f=>!f)){document.getElementById('sm-upbtn').disabled=true;document.getElementById('sm-cap').style.display='none';pendFiles=[];}}
 async function submitSvcUpload(){
   if(!isAdmin)return;
-  const cap=document.getElementById('sm-cap-txt')?.value.trim();const valid=pendFiles.filter(Boolean);if(!valid.length||!activeSvcId)return;const btn=document.getElementById('sm-upbtn');btn.disabled=true;btn.textContent='Uploading…';for(let i=0;i<pendFiles.length;i++){const f=pendFiles[i];if(!f)continue;const bar=document.getElementById('uqb-'+i);for(let p=0;p<=100;p+=15){if(bar)bar.style.width=p+'%';await new Promise(r=>setTimeout(r,22));}const url=URL.createObjectURL(f);UPM[activeSvcId].push({type:f.type.startsWith('video/')?'video':'image',src:url,cap:cap||(f.type.startsWith('video/')?'Video':'Photo')});}const st=document.getElementById('sm-upst');st.textContent=`✅ ${valid.length} file${valid.length>1?'s':''} added!`;st.style.background='rgba(34,197,94,.1)';st.style.color='#22c55e';st.style.border='1px solid rgba(34,197,94,.2)';st.style.display='block';btn.textContent='⬆️ Add to Gallery';resetSvcUpload();renderSvcGal();setTimeout(()=>{st.style.display='none';switchSvcTab('gallery');},1800);
-}
-
-// Drag drop
-const upz_el=document.getElementById('sm-upz');
-if(upz_el){['dragenter','dragover'].forEach(e=>upz_el.addEventListener(e,ev=>{ev.preventDefault();upz_el.classList.add('drag');}));['dragleave','drop'].forEach(e=>upz_el.addEventListener(e,ev=>{ev.preventDefault();upz_el.classList.remove('drag');}));upz_el.addEventListener('drop',ev=>handleSvcUpload(ev.dataTransfer.files));}
-
-// ═══════════════════════════════════════════════
-// ADMIN AUTH
-// ═══════════════════════════════════════════════
-let isAdmin=false;
-function togglePass(){
-  const inp=document.getElementById('al-pass');
-  const btn=document.getElementById('eye-btn');
-  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
-  else{inp.type='password';btn.textContent='👁️';}
-}
-function resetPass(){
-  if(!confirm('Reset password to default?\n\nNew password: prerak@2025'))return;
-  D.settings.adminPass='prerak@2025';save();
-  document.getElementById('al-pass').value='';
-  document.getElementById('al-err').style.display='none';
-  const hint=document.getElementById('al-hint-box');
-  if(hint){hint.style.display='block';hint.innerHTML='✅ Password reset!<br><b>Password:</b> prerak@2025';}
-}
-function openLogin(){
-  document.getElementById('admin-login').classList.add('open');
-  document.getElementById('al-pass').value='';
-  document.getElementById('al-err').style.display='none';
-  const hint=document.getElementById('al-hint-box');if(hint)hint.style.display='none';
-  document.body.classList.add('ns');
-  backToStep1();
-  setTimeout(()=>document.getElementById('al-pass')?.focus(),100);
-}
-function closeLogin(){document.getElementById('admin-login').classList.remove('open');document.body.classList.remove('ns');clearOTPTimer();}
-function backToStep1(){
-  document.getElementById('login-step1').classList.add('active');
-  document.getElementById('login-step2').classList.remove('active');
-  document.getElementById('al-err').style.display='none';
-}
-
-// ═══ OTP SYSTEM ═══
-let _otp='',_otpTimer=null,_otpExpiry=0;
-
-function doLogin(){
-  const pass=(document.getElementById('al-pass')?.value||'').trim();
-  if(pass.toLowerCase()===D.settings.adminPass.toLowerCase()){
-    document.getElementById('al-err').style.display='none';
-    // Send OTP
-    _sendOTP();
-  } else {
-    document.getElementById('al-err').style.display='block';
-    document.getElementById('al-pass').select();
-  }
-}
-
-function _sendOTP(){
-  // Generate 6-digit OTP
-  _otp=String(Math.floor(100000+Math.random()*900000));
-  _otpExpiry=Date.now()+5*60*1000; // 5 min
-
-  const email=D.adminEmail||D.settings.email;
-  const hint=document.getElementById('otp-email-hint');
-  if(hint)hint.textContent='OTP sent to: '+_maskEmail(email);
-
-  // Switch to step 2
-  document.getElementById('login-step1').classList.remove('active');
-  document.getElementById('login-step2').classList.add('active');
-  document.getElementById('otp-err').style.display='none';
-  for(let i=0;i<6;i++){const b=document.getElementById('otp'+i);if(b)b.value='';}
-  setTimeout(()=>document.getElementById('otp0')?.focus(),100);
-
-  // Start countdown
-  startOTPTimer();
-
-  // Send via Claude API
-  _sendOTPEmail(email,_otp);
-}
-
-function _maskEmail(e){
-  if(!e||!e.includes('@'))return e||'admin email';
-  const[u,d]=e.split('@');
-  return u.substring(0,2)+'***@'+d;
-}
-
-async function _sendOTPEmail(email,otp){
-  const demoBox=document.getElementById('otp-demo-box');
-  if(demoBox){demoBox.style.display='block';demoBox.innerHTML='<b style="color:#60a5fa">📤 Sending OTP to '+_maskEmail(email)+'...</b>';}
-
-  const EMAILJS_SERVICE=(D.settings.ejsService||'').trim();
-  const EMAILJS_TEMPLATE=(D.settings.ejsTemplate||'').trim();
-  const EMAILJS_KEY=(D.settings.ejsKey||'').trim();
-
-  const isConfigured=EMAILJS_SERVICE && EMAILJS_TEMPLATE && EMAILJS_KEY;
-
-  if(isConfigured){
-    try{
-      if(!window.emailjs){
-        await new Promise(function(res,rej){
-          const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-          s.onload=res;s.onerror=rej;document.head.appendChild(s);
-        });
-      }
-      if(window.emailjs.init)window.emailjs.init({publicKey:EMAILJS_KEY});
-      await window.emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,{
-        email:email,
-        to_email:email,
-        passcode:otp,
-        otp_code:otp,
-        time:'5 minutes',
-        company:'PRERAK Construction & Prefab Homes',
-        expires:'5 minutes',
-        message:'Your OTP for PRERAK Admin login is: '+otp+'. Valid for 5 minutes.'
-      });
-      if(demoBox){
-        demoBox.style.display='block';
-        demoBox.innerHTML='<b style="color:#22c55e">✅ OTP sent to '+_maskEmail(email)+'</b><br>'
-          +'<span style="font-size:.65rem;opacity:.8">📧 Check your email inbox/spam folder</span><br>'
-          +'<span style="font-size:.58rem;opacity:.6">Didn\'t receive? Click Resend below</span>';
-      }
-      return;
-    }catch(e){
-      console.log('EmailJS error:',e);
-      if(demoBox){
-        demoBox.innerHTML='<b style="color:#ef4444">❌ Email failed to send</b><br>'
-          +'<span style="font-size:.62rem;opacity:.8">Check EmailJS settings in Admin → Dashboard</span><br>'
-          +'<b style="color:#fbbf24">Your OTP: <span style="font-size:1.4rem;letter-spacing:4px;color:#fff">'+otp+'</span></b>';
-      }
-      return;
-    }
-  }
-
-  // Fallback: EmailJS not configured — show OTP directly (first-time setup)
-  if(demoBox){
-    demoBox.style.display='block';
-    demoBox.innerHTML='<div style="padding:8px 10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.25);border-radius:8px;margin-bottom:10px;font-size:.64rem;color:#fbbf24;line-height:1.6">⚠️ <b>EmailJS not configured yet</b><br>OTP via email मा पाउन Dashboard मा EmailJS Service ID, Template ID र Public Key save गर्नुस्।</div>'
-      +'<div style="text-align:center"><span style="font-size:.7rem;opacity:.7;letter-spacing:1px">📱 YOUR OTP CODE:</span><br>'
-      +'<b style="font-size:2rem;letter-spacing:7px;color:#c9933a;font-weight:800">'+otp+'</b><br>'
-      +'<span style="font-size:.58rem;opacity:.6">Valid for 5 minutes</span></div>';
-  }
-}
-
-function startOTPTimer(){
-  clearOTPTimer();
-  const el=document.getElementById('otp-countdown');
-  function tick(){
-    const rem=Math.max(0,_otpExpiry-Date.now());
-    const m=Math.floor(rem/60000);const s=Math.floor((rem%60000)/1000);
-    if(el)el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-    if(rem<=0){clearOTPTimer();if(el)el.textContent='Expired';return;}
-    _otpTimer=setTimeout(tick,1000);
-  }
-  tick();
-}
-function clearOTPTimer(){if(_otpTimer){clearTimeout(_otpTimer);_otpTimer=null;}}
-
-function otpNext(i){
-  const v=document.getElementById('otp'+i)?.value;
-  if(v&&/^\d$/.test(v)&&i<5)setTimeout(()=>document.getElementById('otp'+(i+1))?.focus(),0);
-  // Auto verify when all filled
-  const all=[0,1,2,3,4,5].map(function(j){return document.getElementById('otp'+j)?.value||'';}).join('');
-  if(all.length===6)setTimeout(verifyOTP,200);
-}
-function otpBack(e,i){
-  if(e.key==='Backspace'&&!document.getElementById('otp'+i)?.value&&i>0){
-    document.getElementById('otp'+(i-1))?.focus();
-  }
-}
-function verifyOTP(){
-  if(Date.now()>_otpExpiry){
-    document.getElementById('otp-err').textContent='❌ OTP expired. Click Resend.';
-    document.getElementById('otp-err').style.display='block';return;
-  }
-  const entered=[0,1,2,3,4,5].map(function(i){return document.getElementById('otp'+i)?.value||'';}).join('');
-  if(entered===_otp){
-    clearOTPTimer();
-    isAdmin=true;
-    closeLogin();
-    openAdminPanel();
-  } else {
-    document.getElementById('otp-err').textContent='❌ Wrong OTP. Try again ('+entered+' ≠ expected).';
-    document.getElementById('otp-err').style.display='block';
-    // Shake boxes
-    document.querySelectorAll('.otp-box').forEach(function(b){b.style.borderColor='#ef4444';setTimeout(function(){b.style.borderColor='';},600);});
-  }
-}
-function resendOTP(){
-  const email=D.adminEmail||D.settings.email;
-  _otp=String(Math.floor(100000+Math.random()*900000));
-  _otpExpiry=Date.now()+5*60*1000;
-  for(let i=0;i<6;i++){const b=document.getElementById('otp'+i);if(b)b.value='';}
-  document.getElementById('otp-err').style.display='none';
-  startOTPTimer();
-  _sendOTPEmail(email,_otp);
-  document.getElementById('otp0')?.focus();
-}
-function openAdminPanel(){
-  document.getElementById('admin-panel').classList.add('open');
-  document.body.classList.add('ns');
-  // Always show FAB when admin is logged in
-  document.getElementById('admin-fab')?.classList.add('visible');
-  populateForms();renderDashboard();
-}
-function exitAdmin(){
-  document.getElementById('admin-panel').classList.remove('open');
-  document.body.classList.remove('ns');
-  document.getElementById('admin-bar').classList.add('show');
-  document.body.classList.add('admin-mode');
-  document.getElementById('theme-panel').classList.add('admin-visible');
-  document.getElementById('admin-fab')?.classList.add('visible');
-  renderSite();
-}
-function logoutAdmin(){
-  isAdmin=false;
-  document.getElementById('admin-panel').classList.remove('open');
-  document.getElementById('admin-bar').classList.remove('show');
-  document.getElementById('theme-panel').classList.remove('admin-visible');
-  document.body.classList.remove('ns','admin-mode');
-  // Hide FAB on logout unless URL has admin key
-  const params=new URLSearchParams(window.location.search);
-  const hash=window.location.hash.replace('#','').toLowerCase();
-  const hasKey=params.has('admin')||params.get('key')==='prerak'||hash==='admin';
-  if(!hasKey) document.getElementById('admin-fab')?.classList.remove('visible');
-  renderSite();
-}
-function quickEditProj(id){
-  // Quick inline edit for project title/tag
-  const p=D.projects.find(x=>x.id===id);if(!p)return;
-  const title=prompt('Edit Title:',p.title);if(title===null)return;
-  const tag=prompt('Edit Tag (e.g. Interior, Kitchen):',p.tag);if(tag===null)return;
-  const sub=prompt('Edit Sub (e.g. Hetauda):',p.sub);if(sub===null)return;
-  p.title=title||p.title;p.tag=tag||p.tag;p.sub=sub||p.sub;
-  save();renderSite();
-}
-function delProjConfirm(id){
-  if(!confirm('Delete this project image?'))return;
-  D.projects=D.projects.filter(p=>p.id!==id);
-  save();renderSite();
-}
-
-function showSec(n){
-  document.querySelectorAll('.ap-ni').forEach((el,i)=>{const m=['dashboard','templates','hero','services','projects','testimonials','whyus','pricing','faq','contact','social','notices','calendar','visitcard','settings'];el.classList.toggle('on',m[i]===n);});
-  document.querySelectorAll('.ap-sec').forEach(el=>el.classList.remove('on'));
-  document.getElementById('sec-'+n)?.classList.add('on');
-  if(n==='services')renderAdminSvc();
-  if(n==='projects')renderAdminProj();
-  if(n==='testimonials')renderAdminTest();
-  if(n==='whyus')renderAdminWhy();
-  if(n==='visitcard')renderVCAdmin();
-  if(n==='social')renderSocialAdmin();
-  if(n==='notices')renderNoticeAdmin();
-  if(n==='calendar')renderCalAdmin();
-  if(n==='pricing')renderPricingAdmin();
-  if(n==='faq')renderFAQAdmin();
-}
-// ═══ PUBLIC QUICK PANEL ═══
-let _qpOpen=false;
-function toggleQP(){
-  _qpOpen=!_qpOpen;
-  const menu=document.getElementById('qp-menu');
-  const btn=document.getElementById('qp-toggle');
-  if(menu)menu.style.display=_qpOpen?'flex':'none';
-  if(btn){btn.style.transform=_qpOpen?'rotate(45deg) scale(1.1)':'';btn.textContent=_qpOpen?'✕':'⚡';}
-}
-function closeQP(){_qpOpen=false;const m=document.getElementById('qp-menu');if(m)m.style.display='none';const b=document.getElementById('qp-toggle');if(b){b.style.transform='';b.textContent='⚡';}}
-function initQP(){
-  const S=D.settings;
-  const qc=document.getElementById('qp-call');if(qc)qc.href='tel:'+S.phone1;
-  const qw=document.getElementById('qp-wa');if(qw)qw.href='https://wa.me/'+S.wa+'?text='+encodeURIComponent('नमस्ते '+S.company+' जी!');
-}
-function _buildCalRightPanel(isNe){
-  const todayBS=adToBS(new Date());
-  const S=D.settings;
-  const curMon=todayBS?todayBS.month:_activeMon;
-  const s=getCalSvc(curMon);
-  const calData=NP_CAL[todayBS?todayBS.year:_calYear]||NP_CAL[2083];
-  const todayTxt=todayBS
-    ?NP_MONTHS_NE[todayBS.month]+' '+todayBS.day+', '+todayBS.year+' B.S.'
-    :'N/A';
-  const todayEN=todayBS
-    ?NP_MONTHS_EN[todayBS.month]+' '+todayBS.day+', '+(todayBS.year)
-    :'N/A';
-  const adDate=new Date().toLocaleDateString('en-NP',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-
-  return '<div>'
-    // Today's date card
-    +'<div style="background:linear-gradient(135deg,rgba(201,147,58,.12),rgba(201,147,58,.06));border:1px solid rgba(201,147,58,.25);border-radius:16px;padding:20px 22px;margin-bottom:18px">'
-    +'<div style="font-size:.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--a);font-weight:700;margin-bottom:8px">📅 '+(isNe?'आजको मिति':'Today\'s Date')+'</div>'
-    +'<div style="font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--a);line-height:1;margin-bottom:4px">'+todayTxt+'</div>'
-    +'<div style="font-size:.72rem;color:var(--mt);margin-bottom:10px">'+adDate+'</div>'
-    +'<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.04);border-radius:10px">'
-    +'<span style="font-size:1.6rem">'+s.icon+'</span>'
-    +'<div><div style="font-size:.78rem;font-weight:700;color:var(--txt)">'+(isNe?s.ne:s.en)+'</div>'
-    +'<div style="font-size:.65rem;color:var(--mt)">'+s.tip+'</div></div>'
-    +'</div>'
-    +'</div>'
-    // Services list
-    +'<div style="margin-bottom:18px">'
-    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--mt2);font-weight:700;margin-bottom:10px">🏗️ '+(isNe?'हाम्रा सेवाहरू':'Our Services')+'</div>'
-    +D.services.slice(0,4).map(function(sv){
-      return '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:rgba(255,255,255,.03);border:1px solid var(--brd2);border-radius:9px;margin-bottom:6px;cursor:pointer" onclick="document.getElementById(\'services\').scrollIntoView({behavior:\'smooth\'})">'
-        +'<span style="font-size:1.2rem">'+sv.icon+'</span>'
-        +'<span style="font-size:.8rem;font-weight:600;color:var(--txt)">'+sv.name+'</span>'
-        +'<span style="margin-left:auto;font-size:.7rem;color:var(--a)">→</span>'
-        +'</div>';
-    }).join('')
-    +'</div>'
-    // Quick contact
-    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--mt2);font-weight:700;margin-bottom:10px">📞 '+(isNe?'सम्पर्क':'Quick Contact')+'</div>'
-    +'<a href="tel:'+S.phone1+'" style="display:flex;align-items:center;gap:10px;padding:11px 16px;background:linear-gradient(135deg,rgba(201,147,58,.15),rgba(201,147,58,.08));border:1px solid rgba(201,147,58,.25);border-radius:12px;text-decoration:none;margin-bottom:8px">'
-    +'<span style="font-size:1.3rem">📞</span>'
-    +'<div><div style="font-size:.82rem;font-weight:700;color:var(--a)">'+S.phone1+'</div><div style="font-size:.6rem;color:var(--mt)">'+(isNe?'Call गर्नुस्':'Call Now')+'</div></div>'
-    +'</a>'
-    +'<a href="https://wa.me/'+S.wa+'?text='+encodeURIComponent('नमस्ते '+S.company+' जी!')+'" target="_blank" style="display:flex;align-items:center;gap:10px;padding:11px 16px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);border-radius:12px;text-decoration:none">'
-    +'<span style="font-size:1.3rem">💬</span>'
-    +'<div><div style="font-size:.82rem;font-weight:700;color:#25D366">WhatsApp</div><div style="font-size:.6rem;color:var(--mt)">'+(isNe?'Message गर्नुस्':'Message Us')+'</div></div>'
-    +'</a>'
-    +'</div>';
-}
-
-// ═══════════════════════════════════════════════
-// ANIMATED NEPAL FLAG — Canvas Wave Physics
-// ═══════════════════════════════════════════════
-function initNepalFlag(){
-  const canvas=document.getElementById('np-flag-canvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const W=canvas.width,H=canvas.height;
-  const POLE_X=4,FW=W-POLE_X;
-  const MID=H*0.43,T1_TIP_Y=H*0.41,T2_TIP_Y=H*0.66;
-  let t=0;
-  const GRID=22;
-  function wOff(nx){
-    const amp=3.2,freq=3,spd=2.2;
-    return Math.sin(freq*nx-spd*t)*amp*nx*nx;
-  }
-  function interp(a,b,f){return a*(1-f)+b*f;}
-  function drawFlag(){
-    ctx.clearRect(0,0,W,H);t+=0.05;
-    // Staff
-    const sg=ctx.createLinearGradient(0,0,POLE_X,0);sg.addColorStop(0,'#ccc');sg.addColorStop(.5,'#fff');sg.addColorStop(1,'#aaa');
-    ctx.fillStyle=sg;ctx.fillRect(0,0,POLE_X,H);
-    // Draw strips
-    for(let i=0;i<GRID;i++){
-      const nx0=i/GRID,nx1=(i+1)/GRID;
-      const x0=POLE_X+nx0*FW,x1=POLE_X+nx1*FW;
-      const w0=wOff(nx0),w1=wOff(nx1);
-      // Upper triangle bounds
-      const u_top0=interp(0,T1_TIP_Y+w0,nx0)+w0;
-      const u_top1=interp(0,T1_TIP_Y+w1,nx1)+w1;
-      const u_bot0=interp(MID,T1_TIP_Y+w0,nx0)+w0;
-      const u_bot1=interp(MID,T1_TIP_Y+w1,nx1)+w1;
-      // Lower triangle bounds
-      const l_top0=interp(MID,T2_TIP_Y+w0,nx0)+w0;
-      const l_top1=interp(MID,T2_TIP_Y+w1,nx1)+w1;
-      const l_bot0=interp(H,T2_TIP_Y+w0,nx0)+w0;
-      const l_bot1=interp(H,T2_TIP_Y+w1,nx1)+w1;
-      const shade=Math.sin(3*nx0-2.2*t)*0.12;
-      // White border
-      const BW=1.4;
-      [[u_top0-BW,u_top1-BW,u_bot1+BW,u_bot0+BW],[l_top0-BW,l_top1-BW,l_bot1+BW,l_bot0+BW]].forEach(function(b){
-        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='white';ctx.fill();
-      });
-      // Blue border
-      const BB=0.7;
-      [[u_top0-BB,u_top1-BB,u_bot1+BB,u_bot0+BB],[l_top0-BB,l_top1-BB,l_bot1+BB,l_bot0+BB]].forEach(function(b){
-        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='#003893';ctx.fill();
-      });
-      // Red fill with shading
-      const r=Math.min(255,Math.round(220+shade*40)),g=Math.round(20+shade*10),b2=Math.round(60+shade*20);
-      const rc='rgb('+r+','+g+','+b2+')';
-      [[u_top0,u_top1,u_bot1,u_bot0],[l_top0,l_top1,l_bot1,l_bot0]].forEach(function(b){
-        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle=rc;ctx.fill();
-      });
-    }
-    // Moon (upper triangle)
-    const mnx=0.33,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.09;
-    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
-    // Sun (lower triangle)
-    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.077;
-    ctx.strokeStyle='#fff';ctx.lineWidth=1.3;ctx.lineCap='round';
-    for(let r=0;r<12;r++){const a=r*Math.PI/6;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*(sr+1.5),sy+Math.sin(a)*(sr+1.5));ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.58),sy+Math.sin(a)*(sr+sr*0.58));ctx.stroke();}
-    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
-    requestAnimationFrame(drawFlag);
-  }
-  drawFlag();
-}
-setTimeout(initNepalFlag,400);
-
-function showBSDate(inputId,spanId){
-  const val=document.getElementById(inputId)?.value;
-  const span=document.getElementById(spanId);if(!span)return;
-  if(!val){span.textContent='';return;}
-  const bs=adToBS(new Date(val));
-  if(bs)span.textContent='= '+NP_MONTHS_NE[bs.month]+' '+bs.day+', '+bs.year+' B.S.';
-  else span.textContent='';
-}
-
-// ═══════════════════════════════════════════════
-// NOTICE BOARD
-// ═══════════════════════════════════════════════
-const NF_BG_COLORS={gold:'rgba(201,147,58,.18)',red:'rgba(220,38,38,.15)',green:'rgba(34,197,94,.12)',blue:'rgba(59,130,246,.12)',purple:'rgba(168,85,247,.12)'};
-const NF_BG_BORDERS={gold:'rgba(201,147,58,.4)',red:'rgba(220,38,38,.35)',green:'rgba(34,197,94,.3)',blue:'rgba(59,130,246,.3)',purple:'rgba(168,85,247,.3)'};
-const NF_COLORS={gold:'#c9933a',red:'#ef4444',green:'#22c55e',blue:'#3b82f6',purple:'#a855f7'};
-
-function renderNoticeTicker(){
-  const wrap=document.getElementById('nb-wrap');if(!wrap)return;
-  const now=new Date();
-  const live=(D.notices||[]).filter(function(n){
-    const from=n.from?new Date(n.from):null;
-    const to=n.to?new Date(n.to):null;
-    return(!from||from<=now)&&(!to||to>=now);
-  });
-  if(!live.length){
-    wrap.classList.remove('active');
-    wrap.style.display='none';
-    return;
-  }
-  wrap.classList.add('active');
-  wrap.style.display='block';
-  const items=[...live,...live].map(function(n){
-    const col=NF_COLORS[n.bg||'gold']||'#e8b86d';
-    return '<span class="nb-item" onclick="showFestPopup(\''+n.id+'\')"><span class="ni">'+n.icon+'</span><b style="color:'+col+'">'+n.msg.substring(0,90)+(n.msg.length>90?'...':'')+'</b></span>';
-  }).join('<span style="color:rgba(201,147,58,.35);margin:0 14px;font-size:.55rem;letter-spacing:2px">◆ ◆</span>');
-  wrap.innerHTML='<div class="nb-inner"><div class="nb-ticker"><div class="nb-label">🔔 सूचना</div><div class="nb-scroll"><div class="nb-track">'+items+'</div></div><button class="nb-close" onclick="document.getElementById(\'nb-wrap\').classList.remove(\'active\');document.getElementById(\'nb-wrap\').style.display=\'none\'" title="Close">✕</button></div></div>';
-}
-function showFestPopup(nid){
-  const n=(D.notices||[]).find(function(x){return x.id===nid;});
-  if(!n)return;
-  const col=NF_COLORS[n.bg||'gold'];
-  const bg=NF_BG_COLORS[n.bg||'gold'];
-  const brd=NF_BG_BORDERS[n.bg||'gold'];
-  let popup=document.getElementById('fest-pop-el');
-  if(!popup){popup=document.createElement('div');popup.id='fest-pop-el';popup.className='fest-pop';document.body.appendChild(popup);}
-  const btnHtml=n.btnLbl&&n.btnUrl?'<a href="'+n.btnUrl+'" target="_blank" style="display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:'+col+';color:#fff;border-radius:20px;font-size:.76rem;font-weight:700;text-decoration:none;margin-top:14px">'+n.btnLbl+' →</a>':'';
-  popup.style.background='var(--bg2)';
-  popup.style.borderColor=brd;
-  popup.innerHTML='<button class="fest-close" onclick="closeFestPopup()">✕</button>'
-    +'<div style="font-size:2.8rem;margin-bottom:10px;text-align:center">'+n.icon+'</div>'
-    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:'+col+';font-weight:700;margin-bottom:8px;text-align:center">'+n.cat.toUpperCase()+'</div>'
-    +'<p style="font-size:.92rem;color:var(--txt);line-height:1.7;font-weight:500;text-align:center">'+n.msg+'</p>'
-    +btnHtml
-    +'<p style="font-size:.58rem;color:var(--mt2);text-align:center;margin-top:12px">— '+D.settings.company+' परिवार</p>';
-  popup.classList.add('show');
-}
-function closeFestPopup(){
-  const p=document.getElementById('fest-pop-el');if(p)p.classList.remove('show');
-}
-let _nfBg='gold';
-function selNfBg(bg){
-  _nfBg=bg;
-  document.getElementById('nf-bg').value=bg;
-  ['gold','red','green','blue','purple'].forEach(function(b){
-    const el=document.getElementById('nbg-'+b);
-    if(el)el.classList.toggle('on',b===bg);
-  });
-}
-function renderNoticeAdmin(){
-  const now=new Date();
-  const list=document.getElementById('notice-list');
-  const cnt=document.getElementById('notice-count');
-  if(!list)return;
-  if(cnt)cnt.textContent=(D.notices||[]).length+' total';
-  if(!(D.notices||[]).length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No notices yet. Add your first one above!</p>';return;}
-  list.innerHTML=[...(D.notices||[])].reverse().map(function(n){
-    const now2=new Date();
-    const from=n.from?new Date(n.from):null;
-    const to=n.to?new Date(n.to):null;
-    const active=(!from||from<=now2)&&(!to||to>=now2);
-    const upcoming=from&&from>now2;
-    const expired=to&&to<now2;
-    const statusClass=active?'nc-on':upcoming?'nc-soon':'nc-off';
-    const statusTxt=active?'● Live':upcoming?'⏳ Upcoming':'✕ Expired';
-    return '<div class="nc">'
-      +'<span class="nc-status '+statusClass+'">'+statusTxt+'</span>'
-      +'<div style="font-size:1.4rem;margin-bottom:6px">'+n.icon+'</div>'
-      +'<div style="font-size:.84rem;font-weight:600;color:var(--txt);margin-bottom:6px;padding-right:80px">'+n.msg+'</div>'
-      +'<div style="font-size:.62rem;color:#5a5a6a;margin-bottom:10px">'
-      +(n.from?'📅 From: '+new Date(n.from).toLocaleString():'No start limit')
-      +' &nbsp;→&nbsp; '
-      +(n.to?'Until: '+new Date(n.to).toLocaleString():'No end limit')
-      +'</div>'
-      +'<div style="display:flex;gap:8px">'
-      +'<button class="abtn" onclick="editNotice(\''+n.id+'\')">✎ Edit</button>'
-      +'<button class="dbtn" onclick="deleteNotice(\''+n.id+'\')">🗑 Delete</button>'
-      +'</div>'
-      +'</div>';
-  }).join('');
-}
-function saveNotice(){
-  const msg=(document.getElementById('nf-msg')?.value||'').trim();if(!msg){alert('Message required');return;}
-  const icon=document.getElementById('nf-ico')?.value.trim()||'📢';
-  const cat=document.getElementById('nf-cat')?.value||'announce';
-  const from=document.getElementById('nf-from')?.value||'';
-  const to=document.getElementById('nf-to')?.value||'';
-  const btnLbl=document.getElementById('nf-btn-lbl')?.value.trim()||'';
-  const btnUrl=document.getElementById('nf-btn-url')?.value.trim()||'';
-  const bg=document.getElementById('nf-bg')?.value||'gold';
-  const eid=document.getElementById('nf-eid')?.value||'';
-  if(eid){const idx=D.notices.findIndex(x=>x.id===eid);if(idx>-1)D.notices[idx]={...D.notices[idx],msg,icon,cat,from,to,btnLbl,btnUrl,bg};}
-  else{D.notices.push({id:'n'+Date.now(),msg,icon,cat,from,to,btnLbl,btnUrl,bg});}
-  save();renderNoticeAdmin();renderNoticeTicker();clearNoticeForm();showOk('notice-ok');
-}
-function clearNoticeForm(){
-  ['nf-msg','nf-ico','nf-from','nf-to','nf-btn-lbl','nf-btn-url','nf-eid'].forEach(function(id){const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('nf-cat').value='festival';
-  selNfBg('gold');
-  document.getElementById('nf-ttl').textContent='➕ Add New Notice';
-}
-function editNotice(id){
-  const n=D.notices.find(x=>x.id===id);if(!n)return;
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('nf-msg',n.msg);fld('nf-ico',n.icon);fld('nf-from',n.from);fld('nf-to',n.to);
-  fld('nf-btn-lbl',n.btnLbl);fld('nf-btn-url',n.btnUrl);fld('nf-eid',n.id);
-  document.getElementById('nf-cat').value=n.cat||'festival';
-  selNfBg(n.bg||'gold');
-  document.getElementById('nf-ttl').textContent='✎ Edit Notice';
-  document.getElementById('sec-notices').scrollTop=0;
-}
-function deleteNotice(id){if(!confirm('Delete this notice?'))return;D.notices=D.notices.filter(x=>x.id!==id);save();renderNoticeAdmin();renderNoticeTicker();}
-function switchTplCat(cat){
-  ['festival','offer','season','company','holiday'].forEach(function(c){
-    const el=document.getElementById('tpl-cat-'+c);
-    if(el)el.style.display=c===cat?'block':'none';
-    const btn=document.getElementById('tcat-'+c);
-    if(btn)btn.classList.toggle('on',c===cat);
-  });
-}
-const FEST_TPL={
-  // ─── FESTIVALS ───
-  dashain:{icon:'🎊',msg:'शुभ विजयादशमी २०८२! PRERAK Construction & Prefab Homes परिवारतर्फबाट सम्पूर्ण ग्राहक एवं शुभचिन्तकहरूमा हार्दिक मंगलमय शुभकामना! घरपरिवारमा सुख, शान्ति र समृद्धि होस्।',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
-  tihar:{icon:'🪔',msg:'🪔 शुभ तिहार! दीपावलीको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! घर–आँगन उज्यालो होस्, खुसी–समृद्धि आओस्। सबैलाई पाँच दिने उत्सवको मंगलमय शुभकामना!',cat:'festival',bg:'gold',btnLbl:'हामीलाई भेट्नुस्',btnUrl:'tel:9855069733'},
-  chhath:{icon:'🌅',msg:'🌅 छठ पूजाको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! सूर्य देवताको कृपाले आपको जीवनमा सुख, स्वास्थ्य र समृद्धि आओस्।',cat:'festival',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
-  holi:{icon:'🌈',msg:'🌈 शुभ फागु पूर्णिमा! PRERAK Construction परिवारतर्फबाट होली उत्सवको हार्दिक शुभकामना! रंग–उमंगले भरिपूर्ण यो उत्सवले तपाईंको जीवनमा खुसी ल्याओस्।',cat:'festival',bg:'purple',btnLbl:'Visit Us',btnUrl:'tel:9855069733'},
-  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Construction & Prefab Homes wishes you and your family a blessed Eid filled with joy, peace and prosperity. May Allah accept your prayers!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
-  christmas:{icon:'🎄',msg:'Merry Christmas! PRERAK Construction & Prefab Homes wishes you a joyful Christmas and a prosperous New Year. May this season bring warmth and happiness to your home!',cat:'festival',bg:'red',btnLbl:'Call Us',btnUrl:'tel:9855069733'},
-  indra:{icon:'🐘',msg:'🐘 इन्द्र जात्राको शुभ पर्वमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! यो पर्वले हाम्रो नेपाली संस्कृति र परम्पराको गौरव बढाओस्।',cat:'festival',bg:'blue',btnLbl:'सम्पर्क',btnUrl:'tel:9855069733'},
-  teej:{icon:'💃',msg:'💃 हरितालिका तीज पर्वको हार्दिक शुभकामना! PRERAK परिवारतर्फबाट सम्पूर्ण दिदीबहिनीहरूलाई हार्दिक शुभकामना! यो तीजले सुख–सौभाग्य ल्याओस्।',cat:'festival',bg:'red',btnLbl:'Call',btnUrl:'tel:9855069733'},
-  baisakh:{icon:'🌸',msg:'🌸 नयाँ वर्ष २०८३ को हार्दिक शुभकामना! PRERAK Construction & Prefab Homes परिवारतर्फबाट नयाँ वर्षमा नयाँ उमंग, नयाँ उत्साह र नयाँ सफलताको कामना! शुभ नयाँ वर्ष!',cat:'festival',bg:'gold',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
-  newyear:{icon:'🎆',msg:'Happy New Year! PRERAK Construction & Prefab Homes wishes you a year full of success, happiness and beautiful spaces. Start the new year with your dream home renovation!',cat:'festival',bg:'blue',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
-
-  // ─── OFFERS ───
-  offer10:{icon:'🔥',msg:'🔥 SPECIAL OFFER! यस महिना Interior Design सेवामा 10% छुट! PRERAK Construction & Prefab Homes को विशेष प्रस्ताव — सीमित समयका लागि मात्र। अहिले नै सम्पर्क गर्नुस्!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733?text=10% Discount ko lagi interested'},
-  offer20:{icon:'💥',msg:'💥 MEGA OFFER — 20% DISCOUNT! Gypsum Ceiling, UPVC Windows र Flooring सेवामा 20% छुट! PRERAK Construction & Prefab Homes — Limited Time Only! आज नै call गर्नुस्।',cat:'offer',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
-  freevisit:{icon:'🏠',msg:'🏠 FREE SITE VISIT! PRERAK Construction & Prefab Homes ले नि:शुल्क साइट भ्रमण र विस्तृत estimate दिँदैछ। घरमै आएर design र cost बताउँछौं — कुनै charge छैन!',cat:'offer',bg:'green',btnLbl:'Book Free Visit',btnUrl:'https://wa.me/9779855069733?text=Free site visit ko lagi book garnuhos'},
-  package:{icon:'📦',msg:'📦 COMPLETE HOME PACKAGE! Construction + Interior + Flooring + Electrical एकैपटक गराउनुस् र special bundle discount पाउनुस्! PRERAK Construction — One Stop Solution.',cat:'offer',bg:'blue',btnLbl:'Get Package',btnUrl:'tel:9855069733'},
-  monsoon:{icon:'🌧️',msg:'⚠️ Monsoon आउँदैछ! अहिले नै Waterproofing र Roofing check गराउनुस्। PRERAK Construction & Prefab Homes को professional waterproofing service — Monsoon Special Price मा!',cat:'offer',bg:'blue',btnLbl:'Book Now',btnUrl:'tel:9855069733'},
-  solar:{icon:'☀️',msg:'☀️ SOLAR SPECIAL OFFER! Solar Panel installation मा यस महिना विशेष छुट। बिजुली बिल शून्य गर्नुस्! PRERAK Construction को expert solar team — Free site assessment!',cat:'offer',bg:'gold',btnLbl:'Solar Quote',btnUrl:'https://wa.me/9779855069733?text=Solar installation ko lagi interested'},
-  interior:{icon:'🛋️',msg:'🛋️ INTERIOR DESIGN OFFER! सपनाको घर बनाउनुस् special price मा। Modular Kitchen, Wardrobe, TV Unit, Gypsum Ceiling — Complete Interior Package available! PRERAK Construction.',cat:'offer',bg:'purple',btnLbl:'See Designs',btnUrl:'tel:9855069733'},
-  urgent:{icon:'⚡',msg:'⚡ LAST CHANCE! यो offer आज मात्र! PRERAK Construction को special construction package अब limited slots मात्र बाँकी। अहिले नै book गर्नुस् — पछि पछुताउनुपर्छ!',cat:'offer',bg:'red',btnLbl:'Book NOW',btnUrl:'https://wa.me/9779855069733?text=Urgent booking'},
-
-  // ─── SEASONS ───
-  winter:{icon:'❄️',msg:'❄️ जाडो आयो! PRERAK Construction & Prefab Homes को सल्लाह: Windows insulation, UPVC doors र heating system check गराउनुस्। जाडोमा गर्म रहनुस् — हामी सेवामा छौं!',cat:'announce',bg:'blue',btnLbl:'Enquire',btnUrl:'tel:9855069733'},
-  summer:{icon:'🌞',msg:'🌞 गर्मी बढ्दैछ! UPVC windows र proper insulation ले घरलाई cool राख्छ। PRERAK Construction & Prefab Homes को expert team — Summer maintenance service available!',cat:'announce',bg:'gold',btnLbl:'Contact',btnUrl:'tel:9855069733'},
-  rainy:{icon:'⛈️',msg:'⛈️ वर्षा सुरु! PRERAK को Waterproofing service ले आफ्नो घर बचाउनुस्। Roof leakage, damp walls, seepage — सबै problem को expert solution। अहिले नै call!',cat:'announce',bg:'blue',btnLbl:'Emergency Call',btnUrl:'tel:9855069733'},
-  spring:{icon:'🌺',msg:'🌺 वसन्त ऋतु! घर renew गर्ने perfect time। Painting, polishing, renovation — PRERAK Construction को complete home refresh package। नयाँ मौसम, नयाँ घर!',cat:'announce',bg:'green',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
-
-  // ─── COMPANY ───
-  anniversary:{icon:'🎂',msg:'🎂 PRERAK Construction & Prefab Homes को स्थापना दिवसको अवसरमा सबै ग्राहक एवं शुभचिन्तकहरूलाई हार्दिक धन्यवाद! तपाईंहरूको विश्वास र सहयोगले हामी यहाँसम्म पुग्न सफल भयौं।',cat:'announce',bg:'gold',btnLbl:'Celebrate With Us',btnUrl:'tel:9855069733'},
-  thankyou:{icon:'🙏',msg:'🙏 हाम्रा प्रिय ग्राहकहरूलाई हार्दिक धन्यवाद! PRERAK Construction & Prefab Homes सँग काम गर्नुभएकोमा कृतज्ञ छौं। तपाईंको विश्वास नै हाम्रो सबैभन्दा ठूलो पुरस्कार हो।',cat:'announce',bg:'blue',btnLbl:'Rate Us',btnUrl:'https://wa.me/9779855069733?text=PRERAK ko service review'},
-  newservice:{icon:'🆕',msg:'🆕 नयाँ सेवा सुरु! PRERAK Construction & Prefab Homes ले अब Prefab House Construction सेवा सुरु गरेको छ। छिटो, सस्तो र टिकाउ — थप जानकारीका लागि सम्पर्क गर्नुस्!',cat:'announce',bg:'green',btnLbl:'Learn More',btnUrl:'tel:9855069733'},
-  award:{icon:'🏆',msg:'🏆 उपलब्धि! PRERAK Construction & Prefab Homes लाई Makwanpur District को Best Construction Company award प्राप्त भएको छ। यो सफलता हाम्रा ग्राहकहरूको विश्वासको कारण हो। धन्यवाद!',cat:'announce',bg:'gold',btnLbl:'Congratulate',btnUrl:'https://wa.me/9779855069733'},
-  project:{icon:'🏗️',msg:'🏗️ Project सम्पन्न! PRERAK Construction & Prefab Homes ले Hetauda मा एउटा residential project सफलतापूर्वक complete गर्यो। Quality र timeline — दुवैमा 100%! धन्यवाद client जी।',cat:'announce',bg:'blue',btnLbl:'See Portfolio',btnUrl:'tel:9855069733'},
-  referral:{icon:'👥',msg:'👥 REFER & EARN! आफ्ना साथीभाइलाई PRERAK Construction refer गर्नुस् र हरेक successful project मा special reward पाउनुस्! Details जान्न WhatsApp गर्नुस्।',cat:'announce',bg:'purple',btnLbl:'Refer Now',btnUrl:'https://wa.me/9779855069733?text=Referral program ko barema'},
-
-  // ─── HOLIDAY ───
-  closedholiday:{icon:'🔒',msg:'🔒 NOTICE: PRERAK Construction & Prefab Homes को office आज बन्द छ। [Festival] को अवसरमा बिदा। भोलिदेखि सामान्य रूपमा सेवा उपलब्ध हुनेछ। Emergency: 9855069733',cat:'holiday',bg:'red',btnLbl:'Emergency',btnUrl:'tel:9855069733'},
-  halfday:{icon:'🕐',msg:'🕐 NOTICE: आज PRERAK Construction & Prefab Homes को office दिउँसो 1 बजेसम्म मात्र खुला रहनेछ। असुविधाको लागि माफ गर्नुहोला। भोलिदेखि सामान्य समय।',cat:'holiday',bg:'gold',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
-  emergency:{icon:'🚨',msg:'🚨 IMPORTANT NOTICE: PRERAK Construction & Prefab Homes का सबै ग्राहकहरूलाई जरुरी सूचना। कृपया थप जानकारीका लागि तुरुन्त सम्पर्क गर्नुहोला। 📞 9855069733',cat:'announce',bg:'red',btnLbl:'URGENT CALL',btnUrl:'tel:9855069733'},
-  resume:{icon:'✅',msg:'✅ PRERAK Construction & Prefab Homes फेरि सेवामा! बिदाको अवधिपछि हामी पुन: सम्पूर्ण सेवाका साथ उपलब्ध छौं। आजैदेखि appointment लिनुस् — टिम तयार छ!',cat:'announce',bg:'green',btnLbl:'Book Now',btnUrl:'tel:9855069733'}
-};
-function loadFestTemplate(key){
-  const t=FEST_TPL[key];if(!t)return;
-  document.getElementById('nf-msg').value=t.msg;
-  document.getElementById('nf-ico').value=t.icon;
-  document.getElementById('nf-cat').value=t.cat;
-  if(t.btnLbl)document.getElementById('nf-btn-lbl').value=t.btnLbl;
-  if(t.btnUrl)document.getElementById('nf-btn-url').value=t.btnUrl;
-  selNfBg(t.bg);
-  const now=new Date(),end=new Date(now);end.setDate(end.getDate()+7);
-  const fmt=d=>d.toISOString().slice(0,16);
-  document.getElementById('nf-from').value=fmt(now);
-  document.getElementById('nf-to').value=fmt(end);
-  showBSDate('nf-from','nf-from-bs');showBSDate('nf-to','nf-to-bs');
-  // Scroll to form
-  document.getElementById('sec-notices').scrollTop=0;
-}
-
-// ═══ PRICING ADMIN ═══
-function renderPricingAdmin(){
-  const list=document.getElementById('pricing-list');if(!list)return;
-  if(!D.pricing||!D.pricing.length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No pricing plans yet.</p>';return;}
-  list.innerHTML=D.pricing.map(function(p){
-    return '<div class="nc"'+(p.highlight?' style="border-color:rgba(201,147,58,.4);background:rgba(201,147,58,.04)"':'')+'>'
-      +(p.highlight?'<span class="nc-status nc-on">★ Popular</span>':'')
-      +'<div style="font-size:.95rem;font-weight:700;color:var(--txt);margin-bottom:4px">'+p.name+'</div>'
-      +'<div style="font-size:1.2rem;font-weight:700;color:var(--a);margin-bottom:8px">'+p.price+'<span style="font-size:.7rem;color:var(--mt);margin-left:4px">'+p.unit+'</span></div>'
-      +'<div style="font-size:.7rem;color:#8a8a9a;margin-bottom:10px">'+p.features.length+' features · Button: "'+p.cta+'"</div>'
-      +'<div style="display:flex;gap:8px">'
-      +'<button class="abtn" onclick="editPricing(\''+p.id+'\')">✎ Edit</button>'
-      +'<button class="dbtn" onclick="deletePricing(\''+p.id+'\')">🗑 Delete</button>'
-      +'</div></div>';
-  }).join('');
-}
-function savePricing(){
-  const name=document.getElementById('pf-name')?.value.trim();if(!name){alert('Plan name required');return;}
-  const icon=document.getElementById('pf-icon')?.value.trim()||'💎';
-  const sub=document.getElementById('pf-sub')?.value.trim()||'';
-  const price=document.getElementById('pf-price')?.value.trim()||'';
-  const unit=document.getElementById('pf-unit')?.value.trim()||'/sq ft';
-  const featText=document.getElementById('pf-features')?.value||'';
-  const features=featText.split('\n').map(l=>l.trim()).filter(Boolean);
-  const cta=document.getElementById('pf-cta')?.value.trim()||'Get Quote';
-  const highlight=document.getElementById('pf-highlight')?.checked||false;
-  const eid=document.getElementById('pf-eid')?.value||'';
-  if(highlight){D.pricing.forEach(p=>p.highlight=false);}
-  if(eid){const idx=D.pricing.findIndex(x=>x.id===eid);if(idx>-1)D.pricing[idx]={...D.pricing[idx],icon,name,sub,price,unit,features,cta,highlight};}
-  else{D.pricing.push({id:'p'+Date.now(),icon,name,sub,price,unit,features,cta,highlight});}
-  save();renderSite();renderPricingAdmin();clearPricingForm();showOk('pricing-ok');
-}
-function clearPricingForm(){
-  ['pf-name','pf-sub','pf-price','pf-unit','pf-features','pf-cta','pf-eid'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const ic=document.getElementById('pf-icon');if(ic)ic.value='💎';
-  const cb=document.getElementById('pf-highlight');if(cb)cb.checked=false;
-  const cta=document.getElementById('pf-cta');if(cta)cta.value='Get Quote';
-  document.getElementById('pf-ttl').textContent='➕ Add New Plan';
-}
-function editPricing(id){
-  const p=D.pricing.find(x=>x.id===id);if(!p)return;
-  document.getElementById('pf-icon').value=p.icon||'💎';
-  document.getElementById('pf-name').value=p.name;
-  document.getElementById('pf-sub').value=p.sub||'';
-  document.getElementById('pf-price').value=p.price;
-  document.getElementById('pf-unit').value=p.unit;
-  document.getElementById('pf-features').value=p.features.join('\n');
-  document.getElementById('pf-cta').value=p.cta;
-  document.getElementById('pf-highlight').checked=p.highlight||false;
-  document.getElementById('pf-eid').value=p.id;
-  document.getElementById('pf-ttl').textContent='✎ Edit Plan';
-  document.getElementById('sec-pricing').scrollTop=0;
-}
-function deletePricing(id){if(!confirm('Delete this plan?'))return;D.pricing=D.pricing.filter(x=>x.id!==id);save();renderSite();renderPricingAdmin();}
-
-// ═══ FAQ ADMIN ═══
-function renderFAQAdmin(){
-  const list=document.getElementById('faq-list');if(!list)return;
-  if(!D.faqs||!D.faqs.length){list.innerHTML='<p style="color:#5a5a6a;font-size:.8rem;text-align:center;padding:20px">No FAQs yet.</p>';return;}
-  list.innerHTML=D.faqs.map(function(f){
-    return '<div class="nc">'
-      +'<div style="font-size:.85rem;font-weight:700;color:var(--txt);margin-bottom:6px">❓ '+f.q+'</div>'
-      +'<div style="font-size:.75rem;color:var(--mt);line-height:1.6;margin-bottom:10px">'+f.a+'</div>'
-      +'<div style="display:flex;gap:8px">'
-      +'<button class="abtn" onclick="editFAQ(\''+f.id+'\')">✎ Edit</button>'
-      +'<button class="dbtn" onclick="deleteFAQ(\''+f.id+'\')">🗑 Delete</button>'
-      +'</div></div>';
-  }).join('');
-}
-function saveFAQ(){
-  const q=document.getElementById('qf-q')?.value.trim();if(!q){alert('Question required');return;}
-  const a=document.getElementById('qf-a')?.value.trim();if(!a){alert('Answer required');return;}
-  const eid=document.getElementById('qf-eid')?.value||'';
-  if(eid){const idx=D.faqs.findIndex(x=>x.id===eid);if(idx>-1)D.faqs[idx]={id:eid,q,a};}
-  else{D.faqs.push({id:'q'+Date.now(),q,a});}
-  save();renderSite();renderFAQAdmin();clearFAQForm();showOk('faq-ok');
-}
-function clearFAQForm(){
-  ['qf-q','qf-a','qf-eid'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  document.getElementById('qf-ttl').textContent='➕ Add New FAQ';
-}
-function editFAQ(id){
-  const f=D.faqs.find(x=>x.id===id);if(!f)return;
-  document.getElementById('qf-q').value=f.q;
-  document.getElementById('qf-a').value=f.a;
-  document.getElementById('qf-eid').value=f.id;
-  document.getElementById('qf-ttl').textContent='✎ Edit FAQ';
-  document.getElementById('sec-faq').scrollTop=0;
-}
-function deleteFAQ(id){if(!confirm('Delete this FAQ?'))return;D.faqs=D.faqs.filter(x=>x.id!==id);save();renderSite();renderFAQAdmin();}
-
-// ═══ CALENDAR ADMIN ═══
-function renderCalAdmin(){
-  const list=document.getElementById('cal-admin-list');if(!list)return;
-  if(!D.calServices)D.calServices=NP_MONTHS_NE.map(function(_,i){return Object.assign({},getCalSvc(i));});
-  list.innerHTML=D.calServices.map(function(s,i){
-    return '<div class="apc" style="margin-bottom:12px">'
-      +'<div class="apc-hdr"><h3>'+s.icon+' '+NP_MONTHS_NE[i]+' <span style="font-size:.65rem;color:#8a8a9a;font-family:var(--fb)">'+NP_MONTHS_EN[i]+' · '+NP_MONTH_EN_MAP[i]+'</span></h3></div>'
-      +'<div class="afr">'
-      +'<div class="afg" style="flex:0 0 70px"><label>Icon</label><input type="text" id="csi-'+i+'" value="'+s.icon+'" maxlength="4" style="font-size:1.4rem;text-align:center"></div>'
-      +'<div class="afg" style="flex:1"><label>नेपाली सेवा सुझाव</label><input type="text" id="csn-'+i+'" value="'+s.ne+'"></div>'
-      +'</div>'
-      +'<div class="afr">'
-      +'<div class="afg" style="flex:1"><label>English Service Name</label><input type="text" id="cse-'+i+'" value="'+s.en+'"></div>'
-      +'<div class="afg" style="flex:1"><label>Tip / Best For</label><input type="text" id="cst-'+i+'" value="'+s.tip+'"></div>'
-      +'</div>'
-      +'</div>';
-  }).join('');
-}
-function saveCalServices(){
-  if(!D.calServices)D.calServices=[];
-  for(let i=0;i<12;i++){
-    D.calServices[i]={
-      icon:document.getElementById('csi-'+i)?.value||getCalSvc(i).icon,
-      ne:document.getElementById('csn-'+i)?.value||getCalSvc(i).ne,
-      en:document.getElementById('cse-'+i)?.value||getCalSvc(i).en,
-      tip:document.getElementById('cst-'+i)?.value||getCalSvc(i).tip
-    };
-  }
-  save();showOk('cal-svc-ok');
-}
-
-function setCardAccent(color){
-  D.card.accent=color;save();updateVCPreview();
-}
-function renderSocialAdmin(){
-  const S=D.settings;
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('sm-facebook',S.facebook||'');
-  fld('sm-instagram',S.instagram||'');
-  fld('sm-tiktok',S.tiktok||'');
-  smPreview('facebook');smPreview('instagram');smPreview('tiktok');
-}
-function smPreview(platform){
-  const map={facebook:{input:'sm-facebook',preview:'fb-preview',status:'fb-status',col:'#1877f2'},instagram:{input:'sm-instagram',preview:'ig-preview',status:'ig-status',col:'#e1306c'},tiktok:{input:'sm-tiktok',preview:'tt-preview',status:'tt-status',col:'#69c9d0'}};
-  const m=map[platform];if(!m)return;
-  const val=(document.getElementById(m.input)?.value||'').trim();
-  const prev=document.getElementById(m.preview);
-  const stat=document.getElementById(m.status);
-  if(val&&val.startsWith('http')){
-    if(prev){prev.href=val;prev.textContent='🔗 '+val.substring(0,50)+(val.length>50?'…':'');prev.style.display='block';}
-    if(stat){stat.textContent='✅ Set';stat.style.background='rgba(34,197,94,.12)';stat.style.color='#22c55e';stat.style.border='1px solid rgba(34,197,94,.25)';}
-  } else {
-    if(prev)prev.style.display='none';
-    if(stat){stat.textContent=val?'⚠️ Invalid URL':'— Not set';stat.style.background='rgba(255,255,255,.05)';stat.style.color='#5a5a6a';stat.style.border='1px solid rgba(255,255,255,.07)';}
-  }
-}
-function saveSocial(){
-  D.settings.facebook=(document.getElementById('sm-facebook')?.value||'').trim();
-  D.settings.instagram=(document.getElementById('sm-instagram')?.value||'').trim();
-  D.settings.tiktok=(document.getElementById('sm-tiktok')?.value||'').trim();
-  // sync to contact fields too
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v;};
-  fld('c-facebook',D.settings.facebook);fld('c-instagram',D.settings.instagram);fld('c-tiktok',D.settings.tiktok);
-  save();renderSite();renderSocialFloat();showOk('social-ok');
-}
-
-function renderVCAdmin(){
-  const C=D.card;
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('vc-name',C.name);fld('vc-desg',C.desg);
-  fld('vc-cname',C.cname);fld('vc-csub',C.csub);fld('vc-est',C.est);
-  fld('vc-tag',C.tagline);fld('vc-web',C.web);fld('vc-web2',C.web);
-  fld('vc-ph1',C.ph1);fld('vc-ph2',C.ph2);
-  fld('vc-email',C.email);fld('vc-addr',C.addr);
-  fld('vc-services-txt',D.services.slice(0,5).map(s=>s.name).join(', '));
-  const lp=document.getElementById('vc-logo-prev');
-  if(lp)lp.innerHTML=C.logo
-    ?`<img src="${C.logo}" style="width:100%;height:100%;object-fit:contain;border-radius:8px">`
-    :`<div style="text-align:center;color:#5a5a6a;font-size:.72rem;padding:10px">No logo<br>using house icon</div>`;
-  ['dark','corporate','saffron'].forEach(x=>{
-    const card=document.getElementById('vcs-'+x);
-    const chk=document.getElementById('vcs-'+x+'-check');
-    if(card)card.style.borderColor=x===C.style?'#c9933a':'rgba(255,255,255,.1)';
-    if(chk)chk.style.display=x===C.style?'block':'none';
-  });
-  updateVCPreview();
-}
-function _vcColors(t){
-  const isDark=t==='dark',isCorp=t==='corporate';
-  return{
-    accent:isDark?'#c9933a':isCorp?'#1a3a6e':'#f97316',
-    frontBg:isDark?'linear-gradient(135deg,#0f0f14 0%,#1a1a22 60%,#0f0f14 100%)':isCorp?'linear-gradient(135deg,#ffffff,#f4f6fa)':'linear-gradient(135deg,#180b00,#2a1200,#180b00)',
-    backBg:isDark?'linear-gradient(135deg,#07070a,#111118)':isCorp?'linear-gradient(135deg,#1a3a6e,#0f2347)':'linear-gradient(135deg,#f97316,#c2410c)',
-    txtC:isDark?'#f0ede8':isCorp?'#111827':'#fff8f0',
-    subC:isDark?'#8a8a9a':isCorp?'#6b7280':'rgba(255,248,240,.65)',
-    logoStroke:isCorp?'#fff':isDark?'#07070a':'#0d0500'
-  };
-}
-function _buildCardData(){
-  const C=D.card;
-  return{
-    name:document.getElementById('vc-name')?.value||C.name,
-    desg:document.getElementById('vc-desg')?.value||C.desg,
-    cname:document.getElementById('vc-cname')?.value||C.cname,
-    csub:document.getElementById('vc-csub')?.value||C.csub,
-    est:document.getElementById('vc-est')?.value||C.est,
-    ph1:document.getElementById('vc-ph1')?.value||C.ph1,
-    ph2:document.getElementById('vc-ph2')?.value||C.ph2,
-    email:document.getElementById('vc-email')?.value||C.email,
-    addr:document.getElementById('vc-addr')?.value||C.addr,
-    tagline:document.getElementById('vc-tag')?.value||C.tagline,
-    web:document.getElementById('vc-web2')?.value||document.getElementById('vc-web')?.value||C.web,
-    logo:C.logo,style:C.style||'dark'
-  };
-}
-function updateVCPreview(){
-  const pf=document.getElementById('vc-prev-front');
-  const pb=document.getElementById('vc-prev-back');
-  if(pf)_renderVCFront(pf);
-  if(pb)_renderVCBack(pb);
-}
-function _renderVCFront(el){
-  const cd=_buildCardData();const t=cd.style;const c=_vcColors(t);
-  const logoHtml=cd.logo
-    ?`<div style="width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#fff;border:2px solid ${c.accent}33;display:flex;align-items:center;justify-content:center"><img src="${cd.logo}" style="width:90%;height:90%;object-fit:contain"></div>`
-    :`<div style="width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,${c.accent}cc,${c.accent});display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="${c.logoStroke}" stroke-width="2.5" style="width:18px;height:18px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>`;
-  el.innerHTML=`<div style="background:${c.frontBg};height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:14px 16px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,transparent,${c.accent},transparent)"></div>
-      <div style="position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;border:1px solid ${c.accent}18"></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1">
-        <div style="display:flex;align-items:center;gap:9px">${logoHtml}<div><div style="font-family:var(--fd);font-size:.9rem;font-weight:700;letter-spacing:3px;color:${c.txtC};line-height:1">${cd.cname}</div><div style="font-size:.4rem;letter-spacing:1.5px;color:${c.subC};text-transform:uppercase;margin-top:1px">${cd.csub}</div></div></div>
-        <div style="font-size:.38rem;color:${c.accent};border:1px solid ${c.accent}55;padding:2px 8px;border-radius:10px;letter-spacing:1px;white-space:nowrap">${cd.est}</div>
-      </div>
-      <div style="text-align:center;position:relative;z-index:1">
-        <div style="font-family:var(--fd);font-size:1.2rem;font-weight:700;color:${c.txtC};line-height:1.1;margin-bottom:3px">${cd.name}</div>
-        <div style="font-size:.48rem;letter-spacing:2.5px;text-transform:uppercase;color:${c.accent};font-weight:600">${cd.desg}</div>
-        <div style="display:flex;align-items:center;gap:5px;justify-content:center;margin:5px 0"><div style="height:1px;width:22px;background:${c.accent}44"></div><div style="font-size:.38rem;color:${c.accent}66">✦</div><div style="height:1px;width:22px;background:${c.accent}44"></div></div>
-      </div>
-      <div style="position:relative;z-index:1">
-        ${cd.ph1?`<div style="font-size:.44rem;color:${c.subC};margin-bottom:2px;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;background:${c.accent};border-radius:50%;flex-shrink:0"></span>📞 ${cd.ph1}${cd.ph2?' · '+cd.ph2:''}</div>`:''}
-        ${cd.email?`<div style="font-size:.42rem;color:${c.subC};margin-bottom:2px;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;background:${c.accent};border-radius:50%;flex-shrink:0"></span>✉ ${cd.email}</div>`:''}
-        ${cd.addr?`<div style="font-size:.42rem;color:${c.subC};display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;background:${c.accent};border-radius:50%;flex-shrink:0"></span>📍 ${cd.addr}</div>`:''}
-      </div>
-    </div>`;
-}
-function _renderVCBack(el){
-  const cd=_buildCardData();const t=cd.style;const c=_vcColors(t);
-  const svcTxt=(document.getElementById('vc-services-txt')?.value||D.services.slice(0,5).map(s=>s.name).join(', '));
-  const svcs=svcTxt.split(',').map(s=>s.trim()).filter(Boolean);
-  const saffron=t==='saffron';
-  el.innerHTML=`<div style="background:${c.backBg};height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 16px;text-align:center;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;border:1px solid rgba(255,255,255,.08)"></div>
-      <div style="position:absolute;bottom:-30px;left:-30px;width:80px;height:80px;border-radius:50%;border:1px solid rgba(255,255,255,.08)"></div>
-      ${cd.logo?`<div style="width:40px;height:40px;border-radius:8px;background:#fff;margin-bottom:7px;overflow:hidden;display:flex;align-items:center;justify-content:center"><img src="${cd.logo}" style="width:90%;height:90%;object-fit:contain"></div>`:''}
-      <div style="font-family:var(--fd);font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:4px;margin-bottom:1px">${cd.cname}</div>
-      <div style="font-size:.4rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px">${cd.csub}</div>
-      <div style="font-style:italic;font-size:.48rem;color:rgba(255,255,255,.72);max-width:230px;line-height:1.65;margin-bottom:8px">"${cd.tagline}"</div>
-      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:8px">${svcs.map(s=>`<span style="font-size:.38rem;font-weight:700;border:1px solid rgba(255,255,255,.2);padding:2px 7px;border-radius:10px;color:${saffron?'rgba(0,0,0,.7)':'rgba(255,255,255,.7)'}">${s}</span>`).join('')}</div>
-      <div style="font-size:.42rem;color:rgba(255,255,255,.4);letter-spacing:1px;border-top:1px solid rgba(255,255,255,.1);padding-top:7px;width:80%">${cd.web}</div>
-    </div>`;
-}
-function liveVCUpdate(){updateVCPreview();}
-
-function saveVC(){
-  const g=id=>document.getElementById(id)?.value.trim();
-  const C=D.card;
-  C.name=g('vc-name')||C.name;C.desg=g('vc-desg')||C.desg;
-  C.cname=g('vc-cname')||C.cname;C.csub=g('vc-csub')||C.csub;C.est=g('vc-est')||C.est;
-  C.tagline=g('vc-tag')||C.tagline;C.web=g('vc-web')||C.web;
-  C.ph1=g('vc-ph1')||C.ph1;C.ph2=g('vc-ph2')||C.ph2;
-  C.email=g('vc-email')||C.email;C.addr=g('vc-addr')||C.addr;
-  save();renderSite();showOk('vc-ok');
-}
-async function uploadVCLogo(input){
-  const f=input.files[0];if(!f)return;
-  const b64=await resizeImg(f,300,300,.9);
-  D.card.logo=b64;save();renderSite();renderVCAdmin();
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN DASHBOARD
-// ═══════════════════════════════════════════════
-function renderDashboard(){
-  document.getElementById('dash-stats').innerHTML=[
-    {icon:'🔧',label:'Services',val:D.services.length,c:'#c9933a'},
-    {icon:'🏗️',label:'Projects',val:D.projects.length,c:'#22c55e'},
-    {icon:'💬',label:'Testimonials',val:D.testimonials.length,c:'#3b82f6'},
-    {icon:'⭐',label:'Why Us',val:D.whyUs.length,c:'#a855f7'},
-    {icon:'💰',label:'Pricing',val:(D.pricing||[]).length,c:'#f59e0b'},
-    {icon:'❓',label:'FAQs',val:(D.faqs||[]).length,c:'#06b6d4'},
-    {icon:'📢',label:'Notices',val:(D.notices||[]).length,c:'#f97316'}
-  ].map(s=>`<div class="dash-stat"><div style="font-size:1.6rem;margin-bottom:6px">${s.icon}</div><div style="font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:${s.c};line-height:1">${s.val}</div><div style="font-size:.67rem;color:#8a8a9a;text-transform:uppercase;letter-spacing:1.5px;margin-top:3px">${s.label}</div></div>`).join('');
-  const t=D.meta.template||'dark';
-  const dashTmpl=document.getElementById('dash-tmpl');
-  if(dashTmpl)dashTmpl.textContent={dark:'🌙 Dark Luxury',corporate:'🏢 Corporate Blue',saffron:'🔥 Bold Saffron'}[t];
-  ['dark','corporate','saffron'].forEach(x=>document.getElementById('tc-'+x)?.classList.toggle('on',x===t));
-  // Notifications panel
-  renderDashNotif();
-  // Calendar mini grid
-  renderDashCal();
-}
-
-function renderDashNotif(){
-  const box=document.getElementById('dash-notif');if(!box)return;
-  const now=new Date();
-  const active=(D.notices||[]).filter(function(n){
-    const from=n.from?new Date(n.from):null;
-    const to=n.to?new Date(n.to):null;
-    return(!from||from<=now)&&(!to||to>=now);
-  });
-  const upcoming=(D.notices||[]).filter(function(n){
-    return n.from&&new Date(n.from)>now;
-  });
-  if(!active.length&&!upcoming.length){box.innerHTML='';return;}
-
-  let html='<div style="margin-bottom:14px">'
-    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'
-    +'<h3 style="font-size:.85rem;font-weight:700;color:var(--txt)">🔔 Live Notifications</h3>'
-    +'<button onclick="showSec(\'notices\')" style="font-size:.62rem;color:var(--a);background:none;border:1px solid var(--brd);border-radius:12px;padding:3px 10px;cursor:pointer">Manage →</button>'
-    +'</div>'
-    +'<div style="display:flex;flex-direction:column;gap:7px">';
-
-  active.forEach(function(n){
-    const col=NF_COLORS[n.bg||'gold'];
-    const toDate=n.to?new Date(n.to):null;
-    const toBS=toDate?adToBS(toDate):null;
-    const toStr=toBS?NP_MONTHS_NE[toBS.month]+' '+toBS.day+', '+toBS.year+' B.S.':(toDate?toDate.toLocaleDateString():'No end');
-    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid '+col+'33;border-radius:10px;border-left:3px solid '+col+'">'
-      +'<span style="font-size:1.4rem">'+n.icon+'</span>'
-      +'<div style="flex:1"><div style="font-size:.8rem;font-weight:600;color:var(--txt)">'+n.msg.substring(0,60)+(n.msg.length>60?'...':'')+'</div>'
-      +'<div style="font-size:.6rem;color:#5a5a6a;margin-top:2px">● Live until: '+toStr+'</div></div>'
-      +'<span style="font-size:.58rem;font-weight:700;padding:3px 9px;background:rgba(34,197,94,.12);color:#22c55e;border-radius:10px;white-space:nowrap">● Live</span>'
-      +'</div>';
-  });
-
-  upcoming.slice(0,2).forEach(function(n){
-    const col=NF_COLORS[n.bg||'gold'];
-    const fromDate=new Date(n.from);
-    const fromBS=adToBS(fromDate);
-    const fromStr=fromBS?NP_MONTHS_NE[fromBS.month]+' '+fromBS.day+', '+fromBS.year+' B.S.':fromDate.toLocaleDateString();
-    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;border-left:3px solid rgba(234,179,8,.4)">'
-      +'<span style="font-size:1.4rem">'+n.icon+'</span>'
-      +'<div style="flex:1"><div style="font-size:.8rem;font-weight:600;color:var(--txt)">'+n.msg.substring(0,60)+'...</div>'
-      +'<div style="font-size:.6rem;color:#5a5a6a;margin-top:2px">⏳ Starts: '+fromStr+'</div></div>'
-      +'<span style="font-size:.58rem;font-weight:700;padding:3px 9px;background:rgba(234,179,8,.1);color:#eab308;border-radius:10px;white-space:nowrap">⏳ Soon</span>'
-      +'</div>';
-  });
-
-  html+='</div></div>';
-  box.innerHTML=html;
-}
-
-function dashCalYear(d){
-  _calYear+=d;
-  const el=document.getElementById('dash-cal-yr');
-  if(el)el.textContent=_calYear;
-  renderDashCal();
-}
-function renderDashCal(){
-  const grid=document.getElementById('dash-cal-grid');if(!grid)return;
-  const todayBS=adToBS(new Date());
-  grid.innerHTML=NP_MONTHS_NE.map(function(m,i){
-    const s=getCalSvc(i);
-    const isCurrentMonth=todayBS&&todayBS.year===_calYear&&todayBS.month===i;
-    return '<div onclick="downloadCalCard('+i+')" style="background:'+(isCurrentMonth?'rgba(201,147,58,.12)':'rgba(255,255,255,.04)')+';border:1px solid '+(isCurrentMonth?'rgba(201,147,58,.4)':'rgba(255,255,255,.08)')+';border-radius:9px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor=\'#c9933a\'" onmouseout="this.style.borderColor=\''+(isCurrentMonth?'rgba(201,147,58,.4)':'rgba(255,255,255,.08)')+'\';">'
-      +'<div style="font-size:1.3rem;margin-bottom:4px">'+s.icon+'</div>'
-      +'<div style="font-size:.68rem;font-weight:700;color:'+(isCurrentMonth?'#c9933a':'#8a8a9a')+'">'+m+'</div>'
-      +'<div style="font-size:.55rem;color:#5a5a6a;margin-top:2px">'+NP_MONTHS_EN[i]+'</div>'
-      +(isCurrentMonth?'<div style="font-size:.52rem;color:#c9933a;margin-top:3px;font-weight:700">▶ Current</div>':'')
-      +'</div>';
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN FORMS POPULATE
-// ═══════════════════════════════════════════════
-function populateForms(){
-  const H=D.hero,S=D.settings;
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('h-line1',H.line1);fld('h-line2',H.line2);fld('h-line3',H.line3);
-  fld('h-eyebrow',H.eyebrow);fld('h-sub',H.sub);fld('h-btn1',H.btn1);fld('h-btn2',H.btn2);
-  const hc=document.getElementById('hero-cur');if(hc)hc.src=H.bgImg;
-  fld('h-bgurl',H.bgImg.startsWith('data:')?'(uploaded)':H.bgImg);
-  document.getElementById('stats-ed').innerHTML=H.stats.map((s,i)=>`<div class="stat-ed"><label>Stat ${i+1} Number</label><input type="text" id="hs-n${i}" value="${s.num}"><label style="margin-top:4px">Label</label><input type="text" id="hs-l${i}" value="${s.label}"></div>`).join('');
-  fld('c-ph1',S.phone1);fld('c-ph2',S.phone2);fld('c-ph3',S.phone3);
-  fld('c-wa',S.wa);fld('c-email',S.email);fld('c-addr',S.address);fld('c-hrs',S.hours);
-  fld('c-video',S.videoUrl||'');
-  fld('c-facebook',S.facebook||'');fld('c-instagram',S.instagram||'');fld('c-tiktok',S.tiktok||'');
-  // sync social media section too
-  fld('sm-facebook',S.facebook||'');fld('sm-instagram',S.instagram||'');fld('sm-tiktok',S.tiktok||'');
-  fld('s-company',S.company);fld('s-sub',S.sub);fld('s-tagline',S.tagline);
-  fld('s-email',D.adminEmail);
-  populateEmailJS();
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN HERO
-// ═══════════════════════════════════════════════
-async function uploadHeroBg(input){
-  const f=input.files[0];if(!f)return;
-  const b64=await resizeImg(f,1400,900,.85);
-  D.hero.bgImg=b64;save();
-  const hc=document.getElementById('hero-cur');if(hc)hc.src=b64;
-  document.getElementById('h-bgurl').value='(uploaded)';
-  renderSite();
-}
-function setHeroBgUrl(){const url=(document.getElementById('h-bgurl')?.value||'').trim();if(url&&url.startsWith('http')){D.hero.bgImg=url;save();const hc=document.getElementById('hero-cur');if(hc)hc.src=url;renderSite();}}
-function saveHero(){
-  const g=id=>document.getElementById(id)?.value||'';
-  D.hero.line1=g('h-line1')||D.hero.line1;D.hero.line2=g('h-line2')||D.hero.line2;D.hero.line3=g('h-line3')||D.hero.line3;
-  D.hero.eyebrow=g('h-eyebrow')||D.hero.eyebrow;D.hero.sub=g('h-sub')||D.hero.sub;
-  D.hero.btn1=g('h-btn1')||D.hero.btn1;D.hero.btn2=g('h-btn2')||D.hero.btn2;
-  D.hero.stats=D.hero.stats.map((s,i)=>({num:g('hs-n'+i)||s.num,label:g('hs-l'+i)||s.label}));
-  save();renderSite();showOk('hero-ok');
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN SERVICES
-// ═══════════════════════════════════════════════
-let _sfImg=''; // temp store for service image during edit
-let _sfGallery=[]; // temp gallery during edit
-
-function renderAdminSvc(){
-  document.getElementById('svc-list').innerHTML=D.services.map(s=>`
-    <div class="apc" id="svc-row-${s.id}">
-      <div class="apc-hdr">
-        <h3>${s.icon} ${s.name}</h3>
-        <div class="apc-acts">
-          <button class="abtn" onclick="openEditSvc('${s.id}')">✎ Edit</button>
-          <button class="dbtn" onclick="deleteSvc('${s.id}')">🗑 Delete</button>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:110px 1fr;gap:14px;align-items:start">
-        <div style="position:relative">
-          <img src="${s.img}" id="svc-thumb-${s.id}" style="width:110px;height:80px;object-fit:cover;border-radius:9px;border:1px solid rgba(255,255,255,.1);display:block" onerror="this.style.background='#1a1a2e'">
-          <label style="position:absolute;bottom:4px;left:0;right:0;background:rgba(201,147,58,.92);color:#07070a;font-size:.58rem;font-weight:700;text-align:center;padding:3px;cursor:pointer;border-radius:0 0 8px 8px;letter-spacing:.5px">
-            📷 Replace
-            <input type="file" accept="image/*" style="display:none" onchange="quickReplaceImg(this,'${s.id}')">
-          </label>
-        </div>
-        <div>
-          <p style="font-size:.78rem;color:#8a8a9a;line-height:1.65;margin-bottom:8px">${s.desc.substring(0,120)}…</p>
-          <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px">${s.tags.map(t=>`<span style="background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);color:#c9933a;font-size:.58rem;padding:2px 8px;border-radius:10px">${t}</span>`).join('')}</div>
-          <div style="font-size:.65rem;color:#c9933a;font-weight:600">🖼️ Gallery: ${(s.gallery||[]).length} images</div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-async function quickReplaceImg(input,svcId){
-  const f=input.files[0];if(!f)return;
-  const b64=await resizeImg(f,900,600,.82);
-  const s=D.services.find(x=>x.id===svcId);
-  if(s){s.img=b64;save();renderSite();}
-  const thumb=document.getElementById('svc-thumb-'+svcId);
-  if(thumb)thumb.src=b64;
-}
-function openAddSvc(){
-  _sfImg='';_sfGallery=[];
-  document.getElementById('svc-form-ttl').textContent='Add New Service';
-  ['sf-icon','sf-name','sf-desc','sf-tags','sf-feats','sf-imgurl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const ic=document.getElementById('sf-imgc');if(ic)ic.src='';
-  document.getElementById('sf-eid').value='';
-  renderSfGal();
-  document.getElementById('svc-form').classList.add('open');
-  document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
-}
-function openEditSvc(id){
-  const s=D.services.find(x=>x.id===id);if(!s)return;
-  _sfImg=s.img;_sfGallery=JSON.parse(JSON.stringify(s.gallery||[]));
-  document.getElementById('svc-form-ttl').textContent='Edit — '+s.name;
-  document.getElementById('sf-icon').value=s.icon;
-  document.getElementById('sf-name').value=s.name;
-  document.getElementById('sf-desc').value=s.desc;
-  document.getElementById('sf-tags').value=s.tags.join(', ');
-  document.getElementById('sf-feats').value=s.features.join('\n');
-  const ic=document.getElementById('sf-imgc');if(ic)ic.src=s.img;
-  document.getElementById('sf-imgurl').value=s.img.startsWith('data:')?'(uploaded image)':s.img;
-  document.getElementById('sf-eid').value=id;
-  renderSfGal();
-  document.getElementById('svc-form').classList.add('open');
-  document.getElementById('svc-form').scrollIntoView({behavior:'smooth'});
-}
-function renderSfGal(){
-  const grid=document.getElementById('sf-gal-grid');
-  const cnt=document.getElementById('sf-gal-count');
-  if(!grid)return;
-  if(cnt)cnt.textContent=_sfGallery.length;
-  if(!_sfGallery.length){
-    grid.innerHTML='<div style="grid-column:span 4;text-align:center;padding:16px;color:#5a5a6a;font-size:.72rem;border:1px dashed rgba(255,255,255,.07);border-radius:8px">No gallery images — add photos below</div>';
-    return;
-  }
-  grid.innerHTML=_sfGallery.map(function(g,i){
-    return '<div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">'
-      +'<img src="'+g.src+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.background=\'#1a1a2e\'">'
-      +'<button onclick="rmSfGal('+i+')" style="position:absolute;top:3px;right:3px;width:20px;height:20px;background:rgba(239,68,68,.92);border:none;border-radius:50%;color:#fff;font-size:.6rem;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center">✕</button>'
-    +'</div>';
-  }).join('');
-}
-function rmSfGal(i){_sfGallery.splice(i,1);renderSfGal();}
-async function addSvcGallery(input){
-  for(const f of Array.from(input.files)){
-    if(!f.type.startsWith('image/'))continue;
-    const b64=await resizeImg(f,800,600,.82);
-    _sfGallery.push({type:'image',src:b64,cap:f.name.replace(/\.[^.]+$/,'')});
-  }
-  renderSfGal();input.value='';
-}
-function addSvcGalUrl(){
-  const url=(document.getElementById('sf-gal-url')?.value||'').trim();
-  if(!url||!url.startsWith('http')){alert('Valid URL required');return;}
-  _sfGallery.push({type:'image',src:url,cap:''});
-  document.getElementById('sf-gal-url').value='';
-  renderSfGal();
-}
-function closeSvcForm(){document.getElementById('svc-form').classList.remove('open');}
-async function uploadSvcImg(input){
-  const f=input.files[0];if(!f)return;
-  const b64=await resizeImg(f,900,600,.82);
-  _sfImg=b64;
-  const ic=document.getElementById('sf-imgc');if(ic)ic.src=b64;
-  document.getElementById('sf-imgurl').value='✅ Image uploaded';
-}
-function setSvcImgUrl(){
-  const url=(document.getElementById('sf-imgurl')?.value||'').trim();
-  if(url&&url.startsWith('http')){
-    _sfImg=url;
-    const ic=document.getElementById('sf-imgc');if(ic)ic.src=url;
-  }
-}
-function saveSvc(){
-  const icon=document.getElementById('sf-icon').value.trim()||'🔧';
-  const name=document.getElementById('sf-name').value.trim();if(!name){alert('Service name required');return;}
-  const desc=document.getElementById('sf-desc').value.trim();
-  const tags=document.getElementById('sf-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const feats=document.getElementById('sf-feats').value.split('\n').map(f=>f.trim()).filter(Boolean);
-  const img=_sfImg||document.getElementById('sf-imgc')?.src||'';
-  const eid=document.getElementById('sf-eid').value;
-  if(eid){const idx=D.services.findIndex(x=>x.id===eid);if(idx>-1)D.services[idx]={...D.services[idx],icon,name,desc,tags,features:feats,img,gallery:_sfGallery};}
-  else{const id='s'+Date.now();D.services.push({id,icon,name,desc,tags,img,gallery:_sfGallery,features:feats});UPM[id]=[];}
-  _sfImg='';_sfGallery=[];
-  save();renderSite();renderAdminSvc();closeSvcForm();
-}
-function deleteSvc(id){if(!confirm('Delete this service?'))return;D.services=D.services.filter(s=>s.id!==id);delete UPM[id];save();renderSite();renderAdminSvc();}
-
-// ═══════════════════════════════════════════════
-// ADMIN PROJECTS
-// ═══════════════════════════════════════════════
-function renderAdminProj(){
-  document.getElementById('proj-count').textContent=D.projects.length;
-  document.getElementById('proj-gal').innerHTML=D.projects.map(p=>`
-    <div style="background:#0f0f18;border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;position:relative">
-      <div style="position:relative;aspect-ratio:4/3;overflow:hidden">
-        <img src="${p.img}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.background='#1a1a2e'">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:8px;gap:5px">
-          <span style="background:rgba(201,147,58,.9);color:#07070a;font-size:.55rem;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content">${p.tag}</span>
-          <div style="font-size:.72rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.title}</div>
-        </div>
-        <button onclick="delProj('${p.id}')" style="position:absolute;top:6px;right:6px;width:24px;height:24px;background:rgba(239,68,68,.9);border:none;border-radius:50%;color:#fff;font-size:.65rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700">✕</button>
-      </div>
-      <div style="padding:10px;display:flex;flex-direction:column;gap:6px">
-        <input type="text" value="${p.title}" placeholder="Title" onchange="editProj('${p.id}','title',this.value)" style="width:100%;padding:6px 9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#f0ede8;font-family:'Plus Jakarta Sans',sans-serif;font-size:.75rem;outline:none">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
-          <input type="text" value="${p.tag}" placeholder="Tag" onchange="editProj('${p.id}','tag',this.value)" style="padding:5px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#c9933a;font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;outline:none">
-          <input type="text" value="${p.sub}" placeholder="Location" onchange="editProj('${p.id}','sub',this.value)" style="padding:5px 8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:7px;color:#8a8a9a;font-family:'Plus Jakarta Sans',sans-serif;font-size:.72rem;outline:none">
-        </div>
-        <label style="display:flex;align-items:center;justify-content:center;gap:5px;padding:6px;background:rgba(201,147,58,.08);border:1px solid rgba(201,147,58,.2);border-radius:7px;cursor:pointer;font-size:.68rem;color:#c9933a;font-weight:700">
-          🖼️ Replace Image
-          <input type="file" accept="image/*" style="display:none" onchange="replaceProj(this,'${p.id}')">
-        </label>
-      </div>
-    </div>`).join('');
-}
-async function uploadProjects(input){
-  const tag=document.getElementById('pf-tag')?.value||'Project';
-  const title=document.getElementById('pf-title')?.value||'';
-  const sub=document.getElementById('pf-sub')?.value||'Makwanpur';
-  for(const f of Array.from(input.files)){
-    if(!f.type.startsWith('image/'))continue;
-    const b64=await resizeImg(f,1200,800,.82);
-    D.projects.push({id:'p'+Date.now()+(Math.random()*9999|0),img:b64,tag,title:title||f.name.replace(/\.[^.]+$/,''),sub});
-  }
-  save();renderSite();renderAdminProj();input.value='';
-}
-async function replaceProj(input,id){
-  const f=input.files[0];if(!f)return;
-  const b64=await resizeImg(f,1200,800,.82);
-  const p=D.projects.find(x=>x.id===id);
-  if(p){p.img=b64;save();renderSite();renderAdminProj();}
-}
-function editProj(id,field,val){
-  const p=D.projects.find(x=>x.id===id);
-  if(p){p[field]=val;save();renderSite();}
-}
-function delProj(id){if(!confirm('Delete this project?'))return;D.projects=D.projects.filter(p=>p.id!==id);save();renderSite();renderAdminProj();}
-function editProjTitle(id,val){editProj(id,'title',val);}
-
-// ═══════════════════════════════════════════════
-// ADMIN TESTIMONIALS
-// ═══════════════════════════════════════════════
-function renderAdminTest(){
-  document.getElementById('test-list').innerHTML=D.testimonials.map(t=>`
-    <div class="apc">
-      <div class="apc-hdr"><h3>${t.init} ${t.name} <span style="font-size:.7rem;color:#c9933a">${'★'.repeat(t.stars||5)}</span></h3><div class="apc-acts"><button class="abtn" onclick="openEditTest('${t.id}')">✎ Edit</button><button class="dbtn" onclick="deleteTest('${t.id}')">🗑</button></div></div>
-      <p style="font-size:.79rem;color:#8a8a9a;font-style:italic">"${t.text.substring(0,110)}…"</p>
-      <p style="font-size:.71rem;color:#5a5a6a;margin-top:4px">— ${t.loc}</p>
-    </div>`).join('');
-}
-function openAddTest(){document.getElementById('test-form-ttl').textContent='Add Testimonial';['tf-text','tf-name','tf-loc','tf-init'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('tf-eid').value='';document.getElementById('test-form').classList.add('open');}
-function openEditTest(id){const t=D.testimonials.find(x=>x.id===id);if(!t)return;document.getElementById('test-form-ttl').textContent='Edit Testimonial';document.getElementById('tf-text').value=t.text;document.getElementById('tf-name').value=t.name;document.getElementById('tf-loc').value=t.loc;document.getElementById('tf-init').value=t.init;document.getElementById('tf-stars').value=t.stars||5;document.getElementById('tf-eid').value=id;document.getElementById('test-form').classList.add('open');}
-function closeTestForm(){document.getElementById('test-form').classList.remove('open');}
-function saveTest(){
-  const text=document.getElementById('tf-text').value.trim();if(!text){alert('Review text required');return;}
-  const name=document.getElementById('tf-name').value.trim()||'Client';
-  const loc=document.getElementById('tf-loc').value.trim()||'Hetauda';
-  const init=document.getElementById('tf-init').value.trim()||name[0];
-  const stars=+document.getElementById('tf-stars').value||5;
-  const eid=document.getElementById('tf-eid').value;
-  if(eid){const idx=D.testimonials.findIndex(x=>x.id===eid);if(idx>-1)D.testimonials[idx]={...D.testimonials[idx],text,name,loc,init,stars};}
-  else D.testimonials.push({id:'t'+Date.now(),text,name,loc,init,stars});
-  save();renderSite();renderAdminTest();closeTestForm();
-}
-function deleteTest(id){if(!confirm('Delete this testimonial?'))return;D.testimonials=D.testimonials.filter(t=>t.id!==id);save();renderSite();renderAdminTest();}
-
-// ═══════════════════════════════════════════════
-// ADMIN WHY US
-// ═══════════════════════════════════════════════
-function renderAdminWhy(){
-  document.getElementById('why-list').innerHTML=D.whyUs.map(w=>`
-    <div class="apc">
-      <div class="apc-hdr"><h3>${w.icon} ${w.title}</h3><div class="apc-acts"><button class="abtn" onclick="openEditWhy('${w.id}')">✎ Edit</button><button class="dbtn" onclick="deleteWhy('${w.id}')">🗑</button></div></div>
-      <p style="font-size:.79rem;color:#8a8a9a">${w.desc}</p>
-    </div>`).join('');
-}
-function openAddWhy(){document.getElementById('why-form-ttl').textContent='Add Point';['wf-icon','wf-title','wf-desc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('wf-eid').value='';document.getElementById('why-form').classList.add('open');}
-function openEditWhy(id){const w=D.whyUs.find(x=>x.id===id);if(!w)return;document.getElementById('why-form-ttl').textContent='Edit Point';document.getElementById('wf-icon').value=w.icon;document.getElementById('wf-title').value=w.title;document.getElementById('wf-desc').value=w.desc;document.getElementById('wf-eid').value=id;document.getElementById('why-form').classList.add('open');}
-function closeWhyForm(){document.getElementById('why-form').classList.remove('open');}
-function saveWhy(){
-  const icon=document.getElementById('wf-icon').value.trim()||'⭐';
-  const title=document.getElementById('wf-title').value.trim();if(!title){alert('Title required');return;}
-  const desc=document.getElementById('wf-desc').value.trim();
-  const eid=document.getElementById('wf-eid').value;
-  if(eid){const idx=D.whyUs.findIndex(x=>x.id===eid);if(idx>-1)D.whyUs[idx]={...D.whyUs[idx],icon,title,desc};}
-  else D.whyUs.push({id:'w'+Date.now(),icon,title,desc});
-  save();renderSite();renderAdminWhy();closeWhyForm();
-}
-function deleteWhy(id){if(!confirm('Delete this point?'))return;D.whyUs=D.whyUs.filter(w=>w.id!==id);save();renderSite();renderAdminWhy();}
-
-// ═══════════════════════════════════════════════
-// ADMIN CONTACT
-// ═══════════════════════════════════════════════
-function saveContact(){
-  const g=id=>document.getElementById(id)?.value.trim();
-  D.settings.phone1=g('c-ph1')||D.settings.phone1;D.settings.phone2=g('c-ph2')||D.settings.phone2;
-  D.settings.phone3=g('c-ph3')||D.settings.phone3;D.settings.wa=g('c-wa')||D.settings.wa;
-  D.settings.email=g('c-email')||D.settings.email;D.settings.address=g('c-addr')||D.settings.address;
-  D.settings.hours=g('c-hrs')||D.settings.hours;
-  D.settings.videoUrl=document.getElementById('c-video')?.value.trim()||'';
-  D.settings.facebook=document.getElementById('c-facebook')?.value.trim()||'';
-  D.settings.instagram=document.getElementById('c-instagram')?.value.trim()||'';
-  D.settings.tiktok=document.getElementById('c-tiktok')?.value.trim()||'';
-  save();renderSite();renderSocialFloat();showOk('contact-ok');
-}
-
-// ═══════════════════════════════════════════════
-// ADMIN SETTINGS
-// ═══════════════════════════════════════════════
-function saveSettings(){
-  const g=id=>document.getElementById(id)?.value.trim();
-  D.settings.company=g('s-company')||D.settings.company;
-  D.settings.sub=g('s-sub')||D.settings.sub;
-  D.settings.tagline=g('s-tagline')||D.settings.tagline;
-  const newEmail=g('s-email');
-  if(newEmail&&newEmail.includes('@'))D.adminEmail=newEmail;
-  const p1=g('s-pass1'),p2=g('s-pass2'),err=document.getElementById('s-perr');
-  if(p1||p2){if(p1!==p2){err.textContent='Passwords do not match!';err.style.display='block';return;}if(p1.length<6){err.textContent='Min 6 characters required.';err.style.display='block';return;}D.settings.adminPass=p1;err.style.display='none';document.getElementById('s-pass1').value='';document.getElementById('s-pass2').value='';}
-  save();renderSite();showOk('settings-ok');
-  document.getElementById('ld-name').textContent=D.settings.company;
-}
-function saveEmailJS(){
-  const s=document.getElementById('ejs-service')?.value.trim();
-  const t=document.getElementById('ejs-template')?.value.trim();
-  const k=document.getElementById('ejs-key')?.value.trim();
-  if(s)D.settings.ejsService=s;
-  if(t)D.settings.ejsTemplate=t;
-  if(k)D.settings.ejsKey=k;
-  save();showOk('ejs-ok');
-  // Update the _sendOTPEmail constants
-  window._ejsService=D.settings.ejsService||'';
-  window._ejsTemplate=D.settings.ejsTemplate||'';
-  window._ejsKey=D.settings.ejsKey||'';
-}
-async function testEmailJS(){
-  const email=D.adminEmail||D.settings.email;
-  const testOtp='TEST'+Math.floor(1000+Math.random()*9000);
-  await _sendOTPEmail(email,testOtp);
-}
-function populateEmailJS(){
-  const fld=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  fld('ejs-service',D.settings.ejsService||'');
-  fld('ejs-template',D.settings.ejsTemplate||'');
-  fld('ejs-key',D.settings.ejsKey||'');
-}
-function exportData(){const blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='prerak-backup-'+Date.now()+'.json';a.click();}
-function resetData(){D=JSON.parse(JSON.stringify(DEF));save();renderSite();populateForms();renderDashboard();showSec('dashboard');alert('✅ Reset to factory defaults!');}
-
-// ═══ DASHBOARD PIN CHANGE ═══
-function toggleCurPass(){
-  const el=document.getElementById('cur-pass-display');
-  const btn=document.getElementById('cur-pass-eye');
-  if(!el)return;
-  const showing=el.textContent===D.settings.adminPass;
-  el.textContent=showing?'••••••••':D.settings.adminPass;
-  if(btn)btn.innerHTML=showing?'👁️ View':'🙈 Hide';
-}
-function dpToggle(inputId,btnId){
-  const inp=document.getElementById(inputId);
-  const btn=document.getElementById(btnId);
-  if(!inp)return;
-  inp.type=inp.type==='password'?'text':'password';
-  if(btn)btn.textContent=inp.type==='password'?'👁️':'🙈';
-}
-function dpStrength(val){
-  const bar=document.getElementById('dp-fill');
-  const hint=document.getElementById('dp-hint');
-  if(!bar||!hint)return;
-  const len=val.length;
-  const hasUpper=/[A-Z]/.test(val);
-  const hasNum=/[0-9]/.test(val);
-  const hasSpec=/[^a-zA-Z0-9]/.test(val);
-  let score=0;
-  if(len>=6)score++;if(len>=8)score++;if(hasUpper)score++;if(hasNum)score++;if(hasSpec)score++;
-  const levels=[
-    {w:'0%',c:'transparent',t:''},
-    {w:'20%',c:'#ef4444',t:'Too short'},
-    {w:'40%',c:'#f97316',t:'Weak'},
-    {w:'60%',c:'#eab308',t:'Fair'},
-    {w:'80%',c:'#84cc16',t:'Good'},
-    {w:'100%',c:'#22c55e',t:'Strong ✓'}
-  ];
-  const lv=levels[Math.min(score,5)];
-  bar.style.width=lv.w;bar.style.background=lv.c;
-  hint.textContent=lv.t;hint.style.color=lv.c;
-}
-function dpMsg(txt,ok){
-  const el=document.getElementById('dp-msg');if(!el)return;
-  el.style.display='block';
-  el.style.background=ok?'rgba(34,197,94,.1)':'rgba(239,68,68,.1)';
-  el.style.border='1px solid '+(ok?'rgba(34,197,94,.25)':'rgba(239,68,68,.25)');
-  el.style.color=ok?'#22c55e':'#ef4444';
-  el.textContent=txt;
-  if(ok)setTimeout(()=>{el.style.display='none';dpClear();},2500);
-}
-function dpClear(){
-  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  const bar=document.getElementById('dp-fill');if(bar){bar.style.width='0%';}
-  const hint=document.getElementById('dp-hint');if(hint)hint.textContent='';
-  const msg=document.getElementById('dp-msg');if(msg)msg.style.display='none';
-  ['dp-eye0','dp-eye1','dp-eye2'].forEach(id=>{const b=document.getElementById(id);if(b)b.textContent='👁️';});
-  ['dp-old','dp-new1','dp-new2'].forEach(id=>{const el=document.getElementById(id);if(el)el.type='password';});
-}
-function dpSave(){
-  const old=(document.getElementById('dp-old')?.value||'').trim();
-  const n1=(document.getElementById('dp-new1')?.value||'').trim();
-  const n2=(document.getElementById('dp-new2')?.value||'').trim();
-  if(!old){dpMsg('❌ Enter your current password','');return;}
-  if(old.toLowerCase()!==D.settings.adminPass.toLowerCase()){dpMsg('❌ Current password is wrong','');return;}
-  if(!n1||n1.length<6){dpMsg('❌ New password must be at least 6 characters','');return;}
-  if(n1!==n2){dpMsg('❌ Passwords do not match','');return;}
-  D.settings.adminPass=n1;save();
-  dpMsg('✅ Password updated successfully! Use new password next login.','ok');
-}
-
-// ═══════════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ═══════════════════════════════════════════════
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){closeSvcModal();closeLb();close3DCard();}
-  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){
-    e.preventDefault();
-    // Only allow shortcut if FAB is visible (URL has admin key) or already admin
-    const fab=document.getElementById('admin-fab');
-    if(fab?.classList.contains('visible')||isAdmin){
-      isAdmin?openAdminPanel():openLogin();
-    }
-  }
-  if(document.getElementById('lb').classList.contains('open')){if(e.key==='ArrowLeft')lbNav(-1);if(e.key==='ArrowRight')lbNav(1);}
-});
-
-// ═══════════════════════════════════════════════
-// 3D CARD EXPERIENCE
-// ═══════════════════════════════════════════════
-let _3dFlipped=false,_3dDrag=false,_3dRX=0,_3dRY=0,_3dSX=0,_3dSY=0,_3dPAF=null;
-
-function open3DCard(){
-  const ov=document.getElementById('card3d-ov');if(!ov)return;
-  _3dFlipped=false;_3dRX=0;_3dRY=-15;
-  const front=document.getElementById('card3d-front');
-  const back=document.getElementById('card3d-back');
-  if(front)_renderVCFront(front);
-  if(back)_renderVCBack(back);
-  const C=D.card,wa=document.getElementById('c3d-wa');
-  if(wa){const msg='📇 *'+C.cname+' '+C.csub+'*\n📞 '+C.ph1+'\n✉ '+C.email+'\n📍 '+C.addr;wa.href='https://wa.me/'+D.settings.wa+'?text='+encodeURIComponent(msg);}
-  ov.style.display='flex';document.body.classList.add('ns');
-  _start3DParticles();_update3D(true);
-  // bind events
-  const w=document.getElementById('card3d-wrap');
-  w.addEventListener('mousedown',_3dMD);w.addEventListener('touchstart',_3dTD,{passive:false});
-  window.addEventListener('mousemove',_3dMM);window.addEventListener('mouseup',_3dMU);
-  window.addEventListener('touchmove',_3dTM,{passive:false});window.addEventListener('touchend',_3dMU);
-}
-function close3DCard(){
-  const ov=document.getElementById('card3d-ov');if(!ov)return;
-  ov.style.display='none';document.body.classList.remove('ns');
-  cancelAnimationFrame(_3dPAF);_3dPAF=null;
-  const w=document.getElementById('card3d-wrap');
-  if(w){w.removeEventListener('mousedown',_3dMD);w.removeEventListener('touchstart',_3dTD);}
-  window.removeEventListener('mousemove',_3dMM);window.removeEventListener('mouseup',_3dMU);
-  window.removeEventListener('touchmove',_3dTM);window.removeEventListener('touchend',_3dMU);
-}
-function flip3DCard(){_3dFlipped=!_3dFlipped;_3dRY+=180;_update3D();}
-let _3dHolo=false,_3dAccent='#c9933a',_3dBg='#07070a';
-function _update3D(init){
-  const inner=document.getElementById('card3d-inner');
-  const shine=document.getElementById('card3d-shine');
-  const holo=document.getElementById('card3d-holo');
-  const shadow=document.getElementById('card3d-shadow');
-  if(!inner)return;
-  inner.style.transform='rotateX('+_3dRX+'deg) rotateY('+_3dRY+'deg)';
-  inner.style.transition=_3dDrag?'none':'transform .12s ease-out';
-  // dynamic shadow follows tilt
-  if(shadow){
-    const sx=Math.sin(_3dRY*Math.PI/180)*20;
-    const sy=Math.sin(_3dRX*Math.PI/180)*10;
-    shadow.style.transform='translateX('+sx+'px) translateY('+sy+'px)';
-    shadow.style.background='radial-gradient(ellipse,'+_3dAccent+'55,transparent 70%)';
-  }
-  // holographic shine layer
-  if(shine){
-    const a=(_3dRY%360)*Math.PI/180;
-    const p1=50+Math.sin(a)*40;const p2=60+Math.cos(a)*30;
-    shine.style.background='linear-gradient('+(_3dRY%360)+'deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) '+p1+'%,rgba(255,255,255,.05) '+p2+'%,rgba(255,255,255,0) 100%)';
-  }
-  // holographic rainbow layer when holo is on
-  if(holo&&_3dHolo){
-    const hue=(_3dRY*2)%360;
-    const hue2=(hue+120)%360;
-    const hue3=(hue+240)%360;
-    holo.style.background='linear-gradient('+(_3dRY%360)+'deg,hsla('+hue+'deg,100%,60%,.55) 0%,hsla('+hue2+'deg,100%,60%,.3) 50%,hsla('+hue3+'deg,100%,60%,.55) 100%)';
-    // also flash border color
-    const front=document.getElementById('card3d-front');
-    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px hsla('+hue+'deg,100%,60%,.4)';
-  } else if(holo){
-    holo.style.background='transparent';
-    const front=document.getElementById('card3d-front');
-    if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+_3dAccent+'33';
-  }
-}
-function toggle3DHolo(){
-  _3dHolo=!_3dHolo;
-  const btn=document.getElementById('holo-btn');
-  const el=document.getElementById('card3d-holo');
-  if(btn){btn.style.background=_3dHolo?'linear-gradient(90deg,#ff00ff,#00ffff)':'linear-gradient(90deg,rgba(255,0,255,.2),rgba(0,255,255,.2))';btn.textContent=_3dHolo?'🌈 ON':'🌈 Holo';}
-  _update3D();
-}
-function set3DColor(accent,bg){
-  _3dAccent=accent;_3dBg=bg;
-  // update color buttons
-  document.querySelectorAll('.card3d-color-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
-  // re-render card faces with new accent color feel
-  const front=document.getElementById('card3d-front');
-  const back=document.getElementById('card3d-back');
-  if(front)front.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 60px '+accent+'44';
-  if(back)back.style.boxShadow='0 40px 100px rgba(0,0,0,.8),0 0 40px '+accent+'33';
-  // update particle color
-  if(window._3dParticleColor)window._3dParticleColor=accent;
-  _update3D();
-}
-function _3dMD(e){_3dDrag=true;_3dSX=e.clientX;_3dSY=e.clientY;document.getElementById('card3d-inner').style.cursor='grabbing';}
-function _3dTD(e){e.preventDefault();_3dDrag=true;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;}
-function _3dMM(e){if(!_3dDrag)return;const dx=e.clientX-_3dSX,dy=e.clientY-_3dSY;_3dSX=e.clientX;_3dSY=e.clientY;_3dRY+=dx*.9;_3dRX-=dy*.5;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
-function _3dTM(e){if(!_3dDrag)return;e.preventDefault();const dx=e.touches[0].clientX-_3dSX,dy=e.touches[0].clientY-_3dSY;_3dSX=e.touches[0].clientX;_3dSY=e.touches[0].clientY;_3dRY+=dx*1.2;_3dRX-=dy*.7;_3dRX=Math.max(-55,Math.min(55,_3dRX));_update3D();}
-function _3dMU(){
-  _3dDrag=false;
-  const inner=document.getElementById('card3d-inner');if(inner)inner.style.cursor='grab';
-}
-function _start3DParticles(){
-  cancelAnimationFrame(_3dPAF);
-  const c=document.getElementById('card3d-particles');if(!c)return;
-  c.width=window.innerWidth;c.height=window.innerHeight;
-  const ctx=c.getContext('2d');
-  const pts=Array.from({length:70},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.5+.5,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,o:Math.random()*.45+.05,hue:Math.random()*360}));
-  let frame=0;
-  function draw(){
-    _3dPAF=requestAnimationFrame(draw);frame++;
-    ctx.clearRect(0,0,c.width,c.height);
-    pts.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;
-      if(p.x<0||p.x>c.width)p.vx*=-1;
-      if(p.y<0||p.y>c.height)p.vy*=-1;
-      const pulse=p.o*(0.7+Math.sin(frame*.04+p.x)*.3);
-      // if holo mode, rainbow particles
-      if(_3dHolo){
-        p.hue=(p.hue+0.5)%360;
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='hsla('+p.hue+',100%,70%,'+pulse+')';ctx.fill();
-      } else {
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='hsla(0,0%,100%,'+pulse*.35+')';ctx.fill();
-      }
-    });
-    if(!_3dDrag){_3dRY+=.2;_update3D();}
-  }
-  draw();
-}
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-document.body.classList.remove('ns');
-renderSite();
-
-// ═══════════════════════════════════════════════
-// ADMIN ACCESS — 6 ADVANCED HIDDEN UNLOCK METHODS
-// All invisible to customers. Owner-only access.
-// ═══════════════════════════════════════════════
-(function initAdminAccess(){
-  function showFAB(){document.getElementById('admin-fab')?.classList.add('visible');}
-  function unlockAdmin(reason){
-    showFAB();
-    setTimeout(function(){openLogin();},150);
-    console.log('🔓 Admin unlocked via: '+reason);
-  }
-
-  // ─── Method 1: URL param / hash ───────────────────
-  // yoursite.com?admin  OR  yoursite.com#admin  OR  ?key=prerak
-  const params=new URLSearchParams(window.location.search);
-  const hash=window.location.hash.replace('#','').toLowerCase();
-  if(params.has('admin')||params.get('key')==='prerak'||hash==='admin'){
-    showFAB();return;
-  }
-
-  // ─── Method 2: Logo 5x quick tap ──────────────────
-  let tapCount=0,tapTimer=null;
-  function handleLogoTap(e){
-    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
-    if(!logoArea)return;
-    e.preventDefault();
-    tapCount++;
-    const mk=document.querySelector('.logo-mk');
-    if(mk){
-      mk.style.transform='scale(1.25)';mk.style.boxShadow='0 0 16px rgba(201,147,58,.8)';
-      setTimeout(()=>{mk.style.transform='';mk.style.boxShadow='';},150);
-    }
-    clearTimeout(tapTimer);
-    if(tapCount>=5){tapCount=0;unlockAdmin('5x logo tap');return;}
-    tapTimer=setTimeout(()=>{tapCount=0;},4000);
-  }
-  document.addEventListener('click',handleLogoTap);
-  document.addEventListener('touchstart',handleLogoTap,{passive:false});
-
-  // ─── Method 3: Konami-style keyboard code ──────────
-  // Type "PRERAK" anywhere on page (desktop)
-  let keyBuffer='';
-  const SECRET_WORD='PRERAK';
-  document.addEventListener('keydown',function(e){
-    // Only capture if not typing in input/textarea
-    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
-    if(e.key.length===1){
-      keyBuffer+=e.key.toUpperCase();
-      if(keyBuffer.length>SECRET_WORD.length)keyBuffer=keyBuffer.slice(-SECRET_WORD.length);
-      if(keyBuffer===SECRET_WORD){keyBuffer='';unlockAdmin('keyboard PRERAK');}
-    }
-  });
-
-  // ─── Method 4: Long-press logo (2 seconds) ─────────
-  // Mobile-friendly: press & hold the logo
-  let pressTimer=null;
-  function startLongPress(e){
-    const logoArea=e.target.closest('.nav-logo,.logo-mk,.logo-txt,.ln,.ls');
-    if(!logoArea)return;
-    const mk=document.querySelector('.logo-mk');
-    pressTimer=setTimeout(function(){
-      if(mk){mk.style.background='rgba(201,147,58,.9)';setTimeout(()=>{mk.style.background='';},300);}
-      unlockAdmin('2s long press');
-    },2000);
-  }
-  function endLongPress(){clearTimeout(pressTimer);}
-  document.addEventListener('mousedown',startLongPress);
-  document.addEventListener('mouseup',endLongPress);
-  document.addEventListener('mouseleave',endLongPress);
-  document.addEventListener('touchstart',startLongPress,{passive:true});
-  document.addEventListener('touchend',endLongPress);
-
-  // ─── Method 5: Triple-click footer copyright ───────
-  // Click © footer text 3 times quickly
-  let footTaps=0,footTimer=null;
-  document.addEventListener('click',function(e){
-    const foot=e.target.closest('.site-footer,.footer-bottom,.copyright,footer');
-    if(!foot)return;
-    // Only trigger on actual text in footer bottom
-    const txt=foot.textContent||'';
-    if(!txt.includes('©')&&!txt.toLowerCase().includes('prerak'))return;
-    footTaps++;
-    clearTimeout(footTimer);
-    if(footTaps>=3){footTaps=0;unlockAdmin('3x footer click');return;}
-    footTimer=setTimeout(()=>{footTaps=0;},2500);
-  });
-
-  // ─── Method 6: Konami arrow sequence ───────────────
-  // ↑↑↓↓←→←→ then Enter (classic cheat code)
-  const KONAMI=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','Enter'];
-  let konamiIdx=0;
-  document.addEventListener('keydown',function(e){
-    if(e.key===KONAMI[konamiIdx]){
-      konamiIdx++;
-      if(konamiIdx===KONAMI.length){konamiIdx=0;unlockAdmin('Konami code');}
-    } else konamiIdx=0;
-  });
-
-  // ─── Method 7: Swipe pattern (Z shape) on mobile ───
-  // Draw Z shape on screen: right → diagonal-left → right
-  let swipeStart=null,swipePoints=[];
-  document.addEventListener('touchstart',function(e){
-    if(e.touches.length===1)swipeStart={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
-    swipePoints=[];
-  },{passive:true});
-  document.addEventListener('touchmove',function(e){
-    if(!swipeStart||e.touches.length!==1)return;
-    swipePoints.push({x:e.touches[0].clientX,y:e.touches[0].clientY});
-  },{passive:true});
-  document.addEventListener('touchend',function(e){
-    if(!swipeStart||swipePoints.length<8){swipeStart=null;return;}
-    const dur=Date.now()-swipeStart.t;
-    if(dur>3000||dur<400){swipeStart=null;return;}
-    // Analyze: need right-stroke, then down-left diagonal, then right
-    const n=swipePoints.length;
-    const q1=swipePoints[Math.floor(n*0.2)];
-    const q2=swipePoints[Math.floor(n*0.5)];
-    const q3=swipePoints[Math.floor(n*0.8)];
-    const dx1=q1.x-swipeStart.x,dx2=q3.x-q2.x,dy2=q3.y-q2.y;
-    const dxDiag=q2.x-q1.x,dyDiag=q2.y-q1.y;
-    // Z-shape: right stroke (dx1>60), diagonal down-left (dxDiag<-40 && dyDiag>40), right stroke (dx2>40)
-    if(dx1>60 && dxDiag<-40 && dyDiag>40 && dx2>40){
-      unlockAdmin('Z-swipe gesture');
-    }
-    swipeStart=null;
-  },{passive:true});
-})();
-</script>
-</body>
-</html>
+  const cap=document.g
