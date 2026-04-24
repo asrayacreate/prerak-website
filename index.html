@@ -754,7 +754,7 @@ body.admin-mode .site-nav{top:34px;}
     <div class="otp-step active" id="login-step1">
       <div class="al-icon">🔐</div>
       <h2>Admin Login</h2>
-      <p>PRERAK Multipurpose Pvt Ltd</p>
+      <p>PRERAK Construction & Prefab Homes</p>
       <div class="al-f">
         <label>Admin Password</label>
         <div class="pass-wrap">
@@ -1470,7 +1470,7 @@ body.admin-mode .site-nav{top:34px;}
         <div class="apc-hdr"><h3>🏢 Company Identity (Front)</h3></div>
         <div class="afr">
           <div class="afg"><label>Company Name</label><input type="text" id="vc-cname" placeholder="PRERAK" oninput="liveVCUpdate()"></div>
-          <div class="afg"><label>Sub Name / Type</label><input type="text" id="vc-csub" placeholder="Multipurpose Pvt Ltd" oninput="liveVCUpdate()"></div>
+          <div class="afg"><label>Sub Name / Type</label><input type="text" id="vc-csub" placeholder="Construction & Prefab Homes" oninput="liveVCUpdate()"></div>
         </div>
         <div class="afr">
           <div class="afg"><label>Est. Badge</label><input type="text" id="vc-est" placeholder="Est. 2012" oninput="liveVCUpdate()"></div>
@@ -1487,7 +1487,7 @@ body.admin-mode .site-nav{top:34px;}
         </div>
         <div class="afr">
           <div class="afg"><label>Email</label><input type="text" id="vc-email" oninput="liveVCUpdate()"></div>
-          <div class="afg"><label>Address (short)</label><input type="text" id="vc-addr" placeholder="Hetauda-4, Makwanpur" oninput="liveVCUpdate()"></div>
+          <div class="afg"><label>Address (short)</label><input type="text" id="vc-addr" placeholder="Hetauda-2, Makwanpur" oninput="liveVCUpdate()"></div>
         </div>
       </div>
 
@@ -1584,7 +1584,7 @@ body.admin-mode .site-nav{top:34px;}
         <p style="font-size:.76rem;color:var(--mt)">Photos and videos supported</p>
       </div>
       <div class="uq" id="sm-uq"></div>
-      <div id="sm-cap" style="display:none"><label style="display:block;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-bottom:6px;font-weight:600">Caption</label><input type="text" id="sm-cap-txt" placeholder="e.g. Interior work — Hetauda-4" style="width:100%;padding:10px 13px;background:var(--ibg);border:1px solid var(--brd2);border-radius:var(--r);color:var(--txt);font-family:var(--fb);font-size:.83rem;outline:none;margin-bottom:14px;"></div>
+      <div id="sm-cap" style="display:none"><label style="display:block;font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-bottom:6px;font-weight:600">Caption</label><input type="text" id="sm-cap-txt" placeholder="e.g. Interior work — Hetauda-2" style="width:100%;padding:10px 13px;background:var(--ibg);border:1px solid var(--brd2);border-radius:var(--r);color:var(--txt);font-family:var(--fb);font-size:.83rem;outline:none;margin-bottom:14px;"></div>
       <button class="btn-a" id="sm-upbtn" onclick="submitSvcUpload()" disabled style="width:100%;justify-content:center;border:none;cursor:pointer">⬆️ Add to Gallery</button>
       <div id="sm-upst" style="display:none;text-align:center;padding:12px;font-size:.82rem;font-weight:600;border-radius:9px;margin-top:10px;"></div>
     </div>
@@ -1595,25 +1595,9 @@ body.admin-mode .site-nav{top:34px;}
 // ═══════════════════════════════════════════════
 // DEFAULT DATA
 // ═══════════════════════════════════════════════
-  const DEF={
+const DEF={
   meta:{template:'dark'},
-  settings:{
-    company:'PRERAK',
-    sub:'Construction & Prefab Homes', // नयाँ नाम
-    tagline:'Building dreams across Hetauda & Makwanpur since 2012.',
-    phone1:'9855069733',
-    phone2:'9801069733',
-    phone3:'057-590733',
-    email:'prerakconstrucion21@gmail.com',
-    address:'Kantirajpath, Hetauda-2\Makwanpur, Nepal', // नयाँ ठेगाना २ नम्बर
-    hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',
-    wa:'9779855069733',
-    adminPass:'prerak@2025',
-    facebook:'',instagram:'',tiktok:'',videoUrl:''
-  },
-  // ... बाँकी जस्ताको तस्तै
-  meta:{template:'dark'},
-  settings:{company:'PRERAK',sub:'Multipurpose Pvt Ltd',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Hetauda-4, Kantirajpath\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
+  settings:{company:'PRERAK',sub:'Construction & Prefab Homes',tagline:'Building dreams across Hetauda & Makwanpur since 2012.',phone1:'9855069733',phone2:'9801069733',phone3:'057-590733',email:'prerakconstrucion21@gmail.com',address:'Kantirajpath, Hetauda-2\nMakwanpur, Nepal',hours:'Sun–Fri: 8AM–6PM | Sat: 9AM–4PM',wa:'9779855069733',adminPass:'prerak@2025',facebook:'',instagram:'',tiktok:'',videoUrl:''},
   hero:{eyebrow:'Hetauda, Makwanpur, Nepal',line1:'Building Your',line2:'Dreams',line3:'Into Reality',sub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",btn1:'🏗️ Get Free Quote',btn2:'Explore Services →',bgImg:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1400&q=80',stats:[{num:'500+',label:'Projects Done'},{num:'10+',label:'Years Experience'},{num:'100%',label:'Satisfaction'}]},
   services:[
     {id:'s1',icon:'🏗️',name:'Construction Works',desc:'Complete construction from foundation to finishing. Residential homes, commercial buildings, RCC structures and prefab houses — all under one roof.',tags:['Residential','Commercial','RCC','Prefab'],img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80',gallery:[{type:'image',src:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80',cap:'Foundation Work'},{type:'image',src:'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80',cap:'RCC Structure'}],features:['Foundation to finishing','RCC structure design','Prefab & modular homes','Commercial buildings','Renovation & repair']},
@@ -1633,7 +1617,7 @@ body.admin-mode .site-nav{top:34px;}
   ],
   testimonials:[
     {id:'t1',text:'PRERAK ले हाम्रो घरको interior design गर्यो — बिल्कुल सपना जस्तै। Quality र time दुवैमा best!',name:'Ramesh Sharma',loc:'Hetauda-6',init:'र',stars:5},
-    {id:'t2',text:'UPVC windows and doors ko quality ekdam ramro. Rate pani fair thiyo. Strongly recommend!',name:'Sita Thapa',loc:'Hetauda-4',init:'स',stars:5},
+    {id:'t2',text:'UPVC windows and doors ko quality ekdam ramro. Rate pani fair thiyo. Strongly recommend!',name:'Sita Thapa',loc:'Hetauda-2',init:'स',stars:5},
     {id:'t3',text:'Gypsum ceiling ko kaam top level. Team professional, deadline pani meet garyo. Very happy!',name:'Bikash Adhikari',loc:'Hetauda-3',init:'ब',stars:5},
     {id:'t4',text:'Solar installation ko kaam ramro garyo. अब बिजुलीको bill नै छैन! Very professional team.',name:'Arjun Poudel',loc:'Hetauda-9',init:'अ',stars:5},
     {id:'t5',text:'मेरो पसलको interior design र ceiling PRERAK ले गर्यो। Best decision ever!',name:'Maya Gurung',loc:'Hetauda-2',init:'म',stars:5}
@@ -1647,14 +1631,14 @@ body.admin-mode .site-nav{top:34px;}
   ],
   card:{
     name:'Management Team',desg:'Director & CEO — Hetauda, Makwanpur',
-    cname:'PRERAK',csub:'Multipurpose Pvt Ltd',est:'Est. 2012',
+    cname:'PRERAK',csub:'Construction & Prefab Homes',est:'Est. 2012',
     tagline:'Building dreams across Hetauda & Makwanpur since 2012.',
     web:'www.prerakmultipurpose.com.np',
     ph1:'9855069733',ph2:'9801069733',
-    email:'prerakconstrucion21@gmail.com',addr:'Hetauda-4, Kantirajpath, Makwanpur',
+    email:'prerakconstrucion21@gmail.com',addr:'Kantirajpath, Hetauda-2, Makwanpur, Nepal',
     logo:'',style:'dark'
   },
-  adminEmail:'prerakconstrucion21@gmail.com',
+  adminEmail:'asrayacreate.ac@gmail.com',
   notices:[],
   calServices:null
 };
@@ -1871,25 +1855,16 @@ function renderSite(){
       </div>
     </div>
     <!-- Google Maps -->
-    <div style="margin-top:36px;border-radius:var(--rl);overflow:hidden;border:1px solid var(--brd2);height:280px;position:relative;">
-      <div style="position:absolute;top:12px;left:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px">📍 Find Us</div>
-      <a href="https://maps.google.com/maps?q=Hetauda+4+Kantirajpath+Makwanpur+Nepal" target="_blank" style="display:block;width:100%;height:280px;background:linear-gradient(135deg,var(--bg3),var(--bg2));border-radius:var(--r);overflow:hidden;position:relative;text-decoration:none;border:1px solid var(--brd2)" title="Open in Google Maps">
-        <!-- Map background pattern -->
-        <div style="position:absolute;inset:0;opacity:.15;background-image:repeating-linear-gradient(0deg,var(--brd2) 0,var(--brd2) 1px,transparent 0,transparent 40px),repeating-linear-gradient(90deg,var(--brd2) 0,var(--brd2) 1px,transparent 0,transparent 40px)"></div>
-        <!-- Fake roads -->
-        <div style="position:absolute;top:50%;left:0;right:0;height:3px;background:rgba(201,147,58,.3);transform:translateY(-50%)"></div>
-        <div style="position:absolute;top:0;bottom:0;left:50%;width:3px;background:rgba(201,147,58,.2);transform:translateX(-50%)"></div>
-        <div style="position:absolute;top:30%;left:0;right:0;height:2px;background:rgba(255,255,255,.06)"></div>
-        <div style="position:absolute;top:70%;left:0;right:0;height:2px;background:rgba(255,255,255,.06)"></div>
-        <!-- Pin -->
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);text-align:center">
-          <div style="font-size:2.5rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))">📍</div>
-          <div style="background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;padding:5px 14px;border-radius:20px;white-space:nowrap;margin-top:4px;box-shadow:0 4px 14px rgba(201,147,58,.4)">${S.company} — Hetauda</div>
-        </div>
-        <!-- Open maps button -->
-        <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);background:var(--a);color:var(--bg);font-size:.7rem;font-weight:700;padding:8px 20px;border-radius:20px;white-space:nowrap;display:flex;align-items:center;gap:7px;box-shadow:0 4px 14px rgba(201,147,58,.45)">
-          🗺️ Open in Google Maps →
-        </div>
+    <div style="margin-top:36px;border-radius:14px;overflow:hidden;border:1px solid var(--brd2);height:320px;position:relative;box-shadow:0 8px 28px rgba(0,0,0,.18);">
+      <div style="position:absolute;top:12px;left:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(201,147,58,.4)">📍 Find Us</div>
+      <iframe
+        src="https://www.google.com/maps?q=Kantirajpath,+Hetauda-2,+Makwanpur,+Nepal&output=embed"
+        width="100%" height="320" style="border:0;display:block;border-radius:14px;filter:grayscale(15%) contrast(1.05);"
+        allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="PRERAK Construction & Prefab Homes — Kantirajpath, Hetauda-2"></iframe>
+      <a href="https://www.google.com/maps/search/?api=1&query=Kantirajpath,+Hetauda-2,+Makwanpur,+Nepal" target="_blank" rel="noopener" style="position:absolute;bottom:14px;right:14px;z-index:2;background:var(--a);color:var(--bg);font-size:.68rem;font-weight:700;padding:8px 18px;border-radius:20px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;box-shadow:0 4px 16px rgba(201,147,58,.5)">
+        🗺️ Open in Google Maps →
       </a>
     </div>
   </section>
@@ -2987,7 +2962,7 @@ async function _sendOTPEmail(email,otp){
       await window.emailjs.send(EMAILJS_SERVICE,EMAILJS_TEMPLATE,{
         to_email:email,
         otp_code:otp,
-        company:'PRERAK Multipurpose Pvt Ltd',
+        company:'PRERAK Construction & Prefab Homes',
         expires:'5 minutes'
       });
       if(demoBox){demoBox.style.display='block';demoBox.innerHTML='<b style="color:#22c55e">✅ OTP sent to '+_maskEmail(email)+'</b><br><span style="font-size:.65rem;opacity:.7">Check your email inbox/spam</span>';}
@@ -3399,46 +3374,46 @@ function switchTplCat(cat){
 }
 const FEST_TPL={
   // ─── FESTIVALS ───
-  dashain:{icon:'🎊',msg:'शुभ विजयादशमी २०८२! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट सम्पूर्ण ग्राहक एवं शुभचिन्तकहरूमा हार्दिक मंगलमय शुभकामना! घरपरिवारमा सुख, शान्ति र समृद्धि होस्।',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
+  dashain:{icon:'🎊',msg:'शुभ विजयादशमी २०८२! PRERAK Construction & Prefab Homes परिवारतर्फबाट सम्पूर्ण ग्राहक एवं शुभचिन्तकहरूमा हार्दिक मंगलमय शुभकामना! घरपरिवारमा सुख, शान्ति र समृद्धि होस्।',cat:'festival',bg:'red',btnLbl:'सम्पर्क गर्नुस्',btnUrl:'tel:9855069733'},
   tihar:{icon:'🪔',msg:'🪔 शुभ तिहार! दीपावलीको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! घर–आँगन उज्यालो होस्, खुसी–समृद्धि आओस्। सबैलाई पाँच दिने उत्सवको मंगलमय शुभकामना!',cat:'festival',bg:'gold',btnLbl:'हामीलाई भेट्नुस्',btnUrl:'tel:9855069733'},
   chhath:{icon:'🌅',msg:'🌅 छठ पूजाको पावन अवसरमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! सूर्य देवताको कृपाले आपको जीवनमा सुख, स्वास्थ्य र समृद्धि आओस्।',cat:'festival',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
   holi:{icon:'🌈',msg:'🌈 शुभ फागु पूर्णिमा! PRERAK Multipurpose परिवारतर्फबाट होली उत्सवको हार्दिक शुभकामना! रंग–उमंगले भरिपूर्ण यो उत्सवले तपाईंको जीवनमा खुसी ल्याओस्।',cat:'festival',bg:'purple',btnLbl:'Visit Us',btnUrl:'tel:9855069733'},
-  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Multipurpose Pvt Ltd wishes you and your family a blessed Eid filled with joy, peace and prosperity. May Allah accept your prayers!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
-  christmas:{icon:'🎄',msg:'Merry Christmas! PRERAK Multipurpose Pvt Ltd wishes you a joyful Christmas and a prosperous New Year. May this season bring warmth and happiness to your home!',cat:'festival',bg:'red',btnLbl:'Call Us',btnUrl:'tel:9855069733'},
+  eid:{icon:'☪️',msg:'Eid Mubarak! PRERAK Construction & Prefab Homes wishes you and your family a blessed Eid filled with joy, peace and prosperity. May Allah accept your prayers!',cat:'festival',bg:'green',btnLbl:'Contact Us',btnUrl:'tel:9855069733'},
+  christmas:{icon:'🎄',msg:'Merry Christmas! PRERAK Construction & Prefab Homes wishes you a joyful Christmas and a prosperous New Year. May this season bring warmth and happiness to your home!',cat:'festival',bg:'red',btnLbl:'Call Us',btnUrl:'tel:9855069733'},
   indra:{icon:'🐘',msg:'🐘 इन्द्र जात्राको शुभ पर्वमा PRERAK परिवारतर्फबाट हार्दिक शुभकामना! यो पर्वले हाम्रो नेपाली संस्कृति र परम्पराको गौरव बढाओस्।',cat:'festival',bg:'blue',btnLbl:'सम्पर्क',btnUrl:'tel:9855069733'},
   teej:{icon:'💃',msg:'💃 हरितालिका तीज पर्वको हार्दिक शुभकामना! PRERAK परिवारतर्फबाट सम्पूर्ण दिदीबहिनीहरूलाई हार्दिक शुभकामना! यो तीजले सुख–सौभाग्य ल्याओस्।',cat:'festival',bg:'red',btnLbl:'Call',btnUrl:'tel:9855069733'},
-  baisakh:{icon:'🌸',msg:'🌸 नयाँ वर्ष २०८३ को हार्दिक शुभकामना! PRERAK Multipurpose Pvt Ltd परिवारतर्फबाट नयाँ वर्षमा नयाँ उमंग, नयाँ उत्साह र नयाँ सफलताको कामना! शुभ नयाँ वर्ष!',cat:'festival',bg:'gold',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
-  newyear:{icon:'🎆',msg:'Happy New Year! PRERAK Multipurpose Pvt Ltd wishes you a year full of success, happiness and beautiful spaces. Start the new year with your dream home renovation!',cat:'festival',bg:'blue',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
+  baisakh:{icon:'🌸',msg:'🌸 नयाँ वर्ष २०८३ को हार्दिक शुभकामना! PRERAK Construction & Prefab Homes परिवारतर्फबाट नयाँ वर्षमा नयाँ उमंग, नयाँ उत्साह र नयाँ सफलताको कामना! शुभ नयाँ वर्ष!',cat:'festival',bg:'gold',btnLbl:'Free Quote',btnUrl:'tel:9855069733'},
+  newyear:{icon:'🎆',msg:'Happy New Year! PRERAK Construction & Prefab Homes wishes you a year full of success, happiness and beautiful spaces. Start the new year with your dream home renovation!',cat:'festival',bg:'blue',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
 
   // ─── OFFERS ───
-  offer10:{icon:'🔥',msg:'🔥 SPECIAL OFFER! यस महिना Interior Design सेवामा 10% छुट! PRERAK Multipurpose Pvt Ltd को विशेष प्रस्ताव — सीमित समयका लागि मात्र। अहिले नै सम्पर्क गर्नुस्!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733?text=10% Discount ko lagi interested'},
-  offer20:{icon:'💥',msg:'💥 MEGA OFFER — 20% DISCOUNT! Gypsum Ceiling, UPVC Windows र Flooring सेवामा 20% छुट! PRERAK Multipurpose Pvt Ltd — Limited Time Only! आज नै call गर्नुस्।',cat:'offer',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
-  freevisit:{icon:'🏠',msg:'🏠 FREE SITE VISIT! PRERAK Multipurpose Pvt Ltd ले नि:शुल्क साइट भ्रमण र विस्तृत estimate दिँदैछ। घरमै आएर design र cost बताउँछौं — कुनै charge छैन!',cat:'offer',bg:'green',btnLbl:'Book Free Visit',btnUrl:'https://wa.me/9779855069733?text=Free site visit ko lagi book garnuhos'},
+  offer10:{icon:'🔥',msg:'🔥 SPECIAL OFFER! यस महिना Interior Design सेवामा 10% छुट! PRERAK Construction & Prefab Homes को विशेष प्रस्ताव — सीमित समयका लागि मात्र। अहिले नै सम्पर्क गर्नुस्!',cat:'offer',bg:'red',btnLbl:'WhatsApp Now',btnUrl:'https://wa.me/9779855069733?text=10% Discount ko lagi interested'},
+  offer20:{icon:'💥',msg:'💥 MEGA OFFER — 20% DISCOUNT! Gypsum Ceiling, UPVC Windows र Flooring सेवामा 20% छुट! PRERAK Construction & Prefab Homes — Limited Time Only! आज नै call गर्नुस्।',cat:'offer',bg:'red',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
+  freevisit:{icon:'🏠',msg:'🏠 FREE SITE VISIT! PRERAK Construction & Prefab Homes ले नि:शुल्क साइट भ्रमण र विस्तृत estimate दिँदैछ। घरमै आएर design र cost बताउँछौं — कुनै charge छैन!',cat:'offer',bg:'green',btnLbl:'Book Free Visit',btnUrl:'https://wa.me/9779855069733?text=Free site visit ko lagi book garnuhos'},
   package:{icon:'📦',msg:'📦 COMPLETE HOME PACKAGE! Construction + Interior + Flooring + Electrical एकैपटक गराउनुस् र special bundle discount पाउनुस्! PRERAK Multipurpose — One Stop Solution.',cat:'offer',bg:'blue',btnLbl:'Get Package',btnUrl:'tel:9855069733'},
-  monsoon:{icon:'🌧️',msg:'⚠️ Monsoon आउँदैछ! अहिले नै Waterproofing र Roofing check गराउनुस्। PRERAK Multipurpose Pvt Ltd को professional waterproofing service — Monsoon Special Price मा!',cat:'offer',bg:'blue',btnLbl:'Book Now',btnUrl:'tel:9855069733'},
+  monsoon:{icon:'🌧️',msg:'⚠️ Monsoon आउँदैछ! अहिले नै Waterproofing र Roofing check गराउनुस्। PRERAK Construction & Prefab Homes को professional waterproofing service — Monsoon Special Price मा!',cat:'offer',bg:'blue',btnLbl:'Book Now',btnUrl:'tel:9855069733'},
   solar:{icon:'☀️',msg:'☀️ SOLAR SPECIAL OFFER! Solar Panel installation मा यस महिना विशेष छुट। बिजुली बिल शून्य गर्नुस्! PRERAK Multipurpose को expert solar team — Free site assessment!',cat:'offer',bg:'gold',btnLbl:'Solar Quote',btnUrl:'https://wa.me/9779855069733?text=Solar installation ko lagi interested'},
   interior:{icon:'🛋️',msg:'🛋️ INTERIOR DESIGN OFFER! सपनाको घर बनाउनुस् special price मा। Modular Kitchen, Wardrobe, TV Unit, Gypsum Ceiling — Complete Interior Package available! PRERAK Multipurpose.',cat:'offer',bg:'purple',btnLbl:'See Designs',btnUrl:'tel:9855069733'},
   urgent:{icon:'⚡',msg:'⚡ LAST CHANCE! यो offer आज मात्र! PRERAK Multipurpose को special construction package अब limited slots मात्र बाँकी। अहिले नै book गर्नुस् — पछि पछुताउनुपर्छ!',cat:'offer',bg:'red',btnLbl:'Book NOW',btnUrl:'https://wa.me/9779855069733?text=Urgent booking'},
 
   // ─── SEASONS ───
-  winter:{icon:'❄️',msg:'❄️ जाडो आयो! PRERAK Multipurpose Pvt Ltd को सल्लाह: Windows insulation, UPVC doors र heating system check गराउनुस्। जाडोमा गर्म रहनुस् — हामी सेवामा छौं!',cat:'announce',bg:'blue',btnLbl:'Enquire',btnUrl:'tel:9855069733'},
-  summer:{icon:'🌞',msg:'🌞 गर्मी बढ्दैछ! UPVC windows र proper insulation ले घरलाई cool राख्छ। PRERAK Multipurpose Pvt Ltd को expert team — Summer maintenance service available!',cat:'announce',bg:'gold',btnLbl:'Contact',btnUrl:'tel:9855069733'},
+  winter:{icon:'❄️',msg:'❄️ जाडो आयो! PRERAK Construction & Prefab Homes को सल्लाह: Windows insulation, UPVC doors र heating system check गराउनुस्। जाडोमा गर्म रहनुस् — हामी सेवामा छौं!',cat:'announce',bg:'blue',btnLbl:'Enquire',btnUrl:'tel:9855069733'},
+  summer:{icon:'🌞',msg:'🌞 गर्मी बढ्दैछ! UPVC windows र proper insulation ले घरलाई cool राख्छ। PRERAK Construction & Prefab Homes को expert team — Summer maintenance service available!',cat:'announce',bg:'gold',btnLbl:'Contact',btnUrl:'tel:9855069733'},
   rainy:{icon:'⛈️',msg:'⛈️ वर्षा सुरु! PRERAK को Waterproofing service ले आफ्नो घर बचाउनुस्। Roof leakage, damp walls, seepage — सबै problem को expert solution। अहिले नै call!',cat:'announce',bg:'blue',btnLbl:'Emergency Call',btnUrl:'tel:9855069733'},
   spring:{icon:'🌺',msg:'🌺 वसन्त ऋतु! घर renew गर्ने perfect time। Painting, polishing, renovation — PRERAK Multipurpose को complete home refresh package। नयाँ मौसम, नयाँ घर!',cat:'announce',bg:'green',btnLbl:'Get Quote',btnUrl:'tel:9855069733'},
 
   // ─── COMPANY ───
-  anniversary:{icon:'🎂',msg:'🎂 PRERAK Multipurpose Pvt Ltd को स्थापना दिवसको अवसरमा सबै ग्राहक एवं शुभचिन्तकहरूलाई हार्दिक धन्यवाद! तपाईंहरूको विश्वास र सहयोगले हामी यहाँसम्म पुग्न सफल भयौं।',cat:'announce',bg:'gold',btnLbl:'Celebrate With Us',btnUrl:'tel:9855069733'},
-  thankyou:{icon:'🙏',msg:'🙏 हाम्रा प्रिय ग्राहकहरूलाई हार्दिक धन्यवाद! PRERAK Multipurpose Pvt Ltd सँग काम गर्नुभएकोमा कृतज्ञ छौं। तपाईंको विश्वास नै हाम्रो सबैभन्दा ठूलो पुरस्कार हो।',cat:'announce',bg:'blue',btnLbl:'Rate Us',btnUrl:'https://wa.me/9779855069733?text=PRERAK ko service review'},
-  newservice:{icon:'🆕',msg:'🆕 नयाँ सेवा सुरु! PRERAK Multipurpose Pvt Ltd ले अब Prefab House Construction सेवा सुरु गरेको छ। छिटो, सस्तो र टिकाउ — थप जानकारीका लागि सम्पर्क गर्नुस्!',cat:'announce',bg:'green',btnLbl:'Learn More',btnUrl:'tel:9855069733'},
-  award:{icon:'🏆',msg:'🏆 उपलब्धि! PRERAK Multipurpose Pvt Ltd लाई Makwanpur District को Best Construction Company award प्राप्त भएको छ। यो सफलता हाम्रा ग्राहकहरूको विश्वासको कारण हो। धन्यवाद!',cat:'announce',bg:'gold',btnLbl:'Congratulate',btnUrl:'https://wa.me/9779855069733'},
-  project:{icon:'🏗️',msg:'🏗️ Project सम्पन्न! PRERAK Multipurpose Pvt Ltd ले Hetauda मा एउटा residential project सफलतापूर्वक complete गर्यो। Quality र timeline — दुवैमा 100%! धन्यवाद client जी।',cat:'announce',bg:'blue',btnLbl:'See Portfolio',btnUrl:'tel:9855069733'},
+  anniversary:{icon:'🎂',msg:'🎂 PRERAK Construction & Prefab Homes को स्थापना दिवसको अवसरमा सबै ग्राहक एवं शुभचिन्तकहरूलाई हार्दिक धन्यवाद! तपाईंहरूको विश्वास र सहयोगले हामी यहाँसम्म पुग्न सफल भयौं।',cat:'announce',bg:'gold',btnLbl:'Celebrate With Us',btnUrl:'tel:9855069733'},
+  thankyou:{icon:'🙏',msg:'🙏 हाम्रा प्रिय ग्राहकहरूलाई हार्दिक धन्यवाद! PRERAK Construction & Prefab Homes सँग काम गर्नुभएकोमा कृतज्ञ छौं। तपाईंको विश्वास नै हाम्रो सबैभन्दा ठूलो पुरस्कार हो।',cat:'announce',bg:'blue',btnLbl:'Rate Us',btnUrl:'https://wa.me/9779855069733?text=PRERAK ko service review'},
+  newservice:{icon:'🆕',msg:'🆕 नयाँ सेवा सुरु! PRERAK Construction & Prefab Homes ले अब Prefab House Construction सेवा सुरु गरेको छ। छिटो, सस्तो र टिकाउ — थप जानकारीका लागि सम्पर्क गर्नुस्!',cat:'announce',bg:'green',btnLbl:'Learn More',btnUrl:'tel:9855069733'},
+  award:{icon:'🏆',msg:'🏆 उपलब्धि! PRERAK Construction & Prefab Homes लाई Makwanpur District को Best Construction Company award प्राप्त भएको छ। यो सफलता हाम्रा ग्राहकहरूको विश्वासको कारण हो। धन्यवाद!',cat:'announce',bg:'gold',btnLbl:'Congratulate',btnUrl:'https://wa.me/9779855069733'},
+  project:{icon:'🏗️',msg:'🏗️ Project सम्पन्न! PRERAK Construction & Prefab Homes ले Hetauda मा एउटा residential project सफलतापूर्वक complete गर्यो। Quality र timeline — दुवैमा 100%! धन्यवाद client जी।',cat:'announce',bg:'blue',btnLbl:'See Portfolio',btnUrl:'tel:9855069733'},
   referral:{icon:'👥',msg:'👥 REFER & EARN! आफ्ना साथीभाइलाई PRERAK Multipurpose refer गर्नुस् र हरेक successful project मा special reward पाउनुस्! Details जान्न WhatsApp गर्नुस्।',cat:'announce',bg:'purple',btnLbl:'Refer Now',btnUrl:'https://wa.me/9779855069733?text=Referral program ko barema'},
 
   // ─── HOLIDAY ───
-  closedholiday:{icon:'🔒',msg:'🔒 NOTICE: PRERAK Multipurpose Pvt Ltd को office आज बन्द छ। [Festival] को अवसरमा बिदा। भोलिदेखि सामान्य रूपमा सेवा उपलब्ध हुनेछ। Emergency: 9855069733',cat:'holiday',bg:'red',btnLbl:'Emergency',btnUrl:'tel:9855069733'},
-  halfday:{icon:'🕐',msg:'🕐 NOTICE: आज PRERAK Multipurpose Pvt Ltd को office दिउँसो 1 बजेसम्म मात्र खुला रहनेछ। असुविधाको लागि माफ गर्नुहोला। भोलिदेखि सामान्य समय।',cat:'holiday',bg:'gold',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
-  emergency:{icon:'🚨',msg:'🚨 IMPORTANT NOTICE: PRERAK Multipurpose Pvt Ltd का सबै ग्राहकहरूलाई जरुरी सूचना। कृपया थप जानकारीका लागि तुरुन्त सम्पर्क गर्नुहोला। 📞 9855069733',cat:'announce',bg:'red',btnLbl:'URGENT CALL',btnUrl:'tel:9855069733'},
-  resume:{icon:'✅',msg:'✅ PRERAK Multipurpose Pvt Ltd फेरि सेवामा! बिदाको अवधिपछि हामी पुन: सम्पूर्ण सेवाका साथ उपलब्ध छौं। आजैदेखि appointment लिनुस् — टिम तयार छ!',cat:'announce',bg:'green',btnLbl:'Book Now',btnUrl:'tel:9855069733'}
+  closedholiday:{icon:'🔒',msg:'🔒 NOTICE: PRERAK Construction & Prefab Homes को office आज बन्द छ। [Festival] को अवसरमा बिदा। भोलिदेखि सामान्य रूपमा सेवा उपलब्ध हुनेछ। Emergency: 9855069733',cat:'holiday',bg:'red',btnLbl:'Emergency',btnUrl:'tel:9855069733'},
+  halfday:{icon:'🕐',msg:'🕐 NOTICE: आज PRERAK Construction & Prefab Homes को office दिउँसो 1 बजेसम्म मात्र खुला रहनेछ। असुविधाको लागि माफ गर्नुहोला। भोलिदेखि सामान्य समय।',cat:'holiday',bg:'gold',btnLbl:'Call Now',btnUrl:'tel:9855069733'},
+  emergency:{icon:'🚨',msg:'🚨 IMPORTANT NOTICE: PRERAK Construction & Prefab Homes का सबै ग्राहकहरूलाई जरुरी सूचना। कृपया थप जानकारीका लागि तुरुन्त सम्पर्क गर्नुहोला। 📞 9855069733',cat:'announce',bg:'red',btnLbl:'URGENT CALL',btnUrl:'tel:9855069733'},
+  resume:{icon:'✅',msg:'✅ PRERAK Construction & Prefab Homes फेरि सेवामा! बिदाको अवधिपछि हामी पुन: सम्पूर्ण सेवाका साथ उपलब्ध छौं। आजैदेखि appointment लिनुस् — टिम तयार छ!',cat:'announce',bg:'green',btnLbl:'Book Now',btnUrl:'tel:9855069733'}
 };
 function loadFestTemplate(key){
   const t=FEST_TPL[key];if(!t)return;
