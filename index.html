@@ -887,6 +887,101 @@ body.has-nav-sc #nb-wrap{top:68px;}
 .flag-cat-count{margin-top:10px;display:inline-block;font-size:.6rem;background:rgba(255,204,77,.15);color:#ffcc4d;padding:3px 10px;border-radius:10px;font-weight:700;letter-spacing:1px;}
 .flag-cat-soon{margin-top:10px;display:inline-block;font-size:.58rem;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
 
+/* 🇳🇵 Featured Flag Card on Home */
+.flag-featured-card{position:relative;display:grid;grid-template-columns:auto 1fr;gap:30px;align-items:center;max-width:1100px;margin:30px auto;padding:36px 40px;background:linear-gradient(135deg,rgba(220,38,38,.18),rgba(0,56,147,.18));backdrop-filter:blur(24px);border:2px solid rgba(255,204,77,.4);border-radius:24px;cursor:pointer;overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.flag-featured-card:hover{transform:translateY(-6px) scale(1.01);border-color:rgba(255,204,77,.7);box-shadow:0 30px 70px rgba(220,38,38,.3),0 0 0 2px rgba(255,204,77,.5);}
+.ffc-glow{position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,204,77,.4),transparent 70%);pointer-events:none;animation:ffcGlowMove 8s ease-in-out infinite;}
+@keyframes ffcGlowMove{0%,100%{transform:translate(0,0);}50%{transform:translate(-50px,50px);}}
+.ffc-flag-vis{position:relative;flex-shrink:0;filter:drop-shadow(0 10px 30px rgba(220,38,38,.5));}
+#ffc-mini-flag{display:block;}
+.ffc-content{position:relative;z-index:1;}
+.ffc-eyebrow{display:inline-block;padding:5px 14px;background:linear-gradient(135deg,rgba(255,204,77,.25),rgba(220,38,38,.2));border:1px solid rgba(255,204,77,.5);border-radius:14px;font-size:.62rem;font-weight:800;color:#ffcc4d;letter-spacing:2.5px;margin-bottom:14px;}
+.ffc-content h2{font-family:var(--fd);font-size:2.4rem;color:#fff;font-weight:800;margin-bottom:2px;line-height:1.05;}
+.ffc-content h3{font-size:1.1rem;color:rgba(255,255,255,.85);font-weight:600;font-style:italic;margin-bottom:14px;}
+.ffc-content p{font-size:.85rem;color:rgba(255,255,255,.78);line-height:1.6;margin-bottom:18px;}
+.ffc-content p b{color:#ffcc4d;}
+.ffc-meta{display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap;}
+.ffc-meta-item{display:flex;flex-direction:column;}
+.ffc-meta-item b{font-size:.6rem;color:#ffcc4d;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:2px;}
+.ffc-meta-item span{font-size:.78rem;color:#fff;font-weight:600;}
+.ffc-cta{padding:12px 28px;background:linear-gradient(135deg,#ffcc4d,#e5a526);color:#131320;border:none;border-radius:24px;font-weight:800;font-size:.78rem;letter-spacing:.5px;cursor:pointer;box-shadow:0 8px 22px rgba(255,204,77,.4);transition:all .25s;}
+.flag-featured-card:hover .ffc-cta{transform:scale(1.05);box-shadow:0 12px 30px rgba(255,204,77,.6);}
+
+/* Flag Detail Screen Styles */
+.flag-detail-wrap{max-width:980px;margin:0 auto;padding:0 24px 60px;}
+.flag-fd-hero{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;padding:40px 30px;background:linear-gradient(135deg,rgba(220,38,38,.2),rgba(0,56,147,.2));border:1px solid rgba(255,204,77,.35);border-radius:20px;margin-bottom:30px;backdrop-filter:blur(18px);}
+.flag-fd-hero-vis{display:flex;justify-content:center;align-items:center;}
+#fd-big-flag{filter:drop-shadow(0 20px 50px rgba(220,38,38,.5));}
+.flag-fd-hero-text h1{font-family:var(--fd);font-size:2.8rem;color:#fff;margin-bottom:6px;background:linear-gradient(90deg,#ffcc4d,#ff6b6b,#ffcc4d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.flag-fd-hero-text .fd-name-en{font-size:1.4rem;color:#fff;font-weight:600;margin-bottom:14px;}
+.flag-fd-hero-text .fd-tag{font-size:.85rem;color:rgba(255,255,255,.75);line-height:1.6;font-style:italic;}
+
+.flag-fd-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:30px;}
+.flag-fd-stat-card{background:rgba(255,255,255,.06);backdrop-filter:blur(14px);border:1px solid rgba(255,204,77,.25);border-radius:14px;padding:16px;text-align:center;transition:all .3s;}
+.flag-fd-stat-card:hover{transform:translateY(-3px);border-color:rgba(255,204,77,.5);}
+.flag-fd-stat-card .lbl{font-size:.62rem;color:#ffcc4d;letter-spacing:1.5px;font-weight:700;text-transform:uppercase;margin-bottom:6px;}
+.flag-fd-stat-card .val{font-family:var(--fd);font-size:1.1rem;color:#fff;font-weight:700;line-height:1.3;}
+
+.flag-fd-section{background:rgba(255,255,255,.05);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:26px 28px;margin-bottom:18px;}
+.flag-fd-section h3{color:#ffcc4d;font-family:var(--fd);font-size:1.4rem;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.flag-fd-section h4{color:#fff;font-size:1rem;margin:18px 0 8px;font-weight:700;}
+.flag-fd-section p{color:rgba(255,255,255,.85);font-size:.88rem;line-height:1.75;margin-bottom:12px;}
+.flag-fd-section p:last-child{margin-bottom:0;}
+.flag-fd-section b{color:#ffcc4d;}
+
+/* Components grid */
+.flag-fd-components{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px;}
+.flag-fd-comp{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,204,77,.2);border-radius:14px;padding:18px;text-align:center;transition:all .3s;}
+.flag-fd-comp:hover{transform:translateY(-3px);border-color:rgba(255,204,77,.5);background:linear-gradient(135deg,rgba(255,204,77,.1),rgba(255,255,255,.02));}
+.flag-fd-comp-ic{font-size:2.2rem;margin-bottom:8px;}
+.flag-fd-comp-ttl{font-family:var(--fd);font-size:1rem;color:#fff;font-weight:700;margin-bottom:3px;}
+.flag-fd-comp-ne{font-size:.72rem;color:#ffcc4d;font-weight:600;margin-bottom:8px;}
+.flag-fd-comp-desc{font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.5;}
+
+/* Color swatches */
+.flag-fd-colors{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:14px;}
+.flag-fd-color{background:rgba(255,255,255,.05);border-radius:14px;padding:14px;text-align:center;border:1px solid rgba(255,255,255,.1);}
+.flag-fd-color-swatch{width:100%;height:80px;border-radius:10px;margin-bottom:10px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2),0 4px 14px rgba(0,0,0,.3);}
+.flag-fd-color-name{color:#fff;font-weight:700;font-size:.85rem;margin-bottom:2px;}
+.flag-fd-color-code{font-family:monospace;color:#ffcc4d;font-size:.7rem;letter-spacing:1px;margin-bottom:4px;}
+.flag-fd-color-mean{font-size:.68rem;color:rgba(255,255,255,.7);font-style:italic;}
+
+/* Timeline */
+.flag-fd-timeline{position:relative;padding-left:36px;margin-top:14px;}
+.flag-fd-timeline::before{content:'';position:absolute;left:14px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,#ffcc4d,#dc2626);}
+.flag-fd-tl-item{position:relative;padding-bottom:18px;}
+.flag-fd-tl-item::before{content:'';position:absolute;left:-29px;top:4px;width:14px;height:14px;background:#ffcc4d;border:3px solid #131320;border-radius:50%;box-shadow:0 0 0 2px #ffcc4d;}
+.flag-fd-tl-year{font-family:var(--fd);color:#ffcc4d;font-weight:800;font-size:.9rem;}
+.flag-fd-tl-event{color:#fff;font-size:.82rem;font-weight:600;margin:2px 0 4px;}
+.flag-fd-tl-desc{color:rgba(255,255,255,.7);font-size:.72rem;line-height:1.5;}
+
+/* Facts list */
+.flag-fd-facts{display:grid;gap:10px;margin-top:14px;}
+.flag-fd-fact{background:linear-gradient(90deg,rgba(255,204,77,.12),transparent);border-left:4px solid #ffcc4d;padding:14px 18px;border-radius:0 10px 10px 0;color:#fff;font-size:.85rem;line-height:1.6;transition:all .3s;}
+.flag-fd-fact:hover{background:linear-gradient(90deg,rgba(255,204,77,.22),transparent);transform:translateX(4px);}
+.flag-fd-fact b{color:#ffcc4d;}
+
+/* Did you know callout */
+.flag-fd-callout{background:linear-gradient(135deg,rgba(220,38,38,.2),rgba(255,204,77,.15));border:1.5px dashed rgba(255,204,77,.5);border-radius:16px;padding:24px;margin:20px 0;text-align:center;}
+.flag-fd-callout-ic{font-size:2.4rem;margin-bottom:10px;}
+.flag-fd-callout-ttl{color:#ffcc4d;font-family:var(--fd);font-size:1.2rem;font-weight:800;margin-bottom:8px;}
+.flag-fd-callout-txt{color:#fff;font-size:.88rem;line-height:1.6;}
+
+@media(max-width:768px){
+  .flag-featured-card{grid-template-columns:1fr;text-align:center;padding:24px 20px;gap:14px;}
+  .ffc-flag-vis{margin:0 auto;}
+  #ffc-mini-flag{max-width:200px;height:auto;}
+  .ffc-content h2{font-size:1.7rem;}
+  .ffc-content h3{font-size:.9rem;}
+  .ffc-meta{justify-content:center;gap:14px;}
+  .flag-fd-hero{grid-template-columns:1fr;text-align:center;padding:24px 18px;}
+  .flag-fd-hero-text h1{font-size:1.9rem;}
+  .flag-fd-hero-text .fd-name-en{font-size:1rem;}
+  .flag-fd-section{padding:18px;}
+  .flag-fd-section h3{font-size:1.1rem;}
+  .flag-detail-wrap{padding:0 14px 40px;}
+}
+
 /* Languages Grid */
 .flag-langs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;padding:20px 40px;max-width:1200px;margin:0 auto;}
 .flag-lang{position:relative;background:linear-gradient(135deg,rgba(0,56,147,.18),rgba(255,255,255,.04));backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px 14px 58px;transition:all .3s;cursor:default;overflow:hidden;}
@@ -1523,6 +1618,26 @@ body.has-nav-sc #nb-wrap{top:68px;}
       <div class="flag-stat-pill"><b>7</b><span>Provinces</span></div>
     </div>
 
+    <!-- 🇳🇵 FEATURED FLAG CARD -->
+    <div class="flag-featured-card" onclick="flagShowFlagDetail()">
+      <div class="ffc-glow"></div>
+      <div class="ffc-flag-vis">
+        <canvas id="ffc-mini-flag" width="280" height="350"></canvas>
+      </div>
+      <div class="ffc-content">
+        <div class="ffc-eyebrow">🌟 SPECIAL FEATURE · विशेष</div>
+        <h2>नेपालको झण्डा</h2>
+        <h3>The Flag of Nepal</h3>
+        <p>The world's <b>only non-rectangular</b> national flag — a sacred double-pennon of red, white & blue with sun and moon emblems</p>
+        <div class="ffc-meta">
+          <div class="ffc-meta-item"><b>Adopted</b><span>16 Dec 1962</span></div>
+          <div class="ffc-meta-item"><b>Designer</b><span>Shankar Nath Rimal</span></div>
+          <div class="ffc-meta-item"><b>Origin</b><span>P. N. Shah era</span></div>
+        </div>
+        <button class="ffc-cta">Explore Full History →</button>
+      </div>
+    </div>
+
     <!-- 12 Category Tiles -->
     <div class="flag-section-title">
       <h3>📂 Explore Categories · वर्गहरू</h3>
@@ -1608,6 +1723,15 @@ body.has-nav-sc #nb-wrap{top:68px;}
       <div class="flag-breadcrumb" id="flag-det-crumb">Home</div>
     </div>
     <div id="flag-detail-body"></div>
+  </div>
+
+  <!-- SCREEN: FLAG DEDICATED PAGE -->
+  <div id="flag-screen-flag" class="flag-screen">
+    <div class="flag-nav-bar">
+      <button class="flag-back-btn" onclick="flagShowHome()">← Home</button>
+      <div class="flag-breadcrumb">Home › <b>नेपालको झण्डा · Flag of Nepal</b></div>
+    </div>
+    <div id="flag-screen-flag-body"></div>
   </div>
 
   </div><!-- /flag-content-wrap -->
@@ -4026,6 +4150,7 @@ function flagShowScreen(id){
 function flagShowHome(){
   _flagNav={screen:'home',category:null,item:null};
   flagShowScreen('home');
+  setTimeout(()=>{flagDrawMiniFeatured();},200);
 }
 
 function flagRenderCategories(){
@@ -4117,6 +4242,429 @@ function flagOpenItem(catId,itemId){
 function flagBackToCategory(){
   if(_flagNav.category)flagOpenCategory(_flagNav.category);
   else flagShowHome();
+}
+
+// 🇳🇵 Flag Featured Detail Screen
+function flagShowFlagDetail(){
+  _flagNav={screen:'flag',category:null,item:null};
+  const body=document.getElementById('flag-screen-flag-body');
+  body.innerHTML=`<div class="flag-detail-wrap">
+    <!-- Hero -->
+    <div class="flag-fd-hero">
+      <div class="flag-fd-hero-vis">
+        <canvas id="fd-big-flag" width="320" height="400"></canvas>
+      </div>
+      <div class="flag-fd-hero-text">
+        <h1>नेपालको झण्डा</h1>
+        <div class="fd-name-en">The Flag of Nepal</div>
+        <div class="fd-tag">The world's only non-rectangular national flag — a sacred double-pennon that has flown for centuries, embodying Nepal's unique identity, bravery, and eternal spirit.</div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="flag-fd-stats">
+      <div class="flag-fd-stat-card"><div class="lbl">Adopted</div><div class="val">16 Dec 1962</div></div>
+      <div class="flag-fd-stat-card"><div class="lbl">Designer</div><div class="val">Shankar Nath Rimal</div></div>
+      <div class="flag-fd-stat-card"><div class="lbl">Original</div><div class="val">Prithvi N. Shah era</div></div>
+      <div class="flag-fd-stat-card"><div class="lbl">Shape</div><div class="val">Concave Pentagon</div></div>
+      <div class="flag-fd-stat-card"><div class="lbl">Type</div><div class="val">Double Pennon</div></div>
+      <div class="flag-fd-stat-card"><div class="lbl">Colors</div><div class="val">Red · White · Blue</div></div>
+    </div>
+
+    <!-- Overview -->
+    <div class="flag-fd-section">
+      <h3>📖 Overview · परिचय</h3>
+      <p>The flag of Nepal (नेपालको झण्डा · <i>Nepālko jhaṇḍā</i>) is a <b>concave pentagonal flag</b> in red, white and blue — used as both the state and civil flag of Nepal. It is the <b>only non-rectangular national flag in the world</b>.</p>
+      <p>The flag's unique shape combines two single pennants and is known as a <b>double-pennon</b>. The crimson red field represents bravery and Nepal's national flower (the rhododendron / लालीगुराँस), while the blue border symbolizes peace and harmony.</p>
+      <p>The current standardized flag was adopted on <b>16 December 1962</b>, alongside the formation of Nepal's new constitutional government. <b>Shankar Nath Rimal</b>, a civil engineer, mathematically standardized the flag at King Mahendra's request.</p>
+    </div>
+
+    <!-- The Three Main Components -->
+    <div class="flag-fd-section">
+      <h3>🎨 The Three Components · तीन मुख्य भागहरू</h3>
+      <p>The flag consists of two triangular pennons joined together, decorated with celestial emblems:</p>
+      <div class="flag-fd-components">
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">🌙</div>
+          <div class="flag-fd-comp-ttl">Crescent Moon</div>
+          <div class="flag-fd-comp-ne">अर्ध-चन्द्र</div>
+          <div class="flag-fd-comp-desc">Upper pennon — 8 visible rays of 16. Symbol of cool weather of Himalayas, calmness & purity of Nepali people</div>
+        </div>
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">☀️</div>
+          <div class="flag-fd-comp-ttl">Twelve-rayed Sun</div>
+          <div class="flag-fd-comp-ne">सूर्य</div>
+          <div class="flag-fd-comp-desc">Lower pennon — 12 rays. Symbol of heat of Terai lowlands, fierce resolve, and hard work of Nepali people</div>
+        </div>
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">🔺</div>
+          <div class="flag-fd-comp-ttl">Double Triangle</div>
+          <div class="flag-fd-comp-ne">दोहोरो त्रिकोण</div>
+          <div class="flag-fd-comp-desc">Two triangular pennons combined — represents unification of rival ruling dynasties under Prithvi Narayan Shah</div>
+        </div>
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">🟥</div>
+          <div class="flag-fd-comp-ttl">Crimson Red Field</div>
+          <div class="flag-fd-comp-ne">रातो भाग</div>
+          <div class="flag-fd-comp-desc">Bravery of Nepali people · National color · Color of रहोडोडेन्ड्रन (Rhododendron) — Nepal's national flower</div>
+        </div>
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">🟦</div>
+          <div class="flag-fd-comp-ttl">Blue Border</div>
+          <div class="flag-fd-comp-ne">निलो किनारा</div>
+          <div class="flag-fd-comp-desc">Peace and harmony · Encircles the entire flag uniformly · Sacred boundary of the nation</div>
+        </div>
+        <div class="flag-fd-comp">
+          <div class="flag-fd-comp-ic">⚪</div>
+          <div class="flag-fd-comp-ttl">White Emblems</div>
+          <div class="flag-fd-comp-ne">सेतो चिन्ह</div>
+          <div class="flag-fd-comp-desc">Sun and moon are pure white — symbols of permanence, purity, and Nepal's hope to last as long as celestial bodies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors -->
+    <div class="flag-fd-section">
+      <h3>🎨 Official Colors · आधिकारिक रंगहरू</h3>
+      <div class="flag-fd-colors">
+        <div class="flag-fd-color">
+          <div class="flag-fd-color-swatch" style="background:#DC143C;"></div>
+          <div class="flag-fd-color-name">Crimson Red</div>
+          <div class="flag-fd-color-code">#DC143C</div>
+          <div class="flag-fd-color-mean">Bravery · Rhododendron · National color</div>
+        </div>
+        <div class="flag-fd-color">
+          <div class="flag-fd-color-swatch" style="background:#003893;"></div>
+          <div class="flag-fd-color-name">Sapphire Blue</div>
+          <div class="flag-fd-color-code">#003893</div>
+          <div class="flag-fd-color-mean">Peace · Harmony · Border</div>
+        </div>
+        <div class="flag-fd-color">
+          <div class="flag-fd-color-swatch" style="background:#FFFFFF;"></div>
+          <div class="flag-fd-color-name">Pure White</div>
+          <div class="flag-fd-color-code">#FFFFFF</div>
+          <div class="flag-fd-color-mean">Sun · Moon · Purity · Permanence</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="flag-fd-section">
+      <h3>📜 History · इतिहास</h3>
+      <p>Triangular flags have flown across South Asia for millennia. Their compact shape allowed them to flutter even in the lightest wind, making them visible from great distances. Traces of triangular flags appear in <b>Hindu religious tradition</b>, where they were called "<b>dhvaja</b>" (ध्वज).</p>
+      
+      <h4>🏰 Origin in the Gorkha Kingdom</h4>
+      <p>The flag's ancestor was the war banner of the Shah kings of the Gorkha Kingdom — a single triangular pennant in red, often featuring deities and other religious symbols. After King <b>Prithvi Narayan Shah unified Nepal</b> in 1768, the double-pennon flag became the standard national flag, combining the pennants of the rival Lunar and Solar dynasties.</p>
+      
+      <h4>👑 The Rana Period</h4>
+      <p>According to some historians, Rana ruler <b>Jung Bahadur</b> changed the sun and moon symbols to include human faces — symbolizing the kings as Rajputs of the Lunar dynasty and the Ranas themselves as Rajputs of the Solar dynasty. This face-bearing version flew until 1962.</p>
+      
+      <h4>📐 1962 Standardization</h4>
+      <p>On <b>16 December 1962</b>, under the new Nepalese constitution, the flag was officially standardized. The human faces were removed from the sun and moon to modernize the flag. <b>Shankar Nath Rimal</b>, a civil engineer, established the precise mathematical construction rules — these are still detailed in the Constitution of Nepal (2015), Schedule 1.</p>
+      
+      <h4>🚫 Failed Change Attempts</h4>
+      <p>In <b>May 2008</b>, during the drafting of Nepal's new republican constitution, some political parties demanded changes to the flag, citing its association with Hinduism and the monarchy. The proposal was <b>rejected</b> — Nepal chose to keep its ancient sacred design.</p>
+    </div>
+
+    <!-- Timeline -->
+    <div class="flag-fd-section">
+      <h3>📅 Historical Timeline · ऐतिहासिक कालक्रम</h3>
+      <div class="flag-fd-timeline">
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">Ancient Times</div>
+          <div class="flag-fd-tl-event">Hindu Dhvaja Banners</div>
+          <div class="flag-fd-tl-desc">Triangular flags used across Hindu temples and ruling dynasties of South Asia</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">Pre-1768</div>
+          <div class="flag-fd-tl-event">Gorkha War Banner</div>
+          <div class="flag-fd-tl-desc">Single red triangular pennant of the Shah kings, with various deities as symbols</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">1768</div>
+          <div class="flag-fd-tl-event">Unification under P. N. Shah</div>
+          <div class="flag-fd-tl-desc">Double-pennon flag becomes standard national flag, combining Lunar & Solar dynasties</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">19th–20th C.</div>
+          <div class="flag-fd-tl-event">Rana Period Modifications</div>
+          <div class="flag-fd-tl-desc">Sun and moon modified with human faces by Jung Bahadur Rana, symbolizing royal lineage</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">1928</div>
+          <div class="flag-fd-tl-event">Documented Variants</div>
+          <div class="flag-fd-tl-desc">A French book "Nepal Vol I" (Perceval Landon) shows a double-pennant with green border instead of blue</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">16 Dec 1962</div>
+          <div class="flag-fd-tl-event">Modern Flag Adopted</div>
+          <div class="flag-fd-tl-desc">Faces removed from sun & moon. Shankar Nath Rimal mathematically standardizes the flag under King Mahendra</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">9 Nov 1990</div>
+          <div class="flag-fd-tl-event">Constitutional Geometry</div>
+          <div class="flag-fd-tl-desc">Article 5, Schedule 1 of the Constitution of the Kingdom of Nepal specifies precise geometric construction</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">May 2008</div>
+          <div class="flag-fd-tl-event">Change Proposal Rejected</div>
+          <div class="flag-fd-tl-desc">Political demand to change flag during constitution drafting was rejected — heritage preserved</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">20 Sep 2015</div>
+          <div class="flag-fd-tl-event">New Constitution</div>
+          <div class="flag-fd-tl-desc">Schedule 1 of new Constitution of Nepal continues precise flag construction specifications</div>
+        </div>
+        <div class="flag-fd-tl-item">
+          <div class="flag-fd-tl-year">Tokyo 2020 Olympics</div>
+          <div class="flag-fd-tl-event">Sole Olympic Exception</div>
+          <div class="flag-fd-tl-desc">Tokyo 2020 protocol named Nepal as the only exception to the standard 2:3 rectangular flag size — same height required</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mathematical Beauty -->
+    <div class="flag-fd-section">
+      <h3>📐 Mathematical Beauty · गणितीय सौन्दर्य</h3>
+      <p>Nepal's flag is famously called <b>"The Most Mathematical Flag in the World"</b>. The Constitution provides a precise geometric construction algorithm, making this flag unique among all national flags.</p>
+      
+      <h4>📏 The Aspect Ratio</h4>
+      <p>When constructed according to the constitutional rules, the ratio of the flag's height to its longest width is an <b>irrational number</b> — the smallest root of the quartic polynomial:</p>
+      <p style="text-align:center;font-family:monospace;background:rgba(255,255,255,.05);padding:18px;border-radius:10px;color:#ffcc4d;font-size:1rem;">
+        x⁴ + 50x² − 67 = 0<br>
+        <span style="font-size:.8rem;color:rgba(255,255,255,.7);">≈ 1.21901... (irrational)</span>
+      </p>
+      <p>The bounding rectangle of just the red field has the simpler ratio of <b>3:4</b> (1:1.333…). The blue border, added afterward, creates the irrational final ratio.</p>
+      
+      <h4>🎓 Famous Mathematical Recognition</h4>
+      <p>Mathematician <b>James Grime</b> dedicated a famous Numberphile video (2012) to Nepal's flag, calling it the most mathematical flag in the world. The flag's construction has fascinated mathematicians worldwide because it's defined entirely through compass-and-straightedge instructions, not arbitrary measurements.</p>
+    </div>
+
+    <!-- Symbolism -->
+    <div class="flag-fd-section">
+      <h3>🕉️ Deep Symbolism · गहन प्रतीकवाद</h3>
+      <p>Each element of the flag carries multiple layers of meaning:</p>
+      
+      <h4>🌙 The Crescent Moon</h4>
+      <ul style="padding-left:22px;color:rgba(255,255,255,.85);font-size:.85rem;line-height:1.8;">
+        <li>Cool weather and snow of the <b>Himalayas</b></li>
+        <li><b>Calm demeanor</b> and purity of spirit of the Nepali people</li>
+        <li>Peace (one popular interpretation)</li>
+        <li>Symbol of <b>Hinduism</b> (per CIA World Factbook interpretation)</li>
+        <li>The Royal Lunar dynasty (Chandravamshi)</li>
+      </ul>
+      
+      <h4>☀️ The Twelve-rayed Sun</h4>
+      <ul style="padding-left:22px;color:rgba(255,255,255,.85);font-size:.85rem;line-height:1.8;">
+        <li>Heat of the southern <b>Terai lowlands</b></li>
+        <li><b>Fierce resolve</b> and determination</li>
+        <li>Hard work (one popular interpretation)</li>
+        <li>Symbol of <b>Buddhism</b> (per CIA World Factbook)</li>
+        <li>The Royal Solar dynasty (Suryavamshi)</li>
+      </ul>
+      
+      <h4>♾️ Together: Sun and Moon</h4>
+      <p>The inclusion of these celestial bodies expresses Nepal's <b>permanence and longevity</b> — the hope that Nepal will endure as long as the sun and moon themselves shine in the sky.</p>
+      
+      <h4>🌹 Crimson Red</h4>
+      <p>Beyond bravery, this is Nepal's <b>national color</b>, found throughout its art, architecture, traditional clothing (especially during festivals like Teej), and cultural decorations. It mirrors the rich red of the rhododendron, Nepal's national flower.</p>
+      
+      <h4>💙 The Blue Border</h4>
+      <p>The unbroken blue border represents Nepal's commitment to <b>peace and harmony</b>, encircling and protecting the entire flag — and by extension, the nation itself.</p>
+    </div>
+
+    <!-- Did You Know -->
+    <div class="flag-fd-callout">
+      <div class="flag-fd-callout-ic">💡</div>
+      <div class="flag-fd-callout-ttl">Olympic Special Treatment</div>
+      <div class="flag-fd-callout-txt">For the <b>Tokyo 2020 Olympics</b>, Nepal's flag was the <b>only exception</b> to the standard rectangular 2:3 aspect ratio rule. All other countries' flags were uniform rectangles, but Nepal's flag flew at the same height as others while keeping its sacred non-rectangular shape.</div>
+    </div>
+
+    <!-- Amazing Facts -->
+    <div class="flag-fd-section">
+      <h3>🌟 Amazing Facts · रोचक तथ्यहरू</h3>
+      <div class="flag-fd-facts">
+        <div class="flag-fd-fact">📜 Nepal's flag is the <b>world's only non-rectangular national flag</b></div>
+        <div class="flag-fd-fact">🔢 The aspect ratio is an <b>irrational number</b> defined by a quartic polynomial</div>
+        <div class="flag-fd-fact">📐 Called <b>"The Most Mathematical Flag"</b> by mathematician James Grime (Numberphile, 2012)</div>
+        <div class="flag-fd-fact">🕉️ Inspired by <b>"Dhvaja"</b> — ancient Hindu religious banners</div>
+        <div class="flag-fd-fact">👤 Until <b>1962</b>, both the sun and moon had <b>human faces</b> on the flag</div>
+        <div class="flag-fd-fact">🏗️ Standardized by civil engineer <b>Shankar Nath Rimal</b> at King Mahendra's request</div>
+        <div class="flag-fd-fact">🏔️ Combines designs from the <b>Mustang Kingdom</b> and <b>Gorkha Kingdom</b></div>
+        <div class="flag-fd-fact">🟢 A <b>1928 French book</b> shows an earlier version with a <b>green border</b> instead of blue</div>
+        <div class="flag-fd-fact">🛡️ Two triangles represent the unification of <b>Lunar and Solar</b> royal dynasties</div>
+        <div class="flag-fd-fact">🏆 At <b>Tokyo 2020 Olympics</b>, Nepal got the <b>only exemption</b> from rectangular flag rules</div>
+        <div class="flag-fd-fact">🇮🇳 In 2018, an incorrect-shape flag flown during PM Modi's Janakpur visit caused public outrage</div>
+        <div class="flag-fd-fact">📖 Schedule 1 of the <b>Constitution of Nepal (2015)</b> details precise construction rules</div>
+        <div class="flag-fd-fact">🌸 Red color matches Nepal's national flower — <b>Rhododendron (लालीगुराँस)</b></div>
+        <div class="flag-fd-fact">⛪ Triangular pennants are still common at Hindu and Buddhist temples across Nepal</div>
+      </div>
+    </div>
+
+    <!-- Construction Rules -->
+    <div class="flag-fd-section">
+      <h3>📏 How to Construct · निर्माण विधि</h3>
+      <p>The flag must be drawn following geometric rules in the Constitution:</p>
+      <ol style="padding-left:22px;color:rgba(255,255,255,.85);font-size:.85rem;line-height:1.8;">
+        <li>Draw a horizontal line of base length (let's call it 1 unit)</li>
+        <li>Draw a vertical line on the left of length <b>4/3</b> units</li>
+        <li>Mark a point on this vertical line at <b>1 unit</b> height</li>
+        <li>Connect this point to a point at the same height on the right edge</li>
+        <li>Add a second triangular pennon below using compass arcs</li>
+        <li>The blue border is added uniformly around the resulting shape</li>
+        <li>Sun (12 rays) and moon (8 visible of 16 rays) drawn using specified circle ratios</li>
+      </ol>
+      <p style="margin-top:14px;font-size:.78rem;color:rgba(255,204,77,.85);font-style:italic;">📜 Full geometric specification: Article 5, Schedule 1, Constitution of Nepal (2015)</p>
+    </div>
+
+    <!-- Closing -->
+    <div class="flag-closing">
+      <div class="flag-closing-flag">🇳🇵</div>
+      <h3>राष्ट्रिय गौरव</h3>
+      <p style="font-size:1rem;color:rgba(255,255,255,.85);">National Pride · Eternal Symbol</p>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.55);margin-top:-10px;margin-bottom:24px;">Like the sun and moon on our flag, may Nepal endure forever 🇳🇵</p>
+      <button class="flag-cta-btn" onclick="flagShowHome()">← Back to Categories</button>
+    </div>
+  </div>`;
+  flagShowScreen('flag');
+  // Render the big flag canvas
+  setTimeout(()=>flagDrawDetailFlag(),100);
+}
+
+// Detail flag canvas drawer (big size)
+function flagDrawDetailFlag(){
+  const c=document.getElementById('fd-big-flag');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  const POLE_X=8,FW=W-POLE_X-30;
+  const MID=H*0.43,T1_TIP_Y=H*0.41,T2_TIP_Y=H*0.66;
+  let t=0;
+  const GRID=44;
+  function wOff(nx){return Math.sin(3*nx-1.5*t)*8*nx*nx;}
+  function interp(a,b,f){return a*(1-f)+b*f;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=0.04;
+    // Pole
+    const sg=ctx.createLinearGradient(0,0,POLE_X,0);
+    sg.addColorStop(0,'#888');sg.addColorStop(.5,'#ddd');sg.addColorStop(1,'#666');
+    ctx.fillStyle=sg;ctx.fillRect(0,0,POLE_X,H);
+    ctx.beginPath();ctx.arc(POLE_X/2,6,POLE_X*0.8,0,Math.PI*2);ctx.fillStyle='#ffcc4d';ctx.fill();
+    for(let i=0;i<GRID;i++){
+      const nx0=i/GRID,nx1=(i+1)/GRID;
+      const x0=POLE_X+nx0*FW,x1=POLE_X+nx1*FW;
+      const w0=wOff(nx0),w1=wOff(nx1);
+      const u_top0=interp(0,T1_TIP_Y+w0,nx0)+w0;
+      const u_top1=interp(0,T1_TIP_Y+w1,nx1)+w1;
+      const u_bot0=interp(MID,T1_TIP_Y+w0,nx0)+w0;
+      const u_bot1=interp(MID,T1_TIP_Y+w1,nx1)+w1;
+      const l_top0=interp(MID,T2_TIP_Y+w0,nx0)+w0;
+      const l_top1=interp(MID,T2_TIP_Y+w1,nx1)+w1;
+      const l_bot0=interp(H,T2_TIP_Y+w0,nx0)+w0;
+      const l_bot1=interp(H,T2_TIP_Y+w1,nx1)+w1;
+      const shade=Math.sin(3*nx0-2*t)*0.18;
+      const BW=4;
+      [[u_top0-BW,u_top1-BW,u_bot1+BW,u_bot0+BW],[l_top0-BW,l_top1-BW,l_bot1+BW,l_bot0+BW]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='white';ctx.fill();
+      });
+      const BB=2;
+      [[u_top0-BB,u_top1-BB,u_bot1+BB,u_bot0+BB],[l_top0-BB,l_top1-BB,l_bot1+BB,l_bot0+BB]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='#003893';ctx.fill();
+      });
+      const r=Math.min(255,Math.round(220+shade*40));
+      const g=Math.max(0,Math.round(20+shade*12));
+      const b2=Math.max(0,Math.round(60+shade*20));
+      [[u_top0,u_top1,u_bot1,u_bot0],[l_top0,l_top1,l_bot1,l_bot0]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='rgb('+r+','+g+','+b2+')';ctx.fill();
+      });
+    }
+    // Moon
+    const mnx=0.32,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.085;
+    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.lineCap='round';
+    for(let r=0;r<8;r++){
+      const a=r*Math.PI/4;
+      ctx.beginPath();
+      ctx.moveTo(mx+Math.cos(a)*(mr+2),my+Math.sin(a)*(mr+2));
+      ctx.lineTo(mx+Math.cos(a)*(mr+mr*0.3),my+Math.sin(a)*(mr+mr*0.3));
+      ctx.stroke();
+    }
+    // Sun (12 rays)
+    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.075;
+    ctx.strokeStyle='#fff';ctx.lineWidth=2.5;
+    for(let r=0;r<12;r++){
+      const a=r*Math.PI/6;
+      ctx.beginPath();
+      ctx.moveTo(sx+Math.cos(a)*(sr+2),sy+Math.sin(a)*(sr+2));
+      ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.55),sy+Math.sin(a)*(sr+sr*0.55));
+      ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    if(_flagNav.screen==='flag')requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// Mini flag drawer for featured card
+function flagDrawMiniFeatured(){
+  const c=document.getElementById('ffc-mini-flag');
+  if(!c)return;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;
+  const POLE_X=6,FW=W-POLE_X-25;
+  const MID=H*0.43,T1_TIP_Y=H*0.41,T2_TIP_Y=H*0.66;
+  let t=0;
+  const GRID=36;
+  function wOff(nx){return Math.sin(3*nx-1.5*t)*7*nx*nx;}
+  function interp(a,b,f){return a*(1-f)+b*f;}
+  function draw(){
+    ctx.clearRect(0,0,W,H);t+=0.035;
+    const sg=ctx.createLinearGradient(0,0,POLE_X,0);
+    sg.addColorStop(0,'#888');sg.addColorStop(.5,'#ddd');sg.addColorStop(1,'#666');
+    ctx.fillStyle=sg;ctx.fillRect(0,0,POLE_X,H);
+    ctx.beginPath();ctx.arc(POLE_X/2,5,POLE_X*0.8,0,Math.PI*2);ctx.fillStyle='#ffcc4d';ctx.fill();
+    for(let i=0;i<GRID;i++){
+      const nx0=i/GRID,nx1=(i+1)/GRID;
+      const x0=POLE_X+nx0*FW,x1=POLE_X+nx1*FW;
+      const w0=wOff(nx0),w1=wOff(nx1);
+      const u_top0=interp(0,T1_TIP_Y+w0,nx0)+w0;
+      const u_top1=interp(0,T1_TIP_Y+w1,nx1)+w1;
+      const u_bot0=interp(MID,T1_TIP_Y+w0,nx0)+w0;
+      const u_bot1=interp(MID,T1_TIP_Y+w1,nx1)+w1;
+      const l_top0=interp(MID,T2_TIP_Y+w0,nx0)+w0;
+      const l_top1=interp(MID,T2_TIP_Y+w1,nx1)+w1;
+      const l_bot0=interp(H,T2_TIP_Y+w0,nx0)+w0;
+      const l_bot1=interp(H,T2_TIP_Y+w1,nx1)+w1;
+      const shade=Math.sin(3*nx0-2*t)*0.18;
+      const BW=3;
+      [[u_top0-BW,u_top1-BW,u_bot1+BW,u_bot0+BW],[l_top0-BW,l_top1-BW,l_bot1+BW,l_bot0+BW]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='white';ctx.fill();
+      });
+      const BB=1.5;
+      [[u_top0-BB,u_top1-BB,u_bot1+BB,u_bot0+BB],[l_top0-BB,l_top1-BB,l_bot1+BB,l_bot0+BB]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='#003893';ctx.fill();
+      });
+      const r=Math.min(255,Math.round(220+shade*40));
+      const g=Math.max(0,Math.round(20+shade*12));
+      const b2=Math.max(0,Math.round(60+shade*20));
+      [[u_top0,u_top1,u_bot1,u_bot0],[l_top0,l_top1,l_bot1,l_bot0]].forEach(b=>{
+        ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle='rgb('+r+','+g+','+b2+')';ctx.fill();
+      });
+    }
+    const mnx=0.32,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.085;
+    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1.5;
+    for(let r=0;r<8;r++){const a=r*Math.PI/4;ctx.beginPath();ctx.moveTo(mx+Math.cos(a)*(mr+1.5),my+Math.sin(a)*(mr+1.5));ctx.lineTo(mx+Math.cos(a)*(mr+mr*0.3),my+Math.sin(a)*(mr+mr*0.3));ctx.stroke();}
+    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.075;
+    ctx.strokeStyle='#fff';ctx.lineWidth=2;
+    for(let r=0;r<12;r++){const a=r*Math.PI/6;ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*(sr+1.5),sy+Math.sin(a)*(sr+1.5));ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.5),sy+Math.sin(a)*(sr+sr*0.5));ctx.stroke();}
+    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    const m=document.getElementById('flag-modal');
+    if(m && m.classList.contains('open') && _flagNav.screen==='home')requestAnimationFrame(draw);
+  }
+  draw();
 }
 
 // ── Search ──
