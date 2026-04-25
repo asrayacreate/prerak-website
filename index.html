@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -722,9 +722,9 @@ body.has-nav-sc #nb-wrap{top:68px;}
 @keyframes livePulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.8)}50%{opacity:.7;transform:scale(1.3);box-shadow:0 0 0 10px rgba(255,255,255,0)}}
 .flag-title h2{font-family:var(--fd);font-size:1.4rem;color:#fff;font-weight:700;letter-spacing:-.5px;margin-bottom:2px;text-shadow:0 2px 10px rgba(0,0,0,.6);}
 .flag-title p{font-size:.7rem;color:rgba(255,255,255,.75);font-style:italic;}
-.flag-badge-date{text-align:right;background:rgba(255,204,77,.15);border:1px solid rgba(255,204,77,.4);padding:8px 16px;border-radius:12px;backdrop-filter:blur(10px);}
-#flag-np-date{color:#ffcc4d;font-size:.76rem;font-weight:700;letter-spacing:.5px;}
-#flag-time{color:rgba(255,255,255,.85);font-size:.88rem;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px;}
+.flag-badge-date{text-align:right;background:rgba(255,204,77,.15);border:1px solid rgba(255,204,77,.4);padding:8px 14px;border-radius:12px;backdrop-filter:blur(10px);min-width:180px;}
+#flag-np-date{color:#ffcc4d;font-size:.76rem;font-weight:700;letter-spacing:.3px;}
+#flag-time{color:rgba(255,255,255,.85);font-size:.88rem;font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px;padding-top:4px;border-top:1px dashed rgba(255,204,77,.25);}
 
 /* FIXED BACKGROUND FLAG — stays while scrolling */
 .flag-stage{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;padding:120px 20px 20px;pointer-events:none;z-index:1;}
@@ -887,6 +887,21 @@ body.has-nav-sc #nb-wrap{top:68px;}
 .flag-cat-count{margin-top:10px;display:inline-block;font-size:.6rem;background:rgba(255,204,77,.15);color:#ffcc4d;padding:3px 10px;border-radius:10px;font-weight:700;letter-spacing:1px;}
 .flag-cat-soon{margin-top:10px;display:inline-block;font-size:.58rem;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;}
 
+/* Languages Grid */
+.flag-langs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;padding:20px 40px;max-width:1200px;margin:0 auto;}
+.flag-lang{position:relative;background:linear-gradient(135deg,rgba(0,56,147,.18),rgba(255,255,255,.04));backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px 14px 58px;transition:all .3s;cursor:default;overflow:hidden;}
+.flag-lang:hover{transform:translateX(4px);border-color:rgba(255,204,77,.4);background:linear-gradient(135deg,rgba(0,56,147,.28),rgba(255,204,77,.08));}
+.flag-lang.top{background:linear-gradient(135deg,rgba(220,38,38,.25),rgba(255,204,77,.15));border-color:rgba(255,204,77,.45);}
+.flag-lang .lr{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:32px;height:32px;background:rgba(255,204,77,.2);color:#ffcc4d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--fd);font-size:.9rem;border:1px solid rgba(255,204,77,.35);}
+.flag-lang.top .lr{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border-color:#ffcc4d;}
+.flag-lang .ln{font-family:var(--fd);font-size:1.15rem;color:#fff;font-weight:700;line-height:1;}
+.flag-lang .lg{font-size:.75rem;color:rgba(255,255,255,.85);font-weight:600;margin-top:2px;}
+.flag-lang .lp{position:absolute;top:10px;right:14px;background:rgba(255,204,77,.15);color:#ffcc4d;padding:2px 8px;border-radius:10px;font-size:.62rem;font-weight:800;letter-spacing:.5px;}
+.flag-lang .ls{font-size:.62rem;color:rgba(255,255,255,.55);margin-top:4px;font-style:italic;}
+@media(max-width:600px){
+  .flag-langs-grid{grid-template-columns:1fr;padding:16px;}
+}
+
 /* Navigation bar for Category/Detail screens */
 .flag-nav-bar{position:sticky;top:88px;z-index:20;display:flex;align-items:center;gap:14px;padding:14px 30px;background:rgba(10,10,26,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,204,77,.2);margin-bottom:10px;}
 .flag-back-btn{background:rgba(255,204,77,.15);color:#ffcc4d;border:1px solid rgba(255,204,77,.3);padding:8px 16px;border-radius:20px;cursor:pointer;font-size:.8rem;font-weight:700;transition:all .2s;font-family:inherit;}
@@ -1007,6 +1022,17 @@ body.has-nav-sc #nb-wrap{top:68px;}
 .qm-body{padding:28px 32px;}
 .qm-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .qm-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.qm-loc-wrap{position:relative;display:flex;gap:8px;align-items:stretch;}
+.qm-loc-wrap input{flex:1;}
+.qm-gps-btn{display:flex;align-items:center;gap:6px;padding:0 14px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:none;border-radius:10px;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .25s;box-shadow:0 4px 14px rgba(220,38,38,.4);white-space:nowrap;font-family:inherit;}
+.qm-gps-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(220,38,38,.6);}
+.qm-gps-btn.loading{animation:qmGpsPulse 1s ease-in-out infinite;pointer-events:none;}
+.qm-gps-btn.done{background:linear-gradient(135deg,#16a34a,#15803d);}
+@keyframes qmGpsPulse{0%,100%{opacity:1;}50%{opacity:.6;}}
+.qm-loc-status{font-size:.7rem;font-weight:600;min-height:14px;letter-spacing:.3px;}
+.qm-loc-status.ok{color:#16a34a;}
+.qm-loc-status.err{color:#dc2626;}
+.qm-loc-status.info{color:var(--a);}
 .qm-field label{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--a);display:flex;align-items:center;gap:6px;}
 .qm-field input,.qm-field select,.qm-field textarea{padding:12px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-family:var(--fb);font-size:.85rem;outline:none;transition:all .2s;}
 .qm-field input::placeholder,.qm-field textarea::placeholder{color:rgba(255,255,255,.35);}
@@ -1477,12 +1503,12 @@ body.has-nav-sc #nb-wrap{top:68px;}
   <!-- SCREEN: HOME (Default) -->
   <div id="flag-screen-home" class="flag-screen flag-screen-active">
     <div class="flag-hero-welcome">
-      <div class="flag-welcome-badge">🇳🇵 DIGITAL IDENTITY</div>
+      <div class="flag-welcome-badge">🇳🇵 DIGITAL IDENTITY · डिजिटल चिनारी</div>
       <h1>नेपाल चिनारी</h1>
-      <h2>The Soul of Nepal</h2>
-      <p>Explore 12 categories · 100+ wonders · Rich heritage · Ancient civilization</p>
+      <h2>Nepal · The Soul of Our Nation</h2>
+      <p>Explore 12 categories · १२ वर्गहरू · 100+ wonders · Rich heritage · Ancient civilization</p>
       <div class="flag-search-wrap">
-        <input type="text" id="flag-search" placeholder="🔍 Search: Everest, Pashupatinath, Dashain..." oninput="flagSearch(this.value)">
+        <input type="text" id="flag-search" placeholder="🔍 Search / खोज्नुस्: Everest, Pashupatinath, Dashain..." oninput="flagSearch(this.value)">
         <div id="flag-search-results"></div>
       </div>
     </div>
@@ -1499,10 +1525,33 @@ body.has-nav-sc #nb-wrap{top:68px;}
 
     <!-- 12 Category Tiles -->
     <div class="flag-section-title">
-      <h3>📂 Explore Categories</h3>
-      <p>Click any category to dive deeper</p>
+      <h3>📂 Explore Categories · वर्गहरू</h3>
+      <p>Click any category to dive deeper · कुनै पनि category मा click गर्नुहोस्</p>
     </div>
     <div class="flag-cats-grid" id="flag-cats-grid"></div>
+
+    <!-- Popular Languages of Nepal -->
+    <div class="flag-section-title">
+      <h3>🗣️ Languages of Nepal · नेपालका भाषाहरू</h3>
+      <p>Nepal speaks in 123+ tongues · १२३+ भाषा बोलिन्छ</p>
+    </div>
+    <div class="flag-langs-grid">
+      <div class="flag-lang top"><div class="lr">1</div><div class="ln">नेपाली</div><div class="lg">Nepali</div><div class="lp">44.86%</div><div class="ls">Official · देवनागरी</div></div>
+      <div class="flag-lang"><div class="lr">2</div><div class="ln">मैथिली</div><div class="lg">Maithili</div><div class="lp">11.05%</div><div class="ls">Province 2 · मधेश</div></div>
+      <div class="flag-lang"><div class="lr">3</div><div class="ln">भोजपुरी</div><div class="lg">Bhojpuri</div><div class="lp">6.24%</div><div class="ls">Terai region</div></div>
+      <div class="flag-lang"><div class="lr">4</div><div class="ln">थारू</div><div class="lg">Tharu</div><div class="lp">5.88%</div><div class="ls">Tharu community</div></div>
+      <div class="flag-lang"><div class="lr">5</div><div class="ln">तामाङ</div><div class="lg">Tamang</div><div class="lp">4.87%</div><div class="ls">Himalayan region</div></div>
+      <div class="flag-lang"><div class="lr">6</div><div class="ln">बज्जिका</div><div class="lg">Bajjika</div><div class="lp">3.93%</div><div class="ls">Eastern Terai</div></div>
+      <div class="flag-lang"><div class="lr">7</div><div class="ln">मगर</div><div class="lg">Magar</div><div class="lp">2.98%</div><div class="ls">Magar community</div></div>
+      <div class="flag-lang"><div class="lr">8</div><div class="ln">दोतेली</div><div class="lg">Doteli</div><div class="lp">2.97%</div><div class="ls">Far-western Nepal</div></div>
+      <div class="flag-lang"><div class="lr">9</div><div class="ln">उर्दू</div><div class="lg">Urdu</div><div class="lp">2.61%</div><div class="ls">Muslim community</div></div>
+      <div class="flag-lang"><div class="lr">10</div><div class="ln">अवधी</div><div class="lg">Awadhi</div><div class="lp">1.89%</div><div class="ls">Lumbini · Terai</div></div>
+      <div class="flag-lang"><div class="lr">11</div><div class="ln">नेवारी</div><div class="lg">Newari (Nepal Bhasa)</div><div class="lp">1.75%</div><div class="ls">Kathmandu Valley</div></div>
+      <div class="flag-lang"><div class="lr">12</div><div class="ln">लिम्बू</div><div class="lg">Limbu</div><div class="lp">1.30%</div><div class="ls">Eastern hills</div></div>
+    </div>
+    <div style="text-align:center;padding:10px 20px 20px;font-size:.72rem;color:rgba(255,255,255,.55);">
+      📊 Source: National Census of Nepal · राष्ट्रिय जनगणना
+    </div>
 
     <!-- Quick facts section -->
     <div class="flag-section-title">
@@ -1592,7 +1641,14 @@ body.has-nav-sc #nb-wrap{top:68px;}
       <div class="qm-row">
         <div class="qm-field">
           <label>📍 Project Location *</label>
-          <input type="text" id="qm-loc" placeholder="Type your city..." required list="np-locations" autocomplete="off">
+          <div class="qm-loc-wrap">
+            <input type="text" id="qm-loc" placeholder="Type your city or tap GPS 📍" required list="np-locations" autocomplete="off">
+            <button type="button" class="qm-gps-btn" id="qm-gps-btn" onclick="autoDetectLocation()" title="Auto-detect my location">
+              <span id="qm-gps-ic">📍</span>
+              <span id="qm-gps-txt">Auto</span>
+            </button>
+          </div>
+          <div class="qm-loc-status" id="qm-loc-status"></div>
           <datalist id="np-locations">
             <option value="Hetauda, Makwanpur">
             <option value="Kathmandu">
@@ -1806,6 +1862,7 @@ body.has-nav-sc #nb-wrap{top:68px;}
       <div class="ap-ni" onclick="showSec('notices')"><span class="ap-ni-ic">📢</span> Notice Board</div>
       <div class="ap-ni" onclick="showSec('calendar')"><span class="ap-ni-ic">📅</span> Calendar Content</div>
       <div class="ap-ni" onclick="showSec('visitcard')"><span class="ap-ni-ic">📇</span> Visiting Card</div>
+      <div class="ap-ni" onclick="showSec('nepal')"><span class="ap-ni-ic">🇳🇵</span> Nepal चिनारी</div>
       <div class="ap-ni" onclick="showSec('settings')"><span class="ap-ni-ic">⚙️</span> Settings</div>
     </div>
     <div class="ap-foot">
@@ -2552,6 +2609,59 @@ body.has-nav-sc #nb-wrap{top:68px;}
       </div>
     </div>
 
+    <!-- 🇳🇵 NEPAL CHINARI MANAGER -->
+    <div class="ap-sec" id="sec-nepal">
+      <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
+      <div class="ap-hdr"><h2>🇳🇵 Nepal चिनारी Manager</h2><p>Manage Nepal's Digital Identity content · Categories · Items · Photos · Videos</p></div>
+
+      <!-- Stats Overview -->
+      <div class="apc" style="background:linear-gradient(135deg,rgba(220,38,38,.1),rgba(255,204,77,.08));border:1px solid rgba(255,204,77,.3);">
+        <div class="apc-hdr"><h3>📊 Overview</h3></div>
+        <div id="np-admin-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;"></div>
+      </div>
+
+      <!-- Category Selector -->
+      <div class="apc">
+        <div class="apc-hdr"><h3>📂 Select Category</h3></div>
+        <div id="np-cat-tiles" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;"></div>
+      </div>
+
+      <!-- Items in Selected Category -->
+      <div class="apc" id="np-items-wrap" style="display:none;">
+        <div class="apc-hdr">
+          <h3 id="np-items-title">Items</h3>
+          <button class="dbtn on" onclick="nepalAdminAddItem()" style="padding:7px 14px;font-size:.74rem;">+ Add New Item</button>
+        </div>
+        <div id="np-items-list"></div>
+      </div>
+
+      <!-- Reset + Export/Import -->
+      <div class="apc">
+        <div class="apc-hdr"><h3>🔧 Data Management</h3></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="dbtn" onclick="nepalAdminExport()">📥 Export Data (JSON)</button>
+          <button class="dbtn" onclick="nepalAdminImport()">📤 Import Data</button>
+          <button class="dbtn" style="background:#c94b4b;color:#fff;" onclick="nepalAdminReset()">♻️ Reset to Defaults</button>
+        </div>
+        <p style="font-size:.72rem;color:#888;margin-top:10px;">💡 Your edits save automatically to browser. Export regularly for backup.</p>
+      </div>
+    </div>
+
+    <!-- Nepal Item Edit Modal -->
+    <div id="np-edit-modal" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+      <div style="background:#fff;border-radius:16px;max-width:780px;width:100%;padding:0;margin:20px 0;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+        <div style="padding:18px 24px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between;">
+          <h3 id="np-edit-ttl" style="margin:0;color:#222;font-size:1.1rem;">Edit Item</h3>
+          <button onclick="nepalAdminCloseEdit()" style="background:none;border:none;font-size:1.4rem;cursor:pointer;color:#666;padding:4px 10px;">✕</button>
+        </div>
+        <div id="np-edit-body" style="padding:20px 24px;max-height:70vh;overflow-y:auto;"></div>
+        <div style="padding:16px 24px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end;">
+          <button class="dbtn" onclick="nepalAdminCloseEdit()">Cancel</button>
+          <button class="dbtn on" onclick="nepalAdminSaveItem()">💾 Save Changes</button>
+        </div>
+      </div>
+    </div>
+
     <!-- SETTINGS -->
     <div class="ap-sec" id="sec-settings">
       <button class="ap-back" onclick="showSec('dashboard')">← Back</button>
@@ -2711,20 +2821,38 @@ const DEF={
 // DATA MANAGEMENT
 // ═══════════════════════════════════════════════
 const LSK='prerak_v5';
-const FILE_VER='v5.3'; // bump this to force template reset on new downloads
+const FILE_VER='v5.4'; // bump this to force template reset on new downloads
 let D=null;
 try{D=JSON.parse(localStorage.getItem(LSK)||'null');}catch(e){}
 if(!D)D=JSON.parse(JSON.stringify(DEF));
-// ensure new fields exist on older saves
+
+// ══ DEFENSIVE DATA VALIDATION ══
+// Ensure ALL critical fields exist — prevents crashes from old localStorage structures
+function _ensureField(key, fallback){
+  try{
+    if(D[key]===undefined||D[key]===null) D[key]=JSON.parse(JSON.stringify(fallback));
+    if(Array.isArray(fallback) && !Array.isArray(D[key])) D[key]=JSON.parse(JSON.stringify(fallback));
+  }catch(e){D[key]=JSON.parse(JSON.stringify(fallback));}
+}
+_ensureField('meta', DEF.meta);
+_ensureField('settings', DEF.settings);
+_ensureField('hero', DEF.hero);
+_ensureField('services', DEF.services);
+_ensureField('projects', DEF.projects||[]);
+_ensureField('testimonials', DEF.testimonials||[]);
+_ensureField('whyUs', DEF.whyUs);
+_ensureField('card', DEF.card);
+_ensureField('notices', []);
+_ensureField('faqs', DEF.faqs);
+_ensureField('pricing', DEF.pricing);
+_ensureField('adminEmail', DEF.adminEmail);
+// Ensure nested fields
 if(!D.card)D.card=JSON.parse(JSON.stringify(DEF.card));
 if(!D.card.logo)D.card.logo=PRERAK_LOGO;
-if(!D.notices)D.notices=[];
-if(!D.faqs)D.faqs=JSON.parse(JSON.stringify(DEF.faqs));
-if(!D.pricing)D.pricing=JSON.parse(JSON.stringify(DEF.pricing));
-if(!D.adminEmail)D.adminEmail=DEF.adminEmail;
 if(!D.settings.facebook)D.settings.facebook='';
 if(!D.settings.instagram)D.settings.instagram='';
 if(!D.settings.tiktok)D.settings.tiktok='';
+if(!D.meta.template)D.meta.template='dark';
 // Reset template to dark if this is a new download (file version changed)
 if(localStorage.getItem('prerak_fver')!==FILE_VER){
   D.meta.template='dark';
@@ -2732,7 +2860,8 @@ if(localStorage.getItem('prerak_fver')!==FILE_VER){
   save();
 }
 const UPM={};
-D.services.forEach(s=>{UPM[s.id]=[];});
+// Defensive forEach — won't crash if services is somehow still wrong
+try{(D.services||[]).forEach(s=>{if(s&&s.id)UPM[s.id]=[];});}catch(e){console.warn('UPM init skipped',e);}
 
 function save(){
   try{localStorage.setItem(LSK,JSON.stringify(D));}
@@ -3588,6 +3717,122 @@ const NEPAL_DATA={
         video:'QL3SeFVq5lE',
         mapEmbed:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113957.74!2d86.84!3d27.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e8584b53197c81%3A0x4a2ee3d57296680f!2sMount%20Everest!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp'
       }
+    ],
+    temples:[
+      {
+        id:'pashupatinath',
+        ne:'पशुपतिनाथ मन्दिर',
+        en:'Pashupatinath Temple',
+        sub:'Sacred Shiva Shrine · UNESCO World Heritage',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pashupatinath_Temple_2019.jpg/1280px-Pashupatinath_Temple_2019.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pashupatinath_Temple_2019.jpg/1024px-Pashupatinath_Temple_2019.jpg','https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Pashupatinath_and_Bagmati.jpg/1024px-Pashupatinath_and_Bagmati.jpg'],
+        stats:[{l:'Deity',v:'Lord Shiva'},{l:'Established',v:'~400 CE'},{l:'Location',v:'Kathmandu'},{l:'Province',v:'Bagmati'},{l:'UNESCO',v:'Yes · 1979'},{l:'Style',v:'Pagoda'}],
+        description:'<p><b>Pashupatinath Temple (पशुपतिनाथ)</b> is the most sacred Hindu temple in Nepal and one of the most significant Shiva temples in the world. Located on the banks of the sacred Bagmati River in Kathmandu, it is dedicated to <b>Lord Pashupati</b> — a manifestation of Lord Shiva as "Lord of All Creatures."</p><p>The temple complex is a sprawling collection of hundreds of temples, ashrams, images, and inscriptions. Only Hindus are allowed inside the main shrine.</p><p>For Hindus, a pilgrimage here is considered to bring moksha (liberation). It serves as the spiritual heart of Nepal.</p>',
+        history:'<p>The earliest evidence dates back to the <b>5th century CE</b>, during the Licchavi period. The current main temple was built by <b>King Bhupatindra Malla</b> in the 17th century after the original was destroyed by termites.</p><p>Designated a <b>UNESCO World Heritage Site in 1979</b>. It is one of the four most important pilgrimage sites for Shiva devotees in South Asia.</p>',
+        facts:['🕉️ Main temple features a <b>2-meter tall Shiva Lingam</b> with 4 faces','🔥 <b>Arya Ghat</b> hosts Hindu cremations 24/7','🙏 Only <b>Hindus</b> allowed inside inner sanctum','🕯️ <b>Maha Shivaratri</b> attracts 1 million+ pilgrims','🐵 Hundreds of sacred monkeys and cows roam here','👳 <b>Naga Sadhus</b> (holy men) cover themselves in ashes','⚱️ <b>Bagmati river</b> considered as sacred as the Ganges','🏛️ Complex has <b>518 temples</b>'],
+        howToVisit:'<ul><li><b>Entry fee:</b> NPR 1000 for foreigners</li><li><b>Timings:</b> 4:00 AM – 9:00 PM (Aarti at 6 PM)</li><li><b>Dress code:</b> Modest, respectful attire</li><li><b>Transport:</b> Taxi from Thamel (5 km)</li><li><b>Duration:</b> 2-3 hours</li><li><b>Photography:</b> Not allowed inside main temple</li></ul>',
+        bestTime:'<p><b>Maha Shivaratri (Feb/March)</b> — most spiritually charged. <b>Teej (Aug/Sep)</b> — women in red. <b>Early morning</b> (5-7 AM) for peaceful experience.</p>',
+        video:'pEWwqazbDJI',
+        mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d85.3487!3d27.7103!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19b38ec48d09%3A0x6c5e9e8f87f70ab1!2sPashupatinath%20Temple!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'muktinath',ne:'मुक्तिनाथ मन्दिर',en:'Muktinath Temple',sub:'Sacred to both Hindus & Buddhists · Mustang',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Muktinath_mandir.jpg/1280px-Muktinath_mandir.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Muktinath_mandir.jpg/1024px-Muktinath_mandir.jpg'],
+        stats:[{l:'Altitude',v:'3,710 m'},{l:'Deity',v:'Vishnu / Avalokiteśvara'},{l:'Location',v:'Mustang'},{l:'Province',v:'Gandaki'},{l:'Water Spouts',v:'108 taps'},{l:'Sacred for',v:'Hindus + Buddhists'}],
+        description:'<p><b>Muktinath (मुक्तिनाथ)</b> meaning "Lord of Liberation" is sacred to both <b>Hindus</b> and <b>Buddhists</b>. Located at 3,710m in Mustang, surrounded by dramatic Himalayan landscapes.</p><p>Famous for its <b>108 sacred water spouts</b> where pilgrims bathe in icy waters to wash away sins.</p>',
+        history:'<p>A sacred site for over <b>2,000 years</b>. One of the 108 Divya Desam for Hindus and 24 Tantric places for Buddhists. The natural <b>eternal flame</b> (from underground gas) and 108 water taps make it unique — four elements coexist naturally here.</p>',
+        facts:['💧 <b>108 water spouts</b> for spiritual purification','🔥 Natural <b>eternal flame</b> from underground gas','🕉️ One of <b>108 Divya Desams</b>','☸️ Buddhists call it <b>Chumig Gyatsa</b> (100 Waters)','🌈 <b>Salagrama Kshetra</b> — fossil Shaligrams found here','⛰️ Between <b>Annapurna & Dhaulagiri</b> ranges'],
+        howToVisit:'<ul><li><b>Route 1:</b> Fly Pokhara → Jomsom → Jeep (2-3 days)</li><li><b>Route 2:</b> Annapurna Circuit trek (14-18 days)</li><li><b>Route 3:</b> Helicopter from Pokhara (1 day)</li><li><b>Altitude:</b> Acclimatization important</li><li><b>Best:</b> Mar-May, Sep-Nov</li></ul>',
+        bestTime:'<p><b>Spring (March-May)</b> and <b>Autumn (Sep-Nov)</b>. Avoid monsoon (landslides) and winter (heavy snow).</p>',
+        video:'',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d83.87!3d28.82!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sMuktinath!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'manakamana',ne:'मनकामना मन्दिर',en:'Manakamana Temple',sub:'Wish-fulfilling Goddess · Gorkha',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Manakamana_Temple_from_Bakreshwari_Temple.jpg/1280px-Manakamana_Temple_from_Bakreshwari_Temple.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Manakamana_Temple_from_Bakreshwari_Temple.jpg/1024px-Manakamana_Temple_from_Bakreshwari_Temple.jpg'],
+        stats:[{l:'Deity',v:'Goddess Bhagwati'},{l:'Altitude',v:'1,302 m'},{l:'District',v:'Gorkha'},{l:'Province',v:'Gandaki'},{l:'Access',v:'Cable Car'},{l:'Built',v:'17th century'}],
+        description:'<p><b>Manakamana (मनकामना)</b> = "wish-granting goddess" (मन + कामना). Dedicated to <b>Goddess Bhagwati</b>, incarnation of Parvati. Believed to fulfill wishes of pure-hearted worshippers.</p><p>Atop a hill at 1,302m, accessible by Nepal\'s <b>first cable car</b> (since 1998) with stunning scenery.</p>',
+        history:'<p>Built during King <b>Ram Shah</b> of Gorkha in the 17th century. Legend: goddess discovered by priest Lakhan Thapa. Cable car opened Nov 1998 — transformed pilgrimage from day-long hike to 10-minute ride.</p>',
+        facts:['🎋 Nepal\'s <b>first cable car</b> (1998)','🐐 Goats and roosters sacrificed as offerings','🙏 Wishes believed to come true within a year','⛰️ Views of <b>Manaslu, Annapurna, Ganesh Himal</b>','📿 Temple priest always descendant of <b>Lakhan Thapa</b>'],
+        howToVisit:'<ul><li><b>From Kathmandu:</b> 3hr drive to Kurintar</li><li><b>From Pokhara:</b> 2hr drive</li><li><b>Cable car:</b> 10 min each way</li><li><b>Fee:</b> NPR 650 (Nepali), NPR 2,475 (foreigner)</li><li><b>Timings:</b> 9 AM – 5 PM</li></ul>',
+        bestTime:'<p>Year-round. Autumn (Sep-Nov) clearest views. Dashain = huge crowds.</p>',
+        video:'',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d84.80!3d27.83!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sManakamana!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'janaki',ne:'जानकी मन्दिर',en:'Janaki Mandir',sub:'Birthplace of Goddess Sita · Janakpur',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Janki_Mandir_Janakpurdham_Nepal.jpg/1280px-Janki_Mandir_Janakpurdham_Nepal.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Janki_Mandir_Janakpurdham_Nepal.jpg/1024px-Janki_Mandir_Janakpurdham_Nepal.jpg'],
+        stats:[{l:'Deity',v:'Goddess Sita'},{l:'Built',v:'1910 CE'},{l:'Location',v:'Janakpur'},{l:'Province',v:'Madhesh'},{l:'Style',v:'Mughal-Hindu'},{l:'Cost',v:'9 Lakh rupees'}],
+        description:'<p><b>Janaki Mandir (जानकी मन्दिर)</b> is a beautiful marble temple dedicated to <b>Goddess Sita</b> (Janaki — daughter of King Janak). One of the finest examples of Hindu-Mughal architecture in Nepal.</p><p>Nicknamed the <b>Nau Lakha Mandir</b> (900,000 rupees) because of its construction cost.</p>',
+        history:'<p>Built in <b>1910 CE</b> by Queen <b>Brisabhanu Kunwari</b> of Tikamgarh, India. Stands on the spot where a golden statue of Sita was discovered. Janakpur is ancient <b>Mithila Kingdom</b> capital — where Lord Ram married Sita per Ramayana.</p>',
+        facts:['💰 <b>"Nau Lakha Mandir"</b> (900K rupees)','👸 Built by Indian Queen','💒 <b>Vivah Panchami</b> celebrates Ram-Sita wedding','🎨 Famous <b>Mithila paintings</b> throughout city','🏛️ Built entirely in <b>white marble</b>'],
+        howToVisit:'<ul><li><b>From KTM:</b> Fly (30 min) or 8hr drive</li><li><b>From India:</b> Cross at Jaleshwor</li><li><b>Entry:</b> Free</li><li><b>Timings:</b> 5-12 AM, 4-9 PM</li></ul>',
+        bestTime:'<p><b>Vivah Panchami (Nov-Dec)</b>, <b>Ram Navami (Mar-Apr)</b>. Winter (Oct-Feb) best weather.</p>',
+        video:'',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d85.93!3d26.73!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sJanaki!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'budhanilkantha',ne:'बूढानीलकण्ठ',en:'Budhanilkantha Temple',sub:'Sleeping Vishnu · Kathmandu',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Vishnu_Budhanilkantha.jpg/1280px-Vishnu_Budhanilkantha.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Vishnu_Budhanilkantha.jpg/1024px-Vishnu_Budhanilkantha.jpg'],
+        stats:[{l:'Deity',v:'Vishnu (Sleeping)'},{l:'Statue Length',v:'5 m'},{l:'Material',v:'Black Basalt'},{l:'Created',v:'7th century'},{l:'Location',v:'Kathmandu'},{l:'Pool',v:'13m × 7m'}],
+        description:'<p><b>Budhanilkantha (बूढानीलकण्ठ)</b> houses the largest stone carving of Lord Vishnu in Nepal — a stunning <b>5-meter monolithic statue</b> reclining on cosmic serpent Shesha Naga in a pool.</p><p>Statue appears to <b>float on water</b>, creating surreal spiritual atmosphere.</p>',
+        history:'<p>Created during <b>Licchavi period (7th century CE)</b>, carved from single block of black basalt. Legend: farmer discovered it while plowing. <b>Nepali kings forbidden</b> from visiting due to ancient prophecy.</p>',
+        facts:['👑 <b>Nepali kings cannot visit</b> per ancient prophecy','💎 Carved from <b>single block of basalt</b>','🌊 Statue appears to <b>float in water</b>','🐍 Vishnu rests on <b>Shesha Naga</b>','🎊 <b>Haribodhini Ekadashi</b> (Oct/Nov) biggest festival'],
+        howToVisit:'<ul><li><b>Location:</b> 10 km N of Kathmandu</li><li><b>Transport:</b> Taxi (30 min)</li><li><b>Entry:</b> Free</li><li><b>Timings:</b> 5 AM – 9 PM</li></ul>',
+        bestTime:'<p><b>Haribodhini Ekadashi (Oct-Nov)</b> most sacred. Early morning for peace.</p>',
+        video:'',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d85.3636!3d27.7793!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBudhanilkantha!5e0!3m2!1sen!2snp!4v1700000000000'
+      }
+    ],
+    buddhist:[
+      {
+        id:'lumbini',ne:'लुम्बिनी',en:'Lumbini',sub:'Birthplace of Lord Buddha · UNESCO',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Mayadevi_Temple_Lumbini.jpg/1280px-Mayadevi_Temple_Lumbini.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Mayadevi_Temple_Lumbini.jpg/1024px-Mayadevi_Temple_Lumbini.jpg','https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Ashoka_pillar_at_Lumbini%2C_Nepal.jpg/1024px-Ashoka_pillar_at_Lumbini%2C_Nepal.jpg'],
+        stats:[{l:'Significance',v:'Birth of Buddha'},{l:'Year',v:'563 BCE'},{l:'Location',v:'Rupandehi'},{l:'Province',v:'Lumbini'},{l:'UNESCO',v:'1997'},{l:'Status',v:'Peace City'}],
+        description:'<p><b>Lumbini (लुम्बिनी)</b> is the birthplace of <b>Siddhartha Gautama (Buddha)</b> in 563 BCE. A UNESCO World Heritage Site, it attracts Buddhist pilgrims from around the world.</p><p>The site contains <b>Mayadevi Temple</b> (exact birth spot), <b>Ashoka Pillar</b> (249 BCE), sacred <b>Puskarini Pond</b>, and monasteries from 25+ Buddhist nations.</p>',
+        history:'<p>Queen <b>Mayadevi</b> gave birth to Prince Siddhartha here. He later became <b>Gautama Buddha</b>, founder of Buddhism.</p><p>Emperor <b>Ashoka</b> visited 249 BCE and erected the pillar with Brahmi inscriptions. Declared <b>UNESCO site in 1997</b>.</p>',
+        facts:['📿 Buddha born <b>563 BCE</b> here under a sal tree','🏛️ <b>Ashoka Pillar</b> (249 BCE) confirms birthplace','🌍 <b>25+ international monasteries</b>','☮️ <b>"Peace City"</b> designated by UN','🙏 One of Buddhism\'s <b>4 holiest sites</b>','🕊️ <b>Eternal Peace Flame</b> burns continuously','🏊 <b>Puskarini Pond</b> where Mayadevi bathed'],
+        howToVisit:'<ul><li><b>From KTM:</b> Fly to Bhairahawa (35 min) + 30 min drive</li><li><b>By road:</b> 6-7 hr from Pokhara</li><li><b>From India:</b> 25 km from Sunauli border</li><li><b>Entry:</b> NPR 500 for foreigners</li><li><b>Duration:</b> Min 1 day (better 2)</li></ul>',
+        bestTime:'<p><b>Oct-March</b>: cool weather. <b>Buddha Jayanti (May)</b>: grand celebrations. Avoid May-July (40°C+).</p>',
+        video:'ZoMS37wLKfA',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d83.27!3d27.47!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sLumbini!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'boudhanath',ne:'बौद्धनाथ स्तुप',en:'Boudhanath Stupa',sub:'Largest Stupa in Nepal · UNESCO',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Bouddha_stupa.jpg/1280px-Bouddha_stupa.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Bouddha_stupa.jpg/1024px-Bouddha_stupa.jpg'],
+        stats:[{l:'Height',v:'36 m'},{l:'Diameter',v:'100 m'},{l:'Built',v:'5th century'},{l:'Location',v:'Kathmandu'},{l:'UNESCO',v:'1979'},{l:'Tradition',v:'Tibetan Buddhism'}],
+        description:'<p><b>Boudhanath (बौद्धनाथ)</b> is one of the <b>largest spherical stupas in the world</b>. The massive white dome with iconic Buddha eyes on golden spire is instantly recognizable as a symbol of Nepal.</p><p>Center of <b>Tibetan Buddhism in Nepal</b>, surrounded by 50+ Tibetan monasteries. Atmosphere filled with chanting monks, spinning prayer wheels, fluttering prayer flags.</p>',
+        history:'<p>Built <b>5th century CE</b> during Licchavi period. Tibetan legend: poor woman asked king for land, granted only area covered by buffalo hide — she cut hide into strips to enclose large area!</p><p>Damaged in <b>2015 earthquake</b>, pinnacle collapsed. Community restored it by 2016.</p>',
+        facts:['👁️ <b>Buddha Eyes</b> on 4 sides = all-seeing wisdom','🌀 <b>13 steps</b> = 13 stages to Enlightenment','🙏 Devotees walk <b>clockwise (kora)</b>','💥 <b>2015 earthquake</b>: restored in 1 year','🧘 <b>50+ Tibetan monasteries</b> surround it','🏮 <b>Butter lamps</b> lit during Losar'],
+        howToVisit:'<ul><li><b>Location:</b> 7 km NE of KTM</li><li><b>Transport:</b> Taxi (20 min)</li><li><b>Entry:</b> NPR 400 (foreigners)</li><li><b>Best:</b> Sunset visit</li><li><b>Duration:</b> 2-3 hours</li></ul>',
+        bestTime:'<p><b>Losar (Feb/March)</b>: Tibetan New Year. <b>Buddha Jayanti (May)</b>. <b>Evenings</b>: butter lamp ambiance.</p>',
+        video:'T-iKuzDAIvM',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d85.362!3d27.721!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sBoudhanath!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'swayambhu',ne:'स्वयम्भूनाथ',en:'Swayambhunath',sub:'Monkey Temple · UNESCO',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Swayambhunath_Kathmandu_Nepal45.jpg/1280px-Swayambhunath_Kathmandu_Nepal45.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Swayambhunath_Kathmandu_Nepal45.jpg/1024px-Swayambhunath_Kathmandu_Nepal45.jpg'],
+        stats:[{l:'Meaning',v:'Self-Existent'},{l:'Age',v:'2000+ years'},{l:'Steps',v:'365'},{l:'Location',v:'Kathmandu'},{l:'UNESCO',v:'1979'},{l:'Monkeys',v:'500+'}],
+        description:'<p><b>Swayambhunath (स्वयम्भूनाथ)</b> = "Self-Existent One". Oldest Buddhist site in Nepal, atop hill with panoramic Kathmandu Valley views. Also <b>"Monkey Temple"</b>.</p><p>Iconic golden spire with <b>Buddha eyes</b> looking in all 4 directions. Climb <b>365 stone steps</b> = days of a year.</p>',
+        history:'<p>Swayambhu Purana legend: Kathmandu Valley was once a lake. Bodhisattva <b>Manjushri</b> cut the hills to drain it — lotus in the center settled on this hill.</p><p>Sacred pilgrimage site for over <b>2,000 years</b>.</p>',
+        facts:['🐒 <b>500+ sacred monkeys</b> — from Manjushri\'s hair legend','👣 <b>365 stone steps</b> = days of year','👁️ <b>Buddha eyes</b> look in 4 directions','🪷 Legend: grew from <b>lotus in ancient lake</b>','☸️ <b>Oldest religious site</b> in Nepal (2,000+ yrs)','🌅 Stunning <b>Kathmandu Valley views</b>','🕉️ Sacred to <b>both Buddhists & Hindus</b>'],
+        howToVisit:'<ul><li><b>Location:</b> 3 km W of Thamel</li><li><b>Climb:</b> 365 steps OR drive to upper gate</li><li><b>Entry:</b> NPR 200 (foreigners)</li><li><b>Watch out:</b> Monkeys snatch food!</li></ul>',
+        bestTime:'<p><b>Early morning</b>: peaceful + sunrise. <b>Losar</b> and <b>Buddha Jayanti</b>: celebrations.</p>',
+        video:'',mapEmbed:'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3533.6!2d85.2904!3d27.7148!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSwayambhunath!5e0!3m2!1sen!2snp!4v1700000000000'
+      },
+      {
+        id:'namobuddha',ne:'नमोबुद्ध',en:'Namo Buddha',sub:'Sacred Tiger Legend · Kavre',
+        hero:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Namo_Buddha_Monastery_1.jpg/1280px-Namo_Buddha_Monastery_1.jpg',
+        gallery:['https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Namo_Buddha_Monastery_1.jpg/1024px-Namo_Buddha_Monastery_1.jpg'],
+        stats:[{l:'Altitude',v:'1,750 m'},{l:'District',v:'Kavrepalanchowk'},{l:'Distance',v:'40 km from KTM'},{l:'Tradition',v:'Tibetan Buddhism'},{l:'Monastery',v:'Thrangu Tashi'},{l:'Sacred for',v:'Buddha legend'}],
+        description:'<p><b>Namo Buddha (नमोबुद्ध)</b> is one of 3 most important Buddhist sites in Nepal. Legend: previous incarnation of Buddha (Prince Mahasattva) <b>sacrificed his body to feed a starving tigress</b> and her cubs — ultimate compassion.</p><p>Features <b>Thrangu Tashi Yangtse Monastery</b> with Himalayan views.</p>',
+        history:'<p>One of Buddhism\'s oldest Jataka (past life) stories. Prince Mahasattva gave his body to save a tigress. After enlightenment, Buddha identified this spot.</p>',
+        facts:['🐅 Buddha fed body to <b>starving tigress</b>','🙏 One of Nepal\'s <b>3 holiest Buddhist sites</b>','🏔️ Spectacular <b>Himalayan views</b>','🧘 Popular <b>meditation retreats</b>'],
+        howToVisit:'<ul><li><b>From KTM:</b> 3hr drive (or 2-day trek)</li><li><b>Entry:</b> Free</li><li><b>Stay:</b> Monastery guesthouses</li><li><b>Trek:</b> Dhulikhel → Namobuddha (6hr scenic)</li></ul>',
+        bestTime:'<p><b>Buddha Jayanti (May)</b>. <b>Oct-April</b> for clear views.</p>',
+        video:'',mapEmbed:''
+      }
     ]
   }
 };
@@ -3619,7 +3864,35 @@ function closeFlagModal(){
   _flagBigRAF=null;_flagTimeInt=null;
 }
 
+// Proper AD → BS converter using NP_CAL data
+function flagAdToBs(ad){
+  // Anchor: April 14, 2026 AD = Baisakh 1, 2083 BS (Nepali New Year)
+  const refAD=new Date(2026,3,14);
+  let diff=Math.floor((ad-refAD)/(1000*60*60*24));
+  let y=2083,m=1,d=1+diff;
+  // Forward
+  while(y<=2085){
+    const cal=NP_CAL[y];if(!cal)break;
+    const md=cal.days[m-1];
+    if(d<=md)break;
+    d-=md;m++;
+    if(m>12){m=1;y++;}
+  }
+  // Backward
+  while(d<1){
+    m--;if(m<1){m=12;y--;}
+    const cal=NP_CAL[y];
+    if(!cal){d=1;break;}
+    d+=cal.days[m-1];
+  }
+  return {y:y,m:m,d:d};
+}
+
 function startFlagTime(){
+  const MONTHS_NE=['बैशाख','जेठ','असार','साउन','भदौ','असोज','कार्तिक','मङ्सिर','पुस','माघ','फागुन','चैत'];
+  const MONTHS_EN=['Baisakh','Jestha','Ashadh','Shrawan','Bhadra','Ashoj','Kartik','Mangsir','Poush','Magh','Falgun','Chaitra'];
+  const DAYS_NE=['आइतबार','सोमबार','मंगलबार','बुधबार','बिहिबार','शुक्रबार','शनिबार'];
+  const DAYS_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const updateTime=()=>{
     const n=new Date();
     const hh=String(n.getHours()).padStart(2,'0');
@@ -3627,16 +3900,15 @@ function startFlagTime(){
     const ss=String(n.getSeconds()).padStart(2,'0');
     const te=document.getElementById('flag-time');
     if(te)te.textContent=hh+':'+mm+':'+ss;
-    // Nepali date
     try{
-      const months=['बैशाख','जेठ','असार','श्रावण','भाद्र','असोज','कार्तिक','मंसिर','पौष','माघ','फाल्गुन','चैत्र'];
-      if(typeof npCurrentDate==='function'){
-        const d=npCurrentDate();
-        const de=document.getElementById('flag-np-date');
-        if(de && d)de.textContent=(d.day||'')+' '+(months[d.month-1]||'')+' '+(d.year||'');
-      }else{
-        const de=document.getElementById('flag-np-date');
-        if(de)de.textContent=n.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'});
+      const bs=flagAdToBs(n);
+      const dayOfWeek=n.getDay();
+      const de=document.getElementById('flag-np-date');
+      if(de){
+        const npNum=function(x){return String(x).split('').map(c=>'०१२३४५६७८९'[parseInt(c)]||c).join('');};
+        // Show: "११ बैशाख २०८३" on first line, "Baisakh 11, 2083 BS · Friday" on second
+        de.innerHTML=`<div style="font-family:var(--fd);font-weight:800;color:#ffcc4d;font-size:.82rem;line-height:1.1">${npNum(bs.d)} ${MONTHS_NE[bs.m-1]} ${npNum(bs.y)}</div>
+          <div style="font-size:.62rem;color:rgba(255,255,255,.75);margin-top:2px">${MONTHS_EN[bs.m-1]} ${bs.d}, ${bs.y} BS · ${DAYS_EN[dayOfWeek]}</div>`;
       }
     }catch(e){
       const de=document.getElementById('flag-np-date');
@@ -3720,35 +3992,17 @@ function startBigFlag(){
         ctx.beginPath();ctx.moveTo(x0,b[0]);ctx.lineTo(x1,b[1]);ctx.lineTo(x1,b[2]);ctx.lineTo(x0,b[3]);ctx.closePath();ctx.fillStyle=rc;ctx.fill();
       });
     }
-    // Moon
-    const mnx=0.33,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.095;
+    // Authentic Moon (upper triangle) - 8 rays + crescent
+    const mnx=0.33,mx=POLE_X+mnx*FW+wOff(mnx),my=H*0.20+wOff(mnx)*0.4,mr=H*0.078;
     ctx.save();
-    ctx.shadowColor='rgba(255,255,255,.6)';ctx.shadowBlur=20;
-    ctx.beginPath();ctx.arc(mx,my,mr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.shadowColor='rgba(255,255,255,.6)';ctx.shadowBlur=18;
+    drawNepalMoon(ctx,mx,my,mr);
     ctx.restore();
-    ctx.beginPath();ctx.arc(mx+mr*0.44,my-mr*0.16,mr*0.77,0,Math.PI*2);ctx.fillStyle='#DC143C';ctx.fill();
-    // Moon rays (12 points)
-    ctx.strokeStyle='#fff';ctx.lineWidth=2.5;ctx.lineCap='round';
-    for(let r=0;r<8;r++){
-      const a=r*Math.PI/4;
-      ctx.beginPath();
-      ctx.moveTo(mx+Math.cos(a)*(mr+3),my+Math.sin(a)*(mr+3));
-      ctx.lineTo(mx+Math.cos(a)*(mr+mr*0.35),my+Math.sin(a)*(mr+mr*0.35));
-      ctx.stroke();
-    }
-    // Sun
-    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.08;
+    // Authentic Sun (lower triangle) - 12 triangular rays
+    const snx=0.3,sx=POLE_X+snx*FW+wOff(snx),sy=H*0.70+wOff(snx)*0.4,sr=H*0.068;
     ctx.save();
     ctx.shadowColor='rgba(255,255,255,.7)';ctx.shadowBlur=20;
-    ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.lineCap='round';
-    for(let r=0;r<12;r++){
-      const a=r*Math.PI/6;
-      ctx.beginPath();
-      ctx.moveTo(sx+Math.cos(a)*(sr+3),sy+Math.sin(a)*(sr+3));
-      ctx.lineTo(sx+Math.cos(a)*(sr+sr*0.6),sy+Math.sin(a)*(sr+sr*0.6));
-      ctx.stroke();
-    }
-    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    drawNepalSun(ctx,sx,sy,sr);
     ctx.restore();
     _flagBigRAF=requestAnimationFrame(draw);
   }
@@ -3966,6 +4220,89 @@ function openQuoteForm(planId){
   document.getElementById('quote-modal').classList.add('open');
   document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('qm-name')?.focus(),200);
+  // Auto-trigger location detection popout after a short delay
+  setTimeout(()=>{
+    const loc=document.getElementById('qm-loc');
+    if(loc && !loc.value){
+      // Auto-trigger GPS detection
+      autoDetectLocation(true);
+    }
+  },500);
+}
+
+// Auto-detect user location using GPS + reverse geocoding
+function autoDetectLocation(autoTrig){
+  const btn=document.getElementById('qm-gps-btn');
+  const ic=document.getElementById('qm-gps-ic');
+  const txt=document.getElementById('qm-gps-txt');
+  const status=document.getElementById('qm-loc-status');
+  const loc=document.getElementById('qm-loc');
+  if(!btn||!status||!loc)return;
+  if(!navigator.geolocation){
+    status.className='qm-loc-status err';
+    status.textContent='❌ GPS not supported in this browser';
+    return;
+  }
+  // Loading state
+  btn.classList.add('loading');
+  btn.classList.remove('done');
+  if(ic)ic.textContent='⏳';
+  if(txt)txt.textContent='Detecting...';
+  status.className='qm-loc-status info';
+  status.textContent=autoTrig?'📍 Auto-detecting your location... (Tap Allow when browser asks)':'📍 Finding your location...';
+  
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      const lat=pos.coords.latitude.toFixed(6);
+      const lon=pos.coords.longitude.toFixed(6);
+      status.className='qm-loc-status info';
+      status.textContent='🛰️ GPS OK! Looking up address...';
+      // Reverse geocode via OpenStreetMap Nominatim (free, no API key)
+      fetch('https://nominatim.openstreetmap.org/reverse?format=json&lat='+lat+'&lon='+lon+'&zoom=14&addressdetails=1',{
+        headers:{'Accept-Language':'en'}
+      }).then(r=>r.json()).then(data=>{
+        btn.classList.remove('loading');
+        btn.classList.add('done');
+        if(ic)ic.textContent='✓';
+        if(txt)txt.textContent='Done';
+        const a=data.address||{};
+        // Compose location string: City/Town + District/State
+        const city=a.city||a.town||a.village||a.municipality||a.county||'';
+        const district=a.state_district||a.county||'';
+        const state=a.state||'';
+        const parts=[city,district!==city?district:null,state].filter(x=>x&&x.trim());
+        const locText=parts.length?parts.join(', '):(data.display_name||'').split(',').slice(0,3).join(',');
+        loc.value=locText||(lat+', '+lon);
+        // Store GPS coords as data attribute
+        loc.setAttribute('data-gps',lat+','+lon);
+        status.className='qm-loc-status ok';
+        status.textContent='✅ Location detected! You can edit if needed.';
+        // Reset button after 3 seconds
+        setTimeout(()=>{
+          btn.classList.remove('done');
+          if(ic)ic.textContent='📍';
+          if(txt)txt.textContent='Auto';
+        },3000);
+      }).catch(err=>{
+        btn.classList.remove('loading');
+        if(ic)ic.textContent='📍';
+        if(txt)txt.textContent='Auto';
+        loc.value=lat+', '+lon;
+        loc.setAttribute('data-gps',lat+','+lon);
+        status.className='qm-loc-status ok';
+        status.textContent='📍 GPS captured (address lookup failed). Please edit.';
+      });
+    },
+    function(err){
+      btn.classList.remove('loading');
+      if(ic)ic.textContent='📍';
+      if(txt)txt.textContent='Retry';
+      status.className='qm-loc-status err';
+      const msgs={1:'❌ Permission denied. Please type your city manually.',2:'❌ Location unavailable. Please type your city.',3:'❌ Timeout. Please type your city.'};
+      status.textContent=msgs[err.code]||'❌ Unable to detect location. Please type manually.';
+    },
+    {enableHighAccuracy:true,timeout:10000,maximumAge:60000}
+  );
 }
 function closeQuoteForm(){
   document.getElementById('quote-modal').classList.remove('open');
@@ -3994,6 +4331,10 @@ function submitQuote(method){
   text+='*Phone:* '+phone+'\n';
   if(email)text+='*Email:* '+email+'\n';
   text+='*Location:* '+loc+'\n';
+  const gps=document.getElementById('qm-loc')?.getAttribute('data-gps');
+  if(gps){
+    text+='*GPS:* '+gps+' (https://maps.google.com/?q='+gps+')\n';
+  }
   if(size)text+='*Land Size:* '+size+' sq ft\n';
   text+='*Project Type:* '+type+'\n';
   if(budget)text+='*Budget:* '+budget+'\n';
@@ -4080,461 +4421,4 @@ function renderFAQSection(){
     +'</div>'
     +'<div class="faq-wrap">'+items+'</div>'
     +'<div class="faq-cta">'
-    +'<h4>🤔 '+(isNe?'अरू कुनै प्रश्न छ?':'Have more questions?')+'</h4>'
-    +'<p>'+(isNe?'हामीलाई call वा WhatsApp गर्नुस् — तुरुन्त जवाफ दिन्छौं!':'Call or WhatsApp us — we reply instantly!')+'</p>'
-    +'<div class="faq-cta-btns">'
-    +'<a href="https://wa.me/'+S.wa+'?text='+encodeURIComponent(isNe?'नमस्ते! मेरो प्रश्न छ।':'Hi! I have a question.')+'" target="_blank" class="faq-cta-btn wa">💬 WhatsApp</a>'
-    +'<a href="tel:'+S.phone1+'" class="faq-cta-btn call">📞 '+S.phone1+'</a>'
-    +'</div>'
-    +'</div>'
-    +'</section>';
-}
-
-function toggleFAQ(id){
-  const el=document.getElementById('faq-'+id);
-  if(!el)return;
-  const isOpen=el.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(x=>x.classList.remove('open'));
-  if(!isOpen)el.classList.add('open');
-}
-
-function renderVideoSection(){
-  const isNe=window._lang==='ne';
-  const vid=D.settings.videoUrl||'';
-  const isYT=vid.includes('youtube.com')||vid.includes('youtu.be');
-  const isMp4=vid.includes('.mp4')||vid.includes('.webm')||vid.startsWith('data:video');
-  let ytId='';
-  if(isYT){ytId=vid.replace(/.*[?&]v=([^&]+).*/,'$1').replace(/.*youtu\.be\//,'').split('?')[0];}
-  const ytEmbed=isYT?'https://www.youtube.com/embed/'+ytId+'?rel=0&modestbranding=1&autoplay=0':'';
-  const vidContent=isYT
-    ?'<iframe src="'+ytEmbed+'" allow="accelerometer;autoplay;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'
-    :isMp4
-    ?'<video src="'+vid+'" controls style="width:100%;aspect-ratio:16/9;border:none"></video>'
-    :'<div class="vid-placeholder" onclick="document.getElementById(\'admin-fab\').click()" title="Admin: Add video URL">'
-      +'<div class="vid-play" style="animation:bl 2s infinite">▶</div>'
-      +'<h3 style="font-family:var(--fd);font-size:1.4rem;font-weight:600;color:var(--txt)">'+(isNe?'एनिमेसन / ब्रान्ड भिडियो':'Animation / Brand Story Video')+'</h3>'
-      +'<p style="font-size:.8rem;color:var(--mt);text-align:center;max-width:340px;line-height:1.7">'+(isNe?'तपाईंले बनाएको cartoon animation video यहाँ राख्नुस्। Admin → Contact → Video URL':'Add your cartoon animation video here. Admin → Contact → Video URL')+'</p>'
-      +'<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;justify-content:center">'
-      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">YouTube</span>'
-      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">MP4 Upload</span>'
-      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">Kling AI</span>'
-      +'<span style="padding:5px 12px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.2);border-radius:20px;font-size:.65rem;color:var(--a);font-weight:700">Pika Labs</span>'
-      +'</div>'
-      +'</div>';
-  return '<section class="vid-sec reveal" id="video-sec">'
-    +'<div style="text-align:center;margin-bottom:40px">'
-    +'<div class="sec-ey" style="justify-content:center"><span>'+(isNe?'भिडियो':'Video')+'</span></div>'
-    +'<h2 class="sec-h" style="text-align:center">'+(isNe?'हाम्रो <em>एनिमेसन भिडियो</em>':'Watch Our <em>Animation Story</em>')+'</h2>'
-    +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:440px;margin:0 auto">'+(isNe?'PRERAK को सेवाहरू cartoon animation मा — निर्माणदेखि सम्पन्नसम्म':'PRERAK services in cartoon animation — from foundation to finish')+'</p>'
-    +'</div>'
-    +'<div class="vid-frame">'+vidContent+'</div>'
-    +'</section>';
-}
-
-// ═══════════════════════════════════════════════
-// LANGUAGE SWITCHER
-// ═══════════════════════════════════════════════
-window._lang='en';
-const TRANS={
-  en:{
-    services:'Services',projects:'Projects',about:'About',contact:'Contact',calendar:'Calendar',
-    heroSub:"Nepal's trusted partner for construction, interior design, UPVC, gypsum, solar & complete renovation — since 2012.",
-    servicesTitle:'Our <em>Services</em>',projectsTitle:'Recent <em>Projects</em>',
-    whyTitle:'Quality You Can <em>Trust</em>',clientsTitle:"What Clients <em>Say</em>",
-    ctaH:'Ready to Build Your <em>Dream?</em>',ctaP:'Free site visit & detailed quotation. We respond within 2 hours.',
-    ctaBtn:'🏗️ Get Free Quote',contactTitle:'Contact <em>Us</em>',
-    badge:'Now Accepting Projects'
-  },
-  ne:{
-    services:'सेवाहरू',projects:'परियोजनाहरू',about:'हाम्रोबारे',contact:'सम्पर्क',calendar:'पात्रो',
-    heroSub:'नेपालको विश्वसनीय निर्माण साझेदार — निर्माण, इन्टेरियर, UPVC, जिप्सम, सोलार र नवीकरण — २०१२ देखि।',
-    servicesTitle:'हाम्रा <em>सेवाहरू</em>',projectsTitle:'हालका <em>परियोजनाहरू</em>',
-    whyTitle:'विश्वासको <em>गुणस्तर</em>',clientsTitle:'ग्राहकहरूले <em>भन्छन्</em>',
-    ctaH:'सपनाको घर <em>बनाउनुस्!</em>',ctaP:'नि:शुल्क साइट भ्रमण र विस्तृत मूल्य सूची। २ घण्टामा जवाफ दिन्छौं।',
-    ctaBtn:'🏗️ नि:शुल्क Quote',contactTitle:'<em>हामीलाई</em> सम्पर्क',
-    badge:'परियोजना स्वीकार गर्दैछौं'
-  }
-};
-function setLang(l){
-  window._lang=l;
-  const t=TRANS[l];
-  // buttons
-  document.getElementById('lang-en')?.classList.toggle('on',l==='en');
-  document.getElementById('lang-ne')?.classList.toggle('on',l==='ne');
-  // nav links
-  const navMap={services:t.services,projects:t.projects,'why-us':t.about,contact:t.contact,'np-calendar':t.calendar};
-  document.querySelectorAll('.nav-links a[data-en]').forEach(function(a){
-    const key=a.getAttribute('href').replace('#','');
-    a.textContent=navMap[key]||(l==='ne'?a.dataset.ne:a.dataset.en);
-  });
-  // hero
-  const heroH=document.querySelector('.hero h1');
-  if(heroH){
-    heroH.innerHTML=l==='ne'
-      ?'<span>सपनाहरू</span><span class="ha">निर्माण</span><span class="ho">गर्दैछौं</span>'
-      :'<span>'+D.hero.line1+'</span><span class="ha">'+D.hero.line2+'</span><span class="ho">'+D.hero.line3+'</span>';
-  }
-  const heroSub=document.querySelector('.hero-sub');
-  if(heroSub)heroSub.textContent=t.heroSub;
-  // live badge
-  const lb=document.querySelector('.live-badge');
-  if(lb)lb.innerHTML='<div class="live-dot"></div> '+t.badge;
-  // Section headings
-  function updateSecH(secId,html){
-    const sec=document.getElementById(secId);
-    if(!sec)return;
-    const h=sec.querySelector('.sec-h');
-    if(h)h.innerHTML=html;
-  }
-  updateSecH('services',t.servicesTitle);
-  updateSecH('projects',t.projectsTitle);
-  updateSecH('why-us',t.whyTitle);
-  // testimonials
-  const testSec=document.querySelector('#site section:not([id]) .sec-h');
-  // CTA
-  const ctaH=document.querySelector('.cta-in h2');if(ctaH)ctaH.innerHTML=t.ctaH;
-  const ctaP=document.querySelector('.cta-in p');if(ctaP)ctaP.textContent=t.ctaP;
-  const ctaBtn=document.querySelector('.cta-btns .btn-a');if(ctaBtn)ctaBtn.innerHTML=t.ctaBtn;
-  // contact
-  const contSec=document.getElementById('contact');
-  if(contSec){const h=contSec.querySelector('.sec-h');if(h)h.innerHTML=t.contactTitle;}
-  // re-render calendar & video
-  const calSec=document.getElementById('np-calendar');
-  if(calSec){calSec.outerHTML=renderCalendarSection();setTimeout(function(){showCalMonth(_activeMon);},50);}
-  const vidSec=document.querySelector('.vid-sec');
-  if(vidSec)vidSec.outerHTML=renderVideoSection();
-  initReveal();
-}
-function renderVCSection(){
-  const C=D.card;const t=C.style||'dark';
-  const isDark=t==='dark',isCorp=t==='corporate',isSaff=t==='saffron';
-  const accent=isDark?'#c9933a':isCorp?'#1a3a6e':'#f97316';
-  const frontBg=isDark?'linear-gradient(135deg,#0f0f14,#1a1a22,#0f0f14)':isCorp?'linear-gradient(135deg,#fff,#f0f4fa)':'linear-gradient(135deg,#180b00,#2a1200,#180b00)';
-  const backBg=isDark?'linear-gradient(135deg,#07070a,#111118)':isCorp?'linear-gradient(135deg,#1a3a6e,#0f2347)':'linear-gradient(135deg,#f97316,#c2410c)';
-  const txtC=isDark?'#f0ede8':isCorp?'#111827':'#fff8f0';
-  const subC=isDark?'#8a8a9a':isCorp?'#6b7280':'rgba(255,248,240,.65)';
-  const logoStroke=isCorp?'#fff':isSaff?'#0d0500':'#07070a';
-  const logoBox=C.logo
-    ?'<div style="width:38px;height:38px;border-radius:8px;overflow:hidden;flex-shrink:0;background:#fff;border:2px solid '+accent+'33;display:flex;align-items:center;justify-content:center"><img src="'+C.logo+'" style="width:90%;height:90%;object-fit:contain"></div>'
-    :'<div style="width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,'+accent+'cc,'+accent+');display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg viewBox="0 0 24 24" fill="none" stroke="'+logoStroke+'" stroke-width="2.5" style="width:18px;height:18px"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>';
-  const editBtn=isAdmin?'<button onclick="event.stopPropagation();showSec(\'visitcard\');openAdminPanel()" style="position:absolute;top:10px;right:10px;width:28px;height:28px;background:'+accent+';border:none;border-radius:50%;color:'+(isCorp?'#fff':'#07070a')+';font-size:.75rem;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;font-weight:700">✎</button>':'';
-  const ph1Html=C.ph1?'<div style="display:flex;align-items:center;gap:5px"><div style="width:3px;height:3px;background:'+accent+';border-radius:50%"></div><span style="font-size:clamp(.38rem,1vw,.58rem);color:'+subC+'">📞 '+C.ph1+'</span></div>':'';
-  const ph2Html=C.ph2?'<div style="display:flex;align-items:center;gap:5px"><div style="width:3px;height:3px;background:'+accent+';border-radius:50%"></div><span style="font-size:clamp(.38rem,1vw,.58rem);color:'+subC+'">📞 '+C.ph2+'</span></div>':'';
-  const emailHtml=C.email?'<div style="display:flex;align-items:center;gap:5px"><div style="width:3px;height:3px;background:'+accent+';border-radius:50%"></div><span style="font-size:clamp(.36rem,.9vw,.55rem);color:'+subC+'">✉ '+C.email+'</span></div>':'';
-  const addrHtml=C.addr?'<div style="display:flex;align-items:center;gap:5px"><div style="width:3px;height:3px;background:'+accent+';border-radius:50%"></div><span style="font-size:clamp(.36rem,.9vw,.55rem);color:'+subC+'">📍 '+C.addr+'</span></div>':'';
-  const logoBackHtml=C.logo?'<div style="width:44px;height:44px;border-radius:9px;background:#fff;margin-bottom:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0"><img src="'+C.logo+'" style="width:90%;height:90%;object-fit:contain"></div>':'';
-  const svcBadges=D.services.slice(0,5).map(function(sv){return '<span style="font-size:clamp(.34rem,.85vw,.5rem);letter-spacing:1px;text-transform:uppercase;font-weight:700;border:1px solid rgba(255,255,255,.2);padding:2px 8px;border-radius:20px;color:rgba(255,255,255,.65)">'+sv.name+'</span>';}).join('');
-  const S=D.settings;
-  const waMsg=encodeURIComponent('*'+C.cname+' '+C.csub+'*\n'+C.name+'\n\n'+C.ph1+'\n'+C.email+'\n'+C.addr);
-
-  return '<section class="sec dk reveal" id="visiting-card" style="padding:80px 6%">'
-  +'<div style="text-align:center;margin-bottom:36px">'
-  +'<div class="sec-ey" style="justify-content:center"><span>Business Card</span></div>'
-  +'<h2 class="sec-h" style="text-align:center">Our <em>Visiting Card</em></h2>'
-  +'<p style="color:var(--mt);font-size:.85rem;text-align:center;max-width:400px;margin:0 auto">Use arrows to flip · Click for <b style="color:var(--a)">3D view</b></p>'
-  +'</div>'
-  +'<div style="display:flex;flex-direction:column;align-items:center;gap:18px">'
-  +'<div style="display:flex;align-items:center;gap:14px;width:100%;max-width:520px;justify-content:center">'
-  +'<button onclick="vcFlip()" style="width:44px;height:44px;border-radius:50%;background:var(--bg2);border:2px solid var(--brd);color:var(--a);font-size:1.3rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.3);font-weight:700">←</button>'
-  +'<div style="perspective:900px;flex:1;max-width:420px">'
-  +'<div id="vc-flipper" style="position:relative;width:100%;aspect-ratio:1.75;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.16,1,.3,1)">'
-  // FRONT
-  +'<div id="vc-mini" onclick="open3DCard()" style="position:absolute;inset:0;border-radius:18px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;cursor:pointer;transform:rotateY(0deg);box-shadow:14px 22px 55px rgba(0,0,0,.65),0 0 0 1px '+accent+'22;background:'+frontBg+'">'
-  +'<div style="position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,transparent,'+accent+',transparent)"></div>'
-  +'<div style="position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.08) 0%,transparent 50%,rgba(255,255,255,.03) 100%);pointer-events:none"></div>'
-  +editBtn
-  +'<div style="position:relative;z-index:2;padding:clamp(14px,4%,24px);height:100%;display:flex;flex-direction:column;justify-content:space-between">'
-  +'<div style="display:flex;align-items:flex-start;justify-content:space-between">'
-  +'<div style="display:flex;align-items:center;gap:9px">'+logoBox+'<div><div style="font-family:var(--fd);font-size:clamp(.8rem,2.2vw,1.1rem);font-weight:700;letter-spacing:3px;color:'+txtC+';line-height:1">'+C.cname+'</div><div style="font-size:clamp(.35rem,1vw,.5rem);letter-spacing:2px;color:'+subC+';text-transform:uppercase;margin-top:2px">'+C.csub+'</div></div></div>'
-  +'<div style="font-size:clamp(.35rem,.9vw,.5rem);letter-spacing:2px;color:'+accent+';font-weight:700;border:1px solid '+accent+'55;padding:2px 8px;border-radius:20px;white-space:nowrap">'+C.est+'</div>'
-  +'</div>'
-  +'<div style="text-align:center;padding:0 4%">'
-  +'<div style="font-family:var(--fd);font-size:clamp(1rem,3.5vw,1.75rem);font-weight:700;color:'+txtC+';line-height:1.1;letter-spacing:1px;margin-bottom:3px">'+C.name+'</div>'
-  +'<div style="font-size:clamp(.42rem,1.2vw,.65rem);letter-spacing:3px;text-transform:uppercase;color:'+accent+';font-weight:600">'+C.desg+'</div>'
-  +'<div style="display:flex;align-items:center;gap:7px;justify-content:center;margin:7px 0"><div style="height:1px;width:24px;background:'+accent+'44"></div><div style="font-size:.42rem;color:'+accent+'66">✦</div><div style="height:1px;width:24px;background:'+accent+'44"></div></div>'
-  +'</div>'
-  +'<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px">'
-  +'<div style="display:flex;flex-direction:column;gap:3px">'+ph1Html+ph2Html+emailHtml+addrHtml+'</div>'
-  +'<div style="width:clamp(32px,6vw,46px);height:clamp(32px,6vw,46px);border:1px solid '+accent+'44;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;opacity:.5;font-size:clamp(.9rem,2.5vw,1.4rem)">📱</div>'
-  +'</div></div></div>'
-  // BACK
-  +'<div onclick="open3DCard()" style="position:absolute;inset:0;border-radius:18px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;cursor:pointer;transform:rotateY(180deg);box-shadow:14px 22px 55px rgba(0,0,0,.65)">'
-  +'<div style="position:absolute;inset:0;background:'+backBg+';display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center">'
-  +'<div style="position:absolute;top:-35px;right:-35px;width:140px;height:140px;border-radius:50%;border:1px solid rgba(255,255,255,.08)"></div>'
-  +'<div style="position:absolute;bottom:-35px;left:-35px;width:110px;height:110px;border-radius:50%;border:1px solid rgba(255,255,255,.08)"></div>'
-  +'<div style="position:relative;z-index:1;width:100%;display:flex;flex-direction:column;align-items:center">'
-  +logoBackHtml
-  +'<div style="font-family:var(--fd);font-size:clamp(1.1rem,4vw,1.8rem);font-weight:700;color:#fff;letter-spacing:5px;margin-bottom:3px">'+C.cname+'</div>'
-  +'<div style="font-size:clamp(.4rem,1.1vw,.58rem);letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px">'+C.csub+'</div>'
-  +'<div style="font-style:italic;font-size:clamp(.5rem,1.4vw,.75rem);color:rgba(255,255,255,.72);max-width:260px;line-height:1.65;margin-bottom:12px">'+C.tagline+'</div>'
-  +'<div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px">'+svcBadges+'</div>'
-  +'<div style="font-size:clamp(.4rem,1vw,.56rem);color:rgba(255,255,255,.4);letter-spacing:1.5px;border-top:1px solid rgba(255,255,255,.12);padding-top:9px;width:75%">'+C.web+'</div>'
-  +'</div></div></div>'
-  +'</div></div>'
-  +'<button onclick="vcFlip()" style="width:44px;height:44px;border-radius:50%;background:var(--bg2);border:2px solid var(--brd);color:var(--a);font-size:1.3rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.3);font-weight:700">→</button>'
-  +'</div>'
-  +'<div style="display:flex;align-items:center;gap:16px">'
-  +'<span id="vc-side-f" style="font-size:.6rem;color:var(--a);letter-spacing:2px;text-transform:uppercase;font-weight:700;transition:all .3s">● FRONT</span>'
-  +'<span style="font-size:.58rem;color:var(--mt);letter-spacing:1px">— tap arrows to flip —</span>'
-  +'<span id="vc-side-b" style="font-size:.6rem;color:var(--mt);letter-spacing:2px;text-transform:uppercase;font-weight:700;opacity:.4;transition:all .3s">● BACK</span>'
-  +'</div>'
-  +'<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">'
-  +'<button onclick="open3DCard()" class="btn-a" style="font-size:.78rem;padding:10px 22px">✨ 3D View</button>'
-  +'<a href="https://wa.me/'+S.wa+'?text='+waMsg+'" target="_blank" class="btn-a" style="font-size:.78rem;padding:10px 20px">💬 Share</a>'
-  +'<button onclick="window.print()" class="btn-b" style="font-size:.78rem;padding:10px 20px;cursor:pointer;border:1px solid var(--brd)">🖨️ Print</button>'
-  +'</div></div></section>';
-}
-
-
-// VC inner flip CSS (injected once)
-if(!document.getElementById('vc-style')){
-  const s=document.createElement('style');s.id='vc-style';
-  s.textContent='.vc-inner.flipped{transform:rotateY(180deg)!important}';
-  document.head.appendChild(s);
-}
-// Visiting Card flip
-// ═══ VISITING CARD — HOLOGRAPHIC FINGER PLAY ═══
-// Color changes with finger/mouse — no UI shown to public
-let _vcFS=false,_vcHue=0,_vcSaturation=0,_vcHoloAF=null;
-
-function vcFlip(){
-  _vcFS=!_vcFS;
-  const fl=document.getElementById('vc-flipper');
-  if(fl)fl.style.transform=_vcFS?'rotateY(180deg)':'rotateY(0deg)';
-  const sf=document.getElementById('vc-side-f');
-  const sb=document.getElementById('vc-side-b');
-  if(sf){sf.style.color=_vcFS?'var(--mt)':'var(--a)';sf.style.opacity=_vcFS?'.4':'1';}
-  if(sb){sb.style.color=_vcFS?'var(--a)':'var(--mt)';sb.style.opacity=_vcFS?'1':'.4';}
-  // flash color on flip
-  _vcFlashColor();
-}
-function _vcFlashColor(){
-  _vcHue=(_vcHue+90)%360;
-  _applyVCHolo(_vcHue,1);
-  setTimeout(()=>_applyVCHolo(_vcHue,0),600);
-}
-function _applyVCHolo(hue,intensity){
-  const shine=document.getElementById('vc-card-shine');
-  const glow=document.getElementById('vc-card-glow');
-  if(shine){
-    if(intensity>0){
-      shine.style.background='linear-gradient(125deg,hsla('+(hue)+',100%,75%,'+(.15*intensity)+') 0%,hsla('+((hue+60)%360)+',100%,75%,'+(.3*intensity)+') 40%,hsla('+((hue+120)%360)+',100%,75%,'+(.15*intensity)+') 70%,transparent 100%)';
-      shine.style.opacity='1';
-    } else {
-      shine.style.opacity='0';
-    }
-  }
-  if(glow){
-    glow.style.boxShadow=intensity>0
-      ?'14px 22px 55px rgba(0,0,0,.65),0 0 '+(40*intensity)+'px hsla('+hue+',100%,60%,'+(.5*intensity)+'),0 0 '+(80*intensity)+'px hsla('+((hue+60)%360)+',100%,60%,'+(.15*intensity)+')'
-      :'14px 22px 55px rgba(0,0,0,.65)';
-  }
-}
-
-function initVCTilt(){
-  _vcFS=false;
-  const wrap=document.getElementById('vc-flipper')?.parentElement;
-  if(!wrap)return;
-
-  // inject holographic overlay into card faces
-  ['vc-mini'].forEach(function(id){
-    const el=document.getElementById(id);
-    if(!el)return;
-    el.id=id;
-    // add shine overlay
-    if(!document.getElementById('vc-card-shine')){
-      const shine=document.createElement('div');
-      shine.id='vc-card-shine';
-      shine.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:20;mix-blend-mode:screen;opacity:0;transition:opacity .4s,background .1s;border-radius:inherit;';
-      el.appendChild(shine);
-    }
-  });
-  // glow reference is the front face
-  const frontFace=document.getElementById('vc-mini');
-
-  function applyTilt(nx,ny){
-    if(_vcFS)return;
-    const fl=document.getElementById('vc-flipper');
-    if(fl)fl.style.transform='rotateY('+(nx*28)+'deg) rotateX('+(-ny*18)+'deg)';
-    // color: hue from x position, saturation from movement intensity
-    const hue=Math.round(((nx+.5)*360))%360;
-    const sat=Math.abs(nx)*100;
-    const intensity=Math.sqrt(nx*nx+ny*ny);
-    _vcHue=hue;
-    if(intensity>.05){
-      _applyVCHolo(hue,Math.min(intensity*1.5,1));
-      // glow on front
-      if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65),0 0 '+(30*intensity)+'px hsla('+hue+',100%,60%,'+(0.5*intensity)+')';
-    }
-  }
-
-  // MOUSE
-  wrap.addEventListener('mousemove',function(e){
-    const r=wrap.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    applyTilt(x,y);
-  });
-  wrap.addEventListener('mouseleave',function(){
-    if(_vcFS)return;
-    const fl=document.getElementById('vc-flipper');
-    if(fl)fl.style.transform='rotateY(0deg) rotateX(0deg)';
-    _applyVCHolo(0,0);
-    if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65)';
-  });
-
-  // TOUCH — finger drag changes color
-  let _tcStart={x:0,y:0};
-  wrap.addEventListener('touchstart',function(e){
-    _tcStart={x:e.touches[0].clientX,y:e.touches[0].clientY};
-  },{passive:true});
-  wrap.addEventListener('touchmove',function(e){
-    e.preventDefault();
-    const r=wrap.getBoundingClientRect();
-    const tx=e.touches[0].clientX,ty=e.touches[0].clientY;
-    const x=(tx-r.left)/r.width-.5;
-    const y=(ty-r.top)/r.height-.5;
-    applyTilt(x,y);
-  },{passive:false});
-  wrap.addEventListener('touchend',function(){
-    const fl=document.getElementById('vc-flipper');
-    if(fl&&!_vcFS)fl.style.transform='rotateY(0deg) rotateX(0deg)';
-    _applyVCHolo(0,0);
-    if(frontFace)frontFace.style.boxShadow='14px 22px 55px rgba(0,0,0,.65)';
-  });
-
-  // GYROSCOPE — phone tilt
-  if(window.DeviceOrientationEvent){
-    window.addEventListener('deviceorientation',function(e){
-      if(!e.gamma&&!e.beta)return;
-      const x=Math.max(-1,Math.min(1,(e.gamma||0)/45));
-      const y=Math.max(-1,Math.min(1,(e.beta||0)/45));
-      applyTilt(x*.5,y*.3);
-    },{passive:true});
-  }
-}
-let mOpen=false;
-function mToggle(){mOpen=!mOpen;document.getElementById('hbg')?.classList.toggle('open',mOpen);const m=document.getElementById('mobM');if(!m)return;if(mOpen){m.style.display='flex';requestAnimationFrame(()=>m.classList.add('open'));document.body.classList.add('ns');}else mClose();}
-function mClose(){mOpen=false;document.getElementById('hbg')?.classList.remove('open');const m=document.getElementById('mobM');if(m){m.classList.remove('open');setTimeout(()=>{if(!mOpen)m.style.display='none';},300);}document.body.classList.remove('ns');}
-
-function initNav(){
-  window.onscroll=()=>{
-    const scrolled=window.scrollY>60;
-    document.getElementById('snav')?.classList.toggle('sc',scrolled);
-    document.body.classList.toggle('has-nav-sc',scrolled);
-    const h=document.documentElement.scrollHeight-window.innerHeight;
-    document.getElementById('prog').style.width=(window.scrollY/h*100)+'%';
-  };
-}
-function initReveal(){
-  const obs=new IntersectionObserver(ens=>{ens.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
-  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-}
-function initCounters(){
-  const obs=new IntersectionObserver(ens=>{ens.forEach(e=>{if(e.isIntersecting){const el=e.target,target=+el.dataset.count;let s=null;(function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/1800,1),ease=1-Math.pow(1-p,4);el.textContent=Math.floor(ease*target);if(p<1)requestAnimationFrame(step);else el.textContent=target;})(performance.now());obs.unobserve(el);}});},{threshold:.3});
-  document.querySelectorAll('[data-count]').forEach(el=>obs.observe(el));
-}
-function initCanvas(){
-  const c=document.getElementById('hcanvas');if(!c)return;
-  const x=c.getContext('2d');
-  function sz(){c.width=window.innerWidth;c.height=window.innerHeight*1.2;}sz();
-  window.addEventListener('resize',sz);
-  const pts=Array.from({length:70},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22}));
-  const col=D.meta.template==='saffron'?'249,115,22':D.meta.template==='corporate'?'26,58,110':'201,147,58';
-  (function draw(){
-    x.clearRect(0,0,c.width,c.height);
-    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,1.4,0,Math.PI*2);x.fillStyle=`rgba(${col},.18)`;x.fill();});
-    for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<115){x.beginPath();x.moveTo(pts[i].x,pts[i].y);x.lineTo(pts[j].x,pts[j].y);x.strokeStyle=`rgba(${col},${.06*(1-d/115)})`;x.lineWidth=.5;x.stroke();}}
-    requestAnimationFrame(draw);
-  })();
-}
-
-let tIdx=0;
-function initTest(){
-  const el=document.getElementById('tDots');if(!el)return;
-  const cards=()=>document.querySelectorAll('.test-card');
-  const per=()=>window.innerWidth>900?3:window.innerWidth>600?2:1;
-  const tot=()=>Math.ceil(cards().length/per());
-  function mkDots(){el.innerHTML='';for(let i=0;i<tot();i++){const d=document.createElement('div');d.className='t-dot'+(i===0?' on':'');d.onclick=()=>goT(i);el.appendChild(d);}}
-  function goT(i){tIdx=Math.max(0,Math.min(i,tot()-1));const c=cards()[0];if(!c)return;const w=c.offsetWidth+18;document.getElementById('testTrack').style.transform=`translateX(-${tIdx*per()*w}px)`;el.querySelectorAll('.t-dot').forEach((d,j)=>d.classList.toggle('on',j===tIdx));}
-  mkDots();window.addEventListener('resize',mkDots);window._goT=goT;
-}
-function tSlide(d){window._goT&&window._goT(tIdx+d);}
-
-function submitForm(){
-  const n=(document.getElementById('cf-name')?.value||'').trim();
-  const p=(document.getElementById('cf-phone')?.value||'').trim();
-  if(!n||!p){alert('कृपया नाम र फोन हाल्नुस्।');return;}
-  const s=document.getElementById('cf-svc')?.value,l=(document.getElementById('cf-loc')?.value||'').trim(),m=(document.getElementById('cf-msg')?.value||'').trim();
-  const wa=`🏗️ *New Quote — ${D.settings.company}*\n\n👤 ${n}\n📞 ${p}\n🔧 ${s||'General'}\n📍 ${l||'—'}\n📝 ${m||'—'}`;
-  window.open(`https://wa.me/${D.settings.wa}?text=`+encodeURIComponent(wa),'_blank');
-  document.getElementById('fContent').style.display='none';
-  document.getElementById('form-ok').style.display='block';
-}
-
-// ═══════════════════════════════════════════════
-// SERVICE MODAL
-// ═══════════════════════════════════════════════
-let activeSvcId=null,galFilter='all',pendFiles=[],lbItems=[],lbI=0;
-
-function openSvcModal(id){
-  const s=D.services.find(x=>x.id===id);if(!s)return;
-  activeSvcId=id;if(!UPM[id])UPM[id]=[];
-  document.getElementById('sm-img').src=s.img;
-  document.getElementById('sm-icon').textContent=s.icon;
-  document.getElementById('sm-title').textContent=s.name;
-  document.getElementById('sm-sub').textContent=s.tags.join(' · ');
-  document.getElementById('sm-desc').textContent=s.desc;
-  document.getElementById('sm-feats').innerHTML=s.features.map(f=>`<div class="feat-item"><div class="feat-dot"></div>${f}</div>`).join('');
-  document.getElementById('sm-tags').innerHTML=s.tags.map(t=>`<span class="d-tag">${t}</span>`).join('');
-  document.getElementById('sm-wa').href=`https://wa.me/${D.settings.wa}?text=नमस्ते ${D.settings.company} जी! मलाई ${s.name} को जानकारी चाहियो।`;
-  // Show upload tab only for admins
-  const upTab=document.getElementById('upload-tab');
-  if(upTab)upTab.style.display=isAdmin?'block':'none';
-  galFilter='all';document.querySelectorAll('.gf').forEach((b,i)=>b.classList.toggle('on',i===0));
-  resetSvcUpload();switchSvcTab('details');renderSvcGal();
-  document.getElementById('svcOv').classList.add('open');document.body.classList.add('ns');
-}
-function closeSvcModal(){document.getElementById('svcOv').classList.remove('open');document.body.classList.remove('ns');activeSvcId=null;}
-function switchSvcTab(n){
-  if(n==='upload'&&!isAdmin)return; // block non-admins
-  const map=['details','gallery','upload'];
-  document.querySelectorAll('.sm-tab').forEach((t,i)=>t.classList.toggle('on',map[i]===n));
-  map.forEach(p=>{const el=document.getElementById('sp-'+p);if(el)el.classList.toggle('on',p===n);});
-  if(n==='gallery')renderSvcGal();
-}
-function getAllGal(){const s=D.services.find(x=>x.id===activeSvcId);return[...(s?.gallery||[]),...(UPM[activeSvcId]||[])];}
-function renderSvcGal(){
-  if(!activeSvcId)return;
-  const all=getAllGal(),base=D.services.find(x=>x.id===activeSvcId)?.gallery?.length||0;
-  const flt=galFilter==='all'?all:all.filter(m=>m.type===galFilter);
-  document.getElementById('sm-gcnt').textContent=all.length;
-  const grid=document.getElementById('sm-gal');
-  if(!flt.length){grid.innerHTML=`<div style="grid-column:span 3;text-align:center;padding:36px;color:var(--mt);font-size:.85rem">No ${galFilter==='all'?'media':galFilter+'s'} yet. Upload in the Upload tab.</div>`;return;}
-  grid.innerHTML=flt.map(m=>{
-    const ri=all.indexOf(m);const isUp=ri>=base;
-    const del=isAdmin&&isUp?`<button class="gal-del" onclick="event.stopPropagation();delSvcMedia(${ri})">✕</button>`:'';
-    if(m.type==='video')return`<div class="gal-item"><video src="${m.src}" muted playsinline preload="metadata"></video><span style="position:absolute;top:7px;left:7px;background:rgba(0,0,0,.7);color:#fff;font-size:.56rem;font-weight:700;padding:2px 8px;border-radius:10px">🎬 Video</span>${del}<div class="gal-ov" onclick="openLb(${ri})"><div class="gal-zm">▶</div></div></div>`;
-    return`<div class="gal-item"><img src="${m.src}" alt="${m.cap||''}">${del}<div class="gal-ov" onclick="openLb(${ri})"><div class="gal-zm">⊕</div></div></div>`;
-  }).join('');
-}
-function filterGal(type,btn){galFilter=type;document.querySelectorAll('.gf').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderSvcGal();}
-function delSvcMedia(idx){
-  if(!isAdmin)return;
-  const s=D.services.find(x=>x.id===activeSvcId);const base=s?.gallery?.length||0;const up=UPM[activeSvcId];const ui=idx-base;if(ui>=0&&up){const m=up[ui];if(m?.src?.startsWith('blob:'))URL.revokeObjectURL(m.src);up.splice(ui,1);renderSvcGal();}
-}
-
-// Lightbox
-function openLb(idx){lbItems=getAllGal();lbI=idx;renderLb();document.getElementById('lb').classList.add('open');document.body.classList.add('ns');}
-function renderLb(){const m=lbItems[lbI];if(!m)return;const w=document.getElementById('lb-mw');w.innerHTML=m.type==='video'?`<video src="${m.src}" controls autoplay style="max-width:90vw;max-height:83vh;border-radius:8px"></video>`:`<img src="${m.src}" alt="" style="max-width:90vw;max-height:83vh;border-radius:8px;object-fit:contain">`;document.getElementById('lb-ctr').textContent=`${lbI+1} / ${lbItems.length}`;}
-function lbNav(d){lbI=(lbI+d+lbItems.length)%lbItems.length;renderLb();}
-function closeLb(){document.getElementById('lb').classList.remove('open');document.getElementById('lb-mw').innerHTML='';document.body.classList.remove('ns');}
-
-// Upload
-function resetSvcUpload(){pendFiles=[];document.getElementById('sm-uq').innerHTML='';document.getElementById('sm-cap').style.display='none';const b=document.getElementById('sm-upbtn');if(b)b.disabled=true;const st=document.getElementById('sm-upst');if(st)st.style.display='none';const fi=document.getElementById('sm-file');if(fi)fi.value='';}
-function handleSvcUpload(files){if(!isAdmin||!files?.length)return;Array.from(files).forEach(f=>{if(!f.type.startsWith('image/')&&!f.type.startsWith('video/'))return;if(f.size>60*1024*1024){alert(`${f.name} too large (max 60MB)`);return;}pendFiles.push(f);addUQ(f,pendFiles.length-1);});if(pendFiles.length){document.getElementById('sm-cap').style.display='block';document.getElementById('sm-upbtn').disabled=false;}}
-function addUQ(f,idx){const url=URL.createObjectURL(f);const isV=f.type.startsWith('video/');const div=document.createElement('div');div.className='uq-it';div.id='uq-'+idx;div.innerHTML=`${isV?`<div style="width:46px;height:46px;background:var(--bg2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">🎬</div>`:`<img class="uq-th" src="${url}" alt="">`}<div class="uq-info"><div class="uq-nm">${f.name}</div><div class="uq-sz">${isV?'Video':'Photo'} · ${(f.size/1024/1024).toFixed(1)}MB</div><div class="uq-bw"><div class="uq-b" id="uqb-${idx}" style="width:0%"></div></div></div><button class="uq-x" onclick="rmUQ(${idx})">✕</button>`;document.getElementById('sm-uq').appendChild(div);}
-function rmUQ(idx){pendFiles[idx]=null;document.getElementById('uq-'+idx)?.remove();if(pendFiles.every(f=>!f)){document.getElementById('sm-upbtn').disabled=true;document.getElementById('sm-cap').style.display='none';pendFiles=[];}}
-async function submitSvcUpload(){
-  if(!isAdmin)return;
-  const cap=document.g
+    +'<h4>🤔 '+(is
