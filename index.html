@@ -699,6 +699,49 @@ body.hide-vc #visiting-card { display:none; }
 /* Brand video hide if empty */
 #brand-video:not(.has-video) { display:none; }
 
+/* ═══ BRAND VIDEO PLAYER — professional sizing & style (size-only fix) ═══ */
+#brand-video #vg-featured-wrap{
+  width:100%;
+  max-width:900px;
+  margin:0 auto 26px;
+  border:1.5px solid rgba(212,166,74,.45); /* thin gold */
+  border-radius:16px;
+  box-shadow:0 14px 38px rgba(0,0,0,.36);
+  box-sizing:border-box;
+}
+#brand-video #fv-player{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:420px;
+  margin:0 auto;
+  border-radius:16px;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+/* Ensure media inside fills cleanly with no stretch */
+#brand-video #fv-player > img,
+#brand-video #fv-player > video,
+#brand-video #fv-player > iframe{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* Tablet */
+@media (max-width:1024px){
+  #brand-video #vg-featured-wrap{max-width:90%;}
+  #brand-video #fv-player{max-height:320px;}
+}
+/* Mobile */
+@media (max-width:600px){
+  #brand-video #vg-featured-wrap{max-width:100%;border-radius:14px;}
+  #brand-video #fv-player{max-height:260px;border-radius:14px;}
+}
+/* Prevent horizontal scroll caused by section */
+#brand-video{overflow-x:hidden;}
+
+
 
 /* (Component visibility now handled in main rules above) */
 
@@ -1217,8 +1260,8 @@ body.hide-vc #visiting-card { display:none; }
     </div>
 
     <!-- ═══ FEATURED VIDEO PLAYER (BIG TOP) ═══ -->
-    <div id="vg-featured-wrap" class="reveal" style="max-width:720px;margin:0 auto 26px;background:linear-gradient(155deg,var(--bg2),var(--bg3));border:1.5px solid var(--lines);border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.4);">
-      <div id="fv-player" style="position:relative;width:100%;aspect-ratio:16/9;background:#0a0806;overflow:hidden;">
+    <div id="vg-featured-wrap" class="reveal" style="background:linear-gradient(155deg,var(--bg2),var(--bg3));overflow:hidden;">
+      <div id="fv-player" style="background:#0a0806;">
         <img id="fv-thumb" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200" alt="Featured" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
         <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
         <!-- BIG play button -->
@@ -3312,16 +3355,24 @@ body.hide-vc #visiting-card { display:none; }
         </div>
         <div class="ejs-desc">EmailJS को free plan मा monthly 200 emails पाइन्छ। Setup गरेपछि admin login OTP directly email मा जान्छ।</div>
         <div class="afr">
-          <div class="afg"><label>SERVICE ID</label><input type="text" id="ejs-sid" placeholder="service_bvxfr3q" value="service_bvxfr3q"></div>
-          <div class="afg"><label>TEMPLATE ID</label><input type="text" id="ejs-tid" placeholder="template_xs9x16u" value="template_xs9x16u"></div>
+          <div class="afg"><label>SERVICE ID</label><input type="text" id="ejs-sid" placeholder="service_xxxxxxx" value="service_bvxfr3q"></div>
+          <div class="afg"><label>TEMPLATE ID</label><input type="text" id="ejs-tid" placeholder="template_xxxxxxx" value="template_xs9x16u"></div>
         </div>
-        <div class="afg"><label>PUBLIC KEY</label><input type="text" id="ejs-pk" placeholder="fpml8phlCtNwoA7rZ" value="fpml8phlCtNwoA7rZ"></div>
-        <div style="display:flex;gap:9px;align-items:center;margin-top:10px;">
+        <div class="afg"><label>PUBLIC KEY</label><input type="text" id="ejs-pk" placeholder="EmailJS Public Key" value="fpml8phlCtNwoA7rZ"></div>
+        <div class="afg" style="margin-top:8px;"><label>ADMIN EMAIL (recipient for OTP)</label><input type="email" id="ejs-adm-email" placeholder="admin@example.com"><div style="font-size:.62rem;color:#6b7280;margin-top:3px;">OTP login codes will be sent to this email address.</div></div>
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-top:11px;background:rgba(220,38,38,.05);border:1px solid rgba(220,38,38,.25);border-radius:8px;padding:10px 12px;">
+          <input type="checkbox" id="ejs-debug" style="width:16px;height:16px;cursor:pointer;margin-top:2px;flex-shrink:0;">
+          <label for="ejs-debug" style="font-size:.74rem;font-weight:700;color:#dc2626;cursor:pointer;flex:1;line-height:1.5;">
+            🐞 <b>Debug Mode</b> — Show OTP on screen (for testing only).<br>
+            <span style="font-weight:500;color:#7f1d1d;font-size:.66rem;">⚠️ Disable this in production. When OFF, OTP is sent only via email — never shown on screen.</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveEmailJS()" style="background:linear-gradient(135deg,#16a34a,#15803d);">💾 Save EmailJS</button>
           <button class="cbtn" onclick="sendTestOTP()">📧 Send Test OTP</button>
           <span class="afok" id="ejs-ok">✅ Saved!</span>
         </div>
-        <div class="ejs-tip">Setup steps: 1) emailjs.com मा free account बनाउनुस् 2) Email service add गर्नुस् (Gmail) 3) Template बनाउनुस् — variables: <code>to_email</code>, <code>otp_code</code>, <code>company</code> 4) IDs माथि paste गर्नुस्</div>
+        <div class="ejs-tip">Setup steps: 1) emailjs.com मा free account बनाउनुस् 2) Email service add गर्नुस् (Gmail) 3) Template बनाउनुस् — variables: <code>to_email</code>, <code>otp_code</code>, <code>company</code> 4) IDs माथि paste गर्नुस्. <br>If you see <b>"Account not found"</b>, your Public Key/Service ID may belong to a deleted account — verify on emailjs.com.</div>
       </div>
 
       <!-- Nepali Calendar Preview -->
@@ -5086,34 +5137,61 @@ function saveSocial(){
 
 // ═══ EMAILJS SAVE ═══
 function saveEmailJS(){
-  D.emailjs={
-    sid:(document.getElementById('ejs-sid').value||'').trim(),
-    tid:(document.getElementById('ejs-tid').value||'').trim(),
-    pk:(document.getElementById('ejs-pk').value||'').trim()
-  };
+  const v = id => ((document.getElementById(id)||{}).value || '').trim();
+  const sid = v('ejs-sid');
+  const tid = v('ejs-tid');
+  const pk  = v('ejs-pk');
+  const admEm = v('ejs-adm-email');
+  const debug = !!(document.getElementById('ejs-debug')||{}).checked;
+
+  D.emailjs = D.emailjs || {};
+  D.emailjs.sid = sid;
+  D.emailjs.tid = tid;
+  D.emailjs.pk  = pk;
+  D.emailjs.debug = debug;
+
+  // If admin email entered in EmailJS card, sync to D.adminEmail + Company Info field
+  if(admEm){
+    D.adminEmail = admEm;
+    const sEm = document.getElementById('s-em');
+    if(sEm) sEm.value = admEm;
+  }
+
   saveData();
+
   // Re-init EmailJS with new credentials
   _ejsReady = false;
   _ejsLoading = null;
   if(typeof _ejsConfigValid === 'function' && _ejsConfigValid()){
-    _ejsInit().then(()=>console.log('EmailJS re-initialized after save')).catch(e=>console.warn('EmailJS init after save failed:', e && e.message));
+    _ejsInit().then(()=>console.log('[EmailJS] re-initialized after save')).catch(e=>console.warn('[EmailJS] init after save failed:', e && e.message));
   }
   showOk('ejs-ok');
 }
 async function sendTestOTP(){
   if(typeof _ejsConfigValid !== 'function' || !_ejsConfigValid()){
-    alert('⚠️ EmailJS configuration missing or invalid.\n\nFill in Service ID, Template ID, and Public Key first, click Save EmailJS, then try again.');
+    alert('⚠️ EmailJS setup invalid.\n\nPlease check Public Key, Service ID and Template ID, then click Save EmailJS.');
     return;
   }
   const otp = Math.floor(100000+Math.random()*900000);
   const email = (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
   try{
     await _ejsSend(otp, email);
-    alert('✅ Test OTP sent successfully!\n\nOTP: '+otp+'\nSent to: '+email+'\n\nCheck your inbox / spam folder.');
+    const isDebug = _isDebugMode();
+    let msg = '✅ Test OTP sent successfully!\n\nSent to: '+email+'\n\nCheck your inbox / spam folder.';
+    if(isDebug) msg += '\n\n[Debug] Test OTP: '+otp;
+    alert(msg);
   } catch(e){
     const errMsg = (e && (e.text || e.message)) || String(e) || 'Unknown error';
     console.error('Test OTP failed:', e);
-    alert('❌ Test failed: '+errMsg+'\n\nOTP (you can still use this): '+otp);
+    let hint = '';
+    if(errMsg.toLowerCase().includes('account not found')){
+      hint = '\n\nThis usually means:\n• Your EmailJS account was deleted\n• Public Key is from a different/missing account\n• Service ID belongs to another user\n\nVerify on emailjs.com → Account → Public Keys.';
+    } else if(errMsg.toLowerCase().includes('template')){
+      hint = '\n\nVerify Template ID on emailjs.com → Email Templates.';
+    } else if(errMsg.toLowerCase().includes('service')){
+      hint = '\n\nVerify Service ID on emailjs.com → Email Services.';
+    }
+    alert('❌ Test failed: '+errMsg+hint);
   }
 }
 
@@ -5258,6 +5336,8 @@ function populateSocial(){
   if(document.getElementById('ejs-sid')) document.getElementById('ejs-sid').value=ejs.sid||'service_bvxfr3q';
   if(document.getElementById('ejs-tid')) document.getElementById('ejs-tid').value=ejs.tid||'template_xs9x16u';
   if(document.getElementById('ejs-pk')) document.getElementById('ejs-pk').value=ejs.pk||'fpml8phlCtNwoA7rZ';
+  if(document.getElementById('ejs-debug')) document.getElementById('ejs-debug').checked = !!(ejs.debug);
+  if(document.getElementById('ejs-adm-email')) document.getElementById('ejs-adm-email').value = D.adminEmail || '';
   if(document.getElementById('s-vid')) document.getElementById('s-vid').value=D.animVideo||'';
 }
 
@@ -5753,42 +5833,70 @@ function _maskEmail(e){
   return u.substring(0,2) + '***@' + d;
 }
 
+function _isDebugMode(){
+  return !!(typeof D !== 'undefined' && D && D.emailjs && D.emailjs.debug);
+}
+
 async function _sendOTPEmail(email, otp){
   const demo = document.getElementById('otp-demo');
   if(demo) demo.style.display = 'block';
 
-  // Render OTP card with optional status footer
-  const showOTPCard = function(statusMsg, statusColor){
+  const isDebug = _isDebugMode();
+
+  // Setup-error card (shown when config is missing/invalid)
+  const showSetupError = function(msg){
+    if(!demo) return;
+    demo.innerHTML =
+       '<div style="padding:14px;background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.55);border-radius:12px;text-align:center;font-size:.74rem;color:#fbbf24;line-height:1.6;">'
+      +msg+'</div>';
+  };
+
+  // Production card — never shows the OTP code
+  const showProdCard = function(statusMsg, statusColor){
+    if(!demo) return;
+    demo.innerHTML =
+       '<div style="padding:14px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(59,130,246,.04));border:1.5px solid rgba(59,130,246,.4);border-radius:12px;text-align:center;">'
+      +'<div style="font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;font-weight:700;margin-bottom:6px">📨 OTP Email</div>'
+      +'<div style="font-size:.7rem;color:'+(statusColor||'#9ca3af')+';line-height:1.6;">'+(statusMsg||'')+'</div>'
+      +'</div>';
+  };
+
+  // Debug card — shows OTP on screen (only when debug mode enabled)
+  const showDebugCard = function(statusMsg, statusColor){
     if(!demo) return;
     demo.innerHTML =
        '<div style="padding:14px;background:linear-gradient(135deg,rgba(201,147,58,.18),rgba(201,147,58,.05));border:2px solid rgba(201,147,58,.5);border-radius:12px;text-align:center;">'
-      +'<div style="font-size:.62rem;opacity:.8;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:6px">📱 YOUR OTP CODE</div>'
+      +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:8px;">📱 YOUR OTP CODE <span style="background:rgba(220,38,38,.7);color:#fff;padding:2px 7px;border-radius:5px;font-size:.55rem;letter-spacing:1px;">DEBUG</span></div>'
       +'<div style="font-size:2.2rem;letter-spacing:10px;color:#f0d894;font-weight:800;font-family:monospace;text-shadow:0 0 12px rgba(201,147,58,.4);margin:4px 0">'+otp+'</div>'
       +'<div style="font-size:.58rem;opacity:.7;margin-top:4px">⏱️ Valid 5 min · Copy & paste above ↑</div>'
       +(statusMsg ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.62rem;color:'+(statusColor||'#9ca3af')+';line-height:1.5;">'+statusMsg+'</div>' : '')
       +'</div>';
   };
 
-  // 1) Validate config first — keep system, just show clear message
+  // 1) Validate config — clear setup message (no OTP shown)
   if(!_ejsConfigValid()){
-    showOTPCard('⚠️ EmailJS configuration missing or invalid.<br>Set Service ID, Template ID, Public Key in Admin → Settings → EmailJS.', '#f59e0b');
+    showSetupError('⚠️ <b>EmailJS setup invalid.</b><br>Please check Public Key, Service ID and Template ID in Admin → Settings → EmailJS.');
     return;
   }
 
-  // 2) Show OTP immediately so user is not blocked + status hint
-  showOTPCard('📤 Sending email to ' + _maskEmail(email) + '...', '#60a5fa');
+  // 2) Show "sending" state
+  if(isDebug) showDebugCard('📤 Sending email to ' + _maskEmail(email) + '...', '#60a5fa');
+  else        showProdCard('📤 Sending OTP to ' + _maskEmail(email) + '...', '#60a5fa');
 
-  // 3) Send via EmailJS, with descriptive errors
+  // 3) Try send via EmailJS
   try{
     const result = await _ejsSend(otp, email);
     console.log('[EmailJS] Send OK:', result && result.status, result && result.text);
-    showOTPCard('✅ Sent to ' + _maskEmail(email) + ' (check inbox / spam)', '#22c55e');
+    if(isDebug) showDebugCard('✅ Sent to ' + _maskEmail(email) + ' (check inbox / spam)', '#22c55e');
+    else        showProdCard('✅ OTP sent to ' + _maskEmail(email) + '.<br>Check your inbox / spam folder and enter the code above.', '#22c55e');
   } catch(e){
     const raw = (e && (e.text || e.message)) || String(e) || 'Unknown error';
     console.error('[EmailJS] Send failed:', e);
-    let userMsg = '⚠️ Email send failed — use OTP shown above.';
+    let userMsg = '⚠️ Email send failed. Please retry or contact admin.';
     const low = raw.toLowerCase();
-    if(low.includes('public key') || low.includes('public_key')){
+    if(low.includes('account not found')){
+      userMsg = '❌ <b>EmailJS Account not found.</b><br>The Public Key / Service ID belongs to a missing account. Verify your account on emailjs.com → Account → Public Keys, then update credentials in Admin → Settings → EmailJS.';
+    } else if(low.includes('public key') || low.includes('public_key')){
       userMsg = '❌ Invalid Public Key. Check Admin → Settings → EmailJS.';
     } else if(low.includes('service') && (low.includes('not found') || low.includes('invalid'))){
       userMsg = '❌ Invalid Service ID. Check Admin → Settings → EmailJS.';
@@ -5797,9 +5905,11 @@ async function _sendOTPEmail(email, otp){
     } else if(low.includes('network') || low.includes('failed to load') || low.includes('failed to fetch')){
       userMsg = '❌ Network error — cannot reach EmailJS. Check internet.';
     } else if(raw && raw !== 'Unknown error'){
-      userMsg = '⚠️ Email send failed: ' + raw.substring(0, 100) + '<br>Use OTP shown above.';
+      userMsg = '❌ Email send failed: ' + raw.substring(0, 120);
     }
-    showOTPCard(userMsg, '#f59e0b');
+    // In debug mode, fall back to showing OTP. In production, no OTP shown.
+    if(isDebug) showDebugCard(userMsg, '#ef4444');
+    else        showProdCard(userMsg, '#ef4444');
   }
 }
 
