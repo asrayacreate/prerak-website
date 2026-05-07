@@ -186,13 +186,13 @@ body.notop .nav{top:0;}
 .htog{display:none;width:36px;height:36px;background:rgba(212,166,74,.09);border:1px solid var(--line);border-radius:8px;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold);}
 @media(max-width:1000px){.nav-links{display:none;}.htog{display:flex;}.nav-links.mob{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--bg2);padding:11px;gap:3px;border-top:1px solid var(--line);z-index:99;}.nav-links.mob a{width:100%;padding:11px 13px;}}
 /* HERO */
-.hero{position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden;padding:78px 20px;}
+.hero{position:relative;min-height:65vh;max-height:78vh;display:flex;align-items:center;overflow:hidden;padding:60px 20px 50px;}
 .hbg{position:absolute;inset:0;background:radial-gradient(ellipse at 18% 28%,rgba(212,166,74,.06),transparent 50%),radial-gradient(ellipse at 82% 72%,rgba(196,80,44,.05),transparent 50%),var(--bg);z-index:0;}
 .hslides{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
-.hsl{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.8s ease-in-out;}
-.hsl.active{opacity:.27;animation:kb 9s ease-in-out infinite;}
-.hsl::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,12,10,.9) 0%,rgba(15,12,10,.5) 50%,rgba(15,12,10,.9) 100%);}
-@keyframes kb{0%,100%{transform:scale(1.05);}50%{transform:scale(1.17) translate(-2%,-2%);}}
+.hsl{position:absolute;inset:0;background-size:cover;background-position:center center;background-repeat:no-repeat;opacity:0;transition:opacity 1.5s ease-in-out;will-change:opacity,transform;}
+.hsl.active{opacity:.32;animation:kbHero 14s ease-in-out infinite;}
+.hsl::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,12,10,.55) 0%,rgba(15,12,10,.35) 45%,rgba(15,12,10,.78) 100%);}
+@keyframes kb{0%,100%{transform:scale(1.05);}50%{transform:scale(1.17) translate(-2%,-2%);}}@keyframes kbHero{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
 .hgrain{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 .h-in{position:relative;z-index:3;max-width:1320px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.3fr .9fr;gap:48px;align-items:center;}
 .h-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(212,166,74,.09);border:1px solid var(--lines);padding:5px 14px;border-radius:28px;font-size:.64rem;font-weight:700;letter-spacing:2px;color:var(--gl);text-transform:uppercase;margin-bottom:19px;}
@@ -228,7 +228,7 @@ body.notop .nav{top:0;}
 .hdots{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:6px;}
 .hdot{width:7px;height:7px;border-radius:50%;background:rgba(245,237,224,.2);cursor:pointer;transition:all .3s;}
 .hdot.active{background:var(--gl);width:22px;border-radius:3px;}
-@media(max-width:900px){.hero{min-height:auto;padding:58px 16px;}.h-in{grid-template-columns:1fr;gap:22px;}.hcard{order:2;}.h-stats{gap:15px;}.hst .n{font-size:1.7rem;}}
+@media(max-width:900px){.hero{min-height:48vh;max-height:none;padding:40px 16px 32px;}.h-in{grid-template-columns:1fr;gap:18px;}.hcard{order:2;}.h-stats{gap:15px;}.hst .n{font-size:1.7rem;}}@media(max-width:520px){.hero{min-height:46vh;padding:34px 14px 28px;}}
 /* COMMON */
 .sec{padding:84px 20px;position:relative;}
 .si{max-width:1320px;margin:0 auto;}
@@ -4655,11 +4655,13 @@ function startOTPCountdown(){
   },1000);
 }
 function resendOTP(){
-  otpCode=String(Math.floor(100000+Math.random()*900000));
-  document.getElementById('otp-demo').innerHTML=`🔔 <b>New OTP:</b> <b style="color:#f4c869;font-size:1.1rem;">${otpCode}</b>`;
+  otpCode = String(Math.floor(100000+Math.random()*900000));
   startOTPCountdown();
-  [0,1,2,3,4,5].forEach(i=>document.getElementById(`o${i}`).value='');
-  document.getElementById('o0').focus();
+  [0,1,2,3,4,5].forEach(i=>{ const el=document.getElementById('o'+i); if(el) el.value=''; });
+  const o0=document.getElementById('o0'); if(o0) o0.focus();
+  // Actually re-send via EmailJS (uses same path as initial send)
+  const email = (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  _sendOTPEmail(email, otpCode);
 }
 function backToStep1(){
   document.getElementById('step2').classList.remove('active');
@@ -5085,15 +5087,34 @@ function saveSocial(){
 // ═══ EMAILJS SAVE ═══
 function saveEmailJS(){
   D.emailjs={
-    sid:document.getElementById('ejs-sid').value,
-    tid:document.getElementById('ejs-tid').value,
-    pk:document.getElementById('ejs-pk').value
+    sid:(document.getElementById('ejs-sid').value||'').trim(),
+    tid:(document.getElementById('ejs-tid').value||'').trim(),
+    pk:(document.getElementById('ejs-pk').value||'').trim()
   };
-  saveData(); showOk('ejs-ok');
+  saveData();
+  // Re-init EmailJS with new credentials
+  _ejsReady = false;
+  _ejsLoading = null;
+  if(typeof _ejsConfigValid === 'function' && _ejsConfigValid()){
+    _ejsInit().then(()=>console.log('EmailJS re-initialized after save')).catch(e=>console.warn('EmailJS init after save failed:', e && e.message));
+  }
+  showOk('ejs-ok');
 }
-function sendTestOTP(){
-  const otp=Math.floor(100000+Math.random()*900000);
-  alert('Test OTP: '+otp+'\n\nIn production with EmailJS configured, this would be sent to: '+D.adminEmail);
+async function sendTestOTP(){
+  if(typeof _ejsConfigValid !== 'function' || !_ejsConfigValid()){
+    alert('⚠️ EmailJS configuration missing or invalid.\n\nFill in Service ID, Template ID, and Public Key first, click Save EmailJS, then try again.');
+    return;
+  }
+  const otp = Math.floor(100000+Math.random()*900000);
+  const email = (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  try{
+    await _ejsSend(otp, email);
+    alert('✅ Test OTP sent successfully!\n\nOTP: '+otp+'\nSent to: '+email+'\n\nCheck your inbox / spam folder.');
+  } catch(e){
+    const errMsg = (e && (e.text || e.message)) || String(e) || 'Unknown error';
+    console.error('Test OTP failed:', e);
+    alert('❌ Test failed: '+errMsg+'\n\nOTP (you can still use this): '+otp);
+  }
 }
 
 // ═══ PASSWORD FULL (with current check) ═══
@@ -5627,71 +5648,160 @@ setInterval(updateAdminDateTime, 60000);
 document.addEventListener('DOMContentLoaded', ()=>setTimeout(updateAdminDateTime, 500));
 
 
-// ═══ SEND OTP (with EmailJS + fallback display) ═══
+// ═══ EMAILJS CORE — robust init, validation, send ═══
+let _ejsReady = false;
+let _ejsLoading = null;
+
+function _ejsLoadSDK(){
+  if(window.emailjs) return Promise.resolve(window.emailjs);
+  if(_ejsLoading) return _ejsLoading;
+  _ejsLoading = new Promise((resolve, reject)=>{
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.async = true;
+    s.onload = ()=>{ if(window.emailjs) resolve(window.emailjs); else reject(new Error('EmailJS SDK loaded but global not found')); };
+    s.onerror = ()=>{ _ejsLoading = null; reject(new Error('Failed to load EmailJS SDK from CDN. Check internet connection.')); };
+    document.head.appendChild(s);
+  });
+  return _ejsLoading;
+}
+
+function _ejsConfig(){
+  const ejs = (typeof D !== 'undefined' && D && D.emailjs) || {};
+  return {
+    sid: String(ejs.sid || 'service_bvxfr3q').trim(),
+    tid: String(ejs.tid || 'template_xs9x16u').trim(),
+    pk:  String(ejs.pk  || 'fpml8phlCtNwoA7rZ').trim()
+  };
+}
+
+function _ejsConfigValid(cfg){
+  cfg = cfg || _ejsConfig();
+  if(!cfg.sid || !cfg.tid || !cfg.pk) return false;
+  if(!cfg.sid.startsWith('service_')) return false;
+  if(!cfg.tid.startsWith('template_')) return false;
+  if(cfg.pk.length < 10) return false;
+  return true;
+}
+
+async function _ejsInit(){
+  const cfg = _ejsConfig();
+  if(!_ejsConfigValid(cfg)){
+    throw new Error('EmailJS configuration missing or invalid.');
+  }
+  await _ejsLoadSDK();
+  if(window.emailjs && window.emailjs.init){
+    try { window.emailjs.init({ publicKey: cfg.pk }); }
+    catch(e){
+      // older API (string arg)
+      try { window.emailjs.init(cfg.pk); } catch(e2){ /* ignore */ }
+    }
+    _ejsReady = true;
+  }
+  return cfg;
+}
+
+async function _ejsSend(otp, email){
+  const cfg = await _ejsInit();
+  // Send with comprehensive parameter set so most templates work
+  return await window.emailjs.send(cfg.sid, cfg.tid, {
+    to_email: email,
+    email: email,
+    user_email: email,
+    recipient: email,
+    otp_code: String(otp),
+    passcode: String(otp),
+    otp: String(otp),
+    code: String(otp),
+    company: 'Prerak Multipurpose Pvt. Ltd.',
+    company_name: 'Prerak Multipurpose Pvt. Ltd.',
+    time: '5 minutes',
+    expiry: '5 minutes',
+    message: 'Your OTP code is: ' + otp + '. Valid for 5 minutes.',
+    subject: 'PRERAK Admin OTP: ' + otp
+  });
+}
+
+// Pre-load SDK + init at startup (best-effort, non-blocking)
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(_ejsConfigValid()){
+      _ejsInit()
+        .then(()=>console.log('[EmailJS] Pre-initialized'))
+        .catch(e=>console.warn('[EmailJS] Pre-init failed:', e && e.message));
+    } else {
+      console.warn('[EmailJS] Config invalid — set values in Admin → Settings → EmailJS.');
+    }
+  }, 1500);
+});
+
+// ═══ SEND OTP (with EmailJS + on-screen fallback) ═══
 function sendOTP(code){
   startOTPCountdown();
-  const email = D.adminEmail || 'asrayacreate.ac@gmail.com';
+  const email = (typeof D !== 'undefined' && D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
   const demo = document.getElementById('otp-demo');
-  if(demo) {
+  if(demo){
     demo.style.display = 'block';
     demo.innerHTML = '<div style="text-align:center;color:#60a5fa;font-size:.72rem;">📤 Generating OTP...</div>';
   }
   _sendOTPEmail(email, code);
 }
-function _maskEmail(e){ if(!e||!e.includes('@'))return e||'admin email'; const[u,d]=e.split('@'); return u.substring(0,2)+'***@'+d; }
+
+function _maskEmail(e){
+  if(!e || !e.includes('@')) return e || 'admin email';
+  const [u,d] = e.split('@');
+  return u.substring(0,2) + '***@' + d;
+}
+
 async function _sendOTPEmail(email, otp){
   const demo = document.getElementById('otp-demo');
   if(demo) demo.style.display = 'block';
 
-  const ejs = D.emailjs || {};
-  const sid = ejs.sid || 'service_bvxfr3q';
-  const tid = ejs.tid || 'template_xs9x16u';
-  const pk  = ejs.pk  || 'fpml8phlCtNwoA7rZ';
-
-  // ALWAYS show OTP on screen first (immediate fallback) so user never waits
+  // Render OTP card with optional status footer
   const showOTPCard = function(statusMsg, statusColor){
     if(!demo) return;
-    demo.innerHTML = 
+    demo.innerHTML =
        '<div style="padding:14px;background:linear-gradient(135deg,rgba(201,147,58,.18),rgba(201,147,58,.05));border:2px solid rgba(201,147,58,.5);border-radius:12px;text-align:center;">'
       +'<div style="font-size:.62rem;opacity:.8;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:6px">📱 YOUR OTP CODE</div>'
       +'<div style="font-size:2.2rem;letter-spacing:10px;color:#f0d894;font-weight:800;font-family:monospace;text-shadow:0 0 12px rgba(201,147,58,.4);margin:4px 0">'+otp+'</div>'
       +'<div style="font-size:.58rem;opacity:.7;margin-top:4px">⏱️ Valid 5 min · Copy & paste above ↑</div>'
-      +(statusMsg ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.62rem;color:'+(statusColor||'#9ca3af')+';">'+statusMsg+'</div>' : '')
+      +(statusMsg ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.62rem;color:'+(statusColor||'#9ca3af')+';line-height:1.5;">'+statusMsg+'</div>' : '')
       +'</div>';
   };
 
-  // Show OTP immediately (so user can use it right away)
-  showOTPCard('📤 Also trying to send to ' + _maskEmail(email) + '...', '#60a5fa');
+  // 1) Validate config first — keep system, just show clear message
+  if(!_ejsConfigValid()){
+    showOTPCard('⚠️ EmailJS configuration missing or invalid.<br>Set Service ID, Template ID, Public Key in Admin → Settings → EmailJS.', '#f59e0b');
+    return;
+  }
 
-  // Try EmailJS in background
-  try {
-    if(!window.emailjs) {
-      await new Promise((res,rej)=>{ 
-        const s=document.createElement('script'); 
-        s.src='https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'; 
-        s.onload=res; 
-        s.onerror=rej; 
-        document.head.appendChild(s); 
-      });
+  // 2) Show OTP immediately so user is not blocked + status hint
+  showOTPCard('📤 Sending email to ' + _maskEmail(email) + '...', '#60a5fa');
+
+  // 3) Send via EmailJS, with descriptive errors
+  try{
+    const result = await _ejsSend(otp, email);
+    console.log('[EmailJS] Send OK:', result && result.status, result && result.text);
+    showOTPCard('✅ Sent to ' + _maskEmail(email) + ' (check inbox / spam)', '#22c55e');
+  } catch(e){
+    const raw = (e && (e.text || e.message)) || String(e) || 'Unknown error';
+    console.error('[EmailJS] Send failed:', e);
+    let userMsg = '⚠️ Email send failed — use OTP shown above.';
+    const low = raw.toLowerCase();
+    if(low.includes('public key') || low.includes('public_key')){
+      userMsg = '❌ Invalid Public Key. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('service') && (low.includes('not found') || low.includes('invalid'))){
+      userMsg = '❌ Invalid Service ID. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('template') && (low.includes('not found') || low.includes('invalid'))){
+      userMsg = '❌ Invalid Template ID. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('network') || low.includes('failed to load') || low.includes('failed to fetch')){
+      userMsg = '❌ Network error — cannot reach EmailJS. Check internet.';
+    } else if(raw && raw !== 'Unknown error'){
+      userMsg = '⚠️ Email send failed: ' + raw.substring(0, 100) + '<br>Use OTP shown above.';
     }
-    if(window.emailjs && window.emailjs.init) window.emailjs.init({publicKey:pk});
-    await window.emailjs.send(sid, tid, {
-      email: email,
-      to_email: email,
-      passcode: otp,
-      otp_code: otp,
-      time: '5 minutes',
-      company: 'Prerak Multipurpose Pvt. Ltd.',
-      message: 'Your OTP is: ' + otp + '. Valid for 5 minutes.'
-    });
-    showOTPCard('✅ Also emailed to ' + _maskEmail(email) + ' (check inbox/spam)', '#22c55e');
-  } catch(e) { 
-    console.log('EmailJS failed (using on-screen OTP):', e); 
-    showOTPCard('💡 Email send failed — use OTP shown above', '#f59e0b');
+    showOTPCard(userMsg, '#f59e0b');
   }
 }
-
-
 
 // ═══ QUOTE MODAL ═══
 let _qmPlan = '';
