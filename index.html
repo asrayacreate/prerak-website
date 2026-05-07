@@ -1204,35 +1204,59 @@ body.hide-vc #visiting-card { display:none; }
 </section>
 
 <!-- ANIMATION / BRAND VIDEO SECTION -->
-<section class="sec anim-sec" id="brand-video" style="display:none;">
-  <div class="si">
+<!-- ═══ SERVICE VIDEOS GALLERY ═══ -->
+<section class="sec" id="brand-video" style="padding:80px 20px;background:linear-gradient(180deg,var(--bg3),var(--bg));position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,166,74,.06),transparent 70%);pointer-events:none;"></div>
+  <div class="si" style="position:relative;z-index:2;">
     <div class="sh reveal">
-      <div class="sey en">Brand Story</div><div class="sey ne np">ब्रान्ड कथा</div>
-      <h2 class="stl en">Our <em>Animation Story</em></h2>
-      <h2 class="stl ne np">हाम्रो <em>एनिमेशन कथा</em></h2>
-      <p class="sdesc en">Watch our brand story video — showing 10+ years of building dreams in Nepal.</p>
-      <p class="sdesc ne np">हाम्रो ब्रान्ड कथा भिडियो हेर्नुस् — नेपालमा सपना बनाउने १०+ वर्षको यात्रा।</p>
+      <div class="sey en">Service Videos</div><div class="sey ne np">सेवा भिडियोहरू</div>
+      <h2 class="stl en">Watch Our <em>Service Works</em></h2>
+      <h2 class="stl ne np">हाम्रो <em>सेवा कार्यहरू</em> हेर्नुस्</h2>
+      <p class="sdesc en">All our construction services in one place — click any video to play.</p>
+      <p class="sdesc ne np">हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।</p>
     </div>
-    <div class="anim-card reveal">
-      <div class="anim-ph" id="animPh" onclick="animPhClick()">
-        <div class="anim-ph-inner" id="animPhInner">
-          <div class="anim-ph-ico">🎬</div>
-          <div class="anim-ph-t en">Our Work &amp; Service Videos</div>
-          <div class="anim-ph-t ne np" style="font-family:'Noto Sans Devanagari',serif">हाम्रा सेवाका भिडियोहरू</div>
-          <div class="anim-ph-s en">Add your cartoon animation video here.<br>Admin → Contact → Video URL</div>
-          <div class="anim-ph-s ne np" style="font-family:'Noto Sans Devanagari',serif">Admin → Contact → Video URL मा गई भिडियो थप्नुस्।</div>
+
+    <!-- ═══ FEATURED VIDEO PLAYER (BIG TOP) ═══ -->
+    <div id="vg-featured-wrap" class="reveal" style="max-width:720px;margin:0 auto 26px;background:linear-gradient(155deg,var(--bg2),var(--bg3));border:1.5px solid var(--lines);border-radius:18px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,.4);">
+      <div id="fv-player" style="position:relative;width:100%;aspect-ratio:16/9;background:#0a0806;overflow:hidden;">
+        <img id="fv-thumb" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200" alt="Featured" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
+        <!-- BIG play button -->
+        <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
+          <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
+        </button>
+        <!-- Now Playing label -->
+        <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
+          <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>NOW PLAYING
+        </span>
+        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
+        <!-- Bottom info overlay -->
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));">
+          <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+            <span id="fv-cat">🏗️ Construction</span>
+            <span style="opacity:.5;">·</span>
+            <span id="fv-dur">2:30</span>
+          </div>
+          <h3 id="fv-title" style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:5px;">Building Construction</h3>
+          <p id="fv-desc" style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;">Complete building construction — RCC, masonry &amp; premium finishing.</p>
         </div>
       </div>
-      <div class="anim-tags">
-        <span class="anim-tag active" onclick="setAnimType('youtube')">▶️ YouTube</span>
-        <span class="anim-tag" onclick="setAnimType('mp4')">📁 MP4 Upload</span>
-        <span class="anim-tag" onclick="setAnimType('kling')">🤖 Kling AI</span>
-        <span class="anim-tag" onclick="setAnimType('pika')">✨ Pika Labs</span>
+    </div>
+
+    <!-- ═══ SERVICE VIDEO GRID ═══ -->
+    <div class="reveal" data-d="1">
+      <div style="text-align:center;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px;">
+        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
+        <span class="en">All 12 Service Videos</span><span class="ne np">सबै १२ सेवा भिडियोहरू</span>
+        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
       </div>
-      <div class="anim-acts">
-        <button class="anim-act aa-admin" onclick="openLogin()">⚙️ <span class="en">Admin — Add Video</span><span class="ne np">Admin — भिडियो थप्नुस्</span></button>
-        <a href="https://wa.me/9779801069733?text=नमस्ते! Video section bारे कुरा गर्नु छ।" target="_blank" rel="noopener" class="anim-act aa-wa">💬 <span class="en">Ask Us</span><span class="ne np">सोध्नुस्</span></a>
-      </div>
+      <div id="svid-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-width:980px;margin:0 auto;"></div>
+    </div>
+
+    <!-- WhatsApp / Admin CTA -->
+    <div class="reveal" data-d="2" style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+      <a href="https://wa.me/9779801069733?text=नमस्ते! Service video bare jankaari chahiyo." target="_blank" rel="noopener" class="btn btn-w">💬 <span class="en">Ask About Services</span><span class="ne np">सेवा बारे सोध्नुस्</span></a>
+      <a href="#contact" class="btn btn-g">📞 <span class="en">Free Site Visit</span><span class="ne np">नि:शुल्क साइट भिजिट</span></a>
     </div>
   </div>
 </section>
@@ -2125,6 +2149,7 @@ body.hide-vc #visiting-card { display:none; }
       <div class="ap-ni" onclick="apSec('vcard')"><span>🎴</span> Visiting Card</div>
       <div class="ap-ni" onclick="apSec('video')"><span>🎬</span> Brand Video</div>
       <div class="ap-ni" onclick="apSec('components')"><span>🧩</span> Components</div>
+      <div class="ap-ni" onclick="apSec('finalsetup')"><span>🚀</span> Final Setup</div>
       <div class="ap-ni" onclick="apSec('settings')"><span>⚙️</span> Settings</div>
     </div>
     <div class="ap-ft">
@@ -2205,6 +2230,36 @@ body.hide-vc #visiting-card { display:none; }
 
 /* Video play button pulse */
 @keyframes playPulse{0%,100%{transform:scale(1);box-shadow:0 4px 12px rgba(220,38,38,.5);}50%{transform:scale(1.1);box-shadow:0 6px 20px rgba(220,38,38,.7),0 0 0 6px rgba(220,38,38,.15);}}
+
+/* Service Video Gallery */
+.svid-card{background:linear-gradient(155deg,var(--bg2),var(--bg3));border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
+.svid-card:hover{transform:translateY(-4px);border-color:var(--lines);box-shadow:0 14px 32px rgba(0,0,0,.4);}
+.svid-card.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,166,74,.3),0 14px 32px rgba(212,166,74,.2);}
+.svid-card.active::after{content:"▶ NOW PLAYING";position:absolute;top:8px;left:8px;background:#dc2626;color:#fff;font-size:.5rem;font-weight:800;padding:3px 8px;border-radius:8px;letter-spacing:1px;z-index:5;animation:pu 1.5s infinite;}
+.svid-thumb{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#0a0806;}
+.svid-thumb img{width:100%;height:100%;object-fit:cover;opacity:.78;transition:transform .5s,opacity .3s;}
+.svid-card:hover .svid-thumb img{transform:scale(1.07);opacity:.9;}
+.svid-thumb::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.7));z-index:1;}
+.svid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:42px;height:42px;border-radius:50%;background:rgba(220,38,38,.92);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.95rem;box-shadow:0 4px 12px rgba(0,0,0,.4);z-index:2;border:2px solid rgba(255,255,255,.2);}
+.svid-card:hover .svid-play{background:#dc2626;transform:translate(-50%,-50%) scale(1.1);}
+.svid-dur{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.85);color:#fff;font-size:.55rem;font-weight:700;padding:2px 6px;border-radius:5px;z-index:3;}
+.svid-cat{position:absolute;bottom:6px;left:6px;background:rgba(212,166,74,.92);color:var(--bg);font-size:.5rem;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:.8px;z-index:3;text-transform:uppercase;}
+.svid-info{padding:10px 13px;}
+.svid-info-title{font-family:var(--fd);font-size:.92rem;font-weight:700;color:var(--paper);line-height:1.2;margin-bottom:3px;display:flex;align-items:center;gap:6px;}
+.svid-info-sub{font-size:.62rem;color:rgba(245,237,224,.5);line-height:1.4;}
+[data-t="corporate"] .svid-card{background:#fff;}
+[data-t="corporate"] .svid-info-title{color:#111827;}
+[data-t="corporate"] .svid-info-sub{color:rgba(17,24,39,.55);}
+@media(max-width:600px){
+  #svid-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important;}
+  .svid-info-title{font-size:.78rem;}
+}
+
+/* Slideshow video zoom (Ken Burns effect) */
+@keyframes ssZoom{0%{transform:scale(1) translate(0,0);}100%{transform:scale(1.08) translate(-1%,-1%);}}
+
+/* Upload area attention animation */
+@keyframes uploadPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.15);}50%{box-shadow:0 0 0 8px rgba(220,38,38,.05);}}
 </style>
           
           <!-- Big Beautiful Nepal Flag SVG (Official proportions) -->
@@ -2657,9 +2712,24 @@ body.hide-vc #visiting-card { display:none; }
           <textarea id="se-gal-urls" rows="3" placeholder="https://images.unsplash.com/photo-xxx?w=400&#10;https://..."></textarea>
         </div>
         <div class="afg">
-          <label>🎬 Service Video / Animation URL (YouTube, MP4 or Kling AI)</label>
-          <input type="text" id="se-video" placeholder="https://www.youtube.com/watch?v=... or .mp4 URL">
-          <div style="font-size:.68rem;color:#9ca3af;margin-top:4px;">Hamro sabai service ko video/animation rakha — visitors lai dekhaaunu</div>
+          <label>🎬 Service Video</label>
+          <!-- Image-style upload area -->
+          <div class="proj-upload-area" onclick="document.getElementById('se-video-file').click()" style="cursor:pointer;padding:24px 16px;text-align:center;margin-top:6px;">
+            <input type="file" id="se-video-file" accept="video/*" style="display:none;" onchange="adminUploadServiceVideo(this)">
+            <div style="font-size:2.5rem;margin-bottom:8px;">📹</div>
+            <div style="font-size:.84rem;font-weight:700;color:#111827;">Click to upload video</div>
+            <div style="font-size:.68rem;color:#9ca3af;margin-top:4px;">All video formats · Any size (browser storage)</div>
+          </div>
+          <!-- Video preview -->
+          <div id="se-video-preview" style="margin-top:10px;display:none;"></div>
+          <!-- Or paste URL -->
+          <div style="margin-top:10px;">
+            <div style="font-size:.62rem;color:#9ca3af;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px;">Or Paste URL (YouTube / MP4 link)</div>
+            <input type="text" id="se-video" placeholder="https://www.youtube.com/watch?v=... or ./video.mp4" onchange="adminUpdateVideoPreview()">
+          </div>
+          <div id="se-video-status" style="font-size:.7rem;margin-top:6px;color:#6b7280;line-height:1.6;">
+            💡 <b>Tip:</b> Thulo file ko lagi YouTube upload garera link paste garnus.
+          </div>
         </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
           <button class="afsv" onclick="adminSaveService()" style="flex:1;">💾 Save Service</button>
@@ -2829,8 +2899,32 @@ body.hide-vc #visiting-card { display:none; }
       <div class="ap-card" style="border-left:3px solid #dc2626;background:linear-gradient(145deg,#fff5f5,#fff);">
         <h3>📺 Main Brand Video</h3>
         <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">This video appears in the hero section of your website. Only admins can change it!</p>
+        <!-- File Upload Area (image-style) -->
+        <div class="afg">
+          <label style="display:flex;align-items:center;gap:6px;font-size:.78rem !important;color:#dc2626 !important;font-weight:800 !important;">
+            <span style="background:#dc2626;color:#fff;font-size:.55rem;padding:3px 8px;border-radius:10px;letter-spacing:1.5px;">★ NEW</span>
+            📁 UPLOAD MP4 VIDEO FILE FROM YOUR COMPUTER
+          </label>
+          <div class="proj-upload-area" onclick="document.getElementById('bv-file').click()" style="cursor:pointer;padding:38px 20px;text-align:center;margin-top:8px;background:linear-gradient(145deg,#fef2f2,#fee2e2);border:3px dashed #dc2626 !important;border-radius:14px;transition:all .2s;animation:uploadPulse 2.5s infinite;" onmouseover="this.style.background='linear-gradient(145deg,#fee2e2,#fecaca)';this.style.transform='scale(1.01)'" onmouseout="this.style.background='linear-gradient(145deg,#fef2f2,#fee2e2)';this.style.transform=''">
+            <input type="file" id="bv-file" accept="video/*" style="display:none;" onchange="adminUploadBrandVideo(this)">
+            <div style="font-size:3.5rem;margin-bottom:10px;animation:bou 2s ease-in-out infinite;">📹</div>
+            <div style="font-size:1.05rem;font-weight:800;color:#dc2626;margin-bottom:5px;">👆 CLICK HERE TO UPLOAD VIDEO</div>
+            <div style="font-size:.78rem;font-weight:700;color:#7f1d1d;">MP4 · WebM · OGG — Any size supported</div>
+            <div style="font-size:.65rem;color:#991b1b;margin-top:6px;font-style:italic;">📱 Mobile bata aafnai video upload garna sakinchha</div>
+          </div>
+          <div id="bv-upload-status" style="font-size:.78rem;margin-top:8px;color:#6b7280;line-height:1.6;display:none;padding:10px;border-radius:8px;background:#f9fafb;"></div>
+          <!-- Video preview after upload -->
+          <div id="bv-preview" style="margin-top:10px;display:none;text-align:center;"></div>
+        </div>
+        
+        <div style="text-align:center;font-size:.65rem;color:#9ca3af;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:6px 0;display:flex;align-items:center;gap:9px;">
+          <span style="flex:1;height:1px;background:#e5e7eb;"></span>
+          <span>OR</span>
+          <span style="flex:1;height:1px;background:#e5e7eb;"></span>
+        </div>
+        
         <div class="afr">
-          <div class="afg"><label>🎥 Video URL</label><input type="text" id="bv-url" placeholder="https://youtube.com/embed/VIDEO_ID OR direct .mp4 link"></div>
+          <div class="afg"><label>🎥 Video URL (paste link)</label><input type="text" id="bv-url" placeholder="https://youtube.com/embed/VIDEO_ID OR direct .mp4 link" oninput="adminBrandVideoPreview()"></div>
           <div class="afg"><label>Video Type</label>
             <select id="bv-type">
               <option value="youtube">YouTube Embed</option>
@@ -2993,7 +3087,146 @@ body.hide-vc #visiting-card { display:none; }
       </div>
     </div>
 
-    <div class="ap-sec" id="sec-settings">
+    <!-- VIDEO GALLERY ADMIN -->
+    <div class="ap-sec" id="sec-vidgallery">
+      <div class="ap-hdr"><h2>🎥 Video Gallery</h2><p>Manage the Service Videos section — title, size, demo video, per-service videos</p></div>
+
+      <!-- Section Visibility + Title -->
+      <div class="ap-card">
+        <h3>📝 Section Settings</h3>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:9px 11px;">
+          <input type="checkbox" id="vg-show" style="width:18px;height:18px;cursor:pointer;" checked>
+          <label for="vg-show" style="font-size:.78rem;font-weight:700;color:#111827;cursor:pointer;flex:1;">✅ Show Video Gallery Section on Website</label>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Eyebrow (EN)</label><input type="text" id="vg-eye-en" placeholder="Service Videos"></div>
+          <div class="afg"><label>शीर्ष (NE)</label><input type="text" id="vg-eye-ne" placeholder="सेवा भिडियोहरू"></div>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Title (EN)</label><input type="text" id="vg-title-en" placeholder="Watch Our Service Works"></div>
+          <div class="afg"><label>शीर्षक (NE)</label><input type="text" id="vg-title-ne" placeholder="हाम्रो सेवा कार्यहरू हेर्नुस्"></div>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Description (EN)</label><textarea id="vg-desc-en" rows="2" placeholder="All our construction services in one place..."></textarea></div>
+          <div class="afg"><label>विवरण (NE)</label><textarea id="vg-desc-ne" rows="2" placeholder="हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- Player Size -->
+      <div class="ap-card">
+        <h3>📐 Featured Player Size</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px;">
+          <button class="cbtn" onclick="vgSetSize(560)" style="width:100%;">📱 Small (560px)</button>
+          <button class="cbtn" onclick="vgSetSize(720)" style="width:100%;">💻 Medium (720px)</button>
+          <button class="cbtn" onclick="vgSetSize(900)" style="width:100%;">🖥️ Large (900px)</button>
+          <button class="cbtn" onclick="vgSetSize(1100)" style="width:100%;">🎬 Cinema (1100px)</button>
+        </div>
+        <div class="afg"><label>Custom Width (px)</label>
+          <input type="number" id="vg-width" placeholder="720" min="400" max="1400" step="20">
+          <div style="font-size:.65rem;color:#9ca3af;margin-top:3px;">Yo player ko maximum width — Recommended: 720px</div>
+        </div>
+      </div>
+
+      <!-- Demo Video -->
+      <div class="ap-card" style="border-left:4px solid #c9933a;">
+        <h3>🎬 Default Demo Video</h3>
+        <p style="font-size:.74rem;color:#6b7280;margin-bottom:12px;line-height:1.6;">Yo URL chha vane je service ma video URL haina, tyo service ko play button click garda yo demo video plays. Khali rakheko vane Big Buck Bunny sample plays.</p>
+        <div class="afg"><label>Demo Video URL (YouTube / MP4)</label>
+          <input type="text" id="vg-demo-url" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value='https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'">📦 Use Big Buck Bunny</button>
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value='https://www.youtube.com/watch?v=u-FrW3KX-Lo'">🏗️ Sample Construction</button>
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value=''">🗑️ Clear</button>
+        </div>
+      </div>
+
+      <!-- Per-Service Videos Quick Manage -->
+      <div class="ap-card">
+        <h3>🎞️ Per-Service Video URLs</h3>
+        <p style="font-size:.74rem;color:#6b7280;margin-bottom:12px;line-height:1.6;">Har service ko aafnu video URL set garna sakinchha. Empty rakheko service ma demo video plays.</p>
+        <div id="vg-svc-list" style="display:flex;flex-direction:column;gap:8px;max-height:480px;overflow-y:auto;"></div>
+        <button class="cbtn" onclick="vgSaveAllSvcVideos()" style="margin-top:10px;width:100%;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;padding:11px;font-weight:700;">💾 Save All Service Videos</button>
+      </div>
+
+      <!-- Save All -->
+      <div class="ap-card" style="background:linear-gradient(135deg,#fff,#f0fff4);border:1.5px solid rgba(22,163,74,.3);">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button class="afsv" onclick="saveVideoGallery()" style="font-size:.85rem;padding:13px 28px;">💾 Save All Settings</button>
+          <button class="cbtn" onclick="resetVideoGallery()">↻ Reset to Defaults</button>
+          <button class="abtn" onclick="exitAdmin();setTimeout(()=>document.getElementById('brand-video')?.scrollIntoView({behavior:'smooth'}),200)">👁 Preview Live</button>
+          <span class="afok" id="vg-ok">✅ Saved!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL SETUP / SYSTEM STATUS -->
+    <div class="ap-sec" id="sec-finalsetup">
+      <div class="ap-hdr"><h2>🚀 Final Setup & System</h2><p>Backup, restore, system status — final project completion</p></div>
+
+      <!-- System Status -->
+      <div class="ap-card" style="border-left:4px solid #16a34a;background:linear-gradient(145deg,#f0fdf4,#fff);">
+        <h3>✅ System Status</h3>
+        <div id="sys-status-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:10px;">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Backup & Restore -->
+      <div class="ap-card" style="border-left:4px solid #3b82f6;">
+        <h3>💾 Backup & Restore</h3>
+        <p style="font-size:.78rem;color:#6b7280;margin-bottom:14px;">Save all your settings (notices, services, projects, contact info, logos, brand video URLs etc.) as a JSON backup file. Restore anytime.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="afsv" onclick="finalExportData()" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);">📥 Download Backup (JSON)</button>
+          <button class="cbtn" onclick="document.getElementById('restore-file').click()">📤 Restore from Backup</button>
+          <input type="file" id="restore-file" accept=".json" style="display:none;" onchange="finalImportData(this)">
+          <span class="afok" id="backup-ok">✅ Done!</span>
+        </div>
+      </div>
+
+      <!-- Storage / Cache -->
+      <div class="ap-card" style="border-left:4px solid #f59e0b;">
+        <h3>🗄️ Storage & Cache</h3>
+        <div id="storage-info" style="font-size:.78rem;color:#374151;line-height:1.8;margin-bottom:12px;">Loading...</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="abtn" onclick="finalClearVideos()">🎬 Clear All Uploaded Videos</button>
+          <button class="dbtn" onclick="finalResetAll()" style="background:rgba(220,38,38,.1);">⚠️ Reset Everything</button>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="ap-card" style="border-left:4px solid #c9933a;">
+        <h3>⚡ Quick Actions</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">
+          <button class="cbtn" onclick="apSec('hero')">🦸 Edit Hero Section</button>
+          <button class="cbtn" onclick="apSec('svcs')">🔧 Manage Services</button>
+          <button class="cbtn" onclick="apSec('video')">🎬 Brand Video</button>
+          <button class="cbtn" onclick="apSec('contact')">📞 Contact Info</button>
+          <button class="cbtn" onclick="apSec('settings')">⚙️ Settings & Logo</button>
+          <button class="abtn" onclick="exitAdmin()">👁️ View Live Website</button>
+        </div>
+      </div>
+
+      <!-- Help -->
+      <div class="ap-card" style="background:linear-gradient(145deg,#fef3c7,#fff);border-left:4px solid #f59e0b;">
+        <h3>📖 Quick Help</h3>
+        <div style="font-size:.78rem;color:#374151;line-height:1.9;">
+          <b>🎬 Video Upload Issues?</b><br>
+          • Video file size matter chha — large files slow load garcha<br>
+          • For sharing, YouTube use garnus (recommended)<br>
+          • Mobile bata pani upload garna milcha<br>
+          <br>
+          <b>📱 Multi-device sync?</b><br>
+          • Yo browser ma matra changes save chha<br>
+          • Backup download garera arko device ma restore garnus<br>
+          <br>
+          <b>🔐 Login problem?</b><br>
+          • Default password: <code>prerak@2025</code><br>
+          • Forgot? — Settings → Change Password<br>
+        </div>
+      </div>
+    </div>
+<div class="ap-sec" id="sec-settings">
       <div class="ap-hdr"><h2>⚙️ Settings</h2><p>Company · EmailJS · Video · Calendar</p></div>
 
       <!-- Company Info -->
@@ -3017,6 +3250,57 @@ body.hide-vc #visiting-card { display:none; }
           <button class="dbtn" onclick="if(confirm('Reset all to factory defaults?'))resetAll()">🗑️ Reset All</button>
           <button class="abtn" onclick="exportData()">📥 Export Backup</button>
           <span class="afok" id="settings-ok">✅ Saved!</span>
+        </div>
+      </div>
+
+      
+      <!-- LOGO MANAGEMENT -->
+      <div class="ap-card" style="border-left:4px solid #c9933a;">
+        <h3>🎨 Company Logo</h3>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:start;margin-bottom:14px;">
+          <!-- Live preview -->
+          <div>
+            <div style="font-size:.6rem;color:#9ca3af;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">Current Logo</div>
+            <div id="logo-prev" style="width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,#f4c869,#a07825);display:flex;align-items:center;justify-content:center;font-size:3.5rem;box-shadow:0 8px 24px rgba(212,166,74,.4);overflow:hidden;border:2px solid rgba(212,166,74,.3);">🏗️</div>
+          </div>
+          <div>
+            <div class="afg" style="margin-bottom:8px;">
+              <label>Logo Type</label>
+              <select id="logo-type" onchange="adminLogoTypeChange()" style="width:100%;padding:9px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:.85rem;background:#fff;">
+                <option value="emoji">😀 Emoji (default 🏗️)</option>
+                <option value="image">🖼️ Image (upload your logo)</option>
+              </select>
+            </div>
+            <!-- Emoji input -->
+            <div id="logo-emoji-row" class="afg">
+              <label>Emoji / Symbol</label>
+              <input type="text" id="logo-emoji-val" placeholder="🏗️" maxlength="4" style="font-size:1.3rem;text-align:center;width:120px;">
+              <div style="font-size:.62rem;color:#9ca3af;margin-top:3px;">Try: 🏗️ 🛋️ 🪟 ⚡ 🏛️ 🏠</div>
+            </div>
+            <!-- Image upload -->
+            <div id="logo-image-row" class="afg" style="display:none;">
+              <label>Upload Logo Image (PNG / JPG / SVG)</label>
+              <div class="proj-upload-area" onclick="document.getElementById('logo-file').click()" style="cursor:pointer;padding:16px;text-align:center;">
+                <input type="file" id="logo-file" accept="image/*" style="display:none;" onchange="adminLogoUpload(this)">
+                <div style="font-size:1.8rem;">📁</div>
+                <div style="font-size:.78rem;font-weight:700;">Click to upload logo</div>
+                <div style="font-size:.65rem;color:#9ca3af;margin-top:3px;">PNG, JPG, SVG · Max 500KB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Flip cycle toggle -->
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;background:rgba(212,166,74,.06);border:1px solid rgba(212,166,74,.2);border-radius:8px;padding:10px 12px;">
+          <input type="checkbox" id="logo-cycle" style="width:18px;height:18px;cursor:pointer;" checked onchange="adminLogoCycleChange()">
+          <label for="logo-cycle" style="font-size:.78rem;font-weight:700;color:#111827;cursor:pointer;flex:1;">
+            🔄 <b>Logo Flip Cycle</b> — har 2.5 sec ma logo + 12 service icons cycle through
+          </label>
+        </div>
+        <!-- Save / Reset -->
+        <div style="display:flex;gap:9px;flex-wrap:wrap;">
+          <button class="afsv" onclick="adminLogoSave()">💾 Save Logo</button>
+          <button class="abtn" onclick="adminLogoReset()">↻ Reset to Default 🏗️</button>
+          <span class="afok" id="logo-ok">✅ Saved!</span>
         </div>
       </div>
 
@@ -3288,6 +3572,7 @@ const SVCS = [
    ne_feats:['लाइसेन्स प्राप्त इन्जिनियर','सरकार स्वीकृत डिजाइन','३ वर्षको वारेन्टी','पारदर्शी BOQ'],
    gal:['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400','https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400','https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=400','https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400','https://images.unsplash.com/photo-1485083269755-a7b559a4fe5e?w=400']},
   {id:1,nm:'Interior Design',ne:'इन्टेरियर डिजाइन',tag:'Interior',ico:'🛋️',
+   videoUrl:'./prerak-interior-residential.mp4',
    bg:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
    desc:'Modular kitchen, wardrobes, TV units, living rooms & complete home interiors. 3D design preview before work starts.',
    ne_desc:'मड्युलर किचन, वार्डरोब, TV युनिट, लिभिङ रूम र पूर्ण घर इन्टेरियर।',
@@ -7052,6 +7337,847 @@ function resetCalPromo(){
     window.apSec = function(nm){
       _origApSec(nm);
       if(nm === 'calpromo') setTimeout(loadCalPromoForm, 50);
+    };
+  }
+})();
+
+// ═══ SERVICE VIDEOS GALLERY ═══
+let _svidActiveIdx = 0;
+let _svidPlaying = false;
+
+function renderServiceVideoGrid(){
+  const grid = document.getElementById('svid-grid');
+  if(!grid || typeof SVCS === 'undefined') return;
+  grid.innerHTML = SVCS.map((s, i) => {
+    const dur = s.videoDur || ['1:30','1:29','1:45','2:00','1:50','2:20','1:40','2:10','1:55','1:35','2:05','1:25'][i] || '1:30';
+    return `
+    <div class="svid-card${i===_svidActiveIdx?' active':''}" data-idx="${i}" onclick="loadServiceVideo(${i})">
+      <div class="svid-thumb">
+        <img src="${s.bg}" alt="${s.nm}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600'">
+        <div class="svid-play">▶</div>
+        <span class="svid-cat">${s.tag}</span>
+        <span class="svid-dur">${dur}</span>
+      </div>
+      <div class="svid-info">
+        <div class="svid-info-title"><span>${s.ico}</span><span class="en">${s.nm}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne}</span></div>
+        <div class="svid-info-sub"><span class="en">${s.desc.substring(0,55)}...</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${(s.ne_desc||'').substring(0,50)}...</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  if(typeof applyLang === 'function') applyLang();
+}
+
+function loadServiceVideo(idx){
+  const s = SVCS[idx];
+  if(!s) return;
+  _svidActiveIdx = idx;
+  _svidPlaying = false;
+  const dur = s.videoDur || ['1:30','1:29','1:45','2:00','1:50','2:20','1:40','2:10','1:55','1:35','2:05','1:25'][idx] || '1:30';
+  // Reset player to thumbnail mode
+  const player = document.getElementById('fv-player');
+  if(player){
+    player.innerHTML = `
+      <img id="fv-thumb" src="${s.bg}" alt="${s.nm}" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
+      <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
+        <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
+      </button>
+      <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
+        <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>FEATURED
+      </span>
+      <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));pointer-events:none;">
+        <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+          <span>${s.ico} ${s.tag}</span>
+          <span style="opacity:.5;">·</span>
+          <span>${dur}</span>
+        </div>
+        <h3 style="font-family:var(--fd);font-size:1.7rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:6px;"><span class="en">${s.nm}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne}</span></h3>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;"><span class="en">${s.desc}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne_desc||''}</span></p>
+      </div>`;
+    // player click removed - button handles it
+  }
+  // Highlight active card
+  document.querySelectorAll('.svid-card').forEach((card, i) => {
+    card.classList.toggle('active', i === idx);
+  });
+  // Smooth scroll to top of video player
+  setTimeout(() => {
+    const fp = document.getElementById('fv-player');
+    if(fp) fp.scrollIntoView({behavior:'smooth',block:'center'});
+  }, 100);
+  if(typeof applyLang === 'function') applyLang();
+}
+
+async function playFeaturedVideo(){
+  console.log('[playVideo] CLICK detected, idx=', _svidActiveIdx);
+  const s = SVCS[_svidActiveIdx];
+  if(!s){ console.error('[playVideo] No service'); return; }
+  const player = document.getElementById('fv-player');
+  if(!player){ console.error('[playVideo] No player element'); return; }
+  
+  const SAMPLE_DEMO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  let url = '';
+  if(s.videoUrl && s.videoUrl.trim()) url = s.videoUrl.trim();
+  else if(typeof D !== 'undefined' && D.animVideo && D.animVideo.trim()) url = D.animVideo.trim();
+  else url = SAMPLE_DEMO;
+  
+  // Resolve IndexedDB URLs
+  if(url.startsWith('idb:')){
+    console.log('[playVideo] Resolving IndexedDB:', url);
+    try {
+      url = await idbResolveUrl(url);
+      if(!url){
+        console.warn('[playVideo] idb: not found, falling back to slideshow');
+        playGallerySlideshow(s);
+        return;
+      }
+    } catch(e){
+      console.error('[playVideo] idb resolve error:', e);
+      playGallerySlideshow(s);
+      return;
+    }
+  }
+  
+  console.log('[playVideo] Using URL:', url.substring(0,80));
+  _svidPlaying = true;
+  
+  const closeBtn = '<button onclick="event.stopPropagation();stopSlideshow();" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;border:1px solid rgba(255,255,255,.2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.85rem;z-index:99;display:flex;align-items:center;justify-content:center;">✕</button>';
+  
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(ytMatch){
+    player.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&rel=0&playsinline=1" style="width:100%;height:100%;border:none;background:#000;" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>' + closeBtn;
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('blob:') || url.startsWith('data:video') || url.startsWith('./')){
+    player.innerHTML = '<video src="' + url + '" controls autoplay playsinline style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>' + closeBtn;
+  } else {
+    player.innerHTML = '<iframe src="' + url + '" style="width:100%;height:100%;border:none;background:#000;" allowfullscreen></iframe>' + closeBtn;
+  }
+  
+  if(url === SAMPLE_DEMO){
+    setTimeout(function(){
+      if(typeof showToast === 'function') showToast('🎬 Demo video playing! Admin → Services → upload your own video.', 5000);
+    }, 1500);
+  }
+}
+
+function stopSlideshow(){
+  if(window._ssTimer) clearInterval(window._ssTimer);
+  if(window._ssProgress) clearInterval(window._ssProgress);
+  window._ssTimer = null;
+  window._ssProgress = null;
+  _svidPlaying = false;
+  loadServiceVideo(_svidActiveIdx);
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(typeof SVCS !== 'undefined' && SVCS.length){
+      renderServiceVideoGrid();
+      // Set initial featured to service 0
+      _svidActiveIdx = 0;
+      // Ensure initial thumbnail/info matches first service
+      const s = SVCS[0];
+      const fvThumb = document.getElementById('fv-thumb');
+      if(fvThumb && s) fvThumb.src = s.bg;
+      const fvCat = document.getElementById('fv-cat');
+      if(fvCat && s) fvCat.textContent = s.ico + ' ' + s.tag;
+      const fvTitle = document.getElementById('fv-title');
+      if(fvTitle && s) fvTitle.textContent = s.nm;
+      const fvDesc = document.getElementById('fv-desc');
+      if(fvDesc && s) fvDesc.textContent = s.desc;
+    }
+  }, 300);
+});
+
+// Re-render when admin saves a service (so new video URLs show)
+const _origAdminSave = window.adminSaveService;
+if(typeof _origAdminSave === 'function'){
+  window.adminSaveService = function(){
+    _origAdminSave.apply(this, arguments);
+    setTimeout(renderServiceVideoGrid, 200);
+  };
+}
+
+// ═══ VIDEO GALLERY ADMIN FUNCTIONS ═══
+function loadVideoGalleryForm(){
+  const v = D.videoGallery || {};
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  const ck = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val !== false; };
+  set('vg-eye-en', v.eyeEn || 'Service Videos');
+  set('vg-eye-ne', v.eyeNe || 'सेवा भिडियोहरू');
+  set('vg-title-en', v.titleEn || 'Watch Our Service Works');
+  set('vg-title-ne', v.titleNe || 'हाम्रो सेवा कार्यहरू हेर्नुस्');
+  set('vg-desc-en', v.descEn || 'All our construction services in one place — click any video to play.');
+  set('vg-desc-ne', v.descNe || 'हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।');
+  set('vg-width', v.width || 720);
+  set('vg-demo-url', v.demoUrl || '');
+  ck('vg-show', v.show);
+  // Render per-service video URL inputs
+  renderVgSvcList();
+}
+
+function renderVgSvcList(){
+  const list = document.getElementById('vg-svc-list');
+  if(!list || typeof SVCS === 'undefined') return;
+  list.innerHTML = SVCS.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:9px 11px;">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#c9933a,#9a6f28);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">${s.ico}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:.75rem;font-weight:700;color:#111827;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.nm}</div>
+        <input type="text" id="vg-svc-${i}" value="${(s.videoUrl||'').replace(/"/g,'&quot;')}" placeholder="YouTube/MP4 URL — empty for demo video" style="width:100%;padding:6px 9px;border:1px solid #e5e7eb;border-radius:6px;font-size:.72rem;font-family:inherit;">
+      </div>
+      <button onclick="vgClearSvc(${i})" style="background:#fee2e2;color:#dc2626;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:700;flex-shrink:0;">🗑</button>
+    </div>
+  `).join('');
+}
+
+function vgClearSvc(idx){
+  const inp = document.getElementById('vg-svc-' + idx);
+  if(inp) inp.value = '';
+}
+
+function vgSaveAllSvcVideos(){
+  let count = 0;
+  SVCS.forEach((s, i) => {
+    const inp = document.getElementById('vg-svc-' + i);
+    if(inp){ s.videoUrl = inp.value.trim(); if(s.videoUrl) count++; }
+  });
+  saveData();
+  if(typeof renderServiceVideoGrid === 'function') renderServiceVideoGrid();
+  if(typeof showToast === 'function') showToast('✅ Saved video URLs for ' + count + ' services');
+}
+
+function vgSetSize(px){
+  document.getElementById('vg-width').value = px;
+  applyVideoGalleryWidth(px);
+}
+
+function applyVideoGalleryWidth(px){
+  const wrap = document.getElementById('vg-featured-wrap');
+  if(wrap) wrap.style.maxWidth = px + 'px';
+}
+
+function applyVideoGallery(){
+  const v = D.videoGallery || {};
+  // Apply visibility
+  const sec = document.getElementById('brand-video');
+  if(sec) sec.style.display = (v.show === false) ? 'none' : '';
+  // Apply width
+  if(v.width) applyVideoGalleryWidth(v.width);
+  // Apply text content
+  const setSec = (selector, lang, val) => {
+    const els = document.querySelectorAll(selector);
+    els.forEach(el => {
+      if(el.classList.contains(lang) && val) el.textContent = val;
+    });
+  };
+  if(v.eyeEn || v.eyeNe){
+    const eyeEls = document.querySelectorAll('#brand-video .sey');
+    eyeEls.forEach(el => {
+      if(el.classList.contains('en') && v.eyeEn) el.textContent = v.eyeEn;
+      if(el.classList.contains('ne') && v.eyeNe) el.textContent = v.eyeNe;
+    });
+  }
+  if(v.titleEn || v.titleNe){
+    const titleEls = document.querySelectorAll('#brand-video .stl');
+    titleEls.forEach(el => {
+      if(el.classList.contains('en') && v.titleEn) el.innerHTML = v.titleEn.replace(/\*\*(.*?)\*\*/g, '<em>$1</em>');
+      if(el.classList.contains('ne') && v.titleNe) el.innerHTML = v.titleNe.replace(/\*\*(.*?)\*\*/g, '<em>$1</em>');
+    });
+  }
+  if(v.descEn || v.descNe){
+    const descEls = document.querySelectorAll('#brand-video .sdesc');
+    descEls.forEach(el => {
+      if(el.classList.contains('en') && v.descEn) el.textContent = v.descEn;
+      if(el.classList.contains('ne') && v.descNe) el.textContent = v.descNe;
+    });
+  }
+}
+
+function saveVideoGallery(){
+  const v = id => (document.getElementById(id) || {}).value || '';
+  const ck = id => { const el = document.getElementById(id); return el ? el.checked : true; };
+  D.videoGallery = {
+    show: ck('vg-show'),
+    eyeEn: v('vg-eye-en'),
+    eyeNe: v('vg-eye-ne'),
+    titleEn: v('vg-title-en'),
+    titleNe: v('vg-title-ne'),
+    descEn: v('vg-desc-en'),
+    descNe: v('vg-desc-ne'),
+    width: parseInt(v('vg-width')) || 720,
+    demoUrl: v('vg-demo-url')
+  };
+  // Also save service videos
+  vgSaveAllSvcVideos();
+  saveData();
+  applyVideoGallery();
+  if(typeof showOk === 'function') showOk('vg-ok');
+  if(typeof showToast === 'function') showToast('✅ Video Gallery settings saved!');
+}
+
+function resetVideoGallery(){
+  if(!confirm('Reset Video Gallery to defaults?\n(Service videos will NOT be cleared — only section settings)')) return;
+  delete D.videoGallery;
+  saveData();
+  loadVideoGalleryForm();
+  applyVideoGallery();
+  if(typeof showToast === 'function') showToast('↻ Reset to defaults');
+}
+
+// Override playFeaturedVideo to use admin demo URL when no service video set
+(function(){
+  if(typeof playFeaturedVideo === 'function'){
+    const _origPlay = playFeaturedVideo;
+    window.playFeaturedVideo = function(){
+      const s = SVCS[_svidActiveIdx];
+      if(!s) return;
+      // Check admin demo URL first if no service URL
+      if(!s.videoUrl && D.videoGallery && D.videoGallery.demoUrl){
+        // Temporarily inject admin demo URL
+        const orig = s.videoUrl;
+        s.videoUrl = D.videoGallery.demoUrl;
+        _origPlay();
+        s.videoUrl = orig;
+      } else {
+        _origPlay();
+      }
+    };
+  }
+})();
+
+// Hook into apSec
+(function(){
+  if(typeof apSec === 'function'){
+    const _origApSec2 = apSec;
+    window.apSec = function(nm){
+      _origApSec2(nm);
+      if(nm === 'vidgallery') setTimeout(loadVideoGalleryForm, 50);
+    };
+  }
+})();
+
+// Apply on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(applyVideoGallery, 400);
+});
+
+
+function adminUpdateVideoPreview(){
+  const url = (document.getElementById('se-video')||{}).value || '';
+  const prevBox = document.getElementById('se-video-preview');
+  if(!prevBox) return;
+  if(!url){
+    prevBox.style.display = 'none';
+    prevBox.innerHTML = '';
+    return;
+  }
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(yt){
+    prevBox.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '" style="width:100%;max-width:300px;aspect-ratio:16/9;border:none;border-radius:8px;background:#000;" allowfullscreen></iframe>';
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('data:video') || url.startsWith('./')){
+    prevBox.innerHTML = '<video src="' + url + '" controls style="width:100%;max-width:300px;border-radius:8px;background:#000;" preload="metadata"></video>';
+  } else {
+    prevBox.innerHTML = '<div style="padding:10px;color:#9ca3af;font-size:.78rem;">Preview not available for this URL type</div>';
+  }
+  prevBox.style.display = 'block';
+}
+
+// Hook into adminEditService to show preview when editing
+(function(){
+  const _orig = window.adminEditService;
+  if(typeof _orig === 'function'){
+    window.adminEditService = function(id){
+      _orig(id);
+      setTimeout(adminUpdateVideoPreview, 80);
+    };
+  }
+})();
+
+// ═══ INDEXEDDB FOR LARGE VIDEOS ═══
+const IDB_NAME = 'prerak_videos';
+const IDB_STORE = 'videos';
+
+function idbOpen(){
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(IDB_NAME, 1);
+    req.onupgradeneeded = e => {
+      e.target.result.createObjectStore(IDB_STORE);
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = e => reject(e.target.error);
+  });
+}
+async function idbSetVideo(key, blob){
+  const db = await idbOpen();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    const req = tx.objectStore(IDB_STORE).put(blob, key);
+    req.onsuccess = () => resolve();
+    req.onerror = e => reject(e.target.error);
+  });
+}
+async function idbGetVideo(key){
+  try {
+    const db = await idbOpen();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readonly');
+      const req = tx.objectStore(IDB_STORE).get(key);
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror = e => reject(e.target.error);
+    });
+  } catch(err){ console.error('idbGetVideo:', err); return null; }
+}
+async function idbRemoveVideo(key){
+  try {
+    const db = await idbOpen();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      const req = tx.objectStore(IDB_STORE).delete(key);
+      req.onsuccess = () => resolve();
+      req.onerror = e => reject(e.target.error);
+    });
+  } catch(err){ console.error('idbRemoveVideo:', err); }
+}
+async function idbResolveUrl(url){
+  if(!url || typeof url !== 'string') return url;
+  if(!url.startsWith('idb:')) return url;
+  const key = url.substring(4);
+  const blob = await idbGetVideo(key);
+  if(!blob) return '';
+  return URL.createObjectURL(blob);
+}
+
+// ═══ NEW SIMPLE VIDEO UPLOAD (any size, IndexedDB-backed) ═══
+async function adminUploadServiceVideo(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('video/')){
+    alert('Video file matra select garnus (MP4/WebM/OGG)');
+    return;
+  }
+  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
+  const status = document.getElementById('se-video-status');
+  const sid = (document.getElementById('se-id')||{}).value || '0';
+  
+  if(status){
+    status.style.color = '#3b82f6';
+    status.innerHTML = '⏳ <b>Uploading ' + sizeMB + ' MB video...</b> please wait...';
+  }
+  
+  try {
+    // Save to IndexedDB
+    const key = 'svc_' + sid + '_' + Date.now();
+    await idbSetVideo(key, f);
+    const idbUrl = 'idb:' + key;
+    document.getElementById('se-video').value = idbUrl;
+    
+    // Show preview using blob URL
+    const blobUrl = URL.createObjectURL(f);
+    const prevBox = document.getElementById('se-video-preview');
+    if(prevBox){
+      prevBox.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:300px;border-radius:8px;background:#000;" preload="metadata"></video>';
+      prevBox.style.display = 'block';
+    }
+    
+    if(status){
+      status.style.color = '#16a34a';
+      status.innerHTML = '✅ <b>Video uploaded!</b> ' + sizeMB + ' MB stored in browser. Save Service garnus.<br>' +
+        '<small style="color:#9ca3af;">⚠️ Yo browser ma matra save chha. Sharing ko lagi YouTube use garnus.</small>';
+    }
+    if(typeof showToast === 'function') showToast('✅ Video uploaded ('+sizeMB+'MB)', 4000);
+  } catch(err){
+    console.error('Video upload error:', err);
+    if(status){
+      status.style.color = '#dc2626';
+      status.innerHTML = '❌ <b>Upload failed.</b> ' + (err.message || err) + '<br>YouTube ma upload garera link paste garnus.';
+    }
+    alert('Upload failed: ' + (err.message || err));
+  }
+}
+
+// ═══ LOGO MANAGEMENT + FLIP CYCLE ═══
+function applyLogo(){
+  const lg = D.logo || {type:'emoji', value:'🏗️', cycle:true};
+  document.querySelectorAll('.logo-mk').forEach(el => {
+    if(lg.type === 'image' && lg.value){
+      el.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    } else {
+      el.innerHTML = '';
+      el.textContent = lg.value || '🏗️';
+    }
+  });
+  // Update preview in admin
+  const prev = document.getElementById('logo-prev');
+  if(prev){
+    if(lg.type === 'image' && lg.value){
+      prev.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    } else {
+      prev.innerHTML = '';
+      prev.textContent = lg.value || '🏗️';
+    }
+  }
+}
+
+function adminLogoLoad(){
+  const lg = D.logo || {type:'emoji', value:'🏗️', cycle:true};
+  const t = document.getElementById('logo-type');
+  const e = document.getElementById('logo-emoji-val');
+  const cc = document.getElementById('logo-cycle');
+  if(t) t.value = lg.type || 'emoji';
+  if(e) e.value = lg.type === 'emoji' ? (lg.value || '🏗️') : '🏗️';
+  if(cc) cc.checked = lg.cycle !== false;
+  adminLogoTypeChange();
+  applyLogo();
+}
+
+function adminLogoTypeChange(){
+  const t = (document.getElementById('logo-type')||{}).value || 'emoji';
+  const er = document.getElementById('logo-emoji-row');
+  const ir = document.getElementById('logo-image-row');
+  if(er) er.style.display = t === 'emoji' ? 'block' : 'none';
+  if(ir) ir.style.display = t === 'image' ? 'block' : 'none';
+}
+
+function adminLogoUpload(input){
+  const f = input.files[0];
+  if(!f || !f.type.startsWith('image/')) return;
+  if(f.size > 500 * 1024){
+    alert('Logo too large ('+(f.size/1024).toFixed(0)+' KB). Max 500KB.\nUse smaller image or compress first.');
+    return;
+  }
+  const r = new FileReader();
+  r.onload = e => {
+    D.logo = D.logo || {};
+    D.logo.type = 'image';
+    D.logo.value = e.target.result;
+    applyLogo();
+    if(typeof showToast === 'function') showToast('✅ Logo uploaded! Click Save Logo.', 3000);
+  };
+  r.readAsDataURL(f);
+}
+
+function adminLogoCycleChange(){
+  D.logo = D.logo || {};
+  D.logo.cycle = (document.getElementById('logo-cycle')||{}).checked !== false;
+  // Don't save immediately - wait for Save button
+}
+
+function adminLogoSave(){
+  const t = (document.getElementById('logo-type')||{}).value || 'emoji';
+  const ev = (document.getElementById('logo-emoji-val')||{}).value || '🏗️';
+  const cy = (document.getElementById('logo-cycle')||{}).checked !== false;
+  D.logo = D.logo || {};
+  D.logo.type = t;
+  D.logo.cycle = cy;
+  if(t === 'emoji') D.logo.value = ev;
+  // (image already saved via upload)
+  saveData();
+  applyLogo();
+  // Restart flip cycle with new settings
+  startLogoFlipCycle();
+  if(typeof showOk === 'function') showOk('logo-ok');
+  if(typeof showToast === 'function') showToast('✅ Logo saved!', 3000);
+}
+
+function adminLogoReset(){
+  if(!confirm('Reset logo to default 🏗️ ?')) return;
+  D.logo = {type:'emoji', value:'🏗️', cycle:true};
+  saveData();
+  adminLogoLoad();
+  applyLogo();
+  startLogoFlipCycle();
+  if(typeof showToast === 'function') showToast('↻ Logo reset to default', 3000);
+}
+
+// ═══ LOGO FLIP CYCLE ═══
+let _logoCycleIdx = 0;
+let _logoCycleTimer = null;
+let _logoCycleOriginal = null;
+
+function startLogoFlipCycle(){
+  // Stop existing
+  if(_logoCycleTimer) { clearInterval(_logoCycleTimer); _logoCycleTimer = null; }
+  
+  const enabled = !D.logo || D.logo.cycle !== false;
+  if(!enabled) return; // disabled in admin
+  
+  // Build cycle items: [LOGO, ...service icons]
+  const items = [{type:'logo'}];
+  if(typeof SVCS !== 'undefined') SVCS.forEach(s => items.push({type:'icon', value:s.ico, name:s.nm}));
+  
+  _logoCycleIdx = 0;
+  _logoCycleTimer = setInterval(() => {
+    _logoCycleIdx = (_logoCycleIdx + 1) % items.length;
+    const it = items[_logoCycleIdx];
+    document.querySelectorAll('.logo-mk').forEach(el => {
+      el.classList.add('logo-flipping');
+      setTimeout(() => {
+        if(it.type === 'logo'){
+          // Restore actual logo
+          const lg = D.logo || {type:'emoji', value:'🏗️'};
+          if(lg.type === 'image' && lg.value){
+            el.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+          } else {
+            el.innerHTML = '';
+            el.textContent = lg.value || '🏗️';
+          }
+          el.title = 'PRERAK';
+        } else {
+          el.innerHTML = '';
+          el.textContent = it.value;
+          el.title = it.name;
+        }
+        el.classList.remove('logo-flipping');
+        el.classList.add('logo-flipping-back');
+        setTimeout(() => el.classList.remove('logo-flipping-back'), 350);
+      }, 350);
+    });
+  }, 2800);
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    applyLogo();
+    startLogoFlipCycle();
+  }, 600);
+});
+
+// Hook into apSec to load logo form when entering settings
+(function(){
+  const _orig = window.apSec;
+  if(typeof _orig === 'function'){
+    window.apSec = function(nm){
+      _orig(nm);
+      if(nm === 'settings') setTimeout(adminLogoLoad, 80);
+    };
+  }
+})();
+
+// ═══ BRAND VIDEO MANAGER UPLOAD ═══
+async function adminUploadBrandVideo(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('video/')){
+    alert('Video file matra select garnus (MP4/WebM/OGG)');
+    return;
+  }
+  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
+  const status = document.getElementById('bv-upload-status');
+  
+  if(status){
+    status.style.display = 'block';
+    status.style.color = '#3b82f6';
+    status.innerHTML = '⏳ <b>Uploading ' + sizeMB + ' MB video...</b> please wait...';
+  }
+  
+  try {
+    // Save to IndexedDB
+    const key = 'brand_video_' + Date.now();
+    await idbSetVideo(key, f);
+    const idbUrl = 'idb:' + key;
+    
+    // Update URL field + auto-set type
+    document.getElementById('bv-url').value = idbUrl;
+    const typeSel = document.getElementById('bv-type');
+    if(typeSel) typeSel.value = 'mp4';
+    
+    // Show video preview
+    const blobUrl = URL.createObjectURL(f);
+    const prev = document.getElementById('bv-preview');
+    if(prev){
+      prev.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+      prev.style.display = 'block';
+    }
+    
+    if(status){
+      status.style.color = '#16a34a';
+      status.innerHTML = '✅ <b>Video uploaded!</b> ' + sizeMB + ' MB stored in browser. Click <b>Save Video</b> to apply.<br>' +
+        '<small style="color:#9ca3af;">⚠️ Yo browser ma matra save chha — sharing ko lagi YouTube use garnus.</small>';
+    }
+    if(typeof showToast === 'function') showToast('✅ Brand video uploaded ('+sizeMB+'MB)', 4000);
+  } catch(err){
+    console.error('Brand video upload error:', err);
+    if(status){
+      status.style.color = '#dc2626';
+      status.innerHTML = '❌ <b>Upload failed.</b> ' + (err.message || err);
+    }
+    alert('Upload failed: ' + (err.message || err));
+  }
+}
+
+// Show preview when URL field changes
+function adminBrandVideoPreview(){
+  const url = (document.getElementById('bv-url')||{}).value || '';
+  const prev = document.getElementById('bv-preview');
+  if(!prev) return;
+  if(!url){
+    prev.style.display = 'none';
+    prev.innerHTML = '';
+    return;
+  }
+  // Auto-detect and show preview
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(yt){
+    prev.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '" style="width:100%;max-width:500px;aspect-ratio:16/9;border:none;border-radius:10px;background:#000;" allowfullscreen></iframe>';
+    prev.style.display = 'block';
+    const ts = document.getElementById('bv-type'); if(ts) ts.value = 'youtube';
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('blob:') || url.startsWith('data:video') || url.startsWith('idb:')){
+    if(url.startsWith('idb:')){
+      // Resolve idb: to blob URL for preview
+      idbResolveUrl(url).then(blobUrl => {
+        if(blobUrl){
+          prev.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+          prev.style.display = 'block';
+        }
+      });
+    } else {
+      prev.innerHTML = '<video src="' + url + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+      prev.style.display = 'block';
+    }
+    const ts = document.getElementById('bv-type'); if(ts) ts.value = 'mp4';
+  }
+}
+
+// Hook into apSec to refresh preview when entering brand video section
+(function(){
+  const _orig = window.apSec;
+  if(typeof _orig === 'function'){
+    window.apSec = function(nm){
+      _orig(nm);
+      if(nm === 'video') setTimeout(adminBrandVideoPreview, 100);
+    };
+  }
+})();
+
+// ═══ FINAL SETUP FUNCTIONS ═══
+async function renderSystemStatus(){
+  const grid = document.getElementById('sys-status-grid');
+  const info = document.getElementById('storage-info');
+  if(!grid) return;
+  
+  // Calculate stats
+  const stats = [
+    {icon:'🔧', label:'Services', val: (typeof SVCS!=='undefined'?SVCS.length:0)},
+    {icon:'🏗️', label:'Projects', val: (typeof PROJS!=='undefined'?PROJS.length:0)},
+    {icon:'💬', label:'Testimonials', val: (typeof TESTS!=='undefined'?TESTS.length:0)},
+    {icon:'❓', label:'FAQs', val: (typeof FAQS!=='undefined'?FAQS.length:0)},
+    {icon:'📢', label:'Active Notices', val: (D&&D.notices?D.notices.length:0)},
+    {icon:'💰', label:'Pricing Plans', val: (D&&D.pricing?D.pricing.length:0)},
+    {icon:'🎬', label:'Brand Video', val: (D&&D.brandVideo&&D.brandVideo.url)?'✅ Set':'❌ Empty'},
+    {icon:'🎨', label:'Logo Type', val: (D&&D.logo)?D.logo.type:'emoji'},
+  ];
+  
+  grid.innerHTML = stats.map(s => `
+    <div style="background:#fff;border:1px solid #d1fae5;border-radius:10px;padding:12px;text-align:center;">
+      <div style="font-size:1.6rem;margin-bottom:4px;">${s.icon}</div>
+      <div style="font-size:1.1rem;font-weight:800;color:#16a34a;line-height:1;">${s.val}</div>
+      <div style="font-size:.6rem;color:#6b7280;letter-spacing:.5px;text-transform:uppercase;margin-top:3px;">${s.label}</div>
+    </div>
+  `).join('');
+  
+  // Storage info
+  if(info){
+    let lsSize = 0;
+    try { lsSize = JSON.stringify(localStorage).length; } catch(e){}
+    let videoCount = 0, videoSize = 0;
+    try {
+      const db = await idbOpen();
+      const tx = db.transaction(IDB_STORE, 'readonly');
+      const store = tx.objectStore(IDB_STORE);
+      const req = store.getAll();
+      await new Promise(r => { req.onsuccess = () => { 
+        videoCount = req.result.length; 
+        videoSize = req.result.reduce((s,b)=>s+(b.size||0), 0);
+        r(); 
+      }; });
+    } catch(e){}
+    
+    info.innerHTML = `
+      <b>💾 LocalStorage (admin data):</b> ${(lsSize/1024).toFixed(1)} KB<br>
+      <b>🎬 IndexedDB (videos):</b> ${videoCount} videos · ${(videoSize/1024/1024).toFixed(2)} MB<br>
+      <b>🌐 Browser:</b> ${navigator.userAgent.substring(0,60)}...<br>
+      <b>📅 Page loaded:</b> ${new Date().toLocaleString()}
+    `;
+  }
+}
+
+function finalExportData(){
+  const backup = {
+    version: 'PRERAK-v9.4',
+    exportedAt: new Date().toISOString(),
+    data: D,
+    services: typeof SVCS !== 'undefined' ? SVCS.map(s => ({...s})) : [],
+    projects: typeof PROJS !== 'undefined' ? PROJS.map(p => ({...p})) : [],
+    note: 'Backup file. Use Restore button to load.'
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'prerak-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  if(typeof showOk === 'function') showOk('backup-ok');
+  if(typeof showToast === 'function') showToast('✅ Backup downloaded!', 3000);
+}
+
+function finalImportData(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!confirm('Restore from backup? Current settings will be replaced.')) {
+    input.value = '';
+    return;
+  }
+  const r = new FileReader();
+  r.onload = e => {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if(!backup.data){ alert('Invalid backup file'); return; }
+      D = backup.data;
+      if(backup.services && backup.services.length) SVCS.length = 0, backup.services.forEach(s => SVCS.push(s));
+      if(backup.projects && backup.projects.length) PROJS.length = 0, backup.projects.forEach(p => PROJS.push(p));
+      saveData();
+      alert('✅ Backup restored! Page will reload.');
+      location.reload();
+    } catch(err){
+      alert('❌ Restore failed: ' + err.message);
+    }
+  };
+  r.readAsText(f);
+}
+
+async function finalClearVideos(){
+  if(!confirm('Clear all uploaded videos from browser?\n\nYouTube/external URLs are not affected.')) return;
+  try {
+    const db = await idbOpen();
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).clear();
+    await new Promise(r => { tx.oncomplete = r; });
+    if(typeof showToast === 'function') showToast('🗑️ All videos cleared', 3000);
+    renderSystemStatus();
+  } catch(err){ alert('Error: ' + err.message); }
+}
+
+function finalResetAll(){
+  if(!confirm('⚠️ RESET EVERYTHING?\n\nAll your changes will be lost — services, projects, videos, contact info, logo, etc.\n\nThis cannot be undone!')) return;
+  if(!confirm('Are you ABSOLUTELY SURE? Last warning!')) return;
+  try {
+    localStorage.clear();
+    indexedDB.deleteDatabase(IDB_NAME);
+    alert('🔄 Everything reset. Page will reload.');
+    location.reload();
+  } catch(err){ alert('Error: ' + err.message); }
+}
+
+// Hook into apSec
+(function(){
+  const _orig = window.apSec;
+  if(typeof _orig === 'function'){
+    window.apSec = function(nm){
+      _orig(nm);
+      if(nm === 'finalsetup') setTimeout(renderSystemStatus, 100);
     };
   }
 })();
