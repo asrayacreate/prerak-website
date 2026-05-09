@@ -3869,6 +3869,21 @@ const ACTS = [
   {ic:'🎊',en:'<b>50+ projects</b> completed this year — Thank you Nepal!',ne:'<b>५०+ परियोजना</b> यस वर्ष सम्पन्न — धन्यवाद नेपाल!',tt:'1 hr ago'}
 ];
 
+
+
+// ═══ SAFE ARRAY / OBJECT HELPERS ═══
+const _arr  = v => (Array.isArray(v) ? v : []);
+const _obj  = v => (v && typeof v === 'object' && !Array.isArray(v) ? v : {});
+const _str  = (v,fb) => (typeof v === 'string' ? v : (fb||''));
+const _num  = (v,fb) => (typeof v === 'number' ? v : (fb||0));
+const _get  = (obj,...keys) => { let o=obj; for(const k of keys){if(o==null)return undefined;o=o[k];} return o; };
+const _gStr = (obj,...keysAndFb) => { const fb=keysAndFb.pop(); const v=_get(obj,...keysAndFb); return typeof v==='string'?v:fb; };
+// Safe render wrapper: try/catch + log
+const _render = (name, fn) => { try{ fn(); }catch(e){ _err('render:'+name, e); } };
+// ═══ PRODUCTION SAFE LOGGER ═══
+const _log  = (...a) => { try{ if(typeof window!=='undefined' && window._DEV) console.log('[PRERAK]',...a); }catch(e){} };
+const _warn = (...a) => { try{ console.warn('[PRERAK]',...a); }catch(e){} };
+const _err  = (...a) => { try{ console.error('[PRERAK]',...a); }catch(e){} };
 // ═══ STATE ═══
 let D = {};
 let lbItems = [], lbIdx = 0;
@@ -3890,7 +3905,7 @@ function init(){
   renderSite();
   applyLogo();           // ← apply saved logo immediately on page load
   renderBrandVideo();    // ← apply saved video section
-  setTimeout(fetchVideoFromFirestore, 1800); // ← async fetch from Firestore
+  setTimeout(syncFromFirestoreOnLoad, 1800); // ← async sync from Firestore (non-blocking)
   // Force critical sections to render (extra safety)
   try { renderPricingSection(); } catch(e){ console.error('Pricing render:',e); }
   try { renderFAQSection(); } catch(e){ console.error('FAQ render:',e); }
@@ -3915,27 +3930,59 @@ function init(){
 // ═══ DATA PERSIST ═══
 function loadData(){
   try{
-    const s = localStorage.getItem(STORE_KEY);
-    D = s ? {...DEFAULT_DATA,...JSON.parse(s)} : {...DEFAULT_DATA};
-    // Ensure ALL critical keys exist (prevents D.X.Y crashes)
-    D.notices    = D.notices    || DEFAULT_DATA.notices;
-    D.pricing    = D.pricing    || DEFAULT_DATA.pricing;
-    D.settings   = D.settings   || DEFAULT_DATA.settings || {};
-    D.card       = D.card       || DEFAULT_DATA.card || {};
-    D.contact    = D.contact    || DEFAULT_DATA.contact || {};
-    D.company    = D.company    || DEFAULT_DATA.company || {};
-    D.hero       = D.hero       || DEFAULT_DATA.hero || {};
-    D.components = D.components || DEFAULT_DATA.components || {};
-    // Ensure visiting card visible by default
-    if(D.components.showVisitingCard === undefined) D.components.showVisitingCard = true;
-    if(D.components.showFAQ === undefined) D.components.showFAQ = true;
-    if(D.components.showPricing === undefined) D.components.showPricing = true;
-  }catch(e){ 
-    console.error('[loadData] error:', e);
-    D = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    const raw = localStorage.getItem(STORE_KEY);
+    const saved = raw ? JSON.parse(raw) : {};
+    D = Object.assign({}, DEFAULT_DATA, saved);
+    // Deep-validate all critical arrays — never let them be undefined/non-array
+    const ensureArr = (key) => {
+      if(!Array.isArray(D[key]) || D[key].length === 0){
+        D[key] = Array.isArray(DEFAULT_DATA[key]) ? JSON.parse(JSON.stringify(DEFAULT_DATA[key])) : [];
+      }
+    };
+    const ensureObj = (key) => {
+      if(!D[key] || typeof D[key] !== 'object' || Array.isArray(D[key])){
+        D[key] = DEFAULT_DATA[key] ? JSON.parse(JSON.stringify(DEFAULT_DATA[key])) : {};
+      }
+    };
+    ensureArr('notices');
+    ensureArr('pricing');
+    ensureArr('testimonials');
+    ensureObj('settings');
+    ensureObj('card');
+    ensureObj('contact');
+    ensureObj('company');
+    ensureObj('hero');
+    ensureObj('components');
+    ensureObj('firebase');
+    D.brandVideo = (D.brandVideo && typeof D.brandVideo === 'object') ? D.brandVideo : {url:'',type:'youtube'};
+    // Merge objects so no sub-key is missing
+    const dfComp = DEFAULT_DATA.components || {};
+    Object.keys(dfComp).forEach(k=>{ if(D.components[k]===undefined) D.components[k]=dfComp[k]; });
+    if(D.components.showVisitingCard===undefined) D.components.showVisitingCard=true;
+    if(D.components.showFAQ===undefined) D.components.showFAQ=true;
+    if(D.components.showPricing===undefined) D.components.showPricing=true;
+    _log('loadData ok, notices:', D.notices.length, 'pricing:', D.pricing.length);
+  }catch(e){
+    _err('loadData failed:', e);
+    try{ D = JSON.parse(JSON.stringify(DEFAULT_DATA)); }catch(e2){ D = {}; }
   }
 }
-function saveData(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(D)); }catch(e){} }
+function saveData(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(D));
+  }catch(e){
+    _err('saveData localStorage:', e);
+  }
+}
+let _fsyncTimer = null;
+function saveDataAndSync(){
+  saveData();
+  // Debounced Firestore sync — 3 seconds after last change
+  clearTimeout(_fsyncTimer);
+  _fsyncTimer = setTimeout(()=>{
+    saveAllSettingsToFirestore().catch(e=>_warn('Auto Firestore sync:',e));
+  }, 3000);
+}
 
 // ═══ THEME ═══
 function setTheme(t){
@@ -3967,28 +4014,32 @@ function applyLang(){
 
 // ═══ RENDER SITE ═══
 function renderSite(){
-  renderServices();
-  renderTestimonials();
-  renderProjects();
-  renderFaqs();
-  renderAdminPricing();
-  renderNotices();
-  renderDashStats2();
-  renderAdminSvcList();
-  renderAdminProjList();
-  populateAdminForms();
-  // Render public pricing & FAQ sections
-  try{renderPricingSection();}catch(e){}
-  try{renderFAQSection();}catch(e){}
-  // Render visiting card section
-  try{renderVCSection();}catch(e){}
+  if(!D || typeof D !== 'object'){ _err('renderSite: D not ready'); return; }
+  _render('services',       renderServices);
+  _render('testimonials',   renderTestimonials);
+  _render('projects',       renderProjects);
+  _render('faqs',           renderFaqs);
+  _render('adminPricing',   renderAdminPricing);
+  _render('notices',        renderNotices);
+  _render('noticeBar',      updateNoticeBar);
+  _render('dashStats2',     renderDashStats2);
+  if(isAdmin){
+    _render('adminSvcList', renderAdminSvcList);
+    _render('adminProjList',renderAdminProjList);
+    _render('adminForms',   populateAdminForms);
+  }
+  _render('pricingSection', renderPricingSection);
+  _render('faqSection',     renderFAQSection);
+  _render('vcSection',      ()=>{ if(typeof renderVCSection==='function') renderVCSection(); });
 }
 
 // ═══ SERVICES ═══
 function renderServices(){
   const g = document.getElementById('svcGrid');
   if(!g) return;
-  g.innerHTML = SVCS.map((s,i)=>`
+  const svcs = _arr(typeof SVCS !== 'undefined' ? SVCS : []);
+  if(!svcs.length){ g.innerHTML=''; return; }
+  g.innerHTML = svcs.map((s,i)=>`
     <div class="svc reveal" data-d="${i%4}" onclick="openSvm(${s.id})">
       <div class="svc-img" style="background-image:url('${s.bg}')">
         <div class="svc-tag">${s.tag}</div>
@@ -3998,7 +4049,7 @@ function renderServices(){
         <h3>${s.ico} <span class="en">${s.nm}</span><span class="ne np">${s.ne}</span></h3>
         <p class="en">${s.desc.substring(0,90)}...</p>
         <p class="ne np">${s.ne_desc.substring(0,90)}...</p>
-        <div class="svc-tags">${s.tags.map(t=>`<span class="stag">${t}</span>`).join('')}</div>
+        <div class="svc-tags">${_arr(s.tags).map(t=>`<span class="stag">${t}</span>`).join('')}</div>
         <div class="svc-bts">
           <button class="svc-bt sbt-d">🔍 <span class="en">View Details</span><span class="ne np">विवरण</span></button>
           <a href="https://wa.me/9779801069733?text=नमस्ते! ${s.nm} बारे जान्न चाहन्छु।" target="_blank" rel="noopener" class="svc-bt sbt-w" onclick="event.stopPropagation()">💬 WhatsApp</a>
@@ -4182,7 +4233,9 @@ function openFullQuoteFromSvm(){
 function renderTestimonials(){
   const g=document.getElementById('testGrid');
   if(!g) return;
-  g.innerHTML = TESTS.map((t,i)=>`
+  const tests=_arr(typeof TESTS!=='undefined'?TESTS:[]);
+  if(!tests.length){g.innerHTML='';return;}
+  g.innerHTML = tests.map((t,i)=>`
     <div class="tc reveal" data-d="${i%3}">
       <div class="tc-s">${'⭐'.repeat(5)}</div>
       <div class="tc-q">"</div>
@@ -4203,8 +4256,10 @@ function renderTestimonials(){
 function renderProjects(){
   const g=document.getElementById('projGrid');
   if(!g) return;
-  const allImgs = PROJS.map(p=>p.img);
-  g.innerHTML = PROJS.map((p,i)=>`
+  const projs=_arr(typeof PROJS!=='undefined'?PROJS:[]);
+  if(!projs.length){g.innerHTML='';return;}
+  const allImgs=projs.map(p=>p.img||'');
+  g.innerHTML = projs.map((p,i)=>`
     <div class="pi${p.cls?' '+p.cls:''} reveal" data-d="${i%3}" onclick="openLb(${JSON.stringify(allImgs)},${i})">
       <img src="${p.img}" alt="${p.nm}" loading="lazy">
       <div class="pi-ov">
@@ -4225,11 +4280,18 @@ function openLb(items, idx){
 }
 function renderLb(){
   const w=document.getElementById('lbMw');
-  w.innerHTML = `<img src="${lbItems[lbIdx]}" alt="Project image" style="max-width:90vw;max-height:84vh;object-fit:contain;border-radius:8px;">`;
-  document.getElementById('lbCtr').textContent = `${lbIdx+1} / ${lbItems.length}`;
+  if(!w) return;
+  const items=_arr(lbItems);
+  if(!items.length){w.innerHTML='';return;}
+  const idx=Math.max(0,Math.min(lbIdx,items.length-1));
+  w.innerHTML=`<img src="${items[idx]}" alt="Project image" style="max-width:90vw;max-height:84vh;object-fit:contain;border-radius:8px;" onerror="this.src='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'300\'><rect fill=\'%23333\' width=\'400\' height=\'300\'/><text fill=\'%23999\' x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\'>Image unavailable</text></svg>'">`;
+  const ctr=document.getElementById('lbCtr');
+  if(ctr) ctr.textContent=`${idx+1} / ${items.length}`;
 }
 function lbNav(d){
-  lbIdx = (lbIdx+d+lbItems.length)%lbItems.length;
+  const len=_arr(lbItems).length;
+  if(!len) return;
+  lbIdx=(lbIdx+d+len)%len;
   renderLb();
 }
 function closeLb(){
@@ -4313,7 +4375,9 @@ function initVCard(){
 function renderFaqs(){
   const w=document.getElementById('faqWrap');
   if(!w) return;
-  w.innerHTML = FAQS.map((f,i)=>`
+  const faqs=_arr(typeof FAQS!=='undefined'?FAQS:[]);
+  if(!faqs.length){w.innerHTML='';return;}
+  w.innerHTML = faqs.map((f,i)=>`
     <div class="faq-it reveal" data-d="${i%3}">
       <div class="faq-q" onclick="toggleFaq(this)">
         <div class="faq-ic">${f.ico}</div>
@@ -4480,6 +4544,67 @@ function initLogoPopup(){
   document.addEventListener('click',e=>{if(!w.contains(e.target)) p.classList.remove('show');});
 }
 
+
+// ═══ FIRESTORE FULL SETTINGS SYNC ═══
+async function saveAllSettingsToFirestore(){
+  if(!_fbValid()) return;
+  if(!initFirebase()) return;
+  const payload = {
+    hero:       _obj(D.hero),
+    contact:    _obj(D.contact),
+    company:    _obj(D.company),
+    settings:   _obj(D.settings),
+    notices:    _arr(D.notices),
+    pricing:    _arr(D.pricing),
+    components: _obj(D.components),
+    brandVideo: _obj(D.brandVideo),
+    theme:      D.theme||'dark',
+    lang:       D.lang||'en',
+    adminEmail: D.adminEmail||'',
+    updatedAt:  firebase.firestore.FieldValue.serverTimestamp()
+  };
+  await _fbDb.collection('siteSettings').doc('main').set(payload, {merge:true});
+  _log('Firestore settings saved');
+}
+
+async function loadAllSettingsFromFirestore(){
+  if(!_fbValid()) return false;
+  if(!initFirebase()) return false;
+  try{
+    const doc = await _fbDb.collection('siteSettings').doc('main').get();
+    if(!doc.exists) return false;
+    const data = doc.data();
+    // Merge into D — only overwrite with valid values
+    if(data.hero       && typeof data.hero==='object')       D.hero       = {..._obj(D.hero),       ...data.hero};
+    if(data.contact    && typeof data.contact==='object')    D.contact    = {..._obj(D.contact),    ...data.contact};
+    if(data.company    && typeof data.company==='object')    D.company    = {..._obj(D.company),    ...data.company};
+    if(data.settings   && typeof data.settings==='object')   D.settings   = {..._obj(D.settings),   ...data.settings};
+    if(data.components && typeof data.components==='object') D.components = {..._obj(D.components), ...data.components};
+    if(data.brandVideo && typeof data.brandVideo==='object') D.brandVideo = {..._obj(D.brandVideo), ...data.brandVideo};
+    if(Array.isArray(data.notices) && data.notices.length)   D.notices    = data.notices;
+    if(Array.isArray(data.pricing) && data.pricing.length)   D.pricing    = data.pricing;
+    if(data.theme)      D.theme      = data.theme;
+    if(data.lang)       D.lang       = data.lang;
+    if(data.adminEmail) D.adminEmail = data.adminEmail;
+    saveData(); // persist to localStorage
+    _log('Firestore settings loaded');
+    return true;
+  }catch(e){ _err('loadAllSettingsFromFirestore:', e); return false; }
+}
+
+async function syncFromFirestoreOnLoad(){
+  try{
+    if(!_fbValid()){_log('Firestore not configured — using localStorage only');return;}
+    const ok = await loadAllSettingsFromFirestore();
+    if(ok){
+      // Re-render with cloud data
+      _render('site-after-sync', renderSite);
+      _render('logo-after-sync', applyLogo);
+      _render('video-after-sync', renderBrandVideo);
+      _render('noticeBar-after-sync', updateNoticeBar);
+    }
+  }catch(e){ _err('syncFromFirestoreOnLoad:', e); }
+}
 // ═══ QUOTE MODAL ═══
 function openQuote(plan, price){
   // Legacy alias — always route to new global quote modal
@@ -4935,17 +5060,20 @@ function populateAdminForms(){
   if(document.getElementById('s-em')) document.getElementById('s-em').value=D.adminEmail||'';
 }
 function saveHero(){
-  D.hero = D.hero || {};
-  D.hero.l1 = document.getElementById('h-l1').value;
-  D.hero.l2 = document.getElementById('h-l2').value;
-  D.hero.l3 = document.getElementById('h-l3').value;
-  D.hero.ey = document.getElementById('h-ey').value;
-  D.hero.sub = document.getElementById('h-sub').value;
-  D.hero.b1 = document.getElementById('h-b1') ? document.getElementById('h-b1').value : '';
-  D.hero.b2 = document.getElementById('h-b2') ? document.getElementById('h-b2').value : '';
-  // Apply to live hero immediately
+  D.hero = _obj(D.hero);
+  const gv = id => (document.getElementById(id)||{}).value||'';
+  D.hero.l1  = gv('h-l1')  || 'Complete';
+  D.hero.l2  = gv('h-l2')  || 'Construction';
+  D.hero.l3  = gv('h-l3')  || 'One Place';
+  D.hero.ey  = gv('h-ey')  || 'Hetauda, Makwanpur, Nepal';
+  D.hero.sub = gv('h-sub');
+  D.hero.b1  = gv('h-b1')  || 'Free Site Visit';
+  D.hero.b2  = gv('h-b2')  || 'Call Now';
   applyHeroText();
-  saveData(); showOk('hero-ok');
+  saveData();
+  showOk('hero-ok');
+  saveAllSettingsToFirestore().catch(e=>_warn('Firestore hero sync:',e));
+  if(typeof showToast==='function') showToast('✅ Hero saved!',2500);
 }
 
 function saveHeroStats(){
@@ -5042,7 +5170,10 @@ function saveSettings(){
     tag:document.getElementById('s-tg').value
   };
   D.adminEmail=document.getElementById('s-em').value||ADMIN_EMAIL;
-  saveData(); showOk('settings-ok');
+  saveData();
+  showOk('settings-ok');
+  saveAllSettingsToFirestore().catch(e=>_warn('Firestore company sync:',e));
+  if(typeof showToast==='function') showToast('✅ Settings saved!',2500);
 }
 function showOk(id){
   const el=document.getElementById(id);
@@ -5063,21 +5194,27 @@ function changePass(){
 
 // ═══ NOTICE ADMIN ═══
 function saveNotice(){
-  const msg=document.getElementById('nf-msg').value.trim();
-  if(!msg){alert('Please enter notice message');return;}
-  const ico=document.getElementById('nf-ico').value||'📢';
-  const cat=document.getElementById('nf-cat').value;
-  const from=document.getElementById('nf-fr').value;
-  const to=document.getElementById('nf-to').value;
-  const eid=document.getElementById('nf-eid').value;
+  const msg=(document.getElementById('nf-msg')||{}).value||''; 
+  if(!msg.trim()){alert('Please enter notice message');return;}
+  const ico=(document.getElementById('nf-ico')||{}).value||'📢';
+  const cat=(document.getElementById('nf-cat')||{}).value||'announce';
+  const from=(document.getElementById('nf-fr')||{}).value||'';
+  const to=(document.getElementById('nf-to')||{}).value||'';
+  const eid=(document.getElementById('nf-eid')||{}).value||'';
+  D.notices = _arr(D.notices);
   if(eid){
-    const idx=D.notices.findIndex(n=>n.id==eid);
-    if(idx>=0) D.notices[idx]={...D.notices[idx],msg,ico,cat,from,to};
+    const idx=D.notices.findIndex(n=>String(n.id)===String(eid));
+    if(idx>=0) D.notices[idx]={...D.notices[idx],msg:msg.trim(),ico,cat,from,to};
   } else {
-    D.notices.push({id:Date.now(),msg,ico,cat,from,to,on:true});
+    D.notices.push({id:Date.now(),msg:msg.trim(),ico,cat,from,to,on:true});
   }
-  saveData(); clearNotice(); renderNotices(); updateNoticeBar();
+  saveData();
+  clearNotice();
+  renderNotices();
+  updateNoticeBar();
   showOk('notice-ok');
+  saveAllSettingsToFirestore().catch(e=>_warn('Firestore notice sync:',e));
+  if(typeof showToast==='function') showToast('✅ Notice saved!',2500);
 }
 function clearNotice(){
   document.getElementById('nf-msg').value='';
@@ -5089,6 +5226,7 @@ function clearNotice(){
 function renderNotices(){
   const list=document.getElementById('nc-list');
   if(!list) return;
+  D.notices = _arr(D.notices);
   const cnt=document.getElementById('nc-cnt');
   if(cnt) cnt.textContent=`(${D.notices.length})`;
   list.innerHTML=D.notices.map((n,i)=>`
@@ -5124,7 +5262,8 @@ function updateNoticeBar(){
     {ico:'📞',msg:'Call/WhatsApp: 980-1069733 · 985-5069733 — Free consultation!'},
     {ico:'🏗️',msg:'Building Construction · Interior Design · UPVC · Solar — All in One'}
   ];
-  let active=(D.notices||[]).filter(n=>n.on!==false);
+  D.notices=_arr(D.notices);
+  let active=D.notices.filter(n=>n&&n.on!==false);
   if(!active.length) active=DFLT;
   const track=document.getElementById('ntcTrack');
   if(!track) return;
@@ -5152,6 +5291,8 @@ function ntpl(key){
 function renderAdminPricing(){
   const c=document.getElementById('pricing-admin-list');
   if(!c) return;
+  D.pricing = _arr(D.pricing);
+  if(!D.pricing.length) D.pricing = JSON.parse(JSON.stringify(DEFAULT_DATA.pricing||[]));
   c.innerHTML=D.pricing.map((p,i)=>`
     <div class="ap-card" style="${p.pop?'border-left:3px solid var(--gold);':''}">
       <h3>${p.pop?'⭐ ':''} Plan ${i+1}: ${p.nm}</h3>
@@ -5187,7 +5328,7 @@ function savePricing(i){
     unit: document.getElementById(`pr-un-${i}`).value,
     feats: document.getElementById(`pr-ft-${i}`).value.split('\n').filter(Boolean),
     cta: document.getElementById(`pr-ct-${i}`)?.value || 'Get Quote',
-    pop: D.pricing[i].pop
+    pop: (_arr(D.pricing)[i]||{}).pop
   };
   saveData(); showOk(`pr-ok-${i}`);
   try{ renderPricingSection(); }catch(e){}
@@ -5198,8 +5339,8 @@ function renderDashStats(){
   const c=document.getElementById('dashStats');
   if(!c) return;
   c.innerHTML=[
-    {n:D.notices.length,l:'Notices',ic:'📢',cl:'#22c55e'},
-    {n:D.pricing.length,l:'Plans',ic:'💰',cl:'#c9933a'},
+    {n:_arr(D.notices).length,l:'Notices',ic:'📢',cl:'#22c55e'},
+    {n:_arr(D.pricing).length,l:'Plans',ic:'💰',cl:'#c9933a'},
     {n:'3',l:'Themes',ic:'🎨',cl:'#3b82f6'},
     {n:isAdmin?'Active':'—',l:'Session',ic:'🔐',cl:'#dc2626'}
   ].map(s=>`
@@ -5432,9 +5573,9 @@ function renderDashStats2(){
     {n:PROJS.length,l:'PROJECTS',ic:'📋',sec:'projs'},
     {n:TESTS.length,l:'TESTIMONIALS',ic:'💬',sec:'tests'},
     {n:'5',l:'WHY US',ic:'⭐',sec:'whyus'},
-    {n:D.pricing.length,l:'PRICING',ic:'💰',sec:'pricing'},
+    {n:_arr(D.pricing).length,l:'PRICING',ic:'💰',sec:'pricing'},
     {n:FAQS.length,l:'FAQS',ic:'❓',sec:'faq'},
-    {n:D.notices.length,l:'NOTICES',ic:'📢',sec:'notice'}
+    {n:_arr(D.notices).length,l:'NOTICES',ic:'📢',sec:'notice'}
   ];
   const row1=document.getElementById('dashStats');
   const row2=document.getElementById('dashStats2');
@@ -5522,7 +5663,7 @@ function downloadFullCalendar(){
   ctx.fillStyle='#c9933a';ctx.font='bold 40px serif';ctx.textAlign='center';
   ctx.fillText('PRERAK नेपाली पात्रो — २०८३ B.S.',W/2,52);
   ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='18px sans-serif';
-  ctx.fillText('Prerak Multipurpose Pvt. Ltd. · '+D.settings.phone1,W/2,82);
+  ctx.fillText('Prerak Multipurpose Pvt. Ltd. · '+_gStr(_obj(D.settings),'phone1',''),W/2,82);
   const calData=NP_CAL[2083]||NP_CAL[2083];
   for(let i=0;i<12;i++){
     const col=i%3,row=Math.floor(i/3);
@@ -5572,7 +5713,7 @@ function downloadFullCalendar(){
   }
   // Footer
   ctx.fillStyle='rgba(255,255,255,.2)';ctx.font='14px sans-serif';ctx.textAlign='center';
-  ctx.fillText('📞 '+D.settings.phone1+' · '+D.settings.email+' · '+D.settings.address.split('\n').join(' '),W/2,H-14);
+  ctx.fillText('📞 '+_gStr(_obj(D.settings),'phone1','')+' · '+_gStr(_obj(D.settings),'email','')+' · '+(_gStr(_obj(D.settings),'address','').split('\n').join(' ')),W/2,H-14);
   const a=document.createElement('a');
   a.download='PRERAK-Calendar-2083.png';a.href=cv.toDataURL('image/png');a.click();
 }
@@ -7215,10 +7356,12 @@ function adminBrandVideoPreview(){
 }
 
 function renderBrandVideo(){
+  try{
   const section = document.getElementById('brand-video');
   if(!section) return;
-  const V = D.brandVideo || {};
-  if(!V.url || !V.url.trim()){
+  D.brandVideo = (D.brandVideo && typeof D.brandVideo==='object') ? D.brandVideo : {};
+  const V = D.brandVideo;
+  if(!V || !V.url || !String(V.url).trim()){
     section.classList.remove('bv-active');
     return;
   }
@@ -7254,6 +7397,7 @@ function renderBrandVideo(){
   } else if(ctaRow){
     ctaRow.innerHTML = '';
   }
+  }catch(e){ _err('renderBrandVideo:', e); }
 }
 
 // Load video from Firestore on page init (non-blocking)
