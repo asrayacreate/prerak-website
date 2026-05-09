@@ -571,7 +571,11 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:44px 20px 1
 .al-btn{width:100%;padding:11px;background:linear-gradient(135deg,#9a6f28,#c9933a);color:#07070a;border:none;border-radius:26px;font-size:.86rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:3px;transition:opacity .2s;}
 .al-btn:hover{opacity:.9;}
 .al-err{font-size:.74rem;color:#ef4444;margin-top:8px;display:none;}
-
+.otp-boxes{display:flex;gap:6px;justify-content:center;margin:13px 0;}
+.otp-box{width:41px;height:48px;text-align:center;font-size:1.25rem;font-weight:700;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:8px;color:#f0ede8;font-family:inherit;outline:none;transition:border-color .2s;}
+.otp-box:focus{border-color:rgba(212,166,74,.5);}
+.otp-tim{font-size:.64rem;color:#8a8a9a;text-align:center;margin-top:4px;}
+.otp-tim span{color:var(--gold);font-weight:700;}
 .os{display:none;}.os.active{display:block;}
 .al-demo{background:rgba(15,15,24,.6);border:1px solid rgba(201,147,58,.3);border-radius:10px;padding:12px;font-size:.72rem;color:#f0ede8;line-height:1.6;margin-top:12px;display:block;min-height:24px;}
 /* ADMIN PANEL */
@@ -626,8 +630,8 @@ footer{background:var(--bg);border-top:1px solid var(--line);padding:44px 20px 1
 .ab-b{padding:3px 10px;background:rgba(0,0,0,.1);border:1px solid rgba(0,0,0,.15);border-radius:16px;color:#07070a;cursor:pointer;font-size:.66rem;font-weight:700;font-family:inherit;transition:all .2s;}
 .ab-b:hover{background:rgba(0,0,0,.2);}
 body.admin-mode .nav{top:32px!important;}
-#admin-fab{position:fixed;bottom:20px;left:16px;width:0;height:0;opacity:0;pointer-events:none;overflow:hidden;z-index:700;display:none;align-items:center;justify-content:center;font-size:.87rem;transition:all .2s;box-shadow:0 4px 14px rgba(0,0,0,.26);}
-#admin-fab.vis{display:flex;}
+#admin-fab{position:fixed;bottom:22px;right:18px;width:40px;height:40px;border-radius:50%;opacity:.25;pointer-events:auto;overflow:visible;z-index:700;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:all .3s;background:rgba(15,12,10,.75);border:1px solid rgba(212,166,74,.22);color:var(--gold);cursor:pointer;}
+#admin-fab:hover{opacity:1;transform:scale(1.12);border-color:var(--gold);}
 #admin-fab:hover{border-color:var(--gold);transform:scale(1.1);}
 /* QUOTE MODAL */
 .qm-c{background:linear-gradient(155deg,var(--bg2),var(--bg3));border:1.5px solid var(--lines);border-radius:20px;width:100%;max-width:505px;max-height:90vh;overflow-y:auto;position:relative;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:mu .4s cubic-bezier(.16,1,.3,1);}
@@ -694,9 +698,50 @@ body.admin-mode .nav{top:32px!important;}
 /* Visiting card: ALWAYS visible by default — admin can hide via .hide-vc body class */
 #visiting-card { display:block; }
 body.hide-vc #visiting-card { display:none; }
+/* Brand video hide if empty */
+#brand-video:not(.has-video) { display:none; }
 
-
-
+/* ═══ BRAND VIDEO PLAYER — professional sizing & style (size-only fix) ═══ */
+#brand-video #vg-featured-wrap{
+  width:100%;
+  max-width:900px;
+  margin:0 auto 26px;
+  border:1.5px solid rgba(212,166,74,.45); /* thin gold */
+  border-radius:16px;
+  box-shadow:0 14px 38px rgba(0,0,0,.36);
+  box-sizing:border-box;
+}
+#brand-video #fv-player{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  max-height:420px;
+  margin:0 auto;
+  border-radius:16px;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+/* Ensure media inside fills cleanly with no stretch */
+#brand-video #fv-player > img,
+#brand-video #fv-player > video,
+#brand-video #fv-player > iframe{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* Tablet */
+@media (max-width:1024px){
+  #brand-video #vg-featured-wrap{max-width:90%;}
+  #brand-video #fv-player{max-height:320px;}
+}
+/* Mobile */
+@media (max-width:600px){
+  #brand-video #vg-featured-wrap{max-width:100%;border-radius:14px;}
+  #brand-video #fv-player{max-height:260px;border-radius:14px;}
+}
+/* Prevent horizontal scroll caused by section */
+#brand-video{overflow-x:hidden;}
 
 
 
@@ -722,7 +767,7 @@ body.hide-vc #visiting-card { display:none; }
 @media(max-width:768px){
   .flt-of { display:none !important; }
   #btt { right:8px !important; bottom:80px !important; }
-  #admin-fab { right:8px !important; bottom:140px !important; }
+  #admin-fab { right:10px !important; bottom:82px !important; }
   /* Make sure modals scroll properly on mobile */
   #quote-modal.open { align-items:flex-start !important; padding-top:20px; padding-bottom:80px; }
   .qm-card { max-height:none !important; }
@@ -746,6 +791,12 @@ body.hide-vc #visiting-card { display:none; }
   50% { transform: rotate(3deg) skewY(1.5deg) scale(1.05); }
 }
 
+/* ═══ VIDEO SECTION HIDDEN FROM PUBLIC ═══ */
+#brand-video,.brand-video,.video-section,.video-wrapper,
+#video-section,.fv-player,#fv-player,.video-container,
+.hero-video,.video-modal,#vg-featured-wrap,
+#svid-grid,.svid-card,#fv-play-btn { display:none!important; }
+
 /* ═══ LEFT FLOATING BAR ═══ */
 #lfb{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:250;display:flex;flex-direction:column;align-items:center;gap:9px;background:rgba(15,12,10,.55);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(212,166,74,.2);border-radius:44px;padding:12px 9px;box-shadow:0 10px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);animation:lfbIn .6s cubic-bezier(.34,1.56,.64,1) both;}
 @keyframes lfbIn{from{opacity:0;transform:translateY(-50%) translateX(-24px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
@@ -753,22 +804,18 @@ body.hide-vc #visiting-card { display:none; }
 .lb::after{content:attr(data-tip);position:absolute;left:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(-8px);background:rgba(10,8,6,.95);backdrop-filter:blur(14px);border:1px solid rgba(212,166,74,.25);color:#f5ede0;font-family:var(--fb);font-size:.62rem;font-weight:700;white-space:nowrap;padding:5px 12px;border-radius:22px;pointer-events:none;opacity:0;transition:opacity .2s,transform .2s;box-shadow:0 4px 16px rgba(0,0,0,.4);}
 .lb:hover::after{opacity:1;transform:translateY(-50%) translateX(0);}
 .lb:hover{transform:scale(1.2) translateX(4px);}
-.lb:active{transform:scale(.95);}
 .lb-ph{background:linear-gradient(135deg,#f4c869,#d4922a);color:#1a1208;box-shadow:0 4px 18px rgba(212,166,74,.4);}
-.lb-ph:hover{box-shadow:0 8px 28px rgba(212,166,74,.65);}
 .lb-ph::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(212,166,74,.5);animation:lbRing 2.2s ease-in-out infinite;}
 @keyframes lbRing{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.22);opacity:0;}}
 .lb-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;box-shadow:0 4px 18px rgba(37,211,102,.35);animation:lbBounce 3s ease-in-out infinite;}
 @keyframes lbBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.08) translateX(2px);}}
-.lb-wa:hover{animation:none;transform:scale(1.2) translateX(4px);box-shadow:0 8px 28px rgba(37,211,102,.6);}
-.lb-cd{background:rgba(212,166,74,.12);color:var(--gl);border:1px solid rgba(212,166,74,.35)!important;box-shadow:0 4px 14px rgba(0,0,0,.28);}
-.lb-cd:hover{background:rgba(212,166,74,.25);color:#fff;box-shadow:0 6px 22px rgba(212,166,74,.45);}
+.lb-wa:hover{animation:none;transform:scale(1.2) translateX(4px);}
+.lb-cd{background:rgba(212,166,74,.12);color:var(--gl);border:1px solid rgba(212,166,74,.35)!important;}
 .lb-qt{background:linear-gradient(135deg,#c4502c,#8a3618);color:#fff;box-shadow:0 4px 18px rgba(196,80,44,.38);}
-.lb-qt:hover{box-shadow:0 8px 28px rgba(196,80,44,.62);}
 .lb-hr{width:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,166,74,.35),transparent);margin:1px 0;}
 .lb svg{width:20px;height:20px;display:block;pointer-events:none;}
 @media(max-width:768px){#lfb{display:none;}}
-@media(max-width:1100px) and (min-width:769px){#lfb{left:8px;gap:7px;padding:9px 7px;}.lb{width:38px;height:38px;}.lb::after{display:none;}.lb svg{width:17px;height:17px;}}
+@media(max-width:1100px) and (min-width:769px){#lfb{left:8px;}.lb{width:38px;height:38px;}.lb::after{display:none;}}
 </style>
 </head>
 <body class="show-vc-on show-cal-on">
@@ -1227,6 +1274,63 @@ body.hide-vc #visiting-card { display:none; }
   </div>
 </section>
 
+<!-- ANIMATION / BRAND VIDEO SECTION -->
+<!-- ═══ SERVICE VIDEOS GALLERY ═══ -->
+<section class="sec" id="brand-video" style="padding:80px 20px;background:linear-gradient(180deg,var(--bg3),var(--bg));position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,166,74,.06),transparent 70%);pointer-events:none;"></div>
+  <div class="si" style="position:relative;z-index:2;">
+    <div class="sh reveal">
+      <div class="sey en">Service Videos</div><div class="sey ne np">सेवा भिडियोहरू</div>
+      <h2 class="stl en">Watch Our <em>Service Works</em></h2>
+      <h2 class="stl ne np">हाम्रो <em>सेवा कार्यहरू</em> हेर्नुस्</h2>
+      <p class="sdesc en">All our construction services in one place — click any video to play.</p>
+      <p class="sdesc ne np">हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।</p>
+    </div>
+
+    <!-- ═══ FEATURED VIDEO PLAYER (BIG TOP) ═══ -->
+    <div id="vg-featured-wrap" class="reveal" style="background:linear-gradient(155deg,var(--bg2),var(--bg3));overflow:hidden;">
+      <div id="fv-player" style="background:#0a0806;">
+        <img id="fv-thumb" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200" alt="Featured" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
+        <!-- BIG play button -->
+        <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
+          <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
+        </button>
+        <!-- Now Playing label -->
+        <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
+          <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>NOW PLAYING
+        </span>
+        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
+        <!-- Bottom info overlay -->
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));">
+          <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+            <span id="fv-cat">🏗️ Construction</span>
+            <span style="opacity:.5;">·</span>
+            <span id="fv-dur">2:30</span>
+          </div>
+          <h3 id="fv-title" style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:5px;">Building Construction</h3>
+          <p id="fv-desc" style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;">Complete building construction — RCC, masonry &amp; premium finishing.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SERVICE VIDEO GRID ═══ -->
+    <div class="reveal" data-d="1">
+      <div style="text-align:center;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px;">
+        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
+        <span class="en">All 12 Service Videos</span><span class="ne np">सबै १२ सेवा भिडियोहरू</span>
+        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
+      </div>
+      <div id="svid-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-width:980px;margin:0 auto;"></div>
+    </div>
+
+    <!-- WhatsApp / Admin CTA -->
+    <div class="reveal" data-d="2" style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+      <a href="https://wa.me/9779801069733?text=नमस्ते! Service video bare jankaari chahiyo." target="_blank" rel="noopener" class="btn btn-w">💬 <span class="en">Ask About Services</span><span class="ne np">सेवा बारे सोध्नुस्</span></a>
+      <a href="#contact" class="btn btn-g">📞 <span class="en">Free Site Visit</span><span class="ne np">नि:शुल्क साइट भिजिट</span></a>
+    </div>
+  </div>
+</section>
 
 <!-- 3D HOLOGRAPHIC VISITING CARD -->
 <section class="sec vc-bg" id="visiting-card">
@@ -1726,21 +1830,20 @@ body.hide-vc #visiting-card { display:none; }
   <span class="en">OFF</span><span class="ne np">छुट</span>
 </div>
 <a href="https://wa.me/9779801069733?text=नमस्ते%20PRERAK!" target="_blank" rel="noopener" class="flt-wa" aria-label="WhatsApp">💬</a>
-<!-- ═══ LEFT FLOATING BAR ═══ -->
 <div id="lfb" role="complementary" aria-label="Quick Actions">
-  <a href="tel:9801069733" class="lb lb-ph" aria-label="Call Now" data-tip="📞 Call Now">
+  <a href="tel:9801069733" class="lb lb-ph" data-tip="📞 Call Now">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
   </a>
   <div class="lb-hr"></div>
-  <a href="https://wa.me/9779801069733?text=नमस्ते%20PRERAK!" target="_blank" rel="noopener" class="lb lb-wa" aria-label="WhatsApp" data-tip="💬 WhatsApp">
+  <a href="https://wa.me/9779801069733?text=नमस्ते%20PRERAK!" target="_blank" rel="noopener" class="lb lb-wa" data-tip="💬 WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.049-1.103l-.29-.172-3.004.928.949-2.945-.188-.299A7.97 7.97 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
   </a>
   <div class="lb-hr"></div>
-  <button class="lb lb-cd" aria-label="Business Card" data-tip="🪪 Our Card" onclick="document.getElementById('visiting-card')?.scrollIntoView({behavior:'smooth',block:'center'})">
+  <button class="lb lb-cd" data-tip="🪪 Our Card" onclick="document.getElementById('visiting-card')?.scrollIntoView({behavior:'smooth',block:'center'})">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><circle cx="8" cy="12" r="2"/><line x1="13" y1="10" x2="19" y2="10"/><line x1="13" y1="14" x2="17" y2="14"/></svg>
   </button>
   <div class="lb-hr"></div>
-  <button class="lb lb-qt" aria-label="Get Quote" data-tip="📋 Free Quote" onclick="openQuote('Free Site Visit','General')">
+  <button class="lb lb-qt" data-tip="📋 Free Quote" onclick="openQuote('Free Site Visit','General')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
   </button>
 </div>
@@ -1757,7 +1860,7 @@ body.hide-vc #visiting-card { display:none; }
   <a href="https://wa.me/9779801069733?text=नमस्ते!" target="_blank" rel="noopener" class="mc2">💬 WhatsApp</a>
 </div>
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<button id="admin-fab" onclick="openLogin()">🔒</button>
+<button id="admin-fab" onclick="isAdmin?openAdminPanel():openLogin()" title="Admin Panel">🔒</button>
 
 <!-- (Removed duplicate qmOv quote modal) -->
 
@@ -2018,20 +2121,67 @@ body.hide-vc #visiting-card { display:none; }
       <h2>Admin Login</h2>
       <p>Prerak Multipurpose Pvt. Ltd.</p>
       <div id="login-level-badge" style="display:none;background:#1a3a6e;color:#fff;padding:5px 16px;border-radius:20px;font-size:.75rem;font-weight:700;text-align:center;margin-bottom:10px;"></div>
-      <div class="al-f" style="margin-bottom:10px;"><label>Email</label><input type="email" id="al-email" placeholder="Admin email" style="width:100%;padding:10px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#f0ede8;font-family:inherit;font-size:.88rem;outline:none;" onkeydown="if(event.key==='Enter')document.getElementById('al-pass').focus()"></div><div class="al-f"><label>Password</label>
-        <div class="al-pw">
-          <input type="password" id="al-pass" placeholder="Enter your admin password" onkeydown="if(event.key==='Enter')doLogin()">
-          <button class="al-eye" onclick="toggleEye()" id="al-eye">👁️</button>
-        </div>
+      <div class="al-f" style="margin-bottom:10px;"><label>Admin Email</label>
+        <input type="email" id="al-email" placeholder="Enter admin email address"
+          style="width:100%;padding:10px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#f0ede8;font-family:inherit;font-size:.88rem;outline:none;transition:border-color .2s;"
+          onkeydown="if(event.key==='Enter')doLogin()">
       </div>
 
-      <button class="al-btn" onclick="doLogin()">🔐 Login</button>
+      <button class="al-btn" onclick="doLogin()">📧 Send OTP Code</button>
+      <div style="text-align:center;margin-top:10px;">
+        <span style="font-size:.65rem;color:#5a5a6a;">Having trouble? </span>
+        <button onclick="showPasswordFallback()" style="background:none;border:none;color:#c9933a;cursor:pointer;font-size:.65rem;font-family:inherit;text-decoration:underline;">Use password instead</button>
+      </div>
+      <div id="pw-fallback" style="display:none;margin-top:12px;border-top:1px solid rgba(255,255,255,.08);padding-top:12px;">
+        <div class="al-f"><label style="font-size:.72rem;color:#8a8a9a;">Emergency Password Login</label>
+          <div class="al-pw">
+            <input type="password" id="al-pw-fb" placeholder="Admin password" onkeydown="if(event.key==='Enter')doPasswordFallback()">
+          </div>
+        </div>
+        <button class="al-btn" onclick="doPasswordFallback()" style="margin-top:8px;background:rgba(201,147,58,.18);border:1px solid rgba(201,147,58,.35);font-size:.78rem;">🔐 Login with Password</button>
+        <div class="al-err" id="al-pw-err">❌ Wrong password.</div>
+      </div>
       <div class="al-err" id="al-err">❌ Wrong password. Try again.</div>
       <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
         <button onclick="closeLogin()" style="background:none;border:none;color:#5a5a6a;cursor:pointer;font-size:.72rem;font-family:inherit;">Cancel</button>
       </div>
     </div>
-  </div>
+    <div class="os" id="step2">
+      <div class="al-ico">📧</div>
+      <h2>Verify OTP</h2>
+      <p id="otp-hint" style="font-size:.75rem;color:#8a8a9a;margin-bottom:4px;"></p>
+      <p style="font-size:.68rem;color:#5a5a6a;margin-bottom:18px;">Enter the 6-digit code</p>
+      <div class="otp-boxes">
+        <input class="otp-box" id="o0" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(0)" onkeydown="otpBk(event,0)">
+        <input class="otp-box" id="o1" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(1)" onkeydown="otpBk(event,1)">
+        <input class="otp-box" id="o2" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(2)" onkeydown="otpBk(event,2)">
+        <input class="otp-box" id="o3" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(3)" onkeydown="otpBk(event,3)">
+        <input class="otp-box" id="o4" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(4)" onkeydown="otpBk(event,4)">
+        <input class="otp-box" id="o5" maxlength="1" type="text" inputmode="numeric" oninput="otpNext(5)" onkeydown="otpBk(event,5)">
+      </div>
+      <div class="otp-tim">Expires in <span id="otp-cd">05:00</span></div>
+      <div class="al-err" id="otp-err">❌ Wrong OTP.</div>
+      <button class="al-btn" onclick="verOTP()" style="margin-top:12px;">✅ Verify & Login</button>
+      <div class="al-demo" id="otp-demo"></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+        <button onclick="resendOTP()" style="background:none;border:none;color:#c9933a;cursor:pointer;font-size:.72rem;font-family:inherit;">🔄 Resend</button>
+        <button onclick="backToStep1()" style="background:none;border:none;color:#5a5a6a;cursor:pointer;font-size:.72rem;font-family:inherit;">← Back</button>
+      </div>
+      <!-- PASSWORD FALLBACK from step2 -->
+      <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,.08);padding-top:12px;text-align:center;">
+        <button onclick="showStep2PasswordFallback()" style="background:none;border:1px solid rgba(201,147,58,.3);color:#c9933a;cursor:pointer;font-size:.7rem;font-family:inherit;padding:6px 14px;border-radius:16px;transition:all .2s;" onmouseover="this.style.background='rgba(201,147,58,.1)'" onmouseout="this.style.background='none'">🔐 Use Password Login Instead</button>
+        <div id="s2-pw-wrap" style="display:none;margin-top:10px;">
+          <div style="position:relative;">
+            <input type="password" id="s2-pw" placeholder="Enter admin password"
+              style="width:100%;padding:10px 40px 10px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.12);border-radius:10px;color:#f0ede8;font-family:inherit;font-size:.88rem;outline:none;box-sizing:border-box;"
+              onkeydown="if(event.key==='Enter')doStep2Password()">
+            <button onclick="toggleS2Eye()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#8a8a9a;cursor:pointer;font-size:.85rem;" id="s2-eye">👁️</button>
+          </div>
+          <div class="al-err" id="s2-pw-err" style="margin-top:6px;">❌ Wrong password.</div>
+          <button class="al-btn" onclick="doStep2Password()" style="margin-top:8px;">🔐 Login with Password</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2111,6 +2261,7 @@ body.hide-vc #visiting-card { display:none; }
       <div class="ap-ni" onclick="apSec('notice')"><span>📢</span> Notice Board</div>
       <div class="ap-ni" onclick="apSec(\'calpromo\')"><span>📺</span> Calendar Promo</div>
       <div class="ap-ni" onclick="apSec('vcard')"><span>🎴</span> Visiting Card</div>
+      <div class="ap-ni" onclick="apSec('video')"><span>🎬</span> Brand Video</div>
       <div class="ap-ni" onclick="apSec('components')"><span>🧩</span> Components</div>
       <div class="ap-ni" onclick="apSec('finalsetup')"><span>🚀</span> Final Setup</div>
       <div class="ap-ni" onclick="apSec('settings')"><span>⚙️</span> Settings</div>
@@ -2192,9 +2343,12 @@ body.hide-vc #visiting-card { display:none; }
 #quote-modal.open{display:flex !important;align-items:flex-start !important;padding-top:20px !important;padding-bottom:80px !important;}
 
 /* Video play button pulse */
-50%{transform:scale(1.1);box-shadow:0 6px 20px rgba(220,38,38,.7),0 0 0 6px rgba(220,38,38,.15);}}
+@keyframes playPulse{0%,100%{transform:scale(1);box-shadow:0 4px 12px rgba(220,38,38,.5);}50%{transform:scale(1.1);box-shadow:0 6px 20px rgba(220,38,38,.7),0 0 0 6px rgba(220,38,38,.15);}}
 
-
+/* Service Video Gallery */
+.svid-card{background:linear-gradient(155deg,var(--bg2),var(--bg3));border:1.5px solid var(--line);border-radius:13px;overflow:hidden;cursor:pointer;transition:all .3s;position:relative;}
+.svid-card:hover{transform:translateY(-4px);border-color:var(--lines);box-shadow:0 14px 32px rgba(0,0,0,.4);}
+.svid-card.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,166,74,.3),0 14px 32px rgba(212,166,74,.2);}
 .svid-card.active::after{content:"▶ NOW PLAYING";position:absolute;top:8px;left:8px;background:#dc2626;color:#fff;font-size:.5rem;font-weight:800;padding:3px 8px;border-radius:8px;letter-spacing:1px;z-index:5;animation:pu 1.5s infinite;}
 .svid-thumb{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#0a0806;}
 .svid-thumb img{width:100%;height:100%;object-fit:cover;opacity:.78;transition:transform .5s,opacity .3s;}
@@ -2211,7 +2365,7 @@ body.hide-vc #visiting-card { display:none; }
 [data-t="corporate"] .svid-info-title{color:#111827;}
 [data-t="corporate"] .svid-info-sub{color:rgba(17,24,39,.55);}
 @media(max-width:600px){
-  
+  #svid-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px !important;}
   .svid-info-title{font-size:.78rem;}
 }
 
@@ -2871,6 +3025,67 @@ body.hide-vc #visiting-card { display:none; }
     </div>
 
     <!-- BRAND VIDEO ADMIN -->
+    <div class="ap-sec" id="sec-video">
+      <div class="ap-hdr"><h2>🎬 Brand Video Manager</h2><p>Manage the promotional video shown on your website</p></div>
+      
+      <div class="ap-card" style="border-left:3px solid #dc2626;background:linear-gradient(145deg,#fff5f5,#fff);">
+        <h3>📺 Main Brand Video</h3>
+        <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">This video appears in the hero section of your website. Only admins can change it!</p>
+        <!-- File Upload Area (image-style) -->
+        <div class="afg">
+          <label style="display:flex;align-items:center;gap:6px;font-size:.78rem !important;color:#dc2626 !important;font-weight:800 !important;">
+            <span style="background:#dc2626;color:#fff;font-size:.55rem;padding:3px 8px;border-radius:10px;letter-spacing:1.5px;">★ NEW</span>
+            📁 UPLOAD MP4 VIDEO FILE FROM YOUR COMPUTER
+          </label>
+          <div class="proj-upload-area" onclick="document.getElementById('bv-file').click()" style="cursor:pointer;padding:38px 20px;text-align:center;margin-top:8px;background:linear-gradient(145deg,#fef2f2,#fee2e2);border:3px dashed #dc2626 !important;border-radius:14px;transition:all .2s;animation:uploadPulse 2.5s infinite;" onmouseover="this.style.background='linear-gradient(145deg,#fee2e2,#fecaca)';this.style.transform='scale(1.01)'" onmouseout="this.style.background='linear-gradient(145deg,#fef2f2,#fee2e2)';this.style.transform=''">
+            <input type="file" id="bv-file" accept="video/*" style="display:none;" onchange="adminUploadBrandVideo(this)">
+            <div style="font-size:3.5rem;margin-bottom:10px;animation:bou 2s ease-in-out infinite;">📹</div>
+            <div style="font-size:1.05rem;font-weight:800;color:#dc2626;margin-bottom:5px;">👆 CLICK HERE TO UPLOAD VIDEO</div>
+            <div style="font-size:.78rem;font-weight:700;color:#7f1d1d;">MP4 · WebM · OGG — Any size supported</div>
+            <div style="font-size:.65rem;color:#991b1b;margin-top:6px;font-style:italic;">📱 Mobile bata aafnai video upload garna sakinchha</div>
+          </div>
+          <div id="bv-upload-status" style="font-size:.78rem;margin-top:8px;color:#6b7280;line-height:1.6;display:none;padding:10px;border-radius:8px;background:#f9fafb;"></div>
+          <!-- Video preview after upload -->
+          <div id="bv-preview" style="margin-top:10px;display:none;text-align:center;"></div>
+        </div>
+        
+        <div style="text-align:center;font-size:.65rem;color:#9ca3af;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:6px 0;display:flex;align-items:center;gap:9px;">
+          <span style="flex:1;height:1px;background:#e5e7eb;"></span>
+          <span>OR</span>
+          <span style="flex:1;height:1px;background:#e5e7eb;"></span>
+        </div>
+        
+        <div class="afr">
+          <div class="afg"><label>🎥 Video URL (paste link)</label><input type="text" id="bv-url" placeholder="https://youtube.com/embed/VIDEO_ID OR direct .mp4 link" oninput="adminBrandVideoPreview()"></div>
+          <div class="afg"><label>Video Type</label>
+            <select id="bv-type">
+              <option value="youtube">YouTube Embed</option>
+              <option value="mp4">Direct MP4</option>
+              <option value="vimeo">Vimeo Embed</option>
+            </select>
+          </div>
+        </div>
+        <div class="afg"><label>Video Title</label><input type="text" id="bv-title" placeholder="Our Construction Story"></div>
+        <div class="afg"><label>Description</label><textarea id="bv-desc" rows="2" placeholder="Watch how we build dream homes"></textarea></div>
+        
+        <div style="margin-top:12px;padding:12px;background:#eff6ff;border-radius:8px;border:1px dashed #3b82f6;">
+          <div style="font-size:.74rem;color:#1e40af;line-height:1.7;">
+            <b>💡 How to get YouTube Embed URL:</b><br>
+            1. Go to YouTube video → Click <b>Share</b><br>
+            2. Click <b>Embed</b> → Copy URL like: <code style="background:#dbeafe;padding:2px 5px;border-radius:3px;font-size:.7rem;">https://youtube.com/embed/dQw4w9WgXcQ</code><br>
+            3. Paste above. Done!
+          </div>
+        </div>
+        
+        <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;">
+          <button class="afsv" onclick="saveBrandVideo()">💾 Save Video</button>
+          <button class="abtn" onclick="previewBrandVideo()" style="background:#10b981;color:#fff;">👁️ Preview</button>
+          <button class="dbtn" onclick="if(confirm('Remove video?')){D.brandVideo={url:'',type:'youtube'};saveData();loadBrandVideo();renderSite();}">🗑️ Remove Video</button>
+          <span class="afok" id="bv-ok">✅ Saved!</span>
+        </div>
+        <div id="bv-preview" style="margin-top:14px;display:none;"></div>
+      </div>
+    </div>
 
     <!-- COMPONENTS TOGGLE ADMIN -->
     <div class="ap-sec" id="sec-components">
@@ -3005,6 +3220,77 @@ body.hide-vc #visiting-card { display:none; }
     </div>
 
     <!-- VIDEO GALLERY ADMIN -->
+    <div class="ap-sec" id="sec-vidgallery">
+      <div class="ap-hdr"><h2>🎥 Video Gallery</h2><p>Manage the Service Videos section — title, size, demo video, per-service videos</p></div>
+
+      <!-- Section Visibility + Title -->
+      <div class="ap-card">
+        <h3>📝 Section Settings</h3>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:9px 11px;">
+          <input type="checkbox" id="vg-show" style="width:18px;height:18px;cursor:pointer;" checked>
+          <label for="vg-show" style="font-size:.78rem;font-weight:700;color:#111827;cursor:pointer;flex:1;">✅ Show Video Gallery Section on Website</label>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Eyebrow (EN)</label><input type="text" id="vg-eye-en" placeholder="Service Videos"></div>
+          <div class="afg"><label>शीर्ष (NE)</label><input type="text" id="vg-eye-ne" placeholder="सेवा भिडियोहरू"></div>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Title (EN)</label><input type="text" id="vg-title-en" placeholder="Watch Our Service Works"></div>
+          <div class="afg"><label>शीर्षक (NE)</label><input type="text" id="vg-title-ne" placeholder="हाम्रो सेवा कार्यहरू हेर्नुस्"></div>
+        </div>
+        <div class="afr">
+          <div class="afg"><label>Description (EN)</label><textarea id="vg-desc-en" rows="2" placeholder="All our construction services in one place..."></textarea></div>
+          <div class="afg"><label>विवरण (NE)</label><textarea id="vg-desc-ne" rows="2" placeholder="हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- Player Size -->
+      <div class="ap-card">
+        <h3>📐 Featured Player Size</h3>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px;">
+          <button class="cbtn" onclick="vgSetSize(560)" style="width:100%;">📱 Small (560px)</button>
+          <button class="cbtn" onclick="vgSetSize(720)" style="width:100%;">💻 Medium (720px)</button>
+          <button class="cbtn" onclick="vgSetSize(900)" style="width:100%;">🖥️ Large (900px)</button>
+          <button class="cbtn" onclick="vgSetSize(1100)" style="width:100%;">🎬 Cinema (1100px)</button>
+        </div>
+        <div class="afg"><label>Custom Width (px)</label>
+          <input type="number" id="vg-width" placeholder="720" min="400" max="1400" step="20">
+          <div style="font-size:.65rem;color:#9ca3af;margin-top:3px;">Yo player ko maximum width — Recommended: 720px</div>
+        </div>
+      </div>
+
+      <!-- Demo Video -->
+      <div class="ap-card" style="border-left:4px solid #c9933a;">
+        <h3>🎬 Default Demo Video</h3>
+        <p style="font-size:.74rem;color:#6b7280;margin-bottom:12px;line-height:1.6;">Yo URL chha vane je service ma video URL haina, tyo service ko play button click garda yo demo video plays. Khali rakheko vane Big Buck Bunny sample plays.</p>
+        <div class="afg"><label>Demo Video URL (YouTube / MP4)</label>
+          <input type="text" id="vg-demo-url" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;">
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value='https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'">📦 Use Big Buck Bunny</button>
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value='https://www.youtube.com/watch?v=u-FrW3KX-Lo'">🏗️ Sample Construction</button>
+          <button class="abtn" onclick="document.getElementById('vg-demo-url').value=''">🗑️ Clear</button>
+        </div>
+      </div>
+
+      <!-- Per-Service Videos Quick Manage -->
+      <div class="ap-card">
+        <h3>🎞️ Per-Service Video URLs</h3>
+        <p style="font-size:.74rem;color:#6b7280;margin-bottom:12px;line-height:1.6;">Har service ko aafnu video URL set garna sakinchha. Empty rakheko service ma demo video plays.</p>
+        <div id="vg-svc-list" style="display:flex;flex-direction:column;gap:8px;max-height:480px;overflow-y:auto;"></div>
+        <button class="cbtn" onclick="vgSaveAllSvcVideos()" style="margin-top:10px;width:100%;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;border:none;padding:11px;font-weight:700;">💾 Save All Service Videos</button>
+      </div>
+
+      <!-- Save All -->
+      <div class="ap-card" style="background:linear-gradient(135deg,#fff,#f0fff4);border:1.5px solid rgba(22,163,74,.3);">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button class="afsv" onclick="saveVideoGallery()" style="font-size:.85rem;padding:13px 28px;">💾 Save All Settings</button>
+          <button class="cbtn" onclick="resetVideoGallery()">↻ Reset to Defaults</button>
+          <button class="abtn" onclick="exitAdmin();setTimeout(()=>document.getElementById('brand-video')?.scrollIntoView({behavior:'smooth'}),200)">👁 Preview Live</button>
+          <span class="afok" id="vg-ok">✅ Saved!</span>
+        </div>
+      </div>
+    </div>
 
     <!-- FINAL SETUP / SYSTEM STATUS -->
     <div class="ap-sec" id="sec-finalsetup">
@@ -3384,9 +3670,10 @@ const DEFAULT_DATA = {
     showLightbulbInfo:false 
   },
   notices: [
-    {id:1,msg:'🎉 This month — 10% OFF on all services!',ico:'🎉',cat:'offer',from:'',to:'',on:true},
-    {id:2,msg:'🏠 Free Site Visit within Hetauda & nearby — Book now!',ico:'🏠',cat:'announce',from:'',to:'',on:true},
-    {id:3,msg:'☀️ Solar system installation with 20% government subsidy available!',ico:'☀️',cat:'announce',from:'',to:'',on:true}
+    {id:1,msg:'🔥 10% OFF on Construction & Interior services this month!',ico:'🔥',cat:'offer',from:'',to:'',on:true},
+    {id:2,msg:'🏠 Free Site Visit available in Hetauda & nearby — Book now!',ico:'🏠',cat:'announce',from:'',to:'',on:true},
+    {id:3,msg:'🪟 UPVC/Aluminum windows & Gypsum ceiling work available!',ico:'🪟',cat:'announce',from:'',to:'',on:true},
+    {id:4,msg:'📞 Call/WhatsApp: 980-1069733 — Free consultation!',ico:'📞',cat:'announce',from:'',to:'',on:true}
   ],
   pricing: [
     {id:'standard',ico:'🏠',nm:'Standard Build',tag:'For Residential',amt:'NPR 1,200',orig:'NPR 1,500',unit:'/sq ft',feats:['RCC structure & quality materials','Standard finishing & painting','Basic electrical & plumbing','Site supervision included','2-year warranty','Free design consultation','7-day delivery for materials'],cta:'Get Quote',pop:false},
@@ -3610,6 +3897,7 @@ let vcFlipped = false, vcHoloOn = false;
 let logoTaps = 0, logoTapT = null;
 let isAdmin = false;
 let isSuperAdmin = false;
+let otpCode = '', otpCountdown = null;
 let exitShown = false;
 
 // ═══ INIT ═══
@@ -3618,6 +3906,7 @@ function init(){
   applyTheme();
   applyLang();
   renderSite();
+  applyLogo();           // ← apply saved logo immediately on page load
   // Force critical sections to render (extra safety)
   try { renderPricingSection(); } catch(e){ console.error('Pricing render:',e); }
   try { renderFAQSection(); } catch(e){ console.error('FAQ render:',e); }
@@ -4431,38 +4720,162 @@ function toggleEye(){
   }
 }
 function doLogin(){
-  const email = (document.getElementById('al-email')||{}).value||'';
-  const pw = document.getElementById('al-pass').value;
-  const SUPER_EMAIL = 'asrayacreate.acc@gmail.com';
-  const SUPER_PASS  = D.superPass || 'prerak@super2025';
-  const REG_PASS    = D.adminPass  || 'prerak@2025';
-  const isSuper = (email===SUPER_EMAIL && pw===SUPER_PASS) || (email==='' && pw===SUPER_PASS);
-  const isReg   = pw===REG_PASS && !isSuper;
-  if(isSuper || isReg){
+  // PRIMARY: Email OTP flow
+  const emailEl = document.getElementById('al-email');
+  const email = emailEl ? emailEl.value.trim() : '';
+  const adminEmail = D.adminEmail || 'asrayacreate.ac@gmail.com';
+  const superEmail = 'asrayacreate.acc@gmail.com';
+
+  if(!email){
+    document.getElementById('al-err').style.display='block';
+    document.getElementById('al-err').textContent='❌ Please enter admin email.';
+    if(emailEl) { emailEl.classList.add('shake'); setTimeout(()=>emailEl.classList.remove('shake'),500); }
+    return;
+  }
+  const isSuper = email.toLowerCase() === superEmail.toLowerCase();
+  const isReg   = email.toLowerCase() === adminEmail.toLowerCase();
+  if(!isSuper && !isReg){
+    document.getElementById('al-err').style.display='block';
+    document.getElementById('al-err').textContent='❌ Email not recognized as admin.';
+    if(emailEl) { emailEl.classList.add('shake'); setTimeout(()=>emailEl.classList.remove('shake'),500); }
+    return;
+  }
+  isSuperAdmin = isSuper;
+  const lb=document.getElementById('login-level-badge');
+  if(lb){lb.textContent=isSuperAdmin?'🛡️ Super Admin':'🔧 Admin';lb.style.display='block';}
+  // Move to OTP step
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  otpCode = String(Math.floor(100000+Math.random()*900000));
+  const hint = document.getElementById('otp-hint');
+  if(hint) hint.textContent = 'OTP sent to: ' + email;
+  sendOTP(otpCode, email);
+}
+
+function showStep2PasswordFallback(forceShow){
+  const wrap = document.getElementById('s2-pw-wrap');
+  if(!wrap) return;
+  if(forceShow) { wrap.style.display='block'; return; }
+  wrap.style.display = wrap.style.display==='none' ? 'block' : 'none';
+  if(wrap.style.display==='block') setTimeout(()=>{ const el=document.getElementById('s2-pw'); if(el) el.focus(); },100);
+}
+function toggleS2Eye(){
+  const inp=document.getElementById('s2-pw');
+  const eye=document.getElementById('s2-eye');
+  if(!inp) return;
+  inp.type = inp.type==='password' ? 'text' : 'password';
+  if(eye) eye.textContent = inp.type==='password' ? '👁️' : '🙈';
+}
+function doStep2Password(){
+  const pw = (document.getElementById('s2-pw')||{}).value||'';
+  const isSuper = pw===(D.superPass||'prerak@super2025');
+  const isReg   = pw===(D.adminPass||'prerak@2025');
+  const err = document.getElementById('s2-pw-err');
+  if(isSuper||isReg){
+    isSuperAdmin=!!isSuper;
+    clearInterval(otpCountdown);
+    completeLogin();
+  } else {
+    if(err) err.style.display='block';
+    const inp=document.getElementById('s2-pw');
+    if(inp){inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),500);}
+    setTimeout(()=>{ if(err) err.style.display='none'; },3000);
+  }
+}
+function showPasswordFallback(){
+  const fb = document.getElementById('pw-fallback');
+  if(fb){ fb.style.display = fb.style.display==='none'?'block':'none'; }
+}
+function doPasswordFallback(){
+  const pw = (document.getElementById('al-pw-fb')||{}).value||'';
+  const isSuper = pw === (D.superPass||'prerak@super2025');
+  const isReg   = pw === (D.adminPass||'prerak@2025');
+  if(isSuper||isReg){
     isSuperAdmin=!!isSuper;
     const lb=document.getElementById('login-level-badge');
     if(lb){lb.textContent=isSuperAdmin?'🛡️ Super Admin':'🔧 Admin';lb.style.display='block';}
-    closeLogin();
-    isAdmin=true;
-    document.getElementById('admin-bar').classList.add('show');
-    const aptag=document.getElementById('ap-level-tag');
-    if(aptag){aptag.textContent=isSuperAdmin?'🛡️ SUPER ADMIN':'🔧 ADMIN';aptag.style.background=isSuperAdmin?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,#1a3a6e,#2550a0)';}
-    const apadmin=document.getElementById('ap-admin-type');
-    if(apadmin) apadmin.textContent=isSuperAdmin?'🛡️ Super Admin':'🔧 Admin';
-    setTimeout(updateAdminDateTime,100);
-    document.getElementById('admin-fab').style.background='var(--rust)';
-    document.body.classList.add('admin-mode');
-    setTimeout(()=>{openAdminPanel();renderDashStats2();renderAdminSvcList();renderAdminProjList();renderTemplates();},300);
+    completeLogin();
   } else {
-    document.getElementById('al-err').style.display='block';
-    document.getElementById('al-pass').classList.add('shake');
-    setTimeout(()=>{document.getElementById('al-pass').classList.remove('shake');},500);
+    const err=document.getElementById('al-pw-err');
+    if(err) err.style.display='block';
+    const inp=document.getElementById('al-pw-fb');
+    if(inp){inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),500);}
   }
+}
+function completeLogin(){
+  closeLogin();
+  isAdmin=true;
+  document.getElementById('admin-bar').classList.add('show');
+  const aptag=document.getElementById('ap-level-tag');
+  if(aptag){aptag.textContent=isSuperAdmin?'🛡️ SUPER ADMIN':'🔧 ADMIN';aptag.style.background=isSuperAdmin?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,#1a3a6e,#2550a0)';}
+  const apadmin=document.getElementById('ap-admin-type');
+  if(apadmin) apadmin.textContent=isSuperAdmin?'🛡️ Super Admin':'🔧 Admin';
+  setTimeout(updateAdminDateTime,100);
+  const fab=document.getElementById('admin-fab');
+  if(fab){fab.style.background='var(--rust)';fab.textContent='⚙️';fab.style.opacity='1';}
+  document.body.classList.add('admin-mode');
+  setTimeout(()=>{openAdminPanel();renderDashStats2();renderAdminSvcList();renderAdminProjList();renderTemplates();},300);
+}
+function otpNext(i){
+  const v=document.getElementById(`o${i}`).value;
+  if(v&&v.match(/[0-9]/)){
+    if(i<5) document.getElementById(`o${i+1}`).focus();
+    else verOTP();
+  } else {document.getElementById(`o${i}`).value='';}
+}
+function otpBk(e,i){
+  if(e.key==='Backspace'&&!document.getElementById(`o${i}`).value&&i>0){
+    document.getElementById(`o${i-1}`).focus();
+  }
+}
+function verOTP(){
+  const entered=[0,1,2,3,4,5].map(i=>document.getElementById(`o${i}`).value).join('');
+  if(entered===otpCode){
+    clearInterval(otpCountdown);
+    completeLogin();
+  } else {
+    document.getElementById('otp-err').style.display='block';
+    [0,1,2,3,4,5].forEach(i=>{const b=document.getElementById(`o${i}`);b.style.borderColor='#ef4444';b.value='';});
+    document.getElementById('o0').focus();
+    setTimeout(()=>{
+      document.getElementById('otp-err').style.display='none';
+      [0,1,2,3,4,5].forEach(i=>document.getElementById(`o${i}`).style.borderColor='');
+    },2000);
+  }
+}
+function startOTPCountdown(){
+  let secs=300;
+  if(otpCountdown) clearInterval(otpCountdown);
+  otpCountdown=setInterval(()=>{
+    secs--;
+    const m=String(Math.floor(secs/60)).padStart(2,'0');
+    const s=String(secs%60).padStart(2,'0');
+    const cd=document.getElementById('otp-cd');
+    if(cd) cd.textContent=`${m}:${s}`;
+    if(secs<=0){clearInterval(otpCountdown);otpCode='';}
+  },1000);
+}
+function resendOTP(){
+  otpCode = String(Math.floor(100000+Math.random()*900000));
+  startOTPCountdown();
+  [0,1,2,3,4,5].forEach(i=>{ const el=document.getElementById('o'+i); if(el) el.value=''; });
+  const o0=document.getElementById('o0'); if(o0) o0.focus();
+  // Actually re-send via EmailJS (uses same path as initial send)
+  const email = (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  _sendOTPEmail(email, otpCode);
+}
+function backToStep1(){
+  document.getElementById('step2').classList.remove('active');
+  document.getElementById('step1').classList.add('active');
+  clearInterval(otpCountdown);
 }
 function logoutAdmin(){
   isAdmin=false;
+  isSuperAdmin=false;
   document.getElementById('admin-bar').classList.remove('show');
-  document.getElementById('admin-fab').style.background='';
+  const fab=document.getElementById('admin-fab');
+  if(fab){fab.style.background='';fab.textContent='🔒';fab.style.opacity='.25';}
+  document.body.classList.remove('admin-mode');
   document.body.classList.remove('admin-mode');
   const ap = document.getElementById('admin-panel');
   if(ap && ap.classList.contains('open')){
@@ -4473,6 +4886,7 @@ function logoutAdmin(){
 
 // ═══ ADMIN PANEL ═══
 function openAdminPanel(){
+  if(!isAdmin){ openLogin(); return; }
   populateAdminForms();
   renderNotices();
   renderDashStats2();
@@ -4719,8 +5133,15 @@ function delNotice(i){
   saveData(); renderNotices(); updateNoticeBar();
 }
 function updateNoticeBar(){
-  const active=D.notices.filter(n=>n.on!==false);
-  if(active.length===0) return;
+  const DFLT=[
+    {ico:'🔥',msg:'10% OFF on Construction & Interior services this month! Call: 980-1069733'},
+    {ico:'🏠',msg:'Free Site Visit available in Hetauda & nearby areas — Book now!'},
+    {ico:'🪟',msg:'UPVC/Aluminum windows, doors & Gypsum ceiling work available!'},
+    {ico:'📞',msg:'Call/WhatsApp: 980-1069733 · 985-5069733 — Free consultation!'},
+    {ico:'🏗️',msg:'Building Construction · Interior Design · UPVC · Solar — All in One'}
+  ];
+  let active=(D.notices||[]).filter(n=>n.on!==false);
+  if(!active.length) active=DFLT;
   const track=document.getElementById('ntcTrack');
   if(!track) return;
   const msgs=active.concat(active).map(n=>`<span class="ntc-it">${n.ico||'📢'} ${n.msg}</span>`).join('');
@@ -4968,6 +5389,24 @@ function animPhClick(){
   }
   // Open admin login prompt
   alert('Admin bata video URL set garnu hola.\n\nAdmin → Settings → Brand Video URL');
+}
+function updateAnimVideo(url){
+  if(!url) return;
+  D.animVideo=url; saveData();
+  const ph=document.getElementById('animPh');
+  const inner=document.getElementById('animPhInner');
+  if(!ph||!inner) return;
+  let embed='';
+  if(url.includes('youtube.com')||url.includes('youtu.be')){
+    const vid=url.match(/(?:v=|youtu\.be\/)([^&?]+)/)?.[1]||url.split('/').pop();
+    embed=`<iframe src="https://www.youtube.com/embed/${vid}?autoplay=0&rel=0" allowfullscreen></iframe>`;
+  } else if(url.match(/\.(mp4|webm|ogg)$/i)){
+    embed=`<video src="${url}" controls style="position:absolute;inset:0;width:100%;height:100%;border-radius:14px;"></video>`;
+  } else {
+    embed=`<iframe src="${url}" allowfullscreen></iframe>`;
+  }
+  inner.style.display='none';
+  ph.insertAdjacentHTML('beforeend',embed);
 }
 
 // ═══ PROJECT UPLOAD PREVIEW ═══
@@ -5449,6 +5888,194 @@ function updateAdminDateTime(){
 setInterval(updateAdminDateTime, 60000);
 document.addEventListener('DOMContentLoaded', ()=>setTimeout(updateAdminDateTime, 500));
 
+
+// ═══ EMAILJS CORE — robust init, validation, send ═══
+let _ejsReady = false;
+let _ejsLoading = null;
+
+function _ejsLoadSDK(){
+  if(window.emailjs) return Promise.resolve(window.emailjs);
+  if(_ejsLoading) return _ejsLoading;
+  _ejsLoading = new Promise((resolve, reject)=>{
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+    s.async = true;
+    s.onload = ()=>{ if(window.emailjs) resolve(window.emailjs); else reject(new Error('EmailJS SDK loaded but global not found')); };
+    s.onerror = ()=>{ _ejsLoading = null; reject(new Error('Failed to load EmailJS SDK from CDN. Check internet connection.')); };
+    document.head.appendChild(s);
+  });
+  return _ejsLoading;
+}
+
+function _ejsConfig(){
+  const ejs = (typeof D !== 'undefined' && D && D.emailjs) || {};
+  return {
+    sid: String(ejs.sid || 'service_bvxfr3q').trim(),
+    tid: String(ejs.tid || 'template_xs9x16u').trim(),
+    pk:  String(ejs.pk  || 'fpml8phlCtNwoA7rZ').trim()
+  };
+}
+
+function _ejsConfigValid(cfg){
+  cfg = cfg || _ejsConfig();
+  if(!cfg.sid || !cfg.tid || !cfg.pk) return false;
+  if(!cfg.sid.startsWith('service_')) return false;
+  if(!cfg.tid.startsWith('template_')) return false;
+  if(cfg.pk.length < 10) return false;
+  return true;
+}
+
+async function _ejsInit(){
+  const cfg = _ejsConfig();
+  if(!_ejsConfigValid(cfg)){
+    throw new Error('EmailJS configuration missing or invalid.');
+  }
+  await _ejsLoadSDK();
+  if(window.emailjs && window.emailjs.init){
+    try { window.emailjs.init({ publicKey: cfg.pk }); }
+    catch(e){
+      // older API (string arg)
+      try { window.emailjs.init(cfg.pk); } catch(e2){ /* ignore */ }
+    }
+    _ejsReady = true;
+  }
+  return cfg;
+}
+
+async function _ejsSend(otp, email){
+  const cfg = await _ejsInit();
+  // Send with comprehensive parameter set so most templates work
+  return await window.emailjs.send(cfg.sid, cfg.tid, {
+    to_email: email,
+    email: email,
+    user_email: email,
+    recipient: email,
+    otp_code: String(otp),
+    passcode: String(otp),
+    otp: String(otp),
+    code: String(otp),
+    company: 'Prerak Multipurpose Pvt. Ltd.',
+    company_name: 'Prerak Multipurpose Pvt. Ltd.',
+    time: '5 minutes',
+    expiry: '5 minutes',
+    message: 'Your OTP code is: ' + otp + '. Valid for 5 minutes.',
+    subject: 'PRERAK Admin OTP: ' + otp
+  });
+}
+
+// Pre-load SDK + init at startup (best-effort, non-blocking)
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(_ejsConfigValid()){
+      _ejsInit()
+        .then(()=>console.log('[EmailJS] Pre-initialized'))
+        .catch(e=>console.warn('[EmailJS] Pre-init failed:', e && e.message));
+    } else {
+      console.warn('[EmailJS] Config invalid — set values in Admin → Settings → EmailJS.');
+    }
+  }, 1500);
+});
+
+// ═══ SEND OTP (with EmailJS + on-screen fallback) ═══
+function sendOTP(code, emailOverride){
+  startOTPCountdown();
+  const email = emailOverride || (typeof D !== 'undefined' && D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  const demo = document.getElementById('otp-demo');
+  if(demo){
+    demo.style.display = 'block';
+    demo.innerHTML = '<div style="text-align:center;color:#60a5fa;font-size:.72rem;">📤 Sending OTP to '+email+'...</div>';
+  }
+  _sendOTPEmail(email, code);
+}
+
+function _maskEmail(e){
+  if(!e || !e.includes('@')) return e || 'admin email';
+  const [u,d] = e.split('@');
+  return u.substring(0,2) + '***@' + d;
+}
+
+function _isDebugMode(){
+  return !!(typeof D !== 'undefined' && D && D.emailjs && D.emailjs.debug);
+}
+
+async function _sendOTPEmail(email, otp){
+  const demo = document.getElementById('otp-demo');
+  if(demo) demo.style.display = 'block';
+
+  const isDebug = _isDebugMode();
+
+  // Setup-error card (shown when config is missing/invalid)
+  const showSetupError = function(msg){
+    if(!demo) return;
+    demo.innerHTML =
+       '<div style="padding:14px;background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.55);border-radius:12px;text-align:center;font-size:.74rem;color:#fbbf24;line-height:1.6;">'
+      +msg+'</div>';
+  };
+
+  // Production card — never shows the OTP code
+  const showProdCard = function(statusMsg, statusColor){
+    if(!demo) return;
+    demo.innerHTML =
+       '<div style="padding:14px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(59,130,246,.04));border:1.5px solid rgba(59,130,246,.4);border-radius:12px;text-align:center;">'
+      +'<div style="font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;font-weight:700;margin-bottom:6px">📨 OTP Email</div>'
+      +'<div style="font-size:.7rem;color:'+(statusColor||'#9ca3af')+';line-height:1.6;">'+(statusMsg||'')+'</div>'
+      +'</div>';
+  };
+
+  // Debug card — shows OTP on screen (only when debug mode enabled)
+  const showDebugCard = function(statusMsg, statusColor){
+    if(!demo) return;
+    demo.innerHTML =
+       '<div style="padding:14px;background:linear-gradient(135deg,rgba(201,147,58,.18),rgba(201,147,58,.05));border:2px solid rgba(201,147,58,.5);border-radius:12px;text-align:center;">'
+      +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:8px;">📱 YOUR OTP CODE <span style="background:rgba(220,38,38,.7);color:#fff;padding:2px 7px;border-radius:5px;font-size:.55rem;letter-spacing:1px;">DEBUG</span></div>'
+      +'<div style="font-size:2.2rem;letter-spacing:10px;color:#f0d894;font-weight:800;font-family:monospace;text-shadow:0 0 12px rgba(201,147,58,.4);margin:4px 0">'+otp+'</div>'
+      +'<div style="font-size:.58rem;opacity:.7;margin-top:4px">⏱️ Valid 5 min · Copy & paste above ↑</div>'
+      +(statusMsg ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.62rem;color:'+(statusColor||'#9ca3af')+';line-height:1.5;">'+statusMsg+'</div>' : '')
+      +'</div>';
+  };
+
+  // 1) Validate config — show password fallback if not configured
+  if(!_ejsConfigValid()){
+    showSetupError('⚠️ <b>EmailJS not configured.</b><br>Use password login below to access admin dashboard.');
+    setTimeout(()=>{ showStep2PasswordFallback(true); }, 200);
+    return;
+  }
+
+  // 2) Show "sending" state
+  if(isDebug) showDebugCard('📤 Sending email to ' + _maskEmail(email) + '...', '#60a5fa');
+  else        showProdCard('📤 Sending OTP to ' + _maskEmail(email) + '...', '#60a5fa');
+
+  // 3) Try send via EmailJS
+  try{
+    const result = await _ejsSend(otp, email);
+    console.log('[EmailJS] Send OK:', result && result.status, result && result.text);
+    if(isDebug) showDebugCard('✅ Sent to ' + _maskEmail(email) + ' (check inbox / spam)', '#22c55e');
+    else        showProdCard('✅ OTP sent to ' + _maskEmail(email) + '.<br>Check your inbox / spam folder and enter the code above.', '#22c55e');
+  } catch(e){
+    const raw = (e && (e.text || e.message)) || String(e) || 'Unknown error';
+    console.error('[EmailJS] Send failed:', e);
+    let userMsg = '⚠️ Email send failed. Please retry or contact admin.';
+    const low = raw.toLowerCase();
+    if(low.includes('account not found')){
+      userMsg = '❌ <b>EmailJS Account not found.</b><br>The Public Key / Service ID belongs to a missing account. Verify your account on emailjs.com → Account → Public Keys, then update credentials in Admin → Settings → EmailJS.';
+    } else if(low.includes('public key') || low.includes('public_key')){
+      userMsg = '❌ Invalid Public Key. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('service') && (low.includes('not found') || low.includes('invalid'))){
+      userMsg = '❌ Invalid Service ID. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('template') && (low.includes('not found') || low.includes('invalid'))){
+      userMsg = '❌ Invalid Template ID. Check Admin → Settings → EmailJS.';
+    } else if(low.includes('network') || low.includes('failed to load') || low.includes('failed to fetch')){
+      userMsg = '❌ Network error — cannot reach EmailJS. Check internet.';
+    } else if(raw && raw !== 'Unknown error'){
+      userMsg = '❌ Email send failed: ' + raw.substring(0, 120);
+    }
+    // Show error + auto-reveal password fallback so admin isn't stuck
+    if(isDebug) showDebugCard(userMsg, '#ef4444');
+    else        showProdCard(userMsg, '#ef4444');
+    // Auto-show password fallback when EmailJS fails
+    setTimeout(()=>{ showStep2PasswordFallback(true); }, 400);
+  }
+}
 
 // ═══ QUOTE MODAL ═══
 let _qmPlan = '';
@@ -6384,9 +7011,73 @@ function saveVCard(){
 }
 
 // ═══ BRAND VIDEO ADMIN ═══
+function loadBrandVideo(){
+  if(!D.brandVideo) D.brandVideo = {};
+  const V = D.brandVideo;
+  const url = document.getElementById('bv-url'); if(url) url.value = V.url || '';
+  const type = document.getElementById('bv-type'); if(type) type.value = V.type || 'youtube';
+  const tit = document.getElementById('bv-title'); if(tit) tit.value = V.title || 'Our Construction Story';
+  const desc = document.getElementById('bv-desc'); if(desc) desc.value = V.desc || '';
+}
 
+function saveBrandVideo(){
+  if(!D.brandVideo) D.brandVideo = {};
+  D.brandVideo.url = document.getElementById('bv-url')?.value.trim() || '';
+  D.brandVideo.type = document.getElementById('bv-type')?.value || 'youtube';
+  D.brandVideo.title = document.getElementById('bv-title')?.value || '';
+  D.brandVideo.desc = document.getElementById('bv-desc')?.value || '';
+  saveData();
+  showOk('bv-ok');
+  try{ updateAnimVideo(D.brandVideo.url); }catch(e){}
+  try{ renderBrandVideo(); }catch(e){}
+}
 
+function previewBrandVideo(){
+  const url = document.getElementById('bv-url')?.value.trim();
+  const type = document.getElementById('bv-type')?.value;
+  const prev = document.getElementById('bv-preview');
+  if(!prev) return;
+  if(!url){ prev.innerHTML = '<div style="padding:14px;background:#fef2f2;color:#991b1b;border-radius:8px;">⚠️ No video URL</div>'; prev.style.display = 'block'; return; }
+  let embed = '';
+  if(type === 'youtube'){
+    embed = '<iframe src="' + url + '" width="100%" height="280" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>';
+  } else if(type === 'mp4'){
+    embed = '<video src="' + url + '" width="100%" height="280" controls style="border-radius:10px;"></video>';
+  } else {
+    embed = '<iframe src="' + url + '" width="100%" height="280" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>';
+  }
+  prev.innerHTML = '<h4 style="margin-bottom:8px;font-size:.84rem;font-weight:700;">📺 Video Preview:</h4>' + embed;
+  prev.style.display = 'block';
+}
 
+function renderBrandVideo(){
+  // Show/hide brand-video section based on URL
+  const section = document.getElementById('brand-video');
+  if(!D.brandVideo || !D.brandVideo.url || !D.brandVideo.url.trim()){
+    if(section) section.style.display = 'none';
+    return;
+  }
+  // Has URL — find or create video container
+  const V = D.brandVideo;
+  if(section){
+    section.style.display = '';
+    section.classList.add('has-video');
+    // Find or create video area
+    let videoArea = section.querySelector('.brand-video-area');
+    if(!videoArea){
+      const container = section.querySelector('.si') || section;
+      videoArea = document.createElement('div');
+      videoArea.className = 'brand-video-area';
+      videoArea.style.cssText = 'max-width:880px;margin:30px auto;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.4);background:#000;';
+      container.appendChild(videoArea);
+    }
+    if(V.type === 'mp4'){
+      videoArea.innerHTML = '<video src="' + V.url + '" width="100%" controls autoplay muted loop playsinline style="display:block;width:100%;"></video>';
+    } else {
+      videoArea.innerHTML = '<iframe src="' + V.url + '" width="100%" height="450" frameborder="0" allowfullscreen style="display:block;width:100%;"></iframe>';
+    }
+  }
+}
 
 // ═══ COMPONENTS TOGGLE ═══
 const COMPONENT_LIST = [
@@ -6549,8 +7240,833 @@ if(typeof _origApSec3 === 'function'){
   };
 }
 
+// Apply on load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    try{ applyComponentVisibility(); renderBrandVideo(); }catch(e){}
+  }, 1500);
+});
+
+// ═══ FIX VISITING CARD CLICK + SMOOTH SCROLL ═══
+// Enhance vcCard click handler — open 3D modal smoothly
+(function enhanceVCard(){
+  setTimeout(() => {
+    const card = document.getElementById('vcCard');
+    if(!card) return;
+    // Remove existing transition issues
+    card.style.transition = 'transform .4s cubic-bezier(.16,1,.3,1), box-shadow .3s';
+    // Add smoothScrollFlip animation
+    if(!document.getElementById('vc-smooth-style')){
+      const st = document.createElement('style');
+      st.id = 'vc-smooth-style';
+      st.textContent = `
+        #vcCard{will-change:transform;}
+        .vc-face{transition:opacity .3s, transform .6s cubic-bezier(.23,1,.32,1)!important;}
+        @keyframes vcSmoothFlip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg) scale(.95)}100%{transform:rotateY(180deg)}}
+        .vc-flipping{animation:vcSmoothFlip .8s cubic-bezier(.16,1,.3,1) forwards;}
+      `;
+      document.head.appendChild(st);
+    }
+  }, 1000);
+})();
 
 
+
+
+// ═══ HERO MIGRATION (auto update to construction-focused content) ═══
+(function migrateHeroV4(){
+  if(!D.hero) return;
+  // If still has old "Building Your Dreams" content, update it
+  if(D.hero.l1 === 'Building Your' && D.hero.l2 === 'Dreams'){
+    D.hero.l1 = 'सम्पूर्ण निर्माणका';
+    D.hero.l2 = 'काम एउटै';
+    D.hero.l3 = 'ठाउँमा';
+    D.hero.ey = '🏗️ Construction · Interior · UPVC · Solar — All in One';
+    D.hero.sub = 'घर निर्माण, इन्टेरियर, UPVC/Aluminum, Gypsum, Plumbing, Electrical, Painting, Renovation तथा Construction Material Supply को भरपर्दो सेवा।';
+    saveData();
+    console.log('✅ Hero migrated to construction focus');
+  }
+})();
+
+
+
+
+// ═══ COMPONENTS MIGRATION (construction-focus reset) ═══
+(function migrateComponentsV5(){
+  if(!D._compMigratedV5){
+    if(!D.components) D.components = {};
+    // Construction focus: Set sensible defaults
+    if(D.components.showVisitingCard === undefined) D.components.showVisitingCard = false;
+    if(D.components.showCalendar === undefined) D.components.showCalendar = false;
+    if(D.components.showNepalFlag === undefined) D.components.showNepalFlag = false;
+    D._compMigratedV5 = true;
+    saveData();
+  }
+})();
+
+
+
+
+// ═══ APPLY CONSTRUCTION-FOCUS ON FIRST LOAD ═══
+(function applyConstructionFocus(){
+  function apply(){
+    if(!D.components) return;
+    const body = document.body;
+    // Add classes based on settings
+    if(D.components.showVisitingCard) body.classList.add('show-vc-on');
+    if(D.components.showCalendar) body.classList.add('show-cal-on');
+    if(D.components.showNepalFlag) body.classList.add('show-nepal-on');
+    
+    // Hide Nepal flag top strip if disabled
+    if(!D.components.showNepalFlag){
+      const strip = document.getElementById('np-top-strip');
+      if(strip) strip.style.display = 'none';
+    }
+  }
+  if(document.readyState !== 'loading'){
+    setTimeout(apply, 100);
+  } else {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(apply, 100));
+  }
+})();
+
+
+
+
+// ═══ SAFETY: Periodic body unlock check (prevent stuck overlay) ═══
+setInterval(function(){
+  try{
+    const qmOpen = document.getElementById('quote-modal')?.classList.contains('open');
+    const svmOpen = document.getElementById('svmOv')?.classList.contains('show');
+    const c3dOpen = document.getElementById('card3d-ov')?.style.display === 'flex';
+    const lbOpen = document.getElementById('lb')?.classList.contains('open');
+    const alOpen = document.getElementById('admin-login')?.classList.contains('open');
+    const apOpen = document.getElementById('admin-panel')?.classList.contains('open');
+    
+    const anyOpen = qmOpen || svmOpen || c3dOpen || lbOpen || alOpen || apOpen;
+    
+    // If no modals open but body is locked, force unlock
+    if(!anyOpen && document.body.style.position === 'fixed'){
+      forceUnlockBody();
+      console.log('Body auto-unlocked (safety)');
+    }
+  }catch(e){}
+}, 3000);
+
+
+
+// ═══ HERO MIGRATION V6 — Updated subtitle per latest spec ═══
+(function migrateHeroV6(){
+  if(!D._heroMigratedV6){
+    if(D.hero && D.hero.sub && D.hero.sub.includes('हेटौंडा, नेपालमा भरपर्दो समाधान')){
+      D.hero.sub = 'घर निर्माण, इन्टेरियर, UPVC/Aluminum, Gypsum, Plumbing, Electrical, Painting, Renovation तथा Construction Material Supply को भरपर्दो सेवा।';
+    }
+    D._heroMigratedV6 = true;
+    saveData();
+  }
+})();
+
+
+
+// ═══════════════════════════════════════════════════════════
+// ROBUST CLICK HANDLER — Event delegation backup
+// Ensures pricing buttons & ask-question buttons ALWAYS work
+// ═══════════════════════════════════════════════════════════
+document.addEventListener('click', function(e){
+  try {
+    // Pricing button click backup
+    const priceBtn = e.target.closest('[data-planid]');
+    if(priceBtn && !priceBtn._handled){
+      const planId = priceBtn.dataset.planid;
+      if(planId && typeof openQuoteModal === 'function'){
+        priceBtn._handled = true;
+        setTimeout(() => priceBtn._handled = false, 1000);
+        e.preventDefault();
+        openQuoteModal(planId);
+        return;
+      }
+    }
+    // Ask-question button click backup
+    const askBtn = e.target.closest('[data-ask-type]');
+    if(askBtn){
+      const type = askBtn.dataset.askType;
+      if(type && typeof askQuickQuestion === 'function'){
+        e.preventDefault();
+        askQuickQuestion(type);
+        return;
+      }
+    }
+  } catch(err){ console.error('Click handler error:', err); }
+}, true);
+
+
+
+// ═══════════════════════════════════════════════════════════
+// FORCED RE-RENDER ON LOAD — Ensures pricing/FAQ work
+// ═══════════════════════════════════════════════════════════
+function forceRenderPublicSections(){
+  try {
+    if(typeof renderPricingSection === 'function') renderPricingSection();
+    if(typeof renderFAQSection === 'function') renderFAQSection();
+    console.log('[Render] Public sections rendered');
+  } catch(err){ console.error('[Render] Error:', err); }
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(forceRenderPublicSections, 200);
+    setTimeout(forceRenderPublicSections, 1500);  // Re-render in case data loads later
+  });
+} else {
+  setTimeout(forceRenderPublicSections, 200);
+  setTimeout(forceRenderPublicSections, 1500);
+}
+
+// Also re-render on window load
+window.addEventListener('load', () => {
+  setTimeout(forceRenderPublicSections, 100);
+});
+
+
+
+// ═══════════════════════════════════════════════════════════
+// EXPOSE KEY FUNCTIONS GLOBALLY (window scope)
+// Ensures onclick="openQuoteModal()" works regardless of scope
+// ═══════════════════════════════════════════════════════════
+window.openQuoteModal = openQuoteModal;
+window.askQuickQuestion = askQuickQuestion;
+window.openSvm = openSvm;
+window.closeSvm = closeSvm;
+window.submitSvmQ = submitSvmQ;
+window.openFullQuoteFromSvm = openFullQuoteFromSvm;
+console.log('[Init] Quote system functions exposed globally');
+
+
+
+// ═══════════════════════════════════════════════════════════
+// IMMEDIATE PUBLIC SECTION RENDER — Run multiple times for safety
+// ═══════════════════════════════════════════════════════════
+(function ensurePublicSectionsRender(){
+  function tryRender(){
+    try {
+      if(typeof renderPricingSection === 'function' && document.getElementById('pricing')){
+        renderPricingSection();
+      }
+      if(typeof renderFAQSection === 'function' && document.getElementById('faq')){
+        renderFAQSection();
+      }
+      if(typeof applyComponentVisibility === 'function'){
+        applyComponentVisibility();
+      }
+    } catch(e){ console.warn('Render attempt failed:', e); }
+  }
+  
+  // Try multiple times to handle different load timings
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', tryRender);
+  } else {
+    tryRender();
+  }
+  setTimeout(tryRender, 500);
+  setTimeout(tryRender, 1500);
+  window.addEventListener('load', tryRender);
+})();
+
+
+
+// ═══ CONTACT FORM SUBMIT (handles both old and new field IDs) ═══
+function submitForm(e){
+  e.preventDefault();
+  // New field IDs (current form)
+  const nm = (document.getElementById('cf-name') || document.getElementById('cf-nm') || {}).value || '';
+  const ph = (document.getElementById('cf-phone') || document.getElementById('cf-ph') || {}).value || '';
+  const loc = (document.getElementById('cf-location') || {}).value || '';
+  const svc = (document.getElementById('cf-service') || document.getElementById('cf-svc') || {}).value || '';
+  const msg = (document.getElementById('cf-msg') || {}).value || '';
+  
+  if(!nm.trim() || !ph.trim()){
+    alert('कृपया Name र Phone भर्नुस् / Please fill Name & Phone');
+    return;
+  }
+  
+  const lines = [
+    'Namaste! Prerak Multipurpose Pvt. Ltd.',
+    '📋 *WEBSITE INQUIRY*',
+    '',
+    '👤 *Name:* ' + nm.trim(),
+    '📱 *Phone:* ' + ph.trim(),
+  ];
+  if(loc.trim()) lines.push('📍 *Location:* ' + loc.trim());
+  if(svc.trim()) lines.push('🏗️ *Service:* ' + svc.trim());
+  if(msg.trim()) lines.push('📝 *Message:* ' + msg.trim());
+  lines.push('', '🙏 Please contact me. Thank you!');
+  
+  const wa = (D.contact && D.contact.wa) || '9779801069733';
+  const txt = encodeURIComponent(lines.join('\n'));
+  window.open('https://wa.me/' + wa + '?text=' + txt, '_blank');
+  
+  // Show success
+  const btn = e.target.querySelector('button[type="submit"]');
+  if(btn){
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✅ Message Sent! We will call you soon.';
+    btn.style.background = '#22c55e';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 4000);
+  }
+}
+
+
+
+// ═══ RENDER VISITING CARD SECTION (Public) ═══
+function renderVCSection(){
+  // Visiting card is static HTML — just refresh content from D.card
+  try { refreshVCardContent(); } catch(e){}
+  // Ensure show-vc-on class is on body
+  if(!D.components || D.components.showVisitingCard !== false){
+    document.body.classList.add('show-vc-on');
+  }
+}
+
+
+
+// ═══════════════════════════════════════════════════════════
+// FINAL SAFETY NET — Guarantee all public sections render
+// ═══════════════════════════════════════════════════════════
+(function finalSafetyNet(){
+  function _renderAll(){
+    try { 
+      if(typeof renderPricingSection === 'function') renderPricingSection();
+      console.log('[FinalSafety] Pricing rendered'); 
+    } catch(e){ console.error('Pricing render failed:', e); }
+    try { 
+      if(typeof renderFAQSection === 'function') renderFAQSection();
+      console.log('[FinalSafety] FAQ rendered'); 
+    } catch(e){ console.error('FAQ render failed:', e); }
+    try { 
+      if(typeof refreshVCardContent === 'function') refreshVCardContent();
+    } catch(e){}
+    // Force visiting card visible
+    document.body.classList.add('show-vc-on');
+    document.body.classList.remove('hide-vc');
+  }
+  
+  // Multiple render attempts to guarantee execution
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', _renderAll);
+  } else {
+    _renderAll();
+  }
+  setTimeout(_renderAll, 1000);
+  setTimeout(_renderAll, 2500);
+  window.addEventListener('load', _renderAll);
+  
+  // Expose globally
+  window.openQuoteModal = window.openQuoteModal || openQuoteModal;
+  window.askQuickQuestion = window.askQuickQuestion || askQuickQuestion;
+  window.closeQuoteModal = window.closeQuoteModal || closeQuoteModal;
+  window.openSvm = window.openSvm || openSvm;
+  window.closeSvm = window.closeSvm || closeSvm;
+  console.log('[FinalSafety] All globals exposed');
+})();
+
+
+// ═══ CALENDAR PROMO VIDEO + OFFER ═══
+function openCalVideo(){
+  // Try to play inline if cal-promo has video URL set
+  const url = (D.calPromo && D.calPromo.videoUrl) || D.animVideo || '';
+  if(url){
+    // Replace thumbnail with iframe/video inline
+    const thumb = document.getElementById('cal-video-thumb');
+    if(thumb){
+      const ytId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+      thumb.innerHTML = ytId
+        ? '<iframe src="https://www.youtube.com/embed/'+ytId[1]+'?autoplay=1&rel=0" style="width:100%;height:100%;border:none;" allowfullscreen allow="autoplay"></iframe>'
+        : (url.match(/\.(mp4|webm|ogg)$/i)
+            ? '<video src="'+url+'" controls autoplay style="width:100%;height:100%;object-fit:cover;"></video>'
+            : '<iframe src="'+url+'" style="width:100%;height:100%;border:none;" allowfullscreen></iframe>');
+      return;
+    }
+  }
+  // Fallback: scroll to brand-video section
+  const bv = document.getElementById('brand-video');
+  if(bv) bv.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function applyCalPromo(){
+  const p = D.calPromo || {};
+  // Video card values
+  const set = (id, val) => { const el = document.getElementById(id); if(el && val !== undefined && val !== '') el.textContent = val; };
+  set('cal-vid-eyebrow-en', p.eyebrowEn);
+  set('cal-vid-eyebrow-ne', p.eyebrowNe);
+  set('cal-vid-title-en', p.titleEn);
+  set('cal-vid-title-ne', p.titleNe);
+  set('cal-vid-desc-en', p.descEn);
+  set('cal-vid-desc-ne', p.descNe);
+  set('cal-vid-dur', p.duration);
+  // Thumbnail
+  if(p.thumbUrl){
+    const img = document.getElementById('cal-vid-img');
+    if(img) img.src = p.thumbUrl;
+  }
+  // Offer card values
+  set('cal-offer-eye-en', p.offerEyeEn);
+  set('cal-offer-eye-ne', p.offerEyeNe);
+  set('cal-offer-title-en', p.offerTitleEn);
+  set('cal-offer-title-ne', p.offerTitleNe);
+  set('cal-offer-sub-en', p.offerSubEn);
+  set('cal-offer-sub-ne', p.offerSubNe);
+  if(p.offerIco){ const i = document.getElementById('cal-offer-ico'); if(i) i.textContent = p.offerIco; }
+  if(p.offerBtnUrl){ const b = document.getElementById('cal-offer-btn'); if(b) b.href = p.offerBtnUrl; }
+  // Visibility toggles
+  const vc = document.getElementById('cal-promo-card');
+  if(vc) vc.style.display = (p.showVideo === false) ? 'none' : '';
+  const oc = document.getElementById('cal-offer-card');
+  if(oc) oc.style.display = (p.showOffer === false) ? 'none' : '';
+}
+
+// Run on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(applyCalPromo, 200);
+});
+
+// ═══ CALENDAR PROMO ADMIN FUNCTIONS ═══
+function loadCalPromoForm(){
+  const p = D.calPromo || {};
+  const v = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  const ck = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val !== false; };
+  v('cp-thumb', p.thumbUrl || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900');
+  v('cp-video-url', p.videoUrl || '');
+  v('cp-eye-en', p.eyebrowEn || 'Watch Our Story');
+  v('cp-eye-ne', p.eyebrowNe || 'हाम्रो कथा हेर्नुस्');
+  v('cp-title-en', p.titleEn || '10+ Years of Building Dreams');
+  v('cp-title-ne', p.titleNe || '१०+ वर्षको निर्माण यात्रा');
+  v('cp-desc-en', p.descEn || 'From foundation to finishing — see how we transform Nepal, one home at a time.');
+  v('cp-desc-ne', p.descNe || 'जग देखि फिनिशिङसम्म — कसरी हामी नेपाललाई परिवर्तन गर्दैछौं।');
+  v('cp-dur', p.duration || '0:30');
+  v('cp-off-ico', p.offerIco || '🎁');
+  v('cp-off-eye-en', p.offerEyeEn || 'Limited Time Offer');
+  v('cp-off-eye-ne', p.offerEyeNe || 'सीमित समयको अफर');
+  v('cp-off-title-en', p.offerTitleEn || 'Free Consultation + 10% OFF');
+  v('cp-off-title-ne', p.offerTitleNe || 'नि:शुल्क परामर्श + १०% छुट');
+  v('cp-off-sub-en', p.offerSubEn || 'Book site visit today — no obligation.');
+  v('cp-off-sub-ne', p.offerSubNe || 'आज नै बुक गर्नुस् — कुनै बाध्यता छैन।');
+  v('cp-off-url', p.offerBtnUrl || 'https://wa.me/9779801069733?text=Free%20consultation%20chahiyo');
+  ck('cp-show-video', p.showVideo);
+  ck('cp-show-offer', p.showOffer);
+  // Update thumb preview
+  const prev = document.getElementById('cp-thumb-prev');
+  if(prev) prev.style.backgroundImage = "url('" + (p.thumbUrl || 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400') + "')";
+}
+
+function cpUpdatePreview(){
+  const url = document.getElementById('cp-thumb').value;
+  const prev = document.getElementById('cp-thumb-prev');
+  if(prev && url) prev.style.backgroundImage = "url('" + url + "')";
+}
+
+function cpUploadThumb(input){
+  const f = input.files[0];
+  if(!f || !f.type.startsWith('image/')) return;
+  const r = new FileReader();
+  r.onload = e => {
+    document.getElementById('cp-thumb').value = e.target.result;
+    cpUpdatePreview();
+  };
+  r.readAsDataURL(f);
+}
+
+function saveCalPromo(){
+  const v = id => (document.getElementById(id) || {}).value || '';
+  const ck = id => { const el = document.getElementById(id); return el ? el.checked : true; };
+  D.calPromo = {
+    thumbUrl: v('cp-thumb'),
+    videoUrl: v('cp-video-url'),
+    eyebrowEn: v('cp-eye-en'),
+    eyebrowNe: v('cp-eye-ne'),
+    titleEn: v('cp-title-en'),
+    titleNe: v('cp-title-ne'),
+    descEn: v('cp-desc-en'),
+    descNe: v('cp-desc-ne'),
+    duration: v('cp-dur'),
+    offerIco: v('cp-off-ico'),
+    offerEyeEn: v('cp-off-eye-en'),
+    offerEyeNe: v('cp-off-eye-ne'),
+    offerTitleEn: v('cp-off-title-en'),
+    offerTitleNe: v('cp-off-title-ne'),
+    offerSubEn: v('cp-off-sub-en'),
+    offerSubNe: v('cp-off-sub-ne'),
+    offerBtnUrl: v('cp-off-url'),
+    showVideo: ck('cp-show-video'),
+    showOffer: ck('cp-show-offer')
+  };
+  saveData();
+  applyCalPromo();
+  if(typeof showOk === 'function') showOk('cp-ok');
+  if(typeof showToast === 'function') showToast('✅ Calendar Promo saved!');
+}
+
+function resetCalPromo(){
+  if(!confirm('Reset Calendar Promo to defaults?')) return;
+  delete D.calPromo;
+  saveData();
+  loadCalPromoForm();
+  applyCalPromo();
+  if(typeof showToast === 'function') showToast('↻ Reset to defaults');
+}
+
+// Hook into apSec to load form when opening calpromo section
+(function(){
+  if(typeof apSec === 'function'){
+    const _origApSec = apSec;
+    window.apSec = function(nm){
+      _origApSec(nm);
+      if(nm === 'calpromo') setTimeout(loadCalPromoForm, 50);
+    };
+  }
+})();
+
+// ═══ SERVICE VIDEOS GALLERY ═══
+let _svidActiveIdx = 0;
+let _svidPlaying = false;
+
+function renderServiceVideoGrid(){
+  const grid = document.getElementById('svid-grid');
+  if(!grid || typeof SVCS === 'undefined') return;
+  grid.innerHTML = SVCS.map((s, i) => {
+    const dur = s.videoDur || ['1:30','1:29','1:45','2:00','1:50','2:20','1:40','2:10','1:55','1:35','2:05','1:25'][i] || '1:30';
+    return `
+    <div class="svid-card${i===_svidActiveIdx?' active':''}" data-idx="${i}" onclick="loadServiceVideo(${i})">
+      <div class="svid-thumb">
+        <img src="${s.bg}" alt="${s.nm}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600'">
+        <div class="svid-play">▶</div>
+        <span class="svid-cat">${s.tag}</span>
+        <span class="svid-dur">${dur}</span>
+      </div>
+      <div class="svid-info">
+        <div class="svid-info-title"><span>${s.ico}</span><span class="en">${s.nm}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne}</span></div>
+        <div class="svid-info-sub"><span class="en">${s.desc.substring(0,55)}...</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${(s.ne_desc||'').substring(0,50)}...</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  if(typeof applyLang === 'function') applyLang();
+}
+
+function loadServiceVideo(idx){
+  const s = SVCS[idx];
+  if(!s) return;
+  _svidActiveIdx = idx;
+  _svidPlaying = false;
+  const dur = s.videoDur || ['1:30','1:29','1:45','2:00','1:50','2:20','1:40','2:10','1:55','1:35','2:05','1:25'][idx] || '1:30';
+  // Reset player to thumbnail mode
+  const player = document.getElementById('fv-player');
+  if(player){
+    player.innerHTML = `
+      <img id="fv-thumb" src="${s.bg}" alt="${s.nm}" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
+      <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
+        <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
+      </button>
+      <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
+        <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>FEATURED
+      </span>
+      <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 20px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));pointer-events:none;">
+        <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
+          <span>${s.ico} ${s.tag}</span>
+          <span style="opacity:.5;">·</span>
+          <span>${dur}</span>
+        </div>
+        <h3 style="font-family:var(--fd);font-size:1.7rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:6px;"><span class="en">${s.nm}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne}</span></h3>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;"><span class="en">${s.desc}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.ne_desc||''}</span></p>
+      </div>`;
+    // player click removed - button handles it
+  }
+  // Highlight active card
+  document.querySelectorAll('.svid-card').forEach((card, i) => {
+    card.classList.toggle('active', i === idx);
+  });
+  // Smooth scroll to top of video player
+  setTimeout(() => {
+    const fp = document.getElementById('fv-player');
+    if(fp) fp.scrollIntoView({behavior:'smooth',block:'center'});
+  }, 100);
+  if(typeof applyLang === 'function') applyLang();
+}
+
+async function playFeaturedVideo(){
+  console.log('[playVideo] CLICK detected, idx=', _svidActiveIdx);
+  const s = SVCS[_svidActiveIdx];
+  if(!s){ console.error('[playVideo] No service'); return; }
+  const player = document.getElementById('fv-player');
+  if(!player){ console.error('[playVideo] No player element'); return; }
+  
+  const SAMPLE_DEMO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  let url = '';
+  if(s.videoUrl && s.videoUrl.trim()) url = s.videoUrl.trim();
+  else if(typeof D !== 'undefined' && D.animVideo && D.animVideo.trim()) url = D.animVideo.trim();
+  else url = SAMPLE_DEMO;
+  
+  // Resolve IndexedDB URLs
+  if(url.startsWith('idb:')){
+    console.log('[playVideo] Resolving IndexedDB:', url);
+    try {
+      url = await idbResolveUrl(url);
+      if(!url){
+        console.warn('[playVideo] idb: not found, falling back to slideshow');
+        playGallerySlideshow(s);
+        return;
+      }
+    } catch(e){
+      console.error('[playVideo] idb resolve error:', e);
+      playGallerySlideshow(s);
+      return;
+    }
+  }
+  
+  console.log('[playVideo] Using URL:', url.substring(0,80));
+  _svidPlaying = true;
+  
+  const closeBtn = '<button onclick="event.stopPropagation();stopSlideshow();" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;border:1px solid rgba(255,255,255,.2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.85rem;z-index:99;display:flex;align-items:center;justify-content:center;">✕</button>';
+  
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(ytMatch){
+    player.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytMatch[1] + '?autoplay=1&rel=0&playsinline=1" style="width:100%;height:100%;border:none;background:#000;" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>' + closeBtn;
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('blob:') || url.startsWith('data:video') || url.startsWith('./')){
+    player.innerHTML = '<video src="' + url + '" controls autoplay playsinline style="width:100%;height:100%;object-fit:cover;background:#000;display:block;"></video>' + closeBtn;
+  } else {
+    player.innerHTML = '<iframe src="' + url + '" style="width:100%;height:100%;border:none;background:#000;" allowfullscreen></iframe>' + closeBtn;
+  }
+  
+  if(url === SAMPLE_DEMO){
+    setTimeout(function(){
+      if(typeof showToast === 'function') showToast('🎬 Demo video playing! Admin → Services → upload your own video.', 5000);
+    }, 1500);
+  }
+}
+
+function stopSlideshow(){
+  if(window._ssTimer) clearInterval(window._ssTimer);
+  if(window._ssProgress) clearInterval(window._ssProgress);
+  window._ssTimer = null;
+  window._ssProgress = null;
+  _svidPlaying = false;
+  loadServiceVideo(_svidActiveIdx);
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(typeof SVCS !== 'undefined' && SVCS.length){
+      renderServiceVideoGrid();
+      // Set initial featured to service 0
+      _svidActiveIdx = 0;
+      // Ensure initial thumbnail/info matches first service
+      const s = SVCS[0];
+      const fvThumb = document.getElementById('fv-thumb');
+      if(fvThumb && s) fvThumb.src = s.bg;
+      const fvCat = document.getElementById('fv-cat');
+      if(fvCat && s) fvCat.textContent = s.ico + ' ' + s.tag;
+      const fvTitle = document.getElementById('fv-title');
+      if(fvTitle && s) fvTitle.textContent = s.nm;
+      const fvDesc = document.getElementById('fv-desc');
+      if(fvDesc && s) fvDesc.textContent = s.desc;
+    }
+  }, 300);
+});
+
+// Re-render when admin saves a service (so new video URLs show)
+const _origAdminSave = window.adminSaveService;
+if(typeof _origAdminSave === 'function'){
+  window.adminSaveService = function(){
+    _origAdminSave.apply(this, arguments);
+    setTimeout(renderServiceVideoGrid, 200);
+  };
+}
+
+// ═══ VIDEO GALLERY ADMIN FUNCTIONS ═══
+function loadVideoGalleryForm(){
+  const v = D.videoGallery || {};
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.value = val || ''; };
+  const ck = (id, val) => { const el = document.getElementById(id); if(el) el.checked = val !== false; };
+  set('vg-eye-en', v.eyeEn || 'Service Videos');
+  set('vg-eye-ne', v.eyeNe || 'सेवा भिडियोहरू');
+  set('vg-title-en', v.titleEn || 'Watch Our Service Works');
+  set('vg-title-ne', v.titleNe || 'हाम्रो सेवा कार्यहरू हेर्नुस्');
+  set('vg-desc-en', v.descEn || 'All our construction services in one place — click any video to play.');
+  set('vg-desc-ne', v.descNe || 'हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।');
+  set('vg-width', v.width || 720);
+  set('vg-demo-url', v.demoUrl || '');
+  ck('vg-show', v.show);
+  // Render per-service video URL inputs
+  renderVgSvcList();
+}
+
+function renderVgSvcList(){
+  const list = document.getElementById('vg-svc-list');
+  if(!list || typeof SVCS === 'undefined') return;
+  list.innerHTML = SVCS.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #e5e7eb;border-radius:9px;padding:9px 11px;">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#c9933a,#9a6f28);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">${s.ico}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:.75rem;font-weight:700;color:#111827;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${s.nm}</div>
+        <input type="text" id="vg-svc-${i}" value="${(s.videoUrl||'').replace(/"/g,'&quot;')}" placeholder="YouTube/MP4 URL — empty for demo video" style="width:100%;padding:6px 9px;border:1px solid #e5e7eb;border-radius:6px;font-size:.72rem;font-family:inherit;">
+      </div>
+      <button onclick="vgClearSvc(${i})" style="background:#fee2e2;color:#dc2626;border:none;padding:5px 10px;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:700;flex-shrink:0;">🗑</button>
+    </div>
+  `).join('');
+}
+
+function vgClearSvc(idx){
+  const inp = document.getElementById('vg-svc-' + idx);
+  if(inp) inp.value = '';
+}
+
+function vgSaveAllSvcVideos(){
+  let count = 0;
+  SVCS.forEach((s, i) => {
+    const inp = document.getElementById('vg-svc-' + i);
+    if(inp){ s.videoUrl = inp.value.trim(); if(s.videoUrl) count++; }
+  });
+  saveData();
+  if(typeof renderServiceVideoGrid === 'function') renderServiceVideoGrid();
+  if(typeof showToast === 'function') showToast('✅ Saved video URLs for ' + count + ' services');
+}
+
+function vgSetSize(px){
+  document.getElementById('vg-width').value = px;
+  applyVideoGalleryWidth(px);
+}
+
+function applyVideoGalleryWidth(px){
+  const wrap = document.getElementById('vg-featured-wrap');
+  if(wrap) wrap.style.maxWidth = px + 'px';
+}
+
+function applyVideoGallery(){
+  const v = D.videoGallery || {};
+  // Apply visibility
+  const sec = document.getElementById('brand-video');
+  if(sec) sec.style.display = (v.show === false) ? 'none' : '';
+  // Apply width
+  if(v.width) applyVideoGalleryWidth(v.width);
+  // Apply text content
+  const setSec = (selector, lang, val) => {
+    const els = document.querySelectorAll(selector);
+    els.forEach(el => {
+      if(el.classList.contains(lang) && val) el.textContent = val;
+    });
+  };
+  if(v.eyeEn || v.eyeNe){
+    const eyeEls = document.querySelectorAll('#brand-video .sey');
+    eyeEls.forEach(el => {
+      if(el.classList.contains('en') && v.eyeEn) el.textContent = v.eyeEn;
+      if(el.classList.contains('ne') && v.eyeNe) el.textContent = v.eyeNe;
+    });
+  }
+  if(v.titleEn || v.titleNe){
+    const titleEls = document.querySelectorAll('#brand-video .stl');
+    titleEls.forEach(el => {
+      if(el.classList.contains('en') && v.titleEn) el.innerHTML = v.titleEn.replace(/\*\*(.*?)\*\*/g, '<em>$1</em>');
+      if(el.classList.contains('ne') && v.titleNe) el.innerHTML = v.titleNe.replace(/\*\*(.*?)\*\*/g, '<em>$1</em>');
+    });
+  }
+  if(v.descEn || v.descNe){
+    const descEls = document.querySelectorAll('#brand-video .sdesc');
+    descEls.forEach(el => {
+      if(el.classList.contains('en') && v.descEn) el.textContent = v.descEn;
+      if(el.classList.contains('ne') && v.descNe) el.textContent = v.descNe;
+    });
+  }
+}
+
+function saveVideoGallery(){
+  const v = id => (document.getElementById(id) || {}).value || '';
+  const ck = id => { const el = document.getElementById(id); return el ? el.checked : true; };
+  D.videoGallery = {
+    show: ck('vg-show'),
+    eyeEn: v('vg-eye-en'),
+    eyeNe: v('vg-eye-ne'),
+    titleEn: v('vg-title-en'),
+    titleNe: v('vg-title-ne'),
+    descEn: v('vg-desc-en'),
+    descNe: v('vg-desc-ne'),
+    width: parseInt(v('vg-width')) || 720,
+    demoUrl: v('vg-demo-url')
+  };
+  // Also save service videos
+  vgSaveAllSvcVideos();
+  saveData();
+  applyVideoGallery();
+  if(typeof showOk === 'function') showOk('vg-ok');
+  if(typeof showToast === 'function') showToast('✅ Video Gallery settings saved!');
+}
+
+function resetVideoGallery(){
+  if(!confirm('Reset Video Gallery to defaults?\n(Service videos will NOT be cleared — only section settings)')) return;
+  delete D.videoGallery;
+  saveData();
+  loadVideoGalleryForm();
+  applyVideoGallery();
+  if(typeof showToast === 'function') showToast('↻ Reset to defaults');
+}
+
+// Override playFeaturedVideo to use admin demo URL when no service video set
+(function(){
+  if(typeof playFeaturedVideo === 'function'){
+    const _origPlay = playFeaturedVideo;
+    window.playFeaturedVideo = function(){
+      const s = SVCS[_svidActiveIdx];
+      if(!s) return;
+      // Check admin demo URL first if no service URL
+      if(!s.videoUrl && D.videoGallery && D.videoGallery.demoUrl){
+        // Temporarily inject admin demo URL
+        const orig = s.videoUrl;
+        s.videoUrl = D.videoGallery.demoUrl;
+        _origPlay();
+        s.videoUrl = orig;
+      } else {
+        _origPlay();
+      }
+    };
+  }
+})();
+
+// Hook into apSec
+(function(){
+  if(typeof apSec === 'function'){
+    const _origApSec2 = apSec;
+    window.apSec = function(nm){
+      _origApSec2(nm);
+      if(nm === 'vidgallery') setTimeout(loadVideoGalleryForm, 50);
+    };
+  }
+})();
+
+// Apply on load
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(applyVideoGallery, 400);
+});
+
+
+function adminUpdateVideoPreview(){
+  const url = (document.getElementById('se-video')||{}).value || '';
+  const prevBox = document.getElementById('se-video-preview');
+  if(!prevBox) return;
+  if(!url){
+    prevBox.style.display = 'none';
+    prevBox.innerHTML = '';
+    return;
+  }
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(yt){
+    prevBox.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '" style="width:100%;max-width:300px;aspect-ratio:16/9;border:none;border-radius:8px;background:#000;" allowfullscreen></iframe>';
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('data:video') || url.startsWith('./')){
+    prevBox.innerHTML = '<video src="' + url + '" controls style="width:100%;max-width:300px;border-radius:8px;background:#000;" preload="metadata"></video>';
+  } else {
+    prevBox.innerHTML = '<div style="padding:10px;color:#9ca3af;font-size:.78rem;">Preview not available for this URL type</div>';
+  }
+  prevBox.style.display = 'block';
+}
 
 // Hook into adminEditService to show preview when editing
 (function(){
@@ -6618,28 +8134,80 @@ async function idbResolveUrl(url){
 }
 
 // ═══ NEW SIMPLE VIDEO UPLOAD (any size, IndexedDB-backed) ═══
+async function adminUploadServiceVideo(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('video/')){
+    alert('Video file matra select garnus (MP4/WebM/OGG)');
+    return;
+  }
+  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
+  const status = document.getElementById('se-video-status');
+  const sid = (document.getElementById('se-id')||{}).value || '0';
+  
+  if(status){
+    status.style.color = '#3b82f6';
+    status.innerHTML = '⏳ <b>Uploading ' + sizeMB + ' MB video...</b> please wait...';
+  }
+  
+  try {
+    // Save to IndexedDB
+    const key = 'svc_' + sid + '_' + Date.now();
+    await idbSetVideo(key, f);
+    const idbUrl = 'idb:' + key;
+    document.getElementById('se-video').value = idbUrl;
+    
+    // Show preview using blob URL
+    const blobUrl = URL.createObjectURL(f);
+    const prevBox = document.getElementById('se-video-preview');
+    if(prevBox){
+      prevBox.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:300px;border-radius:8px;background:#000;" preload="metadata"></video>';
+      prevBox.style.display = 'block';
+    }
+    
+    if(status){
+      status.style.color = '#16a34a';
+      status.innerHTML = '✅ <b>Video uploaded!</b> ' + sizeMB + ' MB stored in browser. Save Service garnus.<br>' +
+        '<small style="color:#9ca3af;">⚠️ Yo browser ma matra save chha. Sharing ko lagi YouTube use garnus.</small>';
+    }
+    if(typeof showToast === 'function') showToast('✅ Video uploaded ('+sizeMB+'MB)', 4000);
+  } catch(err){
+    console.error('Video upload error:', err);
+    if(status){
+      status.style.color = '#dc2626';
+      status.innerHTML = '❌ <b>Upload failed.</b> ' + (err.message || err) + '<br>YouTube ma upload garera link paste garnus.';
+    }
+    alert('Upload failed: ' + (err.message || err));
+  }
+}
 
 // ═══ LOGO MANAGEMENT + FLIP CYCLE ═══
 function applyLogo(){
   const lg = D.logo || {type:'emoji', value:'🏗️', cycle:true};
+  // Update ALL logo circle elements (desktop + mobile + any duplicates)
   document.querySelectorAll('.logo-mk').forEach(el => {
     if(lg.type === 'image' && lg.value){
-      el.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+      el.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">';
     } else {
       el.innerHTML = '';
       el.textContent = lg.value || '🏗️';
     }
   });
-  // Update preview in admin
+  // Update admin preview
   const prev = document.getElementById('logo-prev');
   if(prev){
     if(lg.type === 'image' && lg.value){
-      prev.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+      prev.innerHTML = '<img src="' + lg.value + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">';
     } else {
       prev.innerHTML = '';
       prev.textContent = lg.value || '🏗️';
     }
   }
+  // Update company name text from saved data
+  const cname = (D.company && D.company.name) || (D.settings && D.settings.company) || 'PRERAK';
+  const csub  = (D.company && D.company.sub)  || (D.settings && D.settings.sub)     || 'Multipurpose Pvt. Ltd.';
+  document.querySelectorAll('.logo-nm').forEach(el => { el.textContent = cname; });
+  document.querySelectorAll('.logo-sb').forEach(el => { el.textContent = csub; });
 }
 
 function adminLogoLoad(){
@@ -6665,17 +8233,22 @@ function adminLogoTypeChange(){
 function adminLogoUpload(input){
   const f = input.files[0];
   if(!f || !f.type.startsWith('image/')) return;
-  if(f.size > 500 * 1024){
-    alert('Logo too large ('+(f.size/1024).toFixed(0)+' KB). Max 500KB.\nUse smaller image or compress first.');
+  if(f.size > 800 * 1024){
+    alert('Logo too large ('+(f.size/1024).toFixed(0)+' KB). Max 800KB.\nUse smaller image or compress first.');
     return;
   }
   const r = new FileReader();
   r.onload = e => {
     D.logo = D.logo || {};
-    D.logo.type = 'image';
+    D.logo.type  = 'image';
     D.logo.value = e.target.result;
-    applyLogo();
-    if(typeof showToast === 'function') showToast('✅ Logo uploaded! Click Save Logo.', 3000);
+    D.logo.cycle = (document.getElementById('logo-cycle')||{checked:true}).checked !== false;
+    saveData();           // ← auto-save immediately so refresh persists
+    applyLogo();          // ← update all logo-mk elements instantly
+    startLogoFlipCycle(); // ← restart cycle with new logo
+    adminLogoLoad();      // ← refresh admin form to reflect new state
+    if(typeof showOk === 'function') showOk('logo-ok');
+    if(typeof showToast === 'function') showToast('✅ Logo uploaded & saved!', 3000);
   };
   r.readAsDataURL(f);
 }
@@ -6687,20 +8260,26 @@ function adminLogoCycleChange(){
 }
 
 function adminLogoSave(){
-  const t = (document.getElementById('logo-type')||{}).value || 'emoji';
+  const t  = (document.getElementById('logo-type')||{}).value || 'emoji';
   const ev = (document.getElementById('logo-emoji-val')||{}).value || '🏗️';
   const cy = (document.getElementById('logo-cycle')||{}).checked !== false;
   D.logo = D.logo || {};
-  D.logo.type = t;
+  D.logo.type  = t;
   D.logo.cycle = cy;
-  if(t === 'emoji') D.logo.value = ev;
-  // (image already saved via upload)
+  if(t === 'emoji'){
+    D.logo.value = ev;
+  }
+  // For image type: D.logo.value is already set by adminLogoUpload (or kept from localStorage)
+  // Validate image exists if type is image
+  if(t === 'image' && !D.logo.value){
+    if(typeof showToast === 'function') showToast('⚠️ No image uploaded yet. Please upload first.', 3000);
+    return;
+  }
   saveData();
   applyLogo();
-  // Restart flip cycle with new settings
   startLogoFlipCycle();
   if(typeof showOk === 'function') showOk('logo-ok');
-  if(typeof showToast === 'function') showToast('✅ Logo saved!', 3000);
+  if(typeof showToast === 'function') showToast('✅ Logo saved & applied!', 3000);
 }
 
 function adminLogoReset(){
@@ -6710,7 +8289,8 @@ function adminLogoReset(){
   adminLogoLoad();
   applyLogo();
   startLogoFlipCycle();
-  if(typeof showToast === 'function') showToast('↻ Logo reset to default', 3000);
+  if(typeof showOk === 'function') showOk('logo-ok');
+  if(typeof showToast === 'function') showToast('↻ Logo reset to default 🏗️', 3000);
 }
 
 // ═══ LOGO FLIP CYCLE ═══
@@ -6779,8 +8359,89 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 
 // ═══ BRAND VIDEO MANAGER UPLOAD ═══
+async function adminUploadBrandVideo(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('video/')){
+    alert('Video file matra select garnus (MP4/WebM/OGG)');
+    return;
+  }
+  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
+  const status = document.getElementById('bv-upload-status');
+  
+  if(status){
+    status.style.display = 'block';
+    status.style.color = '#3b82f6';
+    status.innerHTML = '⏳ <b>Uploading ' + sizeMB + ' MB video...</b> please wait...';
+  }
+  
+  try {
+    // Save to IndexedDB
+    const key = 'brand_video_' + Date.now();
+    await idbSetVideo(key, f);
+    const idbUrl = 'idb:' + key;
+    
+    // Update URL field + auto-set type
+    document.getElementById('bv-url').value = idbUrl;
+    const typeSel = document.getElementById('bv-type');
+    if(typeSel) typeSel.value = 'mp4';
+    
+    // Show video preview
+    const blobUrl = URL.createObjectURL(f);
+    const prev = document.getElementById('bv-preview');
+    if(prev){
+      prev.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+      prev.style.display = 'block';
+    }
+    
+    if(status){
+      status.style.color = '#16a34a';
+      status.innerHTML = '✅ <b>Video uploaded!</b> ' + sizeMB + ' MB stored in browser. Click <b>Save Video</b> to apply.<br>' +
+        '<small style="color:#9ca3af;">⚠️ Yo browser ma matra save chha — sharing ko lagi YouTube use garnus.</small>';
+    }
+    if(typeof showToast === 'function') showToast('✅ Brand video uploaded ('+sizeMB+'MB)', 4000);
+  } catch(err){
+    console.error('Brand video upload error:', err);
+    if(status){
+      status.style.color = '#dc2626';
+      status.innerHTML = '❌ <b>Upload failed.</b> ' + (err.message || err);
+    }
+    alert('Upload failed: ' + (err.message || err));
+  }
+}
 
 // Show preview when URL field changes
+function adminBrandVideoPreview(){
+  const url = (document.getElementById('bv-url')||{}).value || '';
+  const prev = document.getElementById('bv-preview');
+  if(!prev) return;
+  if(!url){
+    prev.style.display = 'none';
+    prev.innerHTML = '';
+    return;
+  }
+  // Auto-detect and show preview
+  const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?\/\s]+)/);
+  if(yt){
+    prev.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '" style="width:100%;max-width:500px;aspect-ratio:16/9;border:none;border-radius:10px;background:#000;" allowfullscreen></iframe>';
+    prev.style.display = 'block';
+    const ts = document.getElementById('bv-type'); if(ts) ts.value = 'youtube';
+  } else if(url.match(/\.(mp4|webm|ogg|m4v)(\?|$)/i) || url.startsWith('blob:') || url.startsWith('data:video') || url.startsWith('idb:')){
+    if(url.startsWith('idb:')){
+      // Resolve idb: to blob URL for preview
+      idbResolveUrl(url).then(blobUrl => {
+        if(blobUrl){
+          prev.innerHTML = '<video src="' + blobUrl + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+          prev.style.display = 'block';
+        }
+      });
+    } else {
+      prev.innerHTML = '<video src="' + url + '" controls style="width:100%;max-width:500px;border-radius:10px;background:#000;" preload="metadata"></video>';
+      prev.style.display = 'block';
+    }
+    const ts = document.getElementById('bv-type'); if(ts) ts.value = 'mp4';
+  }
+}
 
 // Hook into apSec to refresh preview when entering brand video section
 (function(){
@@ -6788,6 +8449,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if(typeof _orig === 'function'){
     window.apSec = function(nm){
       _orig(nm);
+      if(nm === 'video') setTimeout(adminBrandVideoPreview, 100);
     };
   }
 })();
