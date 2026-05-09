@@ -6033,20 +6033,27 @@ function _ejsLoadSDK(){
 }
 
 function _ejsConfig(){
-  const ejs = (typeof D !== 'undefined' && D && D.emailjs) || {};
+  // ONLY use user-saved credentials — no hardcoded fallbacks.
+  // Hardcoded fallbacks caused false "Account not found" errors.
+  const ejs = (typeof D !== 'undefined' && D && D.emailjs) ? D.emailjs : {};
   return {
-    sid: String(ejs.sid || 'service_bvxfr3q').trim(),
-    tid: String(ejs.tid || 'template_xs9x16u').trim(),
-    pk:  String(ejs.pk  || 'fpml8phlCtNwoA7rZ').trim()
+    sid: String(ejs.sid || '').trim(),
+    tid: String(ejs.tid || '').trim(),
+    pk:  String(ejs.pk  || '').trim()
   };
 }
 
 function _ejsConfigValid(cfg){
   cfg = cfg || _ejsConfig();
+  // All three must be present and non-empty
   if(!cfg.sid || !cfg.tid || !cfg.pk) return false;
-  if(!cfg.sid.startsWith('service_')) return false;
+  // Format sanity checks (these are the real EmailJS formats)
+  if(!cfg.sid.startsWith('service_'))  return false;
   if(!cfg.tid.startsWith('template_')) return false;
-  if(cfg.pk.length < 10) return false;
+  if(cfg.pk.length < 10)               return false;
+  // Extra guard: reject obviously placeholder/test values
+  const knownBad = ['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'];
+  if(knownBad.includes(cfg.sid) || knownBad.includes(cfg.tid) || knownBad.includes(cfg.pk)) return false;
   return true;
 }
 
@@ -6088,28 +6095,35 @@ async function _ejsSend(otp, email){
   });
 }
 
-// Pre-load SDK + init at startup (best-effort, non-blocking)
+// Pre-load SDK silently (best-effort, non-blocking, NO UI side-effects)
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
-    if(_ejsConfigValid()){
-      _ejsInit()
-        .then(()=>console.log('[EmailJS] Pre-initialized'))
-        .catch(e=>console.warn('[EmailJS] Pre-init failed:', e && e.message));
-    } else {
-      console.warn('[EmailJS] Config invalid — set values in Admin → Settings → EmailJS.');
+    if(!_ejsConfigValid()){
+      _log('EmailJS: user credentials not configured — password login available as fallback.');
+      return;
     }
-  }, 1500);
+    _ejsInit()
+      .then(()=> _log('EmailJS: pre-initialized OK'))
+      .catch(e=> _log('EmailJS: pre-init skipped —', e && e.message));
+    // NOTE: errors here MUST NOT write to any UI element.
+    // UI feedback only happens during the actual sendOTP() flow.
+  }, 2000);
 });
 
 // ═══ SEND OTP (with EmailJS + on-screen fallback) ═══
 function sendOTP(code, emailOverride){
   startOTPCountdown();
-  const email = emailOverride || (typeof D !== 'undefined' && D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  const email = emailOverride || (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  // Clear and reset demo div immediately (prevents stale cached errors from showing)
   const demo = document.getElementById('otp-demo');
   if(demo){
-    demo.style.display = 'block';
-    demo.innerHTML = '<div style="text-align:center;color:#60a5fa;font-size:.72rem;">📤 Sending OTP to '+email+'...</div>';
+    demo.style.display  = 'none';
+    demo.innerHTML      = '';
   }
+  // Clear any previous OTP error
+  const otpErr = document.getElementById('otp-err');
+  if(otpErr) otpErr.style.display = 'none';
+  // Begin async send (UI updated inside _sendOTPEmail)
   _sendOTPEmail(email, code);
 }
 
@@ -6124,81 +6138,121 @@ function _isDebugMode(){
 }
 
 async function _sendOTPEmail(email, otp){
-  const demo = document.getElementById('otp-demo');
-  if(demo) demo.style.display = 'block';
-
+  const demo    = document.getElementById('otp-demo');
+  const otpErr  = document.getElementById('otp-err');
   const isDebug = _isDebugMode();
 
-  // Setup-error card (shown when config is missing/invalid)
-  const showSetupError = function(msg){
+  // ── UI helpers ────────────────────────────────────────────────────────────
+  const _showDemo = (html) => {
     if(!demo) return;
-    demo.innerHTML =
-       '<div style="padding:14px;background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.55);border-radius:12px;text-align:center;font-size:.74rem;color:#fbbf24;line-height:1.6;">'
-      +msg+'</div>';
+    demo.style.display = 'block';
+    demo.innerHTML = html;
   };
-
-  // Production card — never shows the OTP code
-  const showProdCard = function(statusMsg, statusColor){
+  const _hideDemo = () => {
     if(!demo) return;
-    demo.innerHTML =
-       '<div style="padding:14px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(59,130,246,.04));border:1.5px solid rgba(59,130,246,.4);border-radius:12px;text-align:center;">'
-      +'<div style="font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;font-weight:700;margin-bottom:6px">📨 OTP Email</div>'
-      +'<div style="font-size:.7rem;color:'+(statusColor||'#9ca3af')+';line-height:1.6;">'+(statusMsg||'')+'</div>'
-      +'</div>';
+    demo.style.display = 'none';
+    demo.innerHTML = '';
   };
-
-  // Debug card — shows OTP on screen (only when debug mode enabled)
-  const showDebugCard = function(statusMsg, statusColor){
-    if(!demo) return;
-    demo.innerHTML =
-       '<div style="padding:14px;background:linear-gradient(135deg,rgba(201,147,58,.18),rgba(201,147,58,.05));border:2px solid rgba(201,147,58,.5);border-radius:12px;text-align:center;">'
-      +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:5px;display:flex;align-items:center;justify-content:center;gap:8px;">📱 YOUR OTP CODE <span style="background:rgba(220,38,38,.7);color:#fff;padding:2px 7px;border-radius:5px;font-size:.55rem;letter-spacing:1px;">DEBUG</span></div>'
-      +'<div style="font-size:2.2rem;letter-spacing:10px;color:#f0d894;font-weight:800;font-family:monospace;text-shadow:0 0 12px rgba(201,147,58,.4);margin:4px 0">'+otp+'</div>'
-      +'<div style="font-size:.58rem;opacity:.7;margin-top:4px">⏱️ Valid 5 min · Copy & paste above ↑</div>'
-      +(statusMsg ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);font-size:.62rem;color:'+(statusColor||'#9ca3af')+';line-height:1.5;">'+statusMsg+'</div>' : '')
-      +'</div>';
+  const _clearErrors = () => {
+    if(otpErr) otpErr.style.display = 'none';
   };
+  const _showInfo = (msg) => _showDemo(
+    '<div style="padding:13px 14px;background:rgba(59,130,246,.1);border:1.5px solid rgba(59,130,246,.35);border-radius:12px;text-align:center;">'
+    +'<div style="font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:#60a5fa;font-weight:700;margin-bottom:5px;">📨 OTP Email</div>'
+    +'<div style="font-size:.72rem;color:#93c5fd;line-height:1.6;">'+msg+'</div>'
+    +'</div>'
+  );
+  const _showSuccess = (msg) => {
+    _clearErrors();
+    _showDemo(
+      '<div style="padding:13px 14px;background:rgba(34,197,94,.1);border:1.5px solid rgba(34,197,94,.4);border-radius:12px;text-align:center;">'
+      +'<div style="font-size:1.4rem;margin-bottom:4px;">✅</div>'
+      +'<div style="font-size:.72rem;color:#86efac;line-height:1.6;font-weight:600;">'+msg+'</div>'
+      +'</div>'
+    );
+  };
+  const _showError = (msg) => _showDemo(
+    '<div style="padding:13px 14px;background:rgba(239,68,68,.1);border:1.5px solid rgba(239,68,68,.35);border-radius:12px;text-align:center;">'
+    +'<div style="font-size:.72rem;color:#fca5a5;line-height:1.7;">'+msg+'</div>'
+    +'</div>'
+  );
+  const _showDebug = (msg, codeToShow) => _showDemo(
+    '<div style="padding:13px 14px;background:rgba(201,147,58,.15);border:2px solid rgba(201,147,58,.5);border-radius:12px;text-align:center;">'
+    +'<div style="font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:#c9933a;font-weight:700;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:8px;">📱 YOUR OTP <span style="background:rgba(220,38,38,.7);color:#fff;padding:2px 7px;border-radius:5px;font-size:.52rem;">DEBUG</span></div>'
+    +'<div style="font-size:2.2rem;letter-spacing:10px;color:#f0d894;font-weight:800;font-family:monospace;text-shadow:0 0 12px rgba(201,147,58,.4);margin:4px 0 8px;">'+codeToShow+'</div>'
+    +'<div style="font-size:.7rem;color:#c9933a;line-height:1.5;">'+msg+'</div>'
+    +'</div>'
+  );
 
-  // 1) Validate config — show password fallback if not configured
+  // ── 1. Check if EmailJS credentials are configured ────────────────────────
   if(!_ejsConfigValid()){
-    showSetupError('⚠️ <b>EmailJS not configured.</b><br>Use password login below to access admin dashboard.');
-    setTimeout(()=>{ showStep2PasswordFallback(true); }, 200);
+    _showDemo(
+      '<div style="padding:12px 14px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.4);border-radius:12px;text-align:center;">'
+      +'<div style="font-size:.72rem;color:#fcd34d;line-height:1.6;">⚙️ <b>EmailJS not configured.</b><br>Use password login below, or set up EmailJS in Admin → Settings.</div>'
+      +'</div>'
+    );
+    setTimeout(()=>{ if(typeof showStep2PasswordFallback==='function') showStep2PasswordFallback(true); }, 300);
     return;
   }
 
-  // 2) Show "sending" state
-  if(isDebug) showDebugCard('📤 Sending email to ' + _maskEmail(email) + '...', '#60a5fa');
-  else        showProdCard('📤 Sending OTP to ' + _maskEmail(email) + '...', '#60a5fa');
+  // ── 2. Show "Sending…" state (clears any previous content) ───────────────
+  _clearErrors();
+  _showInfo('📤 Sending OTP to <b>' + _maskEmail(email) + '</b>…');
 
-  // 3) Try send via EmailJS
+  // ── 3. Attempt actual send ────────────────────────────────────────────────
   try{
     const result = await _ejsSend(otp, email);
-    console.log('[EmailJS] Send OK:', result && result.status, result && result.text);
-    if(isDebug) showDebugCard('✅ Sent to ' + _maskEmail(email) + ' (check inbox / spam)', '#22c55e');
-    else        showProdCard('✅ OTP sent to ' + _maskEmail(email) + '.<br>Check your inbox / spam folder and enter the code above.', '#22c55e');
-  } catch(e){
-    const raw = (e && (e.text || e.message)) || String(e) || 'Unknown error';
-    console.error('[EmailJS] Send failed:', e);
-    let userMsg = '⚠️ Email send failed. Please retry or contact admin.';
-    const low = raw.toLowerCase();
-    if(low.includes('account not found')){
-      userMsg = '❌ <b>EmailJS Account not found.</b><br>The Public Key / Service ID belongs to a missing account. Verify your account on emailjs.com → Account → Public Keys, then update credentials in Admin → Settings → EmailJS.';
-    } else if(low.includes('public key') || low.includes('public_key')){
-      userMsg = '❌ Invalid Public Key. Check Admin → Settings → EmailJS.';
-    } else if(low.includes('service') && (low.includes('not found') || low.includes('invalid'))){
-      userMsg = '❌ Invalid Service ID. Check Admin → Settings → EmailJS.';
-    } else if(low.includes('template') && (low.includes('not found') || low.includes('invalid'))){
-      userMsg = '❌ Invalid Template ID. Check Admin → Settings → EmailJS.';
-    } else if(low.includes('network') || low.includes('failed to load') || low.includes('failed to fetch')){
-      userMsg = '❌ Network error — cannot reach EmailJS. Check internet.';
-    } else if(raw && raw !== 'Unknown error'){
-      userMsg = '❌ Email send failed: ' + raw.substring(0, 120);
+
+    // EmailJS v3/v4 success: result.status === 200 or result.text === 'OK'
+    const statusOk = !result || result.status === 200 || String(result.text||'').toLowerCase() === 'ok';
+
+    if(!statusOk){
+      // Resolved but non-200 — treat as soft error
+      throw new Error('EmailJS responded with status ' + (result&&result.status) + ': ' + (result&&result.text));
     }
-    // Show error + auto-reveal password fallback so admin isn't stuck
-    if(isDebug) showDebugCard(userMsg, '#ef4444');
-    else        showProdCard(userMsg, '#ef4444');
-    // Auto-show password fallback when EmailJS fails
-    setTimeout(()=>{ showStep2PasswordFallback(true); }, 400);
+
+    _log('EmailJS send OK:', result && result.status, result && result.text);
+    _clearErrors();
+
+    if(isDebug){
+      _showDebug('✅ Also sent to ' + _maskEmail(email) + ' (check inbox)', otp);
+    } else {
+      _showSuccess(
+        'OTP sent to <b>' + _maskEmail(email) + '</b><br>'
+        +'<span style="font-size:.65rem;font-weight:400;">Check your inbox or spam folder and enter the 6-digit code above.</span>'
+      );
+    }
+
+  } catch(e){
+    const raw   = String((e && (e.text || e.message)) || e || 'Unknown error');
+    const low   = raw.toLowerCase();
+    _err('EmailJS send failed:', e);
+
+    // ── Map raw error to a user-friendly message ──────────────────────────
+    let friendly = '';
+    if(low.includes('account not found') || low.includes('account_not_found')){
+      friendly = '❌ <b>Invalid EmailJS credentials.</b><br>Your Service ID or Public Key may be wrong or the account was deleted. Go to Admin → Settings → EmailJS to update them.';
+    } else if(low.includes('public key') || low.includes('public_key') || low.includes('invalid_key')){
+      friendly = '❌ <b>Invalid Public Key.</b><br>Update it in Admin → Settings → EmailJS.';
+    } else if(low.includes('service') && (low.includes('not found') || low.includes('invalid'))){
+      friendly = '❌ <b>Invalid Service ID.</b><br>Check the service in your EmailJS dashboard and update in Admin → Settings.';
+    } else if(low.includes('template') && (low.includes('not found') || low.includes('invalid'))){
+      friendly = '❌ <b>Invalid Template ID.</b><br>Check your template in EmailJS and update in Admin → Settings.';
+    } else if(low.includes('network') || low.includes('fetch') || low.includes('load')){
+      friendly = '❌ <b>Network error.</b><br>Could not reach EmailJS. Check your internet connection and try again.';
+    } else if(low.includes('daily limit') || low.includes('monthly limit') || low.includes('quota')){
+      friendly = '❌ <b>EmailJS quota exceeded.</b><br>Your free tier limit may be reached. Use password login below or upgrade your EmailJS plan.';
+    } else {
+      friendly = '⚠️ <b>OTP send failed.</b><br><span style="font-size:.65rem;">' + raw.substring(0, 150) + '</span>';
+    }
+
+    if(isDebug){
+      _showDebug(friendly + '<br><span style="font-size:.6rem;opacity:.6;">Debug: OTP = '+otp+'</span>', otp);
+    } else {
+      _showError(friendly);
+    }
+    // Auto-reveal password fallback so admin is never stuck
+    setTimeout(()=>{ if(typeof showStep2PasswordFallback==='function') showStep2PasswordFallback(true); }, 500);
   }
 }
 
