@@ -791,11 +791,10 @@ body.hide-vc #visiting-card { display:none; }
   50% { transform: rotate(3deg) skewY(1.5deg) scale(1.05); }
 }
 
-/* ═══ VIDEO SECTION HIDDEN FROM PUBLIC ═══ */
-#brand-video,.brand-video,.video-section,.video-wrapper,
-#video-section,.fv-player,#fv-player,.video-container,
-.hero-video,.video-modal,#vg-featured-wrap,
-#svid-grid,.svid-card,#fv-play-btn { display:none!important; }
+/* ═══ VIDEO SUB-ELEMENTS HIDDEN (main section managed by JS) ═══ */
+.fv-player,#fv-player,.video-modal,
+#svid-grid,.svid-card,#fv-play-btn,#vg-featured-wrap { display:none!important; }
+#brand-video:not(.bv-active) { display:none!important; }
 
 /* ═══ LEFT FLOATING BAR ═══ */
 #lfb{position:fixed;left:14px;top:50%;transform:translateY(-50%);z-index:250;display:flex;flex-direction:column;align-items:center;gap:9px;background:rgba(15,12,10,.55);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(212,166,74,.2);border-radius:44px;padding:12px 9px;box-shadow:0 10px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);animation:lfbIn .6s cubic-bezier(.34,1.56,.64,1) both;}
@@ -817,6 +816,11 @@ body.hide-vc #visiting-card { display:none; }
 @media(max-width:768px){#lfb{display:none;}}
 @media(max-width:1100px) and (min-width:769px){#lfb{left:8px;}.lb{width:38px;height:38px;}.lb::after{display:none;}}
 </style>
+
+  <!-- Firebase SDK (compat - no module needed) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 </head>
 <body class="show-vc-on show-cal-on">
 <div id="prog"></div>
@@ -1276,59 +1280,34 @@ body.hide-vc #visiting-card { display:none; }
 
 <!-- ANIMATION / BRAND VIDEO SECTION -->
 <!-- ═══ SERVICE VIDEOS GALLERY ═══ -->
-<section class="sec" id="brand-video" style="padding:80px 20px;background:linear-gradient(180deg,var(--bg3),var(--bg));position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,166,74,.06),transparent 70%);pointer-events:none;"></div>
-  <div class="si" style="position:relative;z-index:2;">
-    <div class="sh reveal">
-      <div class="sey en">Service Videos</div><div class="sey ne np">सेवा भिडियोहरू</div>
-      <h2 class="stl en">Watch Our <em>Service Works</em></h2>
-      <h2 class="stl ne np">हाम्रो <em>सेवा कार्यहरू</em> हेर्नुस्</h2>
-      <p class="sdesc en">All our construction services in one place — click any video to play.</p>
-      <p class="sdesc ne np">हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।</p>
+<!-- ═══ BRAND VIDEO SECTION ═══ -->
+<section id="brand-video" style="padding:52px 20px 48px;background:linear-gradient(180deg,var(--bg3),var(--bg));position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,166,74,.05),transparent 70%);pointer-events:none;"></div>
+  <div class="si" style="max-width:760px;margin:0 auto;position:relative;z-index:2;">
+    <!-- Section header (populated by renderBrandVideo) -->
+    <div class="sh reveal" id="bv-pub-header" style="margin-bottom:24px;">
+      <div class="sey en" id="bv-pub-eyebrow">Brand Video</div>
+      <h2 class="stl" id="bv-pub-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">Watch Our <em>Story</em></h2>
+      <p class="sdesc" id="bv-pub-desc" style="font-size:.88rem;max-width:560px;margin:0 auto;"></p>
     </div>
 
-    <!-- ═══ FEATURED VIDEO PLAYER (BIG TOP) ═══ -->
-    <div id="vg-featured-wrap" class="reveal" style="background:linear-gradient(155deg,var(--bg2),var(--bg3));overflow:hidden;">
-      <div id="fv-player" style="background:#0a0806;">
-        <img id="fv-thumb" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200" alt="Featured" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
-        <!-- BIG play button -->
-        <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
-          <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
-        </button>
-        <!-- Now Playing label -->
-        <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
-          <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>NOW PLAYING
-        </span>
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
-        <!-- Bottom info overlay -->
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));">
-          <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
-            <span id="fv-cat">🏗️ Construction</span>
-            <span style="opacity:.5;">·</span>
-            <span id="fv-dur">2:30</span>
-          </div>
-          <h3 id="fv-title" style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:5px;">Building Construction</h3>
-          <p id="fv-desc" style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;">Complete building construction — RCC, masonry &amp; premium finishing.</p>
+    <!-- Video player container (medium sized) -->
+    <div id="bv-player-wrap" class="reveal" style="
+      width:100%;max-width:680px;margin:0 auto 22px;
+      background:#0a0806;border-radius:16px;overflow:hidden;
+      box-shadow:0 12px 40px rgba(0,0,0,.45),0 0 0 1px rgba(212,166,74,.15);
+      aspect-ratio:16/9;position:relative;">
+      <!-- Populated by renderBrandVideo() -->
+      <div id="bv-player-inner" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="text-align:center;color:rgba(245,237,224,.35);">
+          <div style="font-size:3rem;margin-bottom:8px;">🎬</div>
+          <div style="font-size:.78rem;font-weight:700;">Loading video…</div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ SERVICE VIDEO GRID ═══ -->
-    <div class="reveal" data-d="1">
-      <div style="text-align:center;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px;">
-        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
-        <span class="en">All 12 Service Videos</span><span class="ne np">सबै १२ सेवा भिडियोहरू</span>
-        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
-      </div>
-      <div id="svid-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-width:980px;margin:0 auto;"></div>
-    </div>
-
-    <!-- WhatsApp / Admin CTA -->
-    <div class="reveal" data-d="2" style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
-      <a href="https://wa.me/9779801069733?text=नमस्ते! Service video bare jankaari chahiyo." target="_blank" rel="noopener" class="btn btn-w">💬 <span class="en">Ask About Services</span><span class="ne np">सेवा बारे सोध्नुस्</span></a>
-      <a href="#contact" class="btn btn-g">📞 <span class="en">Free Site Visit</span><span class="ne np">नि:शुल्क साइट भिजिट</span></a>
-    </div>
+    <!-- CTA row -->
+    <div id="bv-pub-cta" class="reveal" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;"></div>
   </div>
 </section>
 
@@ -3065,8 +3044,11 @@ body.hide-vc #visiting-card { display:none; }
             </select>
           </div>
         </div>
+        <div class="afg"><label>Section Eyebrow / Tag</label><input type="text" id="bv-eyebrow" placeholder="Brand Video"></div>
         <div class="afg"><label>Video Title</label><input type="text" id="bv-title" placeholder="Our Construction Story"></div>
-        <div class="afg"><label>Description</label><textarea id="bv-desc" rows="2" placeholder="Watch how we build dream homes"></textarea></div>
+        <div class="afg"><label>Description / Subtitle</label><textarea id="bv-desc" rows="2" placeholder="Watch how we build dream homes"></textarea></div>
+        <div class="afg"><label>CTA Button Text</label><input type="text" id="bv-cta" placeholder="📞 Free Site Visit" style="margin-bottom:4px;"></div>
+        <div class="afg"><label>CTA Button Link</label><input type="text" id="bv-cta-url" placeholder="https://wa.me/9779801069733 or #contact"></div>
         
         <div style="margin-top:12px;padding:12px;background:#eff6ff;border-radius:8px;border:1px dashed #3b82f6;">
           <div style="font-size:.74rem;color:#1e40af;line-height:1.7;">
@@ -3907,6 +3889,8 @@ function init(){
   applyLang();
   renderSite();
   applyLogo();           // ← apply saved logo immediately on page load
+  renderBrandVideo();    // ← apply saved video section
+  setTimeout(fetchVideoFromFirestore, 1800); // ← async fetch from Firestore
   // Force critical sections to render (extra safety)
   try { renderPricingSection(); } catch(e){ console.error('Pricing render:',e); }
   try { renderFAQSection(); } catch(e){ console.error('FAQ render:',e); }
@@ -7011,72 +6995,278 @@ function saveVCard(){
 }
 
 // ═══ BRAND VIDEO ADMIN ═══
+// ═══ FIREBASE SETUP ═══
+let _fbApp = null, _fbDb = null, _fbStorage = null;
+
+function _fbConfig(){
+  return {
+    apiKey:        (D.firebase && D.firebase.apiKey)        || '',
+    authDomain:    (D.firebase && D.firebase.authDomain)    || '',
+    projectId:     (D.firebase && D.firebase.projectId)     || '',
+    storageBucket: (D.firebase && D.firebase.storageBucket) || '',
+    appId:         (D.firebase && D.firebase.appId)         || ''
+  };
+}
+
+function _fbValid(cfg){
+  cfg = cfg || _fbConfig();
+  return !!(cfg.apiKey && cfg.projectId && cfg.storageBucket);
+}
+
+function initFirebase(){
+  try{
+    const cfg = _fbConfig();
+    if(!_fbValid(cfg)) return false;
+    if(!_fbApp){
+      if(firebase.apps.length) { _fbApp = firebase.apps[0]; }
+      else { _fbApp = firebase.initializeApp(cfg); }
+    }
+    _fbDb      = firebase.firestore(_fbApp);
+    _fbStorage = firebase.storage(_fbApp);
+    return true;
+  }catch(e){ console.warn('[Firebase] init failed:', e); return false; }
+}
+
+function saveFirebaseConfig(){
+  D.firebase = D.firebase || {};
+  D.firebase.apiKey        = document.getElementById('fb-api-key')?.value.trim()        || '';
+  D.firebase.authDomain    = document.getElementById('fb-auth-domain')?.value.trim()    || '';
+  D.firebase.projectId     = document.getElementById('fb-project-id')?.value.trim()     || '';
+  D.firebase.storageBucket = document.getElementById('fb-storage-bucket')?.value.trim() || '';
+  D.firebase.appId         = document.getElementById('fb-app-id')?.value.trim()         || '';
+  saveData();
+  _fbApp = null; _fbDb = null; _fbStorage = null; // reset so re-init with new config
+  showOk('fb-ok');
+  if(typeof showToast==='function') showToast('🔥 Firebase config saved!', 3000);
+}
+
+function loadFirebaseConfigForm(){
+  const fb = D.firebase || {};
+  const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
+  set('fb-api-key',        fb.apiKey);
+  set('fb-auth-domain',    fb.authDomain);
+  set('fb-project-id',     fb.projectId);
+  set('fb-storage-bucket', fb.storageBucket);
+  set('fb-app-id',         fb.appId);
+}
+
+async function testFirebaseConnection(){
+  const st = document.getElementById('fb-status');
+  if(!st) return;
+  st.style.display='block'; st.style.background='#eff6ff'; st.style.color='#1e40af';
+  st.textContent = '🔄 Testing Firebase connection...';
+  try{
+    if(!initFirebase()) throw new Error('Config missing or invalid');
+    await _fbDb.collection('_test').doc('ping').set({ping: Date.now()});
+    await _fbDb.collection('_test').doc('ping').delete();
+    st.style.background='#f0fdf4'; st.style.color='#15803d';
+    st.textContent = '✅ Firebase connected successfully! Firestore is working.';
+  }catch(e){
+    st.style.background='#fef2f2'; st.style.color='#991b1b';
+    st.textContent = '❌ Firebase error: ' + (e.message||String(e));
+  }
+}
+
+async function saveVideoToFirestore(data){
+  if(!initFirebase()) return false;
+  try{
+    await _fbDb.collection('siteSettings').doc('videoSection').set({
+      ...data, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return true;
+  }catch(e){ console.error('[Firestore] save failed:', e); return false; }
+}
+
+async function loadVideoFromFirestore(){
+  if(!initFirebase()) return null;
+  try{
+    const doc = await _fbDb.collection('siteSettings').doc('videoSection').get();
+    if(doc.exists) return doc.data();
+    return null;
+  }catch(e){ console.error('[Firestore] load failed:', e); return null; }
+}
+
+async function uploadVideoToStorage(file, onProgress){
+  if(!initFirebase()) throw new Error('Firebase not configured');
+  const path = 'videos/' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const ref = _fbStorage.ref(path);
+  return new Promise((resolve, reject)=>{
+    const task = ref.put(file);
+    task.on('state_changed',
+      snap => { if(onProgress) onProgress(Math.round(snap.bytesTransferred/snap.totalBytes*100)); },
+      err  => reject(err),
+      ()   => task.snapshot.ref.getDownloadURL().then(resolve).catch(reject)
+    );
+  });
+}
+
+// ═══ VIDEO ADMIN FUNCTIONS ═══
 function loadBrandVideo(){
   if(!D.brandVideo) D.brandVideo = {};
   const V = D.brandVideo;
-  const url = document.getElementById('bv-url'); if(url) url.value = V.url || '';
-  const type = document.getElementById('bv-type'); if(type) type.value = V.type || 'youtube';
-  const tit = document.getElementById('bv-title'); if(tit) tit.value = V.title || 'Our Construction Story';
-  const desc = document.getElementById('bv-desc'); if(desc) desc.value = V.desc || '';
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
+  set('bv-url',     V.url);
+  set('bv-type',    V.type||'youtube');
+  set('bv-eyebrow', V.eyebrow||'Brand Video');
+  set('bv-title',   V.title||'');
+  set('bv-desc',    V.desc||'');
+  set('bv-cta',     V.cta||'📞 Free Site Visit');
+  set('bv-cta-url', V.ctaUrl||'#contact');
+  loadFirebaseConfigForm();
 }
 
-function saveBrandVideo(){
-  if(!D.brandVideo) D.brandVideo = {};
-  D.brandVideo.url = document.getElementById('bv-url')?.value.trim() || '';
-  D.brandVideo.type = document.getElementById('bv-type')?.value || 'youtube';
-  D.brandVideo.title = document.getElementById('bv-title')?.value || '';
-  D.brandVideo.desc = document.getElementById('bv-desc')?.value || '';
+async function saveBrandVideo(){
+  const bvOk = document.getElementById('bv-ok');
+  const data = {
+    url:     (document.getElementById('bv-url')?.value||'').trim(),
+    type:    document.getElementById('bv-type')?.value     || 'youtube',
+    eyebrow: document.getElementById('bv-eyebrow')?.value  || 'Brand Video',
+    title:   document.getElementById('bv-title')?.value    || '',
+    desc:    document.getElementById('bv-desc')?.value     || '',
+    cta:     document.getElementById('bv-cta')?.value      || '📞 Free Site Visit',
+    ctaUrl:  document.getElementById('bv-cta-url')?.value  || '#contact'
+  };
+  if(!data.url){ if(typeof showToast==='function') showToast('⚠️ Please enter a video URL or upload a file first.', 3000); return; }
+  // Save to localStorage first (always)
+  D.brandVideo = data;
   saveData();
-  showOk('bv-ok');
-  try{ updateAnimVideo(D.brandVideo.url); }catch(e){}
-  try{ renderBrandVideo(); }catch(e){}
+  renderBrandVideo();
+  // Try save to Firestore
+  if(_fbValid()){
+    if(typeof showToast==='function') showToast('💾 Saving to Firebase…', 2000);
+    const ok = await saveVideoToFirestore(data);
+    if(ok){ if(typeof showToast==='function') showToast('✅ Video saved to Firebase!', 3500); }
+    else   { if(typeof showToast==='function') showToast('✅ Saved locally. Firebase sync failed — check config.', 4000); }
+  } else {
+    if(typeof showToast==='function') showToast('✅ Video saved locally! Configure Firebase to save to cloud.', 3500);
+  }
+  if(typeof showOk==='function') showOk('bv-ok');
 }
 
 function previewBrandVideo(){
-  const url = document.getElementById('bv-url')?.value.trim();
-  const type = document.getElementById('bv-type')?.value;
+  const url  = (document.getElementById('bv-url')?.value||'').trim();
+  const type = document.getElementById('bv-type')?.value || 'youtube';
   const prev = document.getElementById('bv-preview');
   if(!prev) return;
-  if(!url){ prev.innerHTML = '<div style="padding:14px;background:#fef2f2;color:#991b1b;border-radius:8px;">⚠️ No video URL</div>'; prev.style.display = 'block'; return; }
-  let embed = '';
-  if(type === 'youtube'){
-    embed = '<iframe src="' + url + '" width="100%" height="280" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>';
-  } else if(type === 'mp4'){
-    embed = '<video src="' + url + '" width="100%" height="280" controls style="border-radius:10px;"></video>';
-  } else {
-    embed = '<iframe src="' + url + '" width="100%" height="280" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>';
+  if(!url){ prev.innerHTML='<div style="padding:12px;background:#fef2f2;color:#991b1b;border-radius:8px;font-size:.78rem;">⚠️ No video URL entered</div>'; prev.style.display='block'; return; }
+  let embed='';
+  if(type==='mp4'||type==='webm')
+    embed='<video src="'+url+'" width="100%" height="240" controls style="border-radius:10px;display:block;"></video>';
+  else
+    embed='<iframe src="'+url+'" width="100%" height="240" frameborder="0" allowfullscreen style="border-radius:10px;display:block;"></iframe>';
+  prev.innerHTML='<div style="font-size:.82rem;font-weight:700;margin-bottom:8px;">📺 Preview:</div>'+embed;
+  prev.style.display='block';
+}
+
+async function adminUploadBrandVideo(input){
+  const f = input.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('video/') && !f.name.match(/\.(mp4|webm|ogv|mov)$/i)){
+    if(typeof showToast==='function') showToast('⚠️ Please select a valid video file (MP4, WebM, etc.)', 3000);
+    return;
   }
-  prev.innerHTML = '<h4 style="margin-bottom:8px;font-size:.84rem;font-weight:700;">📺 Video Preview:</h4>' + embed;
-  prev.style.display = 'block';
+  const statusEl = document.getElementById('bv-upload-status');
+  const prevEl   = document.getElementById('bv-preview');
+  const setStatus = (msg,col)=>{ if(statusEl){statusEl.style.display='block';statusEl.style.color=col||'#374151';statusEl.innerHTML=msg;} };
+  // Check if Firebase is configured
+  if(!_fbValid()){
+    // No Firebase — use base64 for small files, warn for large
+    if(f.size > 50 * 1024 * 1024){
+      setStatus('❌ File too large ('+Math.round(f.size/1024/1024)+'MB) for local storage. Please configure Firebase Storage for large uploads, or use a YouTube URL instead.','#991b1b');
+      return;
+    }
+    setStatus('📦 Loading video locally (no Firebase configured)…','#6b7280');
+    const reader = new FileReader();
+    reader.onload = e => {
+      const url = e.target.result;
+      const typeEl = document.getElementById('bv-type'); if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
+      const urlEl  = document.getElementById('bv-url');  if(urlEl)  urlEl.value  = url;
+      setStatus('✅ Video loaded locally. Click <b>Save Video</b> to apply. (For cloud storage, configure Firebase.)','#15803d');
+      if(prevEl){ prevEl.innerHTML='<video src="'+url+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;"></video>'; prevEl.style.display='block'; }
+    };
+    reader.readAsDataURL(f);
+    return;
+  }
+  // Firebase configured — upload to Storage
+  setStatus('☁️ Uploading to Firebase Storage (0%)…','#6b7280');
+  try{
+    if(!initFirebase()) throw new Error('Firebase init failed');
+    const downloadUrl = await uploadVideoToStorage(f, pct => {
+      setStatus('☁️ Uploading to Firebase Storage ('+pct+'%)…','#2563eb');
+    });
+    const typeEl = document.getElementById('bv-type'); if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
+    const urlEl  = document.getElementById('bv-url');  if(urlEl)  urlEl.value  = downloadUrl;
+    setStatus('✅ Uploaded to Firebase Storage! URL set. Click <b>Save Video</b> to publish.','#15803d');
+    if(prevEl){ prevEl.innerHTML='<video src="'+downloadUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;"></video>'; prevEl.style.display='block'; }
+    if(typeof showToast==='function') showToast('✅ Video uploaded to Firebase Storage!', 3500);
+  }catch(e){
+    setStatus('❌ Upload failed: '+(e.message||String(e)),'#991b1b');
+    if(typeof showToast==='function') showToast('❌ Upload failed: '+(e.message||String(e)).substring(0,80), 4000);
+  }
+}
+
+function adminBrandVideoPreview(){
+  // live preview as URL is typed
+  const url=(document.getElementById('bv-url')?.value||'').trim();
+  const type=document.getElementById('bv-type')?.value||'youtube';
+  const prev=document.getElementById('bv-preview');
+  if(!prev||!url) return;
+  prev.style.display='none';
 }
 
 function renderBrandVideo(){
-  // Show/hide brand-video section based on URL
   const section = document.getElementById('brand-video');
-  if(!D.brandVideo || !D.brandVideo.url || !D.brandVideo.url.trim()){
-    if(section) section.style.display = 'none';
+  if(!section) return;
+  const V = D.brandVideo || {};
+  if(!V.url || !V.url.trim()){
+    section.classList.remove('bv-active');
     return;
   }
-  // Has URL — find or create video container
-  const V = D.brandVideo;
-  if(section){
-    section.style.display = '';
-    section.classList.add('has-video');
-    // Find or create video area
-    let videoArea = section.querySelector('.brand-video-area');
-    if(!videoArea){
-      const container = section.querySelector('.si') || section;
-      videoArea = document.createElement('div');
-      videoArea.className = 'brand-video-area';
-      videoArea.style.cssText = 'max-width:880px;margin:30px auto;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.4);background:#000;';
-      container.appendChild(videoArea);
-    }
-    if(V.type === 'mp4'){
-      videoArea.innerHTML = '<video src="' + V.url + '" width="100%" controls autoplay muted loop playsinline style="display:block;width:100%;"></video>';
+  section.classList.add('bv-active');
+  // Update header text
+  const eyebrow = document.getElementById('bv-pub-eyebrow');
+  const titleEl = document.getElementById('bv-pub-title');
+  const descEl  = document.getElementById('bv-pub-desc');
+  if(eyebrow) eyebrow.textContent = V.eyebrow || 'Brand Video';
+  if(titleEl) titleEl.innerHTML   = V.title || 'Watch Our <em>Story</em>';
+  if(descEl)  descEl.textContent  = V.desc || '';
+  // Build player
+  const inner = document.getElementById('bv-player-inner');
+  if(inner){
+    const t = V.type || 'youtube';
+    if(t === 'mp4' || t === 'webm'){
+      inner.innerHTML = '<video src="'+V.url+'" width="100%" height="100%" controls playsinline style="display:block;width:100%;height:100%;object-fit:contain;background:#000;"></video>';
     } else {
-      videoArea.innerHTML = '<iframe src="' + V.url + '" width="100%" height="450" frameborder="0" allowfullscreen style="display:block;width:100%;"></iframe>';
+      // YouTube/Vimeo/embed
+      let src = V.url;
+      // Auto-convert watch?v= to embed
+      src = src.replace('youtube.com/watch?v=','youtube.com/embed/').replace('youtu.be/','youtube.com/embed/');
+      inner.innerHTML = '<iframe src="'+src+'" width="100%" height="100%" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture" style="display:block;width:100%;height:100%;"></iframe>';
     }
   }
+  // Build CTA
+  const ctaRow = document.getElementById('bv-pub-cta');
+  if(ctaRow && V.cta){
+    const link = V.ctaUrl || '#contact';
+    const isExt = link.startsWith('http');
+    ctaRow.innerHTML = '<a href="'+link+'" '+(isExt?'target="_blank" rel="noopener"':'')+' class="btn btn-g" style="padding:11px 26px;font-size:.82rem;font-weight:800;">'+V.cta+'</a>'
+      +'<a href="https://wa.me/9779801069733?text=नमस्ते! Video dekhe pachi jankaari chahiyo." target="_blank" rel="noopener" class="btn btn-w" style="padding:11px 26px;font-size:.82rem;font-weight:800;">💬 WhatsApp</a>';
+  } else if(ctaRow){
+    ctaRow.innerHTML = '';
+  }
+}
+
+// Load video from Firestore on page init (non-blocking)
+async function fetchVideoFromFirestore(){
+  if(!_fbValid()) return;
+  try{
+    const data = await loadVideoFromFirestore();
+    if(data && data.url){
+      D.brandVideo = {...(D.brandVideo||{}), ...data};
+      saveData(); // keep local in sync
+      renderBrandVideo();
+    }
+  }catch(e){ /* silent fail */ }
 }
 
 // ═══ COMPONENTS TOGGLE ═══
@@ -8353,7 +8543,8 @@ document.addEventListener('DOMContentLoaded', function(){
   if(typeof _orig === 'function'){
     window.apSec = function(nm){
       _orig(nm);
-      if(nm === 'settings') setTimeout(adminLogoLoad, 80);
+      if(nm === 'settings') { setTimeout(adminLogoLoad, 80); setTimeout(loadFirebaseConfigForm, 80); }
+      if(nm === 'video') { setTimeout(loadBrandVideo, 80); }
     };
   }
 })();
