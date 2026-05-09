@@ -698,50 +698,9 @@ body.admin-mode .nav{top:32px!important;}
 /* Visiting card: ALWAYS visible by default — admin can hide via .hide-vc body class */
 #visiting-card { display:block; }
 body.hide-vc #visiting-card { display:none; }
-/* Brand video hide if empty */
-#brand-video:not(.has-video) { display:none; }
 
-/* ═══ BRAND VIDEO PLAYER — professional sizing & style (size-only fix) ═══ */
-#brand-video #vg-featured-wrap{
-  width:100%;
-  max-width:900px;
-  margin:0 auto 26px;
-  border:1.5px solid rgba(212,166,74,.45); /* thin gold */
-  border-radius:16px;
-  box-shadow:0 14px 38px rgba(0,0,0,.36);
-  box-sizing:border-box;
-}
-#brand-video #fv-player{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  max-height:420px;
-  margin:0 auto;
-  border-radius:16px;
-  overflow:hidden;
-  box-sizing:border-box;
-}
-/* Ensure media inside fills cleanly with no stretch */
-#brand-video #fv-player > img,
-#brand-video #fv-player > video,
-#brand-video #fv-player > iframe{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-/* Tablet */
-@media (max-width:1024px){
-  #brand-video #vg-featured-wrap{max-width:90%;}
-  #brand-video #fv-player{max-height:320px;}
-}
-/* Mobile */
-@media (max-width:600px){
-  #brand-video #vg-featured-wrap{max-width:100%;border-radius:14px;}
-  #brand-video #fv-player{max-height:260px;border-radius:14px;}
-}
-/* Prevent horizontal scroll caused by section */
-#brand-video{overflow-x:hidden;}
+
+
 
 
 
@@ -789,6 +748,81 @@ body.hide-vc #visiting-card { display:none; }
 @keyframes adminFlagWave {
   0%, 100% { transform: rotate(-3deg) skewY(-1.5deg) scale(1); }
   50% { transform: rotate(3deg) skewY(1.5deg) scale(1.05); }
+}
+
+/* ═══ LEFT FLOATING BAR — Premium Glassmorphism ═══ */
+#lfb{
+  position:fixed;left:14px;top:50%;transform:translateY(-50%);
+  z-index:250;display:flex;flex-direction:column;align-items:center;gap:9px;
+  background:rgba(15,12,10,.55);backdrop-filter:blur(20px) saturate(1.6);
+  -webkit-backdrop-filter:blur(20px) saturate(1.6);
+  border:1px solid rgba(212,166,74,.2);border-radius:44px;padding:12px 9px;
+  box-shadow:0 10px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);
+  animation:lfbIn .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes lfbIn{from{opacity:0;transform:translateY(-50%) translateX(-24px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+.lb{
+  position:relative;width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;outline:none;text-decoration:none;
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .25s;
+  flex-shrink:0;
+}
+/* Tooltip */
+.lb::after{
+  content:attr(data-tip);
+  position:absolute;left:calc(100% + 12px);top:50%;
+  transform:translateY(-50%) translateX(-8px);
+  background:rgba(10,8,6,.95);backdrop-filter:blur(14px);
+  border:1px solid rgba(212,166,74,.25);color:#f5ede0;
+  font-family:var(--fb);font-size:.62rem;font-weight:700;
+  letter-spacing:.4px;white-space:nowrap;padding:5px 12px;
+  border-radius:22px;pointer-events:none;opacity:0;
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 4px 16px rgba(0,0,0,.4);
+}
+.lb:hover::after{opacity:1;transform:translateY(-50%) translateX(0);}
+.lb:hover{transform:scale(1.2) translateX(4px);}
+.lb:active{transform:scale(.95);}
+/* Phone */
+.lb-ph{background:linear-gradient(135deg,#f4c869,#d4922a);color:#1a1208;
+  box-shadow:0 4px 18px rgba(212,166,74,.4);}
+.lb-ph:hover{box-shadow:0 6px 28px rgba(212,166,74,.65);}
+/* WhatsApp */
+.lb-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;
+  box-shadow:0 4px 18px rgba(37,211,102,.35);}
+.lb-wa:hover{box-shadow:0 6px 28px rgba(37,211,102,.6);}
+/* Card */
+.lb-cd{background:rgba(212,166,74,.12);color:var(--gl);
+  border:1px solid rgba(212,166,74,.32)!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.28);}
+.lb-cd:hover{background:rgba(212,166,74,.22);color:#fff;box-shadow:0 6px 22px rgba(212,166,74,.38);}
+/* Quote */
+.lb-qt{background:linear-gradient(135deg,#c4502c,#8a3618);color:#fff;
+  box-shadow:0 4px 18px rgba(196,80,44,.35);}
+.lb-qt:hover{box-shadow:0 6px 28px rgba(196,80,44,.6);}
+/* Divider */
+.lb-hr{width:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(212,166,74,.3),transparent);margin:1px 0;}
+/* SVG icon */
+.lb svg{width:20px;height:20px;display:block;pointer-events:none;flex-shrink:0;}
+/* Pulse ring on phone */
+.lb-ph::before{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:2px solid rgba(212,166,74,.4);
+  animation:lbRing 2.2s ease-in-out infinite;
+}
+@keyframes lbRing{0%,100%{transform:scale(1);opacity:.6;}50%{transform:scale(1.18);opacity:0;}}
+/* WhatsApp bounce */
+.lb-wa{animation:lbBounce 3s ease-in-out infinite;}
+@keyframes lbBounce{0%,100%{transform:scale(1);}50%{transform:scale(1.06) translateX(2px);}}
+.lb-wa:hover{animation:none;transform:scale(1.2) translateX(4px);}
+/* Hide on mobile — bottom bar handles it */
+@media(max-width:768px){#lfb{display:none;}}
+@media(max-width:1100px) and (min-width:769px){
+  #lfb{left:8px;gap:7px;padding:9px 7px;}
+  .lb{width:38px;height:38px;}
+  .lb::after{display:none;}
+  .lb svg{width:18px;height:18px;}
 }
 </style>
 </head>
@@ -1248,63 +1282,7 @@ body.hide-vc #visiting-card { display:none; }
   </div>
 </section>
 
-<!-- ANIMATION / BRAND VIDEO SECTION -->
-<!-- ═══ SERVICE VIDEOS GALLERY ═══ -->
-<section class="sec" id="brand-video" style="padding:80px 20px;background:linear-gradient(180deg,var(--bg3),var(--bg));position:relative;overflow:hidden;">
-  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(212,166,74,.06),transparent 70%);pointer-events:none;"></div>
-  <div class="si" style="position:relative;z-index:2;">
-    <div class="sh reveal">
-      <div class="sey en">Service Videos</div><div class="sey ne np">सेवा भिडियोहरू</div>
-      <h2 class="stl en">Watch Our <em>Service Works</em></h2>
-      <h2 class="stl ne np">हाम्रो <em>सेवा कार्यहरू</em> हेर्नुस्</h2>
-      <p class="sdesc en">All our construction services in one place — click any video to play.</p>
-      <p class="sdesc ne np">हाम्रा सबै निर्माण सेवाहरू एउटै ठाउँमा — कुनै पनि भिडियो क्लिक गरेर हेर्नुस्।</p>
-    </div>
 
-    <!-- ═══ FEATURED VIDEO PLAYER (BIG TOP) ═══ -->
-    <div id="vg-featured-wrap" class="reveal" style="background:linear-gradient(155deg,var(--bg2),var(--bg3));overflow:hidden;">
-      <div id="fv-player" style="background:#0a0806;">
-        <img id="fv-thumb" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200" alt="Featured" style="width:100%;height:100%;object-fit:cover;opacity:.7;transition:transform .8s;">
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.6) 100%);"></div>
-        <!-- BIG play button -->
-        <button id="fv-play-btn" onclick="playFeaturedVideo()" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;background:linear-gradient(135deg,#dc2626,#991b1b);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(220,38,38,.65);animation:playPulse 2s infinite;border:3px solid rgba(255,255,255,.25);cursor:pointer;z-index:10;padding:0;font-family:inherit;">
-          <span style="font-size:1.6rem;color:#fff;margin-left:5px;text-shadow:0 3px 6px rgba(0,0,0,.5);">▶</span>
-        </button>
-        <!-- Now Playing label -->
-        <span style="position:absolute;top:14px;left:14px;background:rgba(220,38,38,.95);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1.5px;display:flex;align-items:center;gap:6px;">
-          <span style="width:6px;height:6px;background:#fff;border-radius:50%;animation:pu 1.5s infinite;"></span>NOW PLAYING
-        </span>
-        <span style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;font-size:.6rem;font-weight:800;padding:5px 12px;border-radius:14px;letter-spacing:1px;border:1px solid rgba(255,255,255,.15);">▶ HD</span>
-        <!-- Bottom info overlay -->
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.92));">
-          <div style="font-size:.6rem;font-weight:800;color:var(--gl);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:8px;">
-            <span id="fv-cat">🏗️ Construction</span>
-            <span style="opacity:.5;">·</span>
-            <span id="fv-dur">2:30</span>
-          </div>
-          <h3 id="fv-title" style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:5px;">Building Construction</h3>
-          <p id="fv-desc" style="font-size:.82rem;color:rgba(255,255,255,.78);line-height:1.5;max-width:700px;">Complete building construction — RCC, masonry &amp; premium finishing.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ SERVICE VIDEO GRID ═══ -->
-    <div class="reveal" data-d="1">
-      <div style="text-align:center;font-size:.62rem;font-weight:800;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:14px;">
-        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
-        <span class="en">All 12 Service Videos</span><span class="ne np">सबै १२ सेवा भिडियोहरू</span>
-        <span style="height:1px;width:40px;background:var(--gold);opacity:.5;"></span>
-      </div>
-      <div id="svid-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-width:980px;margin:0 auto;"></div>
-    </div>
-
-    <!-- WhatsApp / Admin CTA -->
-    <div class="reveal" data-d="2" style="display:flex;gap:11px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
-      <a href="https://wa.me/9779801069733?text=नमस्ते! Service video bare jankaari chahiyo." target="_blank" rel="noopener" class="btn btn-w">💬 <span class="en">Ask About Services</span><span class="ne np">सेवा बारे सोध्नुस्</span></a>
-      <a href="#contact" class="btn btn-g">📞 <span class="en">Free Site Visit</span><span class="ne np">नि:शुल्क साइट भिजिट</span></a>
-    </div>
-  </div>
-</section>
 
 <!-- 3D HOLOGRAPHIC VISITING CARD -->
 <section class="sec vc-bg" id="visiting-card">
@@ -1804,6 +1782,54 @@ body.hide-vc #visiting-card { display:none; }
   <span class="en">OFF</span><span class="ne np">छुट</span>
 </div>
 <a href="https://wa.me/9779801069733?text=नमस्ते%20PRERAK!" target="_blank" rel="noopener" class="flt-wa" aria-label="WhatsApp">💬</a>
+<!-- ═══ LEFT FLOATING BAR ═══ -->
+<div id="lfb" role="complementary" aria-label="Quick Actions">
+
+  <!-- 📞 Phone -->
+  <a href="tel:9801069733" class="lb lb-ph" aria-label="Call Now" data-tip="📞 Call Now">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+  </a>
+
+  <div class="lb-hr"></div>
+
+  <!-- 💬 WhatsApp -->
+  <a href="https://wa.me/9779801069733?text=नमस्ते%20PRERAK!" target="_blank" rel="noopener" class="lb lb-wa" aria-label="WhatsApp" data-tip="💬 WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.049-1.103l-.29-.172-3.004.928.949-2.945-.188-.299A7.97 7.97 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+    </svg>
+  </a>
+
+  <div class="lb-hr"></div>
+
+  <!-- 🪪 Business Card -->
+  <button class="lb lb-cd" aria-label="Business Card" data-tip="🪪 Our Card"
+    onclick="document.getElementById('visiting-card')?.scrollIntoView({behavior:'smooth',block:'center'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2.5"/>
+      <circle cx="8" cy="12" r="2"/>
+      <line x1="13" y1="10" x2="19" y2="10"/>
+      <line x1="13" y1="14" x2="17" y2="14"/>
+    </svg>
+  </button>
+
+  <div class="lb-hr"></div>
+
+  <!-- 📋 Get Quote -->
+  <button class="lb lb-qt" aria-label="Get Quote" data-tip="📋 Free Quote"
+    onclick="openQuote('Free Site Visit','General')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="9" y1="13" x2="15" y2="13"/>
+      <line x1="9" y1="17" x2="13" y2="17"/>
+      <line x1="9" y1="9" x2="10" y2="9"/>
+    </svg>
+  </button>
+
+</div>
 <div class="act-box" id="actBox">
   <div class="act-ic" id="actIc">📞</div>
   <div style="flex:1;min-width:0;">
