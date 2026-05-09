@@ -3441,6 +3441,7 @@ body.hide-vc #visiting-card { display:none; }
         <div style="display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveEmailJS()" style="background:linear-gradient(135deg,#16a34a,#15803d);">💾 Save EmailJS</button>
           <button class="cbtn" onclick="sendTestOTP()">📧 Send Test OTP</button>
+          <div id="ejs-test-status" style="display:none;font-size:.72rem;margin-top:6px;padding:6px 10px;border-radius:8px;background:#f0fdf4;"></div>
           <span class="afok" id="ejs-ok">✅ Saved!</span>
         </div>
         <div class="ejs-tip">Setup steps: 1) emailjs.com मा free account बनाउनुस् 2) Email service add गर्नुस् (Gmail) 3) Template बनाउनुस् — variables: <code>to_email</code>, <code>otp_code</code>, <code>company</code> 4) IDs माथि paste गर्नुस्. <br>If you see <b>"Account not found"</b>, your Public Key/Service ID may belong to a deleted account — verify on emailjs.com.</div>
@@ -3597,7 +3598,7 @@ window.lockBodyScroll = function() {
       document.body.style.overflow = 'hidden';
     }
     window._bodyLockCount = (window._bodyLockCount || 0) + 1;
-  } catch(e) { console.warn('lock failed', e); }
+  } catch(e) { }
 };
 window.unlockBodyScroll = function() {
   try {
@@ -3605,7 +3606,7 @@ window.unlockBodyScroll = function() {
     if(window._bodyLockCount === 0){
       document.body.style.overflow = '';
     }
-  } catch(e) { console.warn('unlock failed', e); }
+  } catch(e) { }
 };
 
 // Force reset
@@ -3881,8 +3882,8 @@ const _gStr = (obj,...keysAndFb) => { const fb=keysAndFb.pop(); const v=_get(obj
 // Safe render wrapper: try/catch + log
 const _render = (name, fn) => { try{ fn(); }catch(e){ _err('render:'+name, e); } };
 // ═══ PRODUCTION SAFE LOGGER ═══
-const _log  = (...a) => { try{ if(typeof window!=='undefined' && window._DEV) console.log('[PRERAK]',...a); }catch(e){} };
-const _warn = (...a) => { try{ console.warn('[PRERAK]',...a); }catch(e){} };
+const _log  = () => {};
+const _warn = () => {};
 const _err  = (...a) => { try{ console.error('[PRERAK]',...a); }catch(e){} };
 // ═══ STATE ═══
 let D = {};
@@ -5445,27 +5446,27 @@ function saveEmailJS(){
 
   saveData();
 
-  // Re-init EmailJS with new credentials
-  _ejsReady = false;
+  // Reset + re-init EmailJS with newly saved credentials (no pre-validation)
+  _ejsReady   = false;
   _ejsLoading = null;
-  if(typeof _ejsConfigValid === 'function' && _ejsConfigValid()){
-    _ejsInit().then(()=>console.log('[EmailJS] re-initialized after save')).catch(e=>console.warn('[EmailJS] init after save failed:', e && e.message));
-  }
+  _ejsInit()
+    .then(()=> _log('EmailJS re-initialized after save'))
+    .catch(e=> _log('EmailJS re-init after save (will retry on next send):', e && e.message));
   showOk('ejs-ok');
 }
 async function sendTestOTP(){
-  if(typeof _ejsConfigValid !== 'function' || !_ejsConfigValid()){
-    alert('⚠️ EmailJS setup invalid.\n\nPlease check Public Key, Service ID and Template ID, then click Save EmailJS.');
-    return;
-  }
-  const otp = Math.floor(100000+Math.random()*900000);
+  // No pre-validation — attempt send directly and surface real API errors.
+  const otp   = Math.floor(100000 + Math.random() * 900000);
   const email = (D && D.adminEmail) || 'asrayacreate.ac@gmail.com';
+  const stEl  = document.getElementById('ejs-test-status');
+  if(stEl){ stEl.style.display='block'; stEl.style.color='#2563eb'; stEl.textContent='📤 Sending test OTP to '+email+'…'; }
   try{
     await _ejsSend(otp, email);
     const isDebug = _isDebugMode();
-    let msg = '✅ Test OTP sent successfully!\n\nSent to: '+email+'\n\nCheck your inbox / spam folder.';
-    if(isDebug) msg += '\n\n[Debug] Test OTP: '+otp;
-    alert(msg);
+    let msg = '✅ Test OTP sent to '+email+'. Check inbox/spam.';
+    if(isDebug) msg += ' [Debug OTP: '+otp+']';
+    if(stEl){ stEl.style.color='#15803d'; stEl.textContent=msg; }
+    if(typeof showToast==='function') showToast(msg, 4000);
   } catch(e){
     const errMsg = (e && (e.text || e.message)) || String(e) || 'Unknown error';
     console.error('Test OTP failed:', e);
@@ -6044,29 +6045,23 @@ function _ejsConfig(){
 }
 
 function _ejsConfigValid(cfg){
+  // ONLY check that all three fields are present and non-empty.
+  // No format checks, no key comparisons — those caused false negatives.
+  // The actual EmailJS API response is the sole source of truth for validity.
   cfg = cfg || _ejsConfig();
-  // All three must be present and non-empty
-  if(!cfg.sid || !cfg.tid || !cfg.pk) return false;
-  // Format sanity checks (these are the real EmailJS formats)
-  if(!cfg.sid.startsWith('service_'))  return false;
-  if(!cfg.tid.startsWith('template_')) return false;
-  if(cfg.pk.length < 10)               return false;
-  // Extra guard: reject obviously placeholder/test values
-  const knownBad = ['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'];
-  if(knownBad.includes(cfg.sid) || knownBad.includes(cfg.tid) || knownBad.includes(cfg.pk)) return false;
-  return true;
+  return !!(cfg.sid && cfg.tid && cfg.pk);
 }
 
 async function _ejsInit(){
   const cfg = _ejsConfig();
-  if(!_ejsConfigValid(cfg)){
-    throw new Error('EmailJS configuration missing or invalid.');
+  // Only block if ALL THREE fields are completely empty — user hasn't saved any config yet.
+  if(!cfg.sid && !cfg.tid && !cfg.pk){
+    throw new Error('EmailJS credentials not set. Please configure them in Admin → Settings → EmailJS.');
   }
   await _ejsLoadSDK();
   if(window.emailjs && window.emailjs.init){
     try { window.emailjs.init({ publicKey: cfg.pk }); }
     catch(e){
-      // older API (string arg)
       try { window.emailjs.init(cfg.pk); } catch(e2){ /* ignore */ }
     }
     _ejsReady = true;
@@ -6095,18 +6090,13 @@ async function _ejsSend(otp, email){
   });
 }
 
-// Pre-load SDK silently (best-effort, non-blocking, NO UI side-effects)
+// Pre-load SDK silently — NO UI side-effects, NO pre-validation alerts.
+// The actual emailjs.send() call is the only real validation.
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
-    if(!_ejsConfigValid()){
-      _log('EmailJS: user credentials not configured — password login available as fallback.');
-      return;
-    }
     _ejsInit()
-      .then(()=> _log('EmailJS: pre-initialized OK'))
-      .catch(e=> _log('EmailJS: pre-init skipped —', e && e.message));
-    // NOTE: errors here MUST NOT write to any UI element.
-    // UI feedback only happens during the actual sendOTP() flow.
+      .then(()=> _log('EmailJS: SDK ready'))
+      .catch(()=> _log('EmailJS: SDK pre-load skipped (credentials not saved yet)'));
   }, 2000);
 });
 
@@ -6184,22 +6174,25 @@ async function _sendOTPEmail(email, otp){
     +'</div>'
   );
 
-  // ── 1. Check if EmailJS credentials are configured ────────────────────────
-  if(!_ejsConfigValid()){
+  // ── 1. Minimal guard: if no credentials saved at all, show setup message ────
+  const _cfg = _ejsConfig();
+  if(!_cfg.sid && !_cfg.tid && !_cfg.pk){
     _showDemo(
       '<div style="padding:12px 14px;background:rgba(245,158,11,.1);border:1.5px solid rgba(245,158,11,.4);border-radius:12px;text-align:center;">'
-      +'<div style="font-size:.72rem;color:#fcd34d;line-height:1.6;">⚙️ <b>EmailJS not configured.</b><br>Use password login below, or set up EmailJS in Admin → Settings.</div>'
+      +'<div style="font-size:.72rem;color:#fcd34d;line-height:1.6;">⚙️ <b>EmailJS credentials not saved.</b><br>'
+      +'Enter your Service ID, Template ID and Public Key in Admin → Settings → EmailJS, then click Save.<br>'
+      +'Or use password login below.</div>'
       +'</div>'
     );
     setTimeout(()=>{ if(typeof showStep2PasswordFallback==='function') showStep2PasswordFallback(true); }, 300);
     return;
   }
 
-  // ── 2. Show "Sending…" state (clears any previous content) ───────────────
+  // ── 2. Show "Sending…" — actual API call decides if credentials are valid ─
   _clearErrors();
   _showInfo('📤 Sending OTP to <b>' + _maskEmail(email) + '</b>…');
 
-  // ── 3. Attempt actual send ────────────────────────────────────────────────
+  // ── 3. Attempt actual send — ONLY the response tells us if it worked ──────
   try{
     const result = await _ejsSend(otp, email);
 
@@ -6259,7 +6252,6 @@ async function _sendOTPEmail(email, otp){
 // ═══ QUOTE MODAL ═══
 let _qmPlan = '';
 function openQuoteModal(planId) {
-  console.log('[openQuoteModal] planId:', planId);
   const m = document.getElementById('quote-modal');
   if(!m) { console.error('quote-modal not in DOM'); return; }
   
@@ -6797,7 +6789,6 @@ async function submitQuoteModal(method){
           return;
         }
       } catch(e) { 
-        console.log('Web Share unavailable, falling back to URL'); 
       }
     }
     
@@ -7107,7 +7098,7 @@ if(typeof _origApSec2 === 'function'){
     if(!p.ico && !p.icon){ p.ico = ['🏠','💎','👑'][i] || '💼'; needsSave = true; }
     if(!p.cta){ p.cta = 'Get Quote'; needsSave = true; }
   });
-  if(needsSave){ saveData(); console.log('✅ Migrated pricing data'); }
+  if(needsSave){ saveData(); }
 })();
 
 
@@ -7219,7 +7210,7 @@ function initFirebase(){
     _fbDb      = firebase.firestore(_fbApp);
     _fbStorage = firebase.storage(_fbApp);
     return true;
-  }catch(e){ console.warn('[Firebase] init failed:', e); return false; }
+  }catch(e){ _err('Firebase init:', e); return false; }
 }
 
 function saveFirebaseConfig(){
@@ -7672,7 +7663,6 @@ document.addEventListener('DOMContentLoaded', () => {
     D.hero.ey = '🏗️ Construction · Interior · UPVC · Solar — All in One';
     D.hero.sub = 'घर निर्माण, इन्टेरियर, UPVC/Aluminum, Gypsum, Plumbing, Electrical, Painting, Renovation तथा Construction Material Supply को भरपर्दो सेवा।';
     saveData();
-    console.log('✅ Hero migrated to construction focus');
   }
 })();
 
@@ -7736,7 +7726,6 @@ setInterval(function(){
     // If no modals open but body is locked, force unlock
     if(!anyOpen && document.body.style.position === 'fixed'){
       forceUnlockBody();
-      console.log('Body auto-unlocked (safety)');
     }
   }catch(e){}
 }, 3000);
@@ -7796,7 +7785,6 @@ function forceRenderPublicSections(){
   try {
     if(typeof renderPricingSection === 'function') renderPricingSection();
     if(typeof renderFAQSection === 'function') renderFAQSection();
-    console.log('[Render] Public sections rendered');
   } catch(err){ console.error('[Render] Error:', err); }
 }
 
@@ -7827,7 +7815,6 @@ window.openSvm = openSvm;
 window.closeSvm = closeSvm;
 window.submitSvmQ = submitSvmQ;
 window.openFullQuoteFromSvm = openFullQuoteFromSvm;
-console.log('[Init] Quote system functions exposed globally');
 
 
 
@@ -7846,7 +7833,7 @@ console.log('[Init] Quote system functions exposed globally');
       if(typeof applyComponentVisibility === 'function'){
         applyComponentVisibility();
       }
-    } catch(e){ console.warn('Render attempt failed:', e); }
+    } catch(e){ _err('Render attempt:', e); }
   }
   
   // Try multiple times to handle different load timings
@@ -7924,11 +7911,9 @@ function renderVCSection(){
   function _renderAll(){
     try { 
       if(typeof renderPricingSection === 'function') renderPricingSection();
-      console.log('[FinalSafety] Pricing rendered'); 
     } catch(e){ console.error('Pricing render failed:', e); }
     try { 
       if(typeof renderFAQSection === 'function') renderFAQSection();
-      console.log('[FinalSafety] FAQ rendered'); 
     } catch(e){ console.error('FAQ render failed:', e); }
     try { 
       if(typeof refreshVCardContent === 'function') refreshVCardContent();
@@ -7954,7 +7939,6 @@ function renderVCSection(){
   window.closeQuoteModal = window.closeQuoteModal || closeQuoteModal;
   window.openSvm = window.openSvm || openSvm;
   window.closeSvm = window.closeSvm || closeSvm;
-  console.log('[FinalSafety] All globals exposed');
 })();
 
 
@@ -8182,7 +8166,6 @@ function loadServiceVideo(idx){
 }
 
 async function playFeaturedVideo(){
-  console.log('[playVideo] CLICK detected, idx=', _svidActiveIdx);
   const s = SVCS[_svidActiveIdx];
   if(!s){ console.error('[playVideo] No service'); return; }
   const player = document.getElementById('fv-player');
@@ -8196,11 +8179,10 @@ async function playFeaturedVideo(){
   
   // Resolve IndexedDB URLs
   if(url.startsWith('idb:')){
-    console.log('[playVideo] Resolving IndexedDB:', url);
     try {
       url = await idbResolveUrl(url);
       if(!url){
-        console.warn('[playVideo] idb: not found, falling back to slideshow');
+        
         playGallerySlideshow(s);
         return;
       }
@@ -8211,7 +8193,7 @@ async function playFeaturedVideo(){
     }
   }
   
-  console.log('[playVideo] Using URL:', url.substring(0,80));
+  
   _svidPlaying = true;
   
   const closeBtn = '<button onclick="event.stopPropagation();stopSlideshow();" style="position:absolute;top:14px;right:14px;background:rgba(0,0,0,.85);color:#fff;border:1px solid rgba(255,255,255,.2);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.85rem;z-index:99;display:flex;align-items:center;justify-content:center;">✕</button>';
