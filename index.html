@@ -21,6 +21,8 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a2a1a'/%3E%3Ctext y='.9em' font-size='80' text-anchor='middle' x='50'%3E🏗️%3C/text%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%231a2a1a'/%3E%3Ctext y='.9em' font-size='80' text-anchor='middle' x='50'%3E🏗️%3C/text%3E%3C/svg%3E">
   <link rel="canonical" href="https://prerakmultipurpose.com/">
+  <!-- Preload first hero image for fast above-the-fold render -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80" fetchpriority="high">
 
   <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
   <meta property="og:title" content="Prerak Multipurpose Pvt. Ltd. | Construction, Interior &amp; UPVC Services | Hetauda, Nepal">
@@ -327,7 +329,6 @@
 body{background:#1e1812!important;color:#fbf4e8!important;}
 
 /* HERO */
-.hsl.active{opacity:.72!important;}
 .hsl::after{
   background:linear-gradient(180deg,
     rgba(6,4,2,.12) 0%,rgba(6,4,2,.04) 36%,rgba(6,4,2,.24) 100%)!important;
@@ -407,7 +408,6 @@ h1,h2,h3,h4{color:var(--paper);}
 body{background:#22180e!important;color:#fbf4e8!important;}
 
 /* Hero light */
-.hsl.active{opacity:.7!important;}
 .hsl::after{
   background:linear-gradient(180deg,
     rgba(6,4,2,.14) 0%,rgba(6,4,2,.04) 38%,rgba(6,4,2,.26) 100%)!important;
@@ -643,7 +643,6 @@ body{background:#22180e!important;color:#fbf4e8!important;}
 body{background:#22180e!important;color:#fbf4e8!important;}
 
 /* 2. LIGHTER HERO */
-.hsl.active{opacity:.68!important;}
 .hsl::after{
   background:linear-gradient(180deg,
     rgba(6,4,2,.14) 0%,
@@ -684,9 +683,6 @@ body{background:#22180e!important;color:#fbf4e8!important;}
 }
 
 /* 5. NOTICE TICKER */
-
-
-
 
 /* 6. CARDS + NAV */
 .svc-card{background:rgba(255,255,255,.055)!important;border:1px solid rgba(212,166,74,.18)!important;}
@@ -774,7 +770,6 @@ body{background:#22180e!important;color:#fbf4e8!important;}
 }
 
 /* ── HERO: lightest possible overlay ── */
-.hsl.active { opacity:.72 !important; }
 .hsl::after {
   background:linear-gradient(
     180deg,
@@ -844,7 +839,6 @@ section { background:transparent; }
 /* ── BRIGHTNESS FIXES ── */
 
 /* Much lighter hero overlay */
-.hsl.active { opacity: .62 !important; }
 .hsl::after {
   background:
     linear-gradient(180deg,
@@ -897,9 +891,6 @@ body, p, span, div, li, h1, h2, h3, h4 { color: var(--paper); }
 /* Hero tag */
 .h-tag { border-color: rgba(212,166,74,.35) !important; }
 
-
-
-
 /* ═══ PREMIUM BRIGHT THEME POLISH ═══ */
 
 /* Brighter dark theme */
@@ -922,7 +913,6 @@ body { background: var(--bg); }
 }
 
 /* Reduce hero darkness — was too heavy */
-.hsl.active { opacity: .52 !important; }
 .hsl::after {
   background:
     linear-gradient(180deg, rgba(15,12,10,.42) 0%, rgba(15,12,10,.2) 40%, rgba(15,12,10,.6) 100%),
@@ -1639,8 +1629,6 @@ body.admin-mode #ap-mob-toggle{display:flex;}
 body.hide-vc #visiting-card { display:none; }
 /* brand-video: visibility controlled exclusively via JS + .bv-active class */
 
-
-
 /* (Component visibility now handled in main rules above) */
 
 /* MOBILE: Improved sticky bottom bar — no overlap */
@@ -1682,8 +1670,6 @@ body.hide-vc #visiting-card { display:none; }
 }
 
 /* ═══ VIDEO SECTION — hidden by default, shown only when valid URL exists ═══ */
-
-
 
 /* Compact premium player */
 #bv-player-wrap {
@@ -2086,7 +2072,6 @@ body{background:var(--bg)!important;color:var(--paper)!important;overflow-x:hidd
 /* ── HERO ─────────────────────────────────────────────────── */
 .hero h1{color:#fff!important;text-shadow:0 2px 24px rgba(0,0,0,.5),0 1px 4px rgba(0,0,0,.3)!important;}
 .h-sub{color:rgba(251,244,232,.95)!important;}
-.hsl.active{opacity:.68!important;}
 .hsl::after{background:linear-gradient(180deg,rgba(8,6,4,.18) 0%,rgba(8,6,4,.07) 38%,rgba(8,6,4,.35) 100%)!important;}
 
 /* ── TEXT CONTRAST THROUGHOUT ──────────────────────────────── */
@@ -3150,6 +3135,1669 @@ body:not(.admin-mode) .mob-cta .mc2{
   font-weight:700 !important;
 }
 /* End stats fix */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FINAL PREMIUM POLISH — Luxury Black + Gold + White
+   Public site only (admin guarded via body:not(.admin-mode))
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── (1) HERO — gradient overlay + animated gold glow on brand name ── */
+body:not(.admin-mode) .hero{
+  position:relative;
+  isolation:isolate;
+}
+body:not(.admin-mode) .hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(255,215,120,.10), transparent 55%),
+    linear-gradient(180deg, rgba(10,7,4,.45) 0%, rgba(10,7,4,.78) 100%);
+  pointer-events:none;
+  z-index:0;
+}
+body:not(.admin-mode) .hero > *{ position:relative; z-index:1; }
+body:not(.admin-mode) .hero h1{
+  font-weight:700 !important;
+  text-shadow:0 2px 24px rgba(0,0,0,.65), 0 1px 4px rgba(0,0,0,.5);
+}
+body:not(.admin-mode) .hero h1 em,
+body:not(.admin-mode) .hero h1 .gold-word,
+body:not(.admin-mode) .hero h1 strong{
+  background:linear-gradient(135deg, #FFD369 0%, #d4a64a 50%, #FFD369 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:heroGoldShine 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 18px rgba(255,215,120,.35));
+}
+@keyframes heroGoldShine{
+  0%,100%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+}
+body:not(.admin-mode) .h-acts .btn{
+  transition:transform .28s ease, box-shadow .28s ease, background .28s ease !important;
+  position:relative;
+  overflow:hidden;
+}
+body:not(.admin-mode) .h-acts .btn::after{
+  content:'';
+  position:absolute;
+  top:0; left:-100%;
+  width:100%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transition:left .55s ease;
+}
+body:not(.admin-mode) .h-acts .btn:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 14px 32px rgba(212,166,74,.4), 0 0 0 1px rgba(255,215,120,.3);
+}
+body:not(.admin-mode) .h-acts .btn:hover::after{ left:120%; }
+
+/* ── (2) HEADER — premium glass + sticky shadow on scroll ─────────── */
+body:not(.admin-mode) .nav{
+  transition:background .35s ease, box-shadow .35s ease, padding .35s ease !important;
+}
+body:not(.admin-mode) .nav.sc{
+  background:linear-gradient(180deg, rgba(8,5,3,.96) 0%, rgba(10,7,4,.92) 100%) !important;
+  box-shadow:0 8px 32px rgba(0,0,0,.6), 0 1px 0 rgba(255,215,120,.18) !important;
+}
+body:not(.admin-mode) .nav-in{
+  align-items:center;
+}
+body:not(.admin-mode) .nav .b-nm,
+body:not(.admin-mode) .nav .brand-name,
+body:not(.admin-mode) .nav .logo{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px;
+}
+body:not(.admin-mode) .nav-r{
+  display:flex !important;
+  align-items:center !important;
+  gap:14px !important;
+  margin-left:auto;
+}
+body:not(.admin-mode) .nav-r a[href^="tel:"]{
+  font-weight:700;
+  color:#FFD369 !important;
+  letter-spacing:.5px;
+}
+
+/* ── (3) SERVICE CARDS — equal height + gold accent + smooth lift ── */
+body:not(.admin-mode) #services .sgrid,
+body:not(.admin-mode) #services > .si > .sgrid{
+  align-items:stretch !important;
+}
+body:not(.admin-mode) .svc,
+body:not(.admin-mode) .svc-card{
+  display:flex !important;
+  flex-direction:column !important;
+  height:100% !important;
+  position:relative;
+  overflow:hidden;
+}
+body:not(.admin-mode) .svc::before,
+body:not(.admin-mode) .svc-card::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:3px;
+  background:linear-gradient(90deg, transparent 0%, #FFD369 50%, transparent 100%);
+  opacity:0;
+  transition:opacity .35s ease, transform .35s ease;
+  transform:translateY(-3px);
+  z-index:2;
+}
+body:not(.admin-mode) .svc:hover::before,
+body:not(.admin-mode) .svc-card:hover::before{
+  opacity:1;
+  transform:translateY(0);
+}
+body:not(.admin-mode) .svc:hover,
+body:not(.admin-mode) .svc-card:hover{
+  transform:translateY(-8px) !important;
+  box-shadow:0 22px 52px rgba(0,0,0,.6), 0 0 0 1px rgba(255,215,120,.30) !important;
+}
+
+/* ── (4) PROJECT GALLERY — uniform ratio + zoom + title overlay ──── */
+body:not(.admin-mode) .pg-c{
+  position:relative;
+  overflow:hidden;
+  border-radius:16px !important;
+}
+body:not(.admin-mode) .pg-c .pg-img,
+body:not(.admin-mode) .pg-c > img:first-of-type{
+  width:100% !important;
+  aspect-ratio:4/3 !important;
+  object-fit:cover !important;
+  display:block;
+  transition:transform .65s cubic-bezier(.22,.8,.36,1), filter .35s ease !important;
+}
+body:not(.admin-mode) .pg-c:hover .pg-img,
+body:not(.admin-mode) .pg-c:hover > img:first-of-type{
+  transform:scale(1.08);
+  filter:brightness(1.06) contrast(1.05);
+}
+body:not(.admin-mode) .pg-c::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 45%, rgba(0,0,0,.55) 85%, rgba(0,0,0,.85) 100%);
+  pointer-events:none;
+  z-index:1;
+  transition:opacity .35s ease;
+}
+body:not(.admin-mode) .pg-c .pg-info,
+body:not(.admin-mode) .pg-c h3,
+body:not(.admin-mode) .pg-c .pg-title{
+  position:relative;
+  z-index:2;
+}
+body:not(.admin-mode) .pg-c h3{
+  color:#fff !important;
+  text-shadow:0 2px 10px rgba(0,0,0,.65);
+}
+
+/* ── (5) TESTIMONIAL — premium card + gold quote icon ─────────────── */
+body:not(.admin-mode) .tc{
+  position:relative;
+  padding-top:34px !important;
+  background:linear-gradient(155deg, rgba(36,28,18,.85) 0%, rgba(15,11,7,.92) 100%) !important;
+  border:1px solid rgba(255,215,120,.22) !important;
+  border-radius:18px !important;
+  box-shadow:0 6px 20px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,215,120,.06) !important;
+  transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease !important;
+}
+body:not(.admin-mode) .tc::before{
+  content:'"';
+  position:absolute;
+  top:-6px; left:18px;
+  font-family:Georgia, 'Cormorant Garamond', serif;
+  font-size:5.5rem;
+  line-height:1;
+  color:#FFD369;
+  opacity:.45;
+  text-shadow:0 4px 18px rgba(255,215,120,.35);
+  font-weight:700;
+  pointer-events:none;
+}
+body:not(.admin-mode) .tc:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,215,120,.5) !important;
+  box-shadow:0 18px 44px rgba(0,0,0,.55), 0 0 0 1px rgba(255,215,120,.25) !important;
+}
+body:not(.admin-mode) .tc p,
+body:not(.admin-mode) .tc .tc-text{
+  color:rgba(247,238,219,.92) !important;
+  font-style:italic;
+  line-height:1.6;
+}
+body:not(.admin-mode) .tc .tc-name,
+body:not(.admin-mode) .tc strong,
+body:not(.admin-mode) .tc h4{
+  color:#FFD369 !important;
+  font-weight:700;
+}
+
+/* ── (6) FAQ — smoother accordion + cleaner spacing ──────────────── */
+body:not(.admin-mode) .faq-item-pub{
+  margin-bottom:12px !important;
+  transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease !important;
+}
+body:not(.admin-mode) .faq-item-pub:hover{
+  transform:translateX(2px);
+}
+body:not(.admin-mode) .faq-item-pub > button,
+body:not(.admin-mode) .faq-item-pub .faq-q{
+  padding:18px 22px !important;
+  font-size:.95rem !important;
+  font-weight:600 !important;
+  color:#fdf6e6 !important;
+  background:transparent !important;
+  border:none !important;
+  width:100%;
+  text-align:left;
+  cursor:pointer;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:14px;
+  transition:color .25s ease;
+}
+body:not(.admin-mode) .faq-item-pub > button:hover{ color:#FFD369 !important; }
+body:not(.admin-mode) .faq-item-pub .faq-arrow,
+body:not(.admin-mode) .faq-item-pub button::after{
+  color:#FFD369;
+  font-weight:700;
+  transition:transform .35s ease;
+}
+body:not(.admin-mode) .faq-item-pub.open .faq-arrow,
+body:not(.admin-mode) .faq-item-pub[aria-expanded="true"] .faq-arrow{
+  transform:rotate(180deg);
+}
+body:not(.admin-mode) .faq-body-pub,
+body:not(.admin-mode) .faq-item-pub .faq-a{
+  padding:0 22px 18px !important;
+  color:rgba(247,238,219,.85) !important;
+  line-height:1.65 !important;
+  font-size:.86rem !important;
+}
+
+/* ── (7) CONTACT FORM — modern styling ────────────────────────────── */
+body:not(.admin-mode) #contact input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+body:not(.admin-mode) #contact select,
+body:not(.admin-mode) #contact textarea,
+body:not(.admin-mode) .qmf input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+body:not(.admin-mode) .qmf select,
+body:not(.admin-mode) .qmf textarea{
+  background:rgba(255,255,255,.04) !important;
+  border:1.5px solid rgba(255,215,120,.22) !important;
+  border-radius:12px !important;
+  padding:12px 16px !important;
+  color:#fdf6e6 !important;
+  font-size:.92rem !important;
+  transition:border-color .25s ease, background .25s ease, box-shadow .25s ease !important;
+}
+body:not(.admin-mode) #contact input:focus,
+body:not(.admin-mode) #contact textarea:focus,
+body:not(.admin-mode) #contact select:focus,
+body:not(.admin-mode) .qmf input:focus,
+body:not(.admin-mode) .qmf textarea:focus,
+body:not(.admin-mode) .qmf select:focus{
+  border-color:#FFD369 !important;
+  background:rgba(255,255,255,.07) !important;
+  box-shadow:0 0 0 4px rgba(255,215,120,.12) !important;
+  outline:none !important;
+}
+body:not(.admin-mode) #contact ::placeholder,
+body:not(.admin-mode) .qmf ::placeholder{
+  color:rgba(247,238,219,.42) !important;
+}
+body:not(.admin-mode) #contact button[type="submit"],
+body:not(.admin-mode) .qmsv,
+body:not(.admin-mode) #contact .btn-pri{
+  background:linear-gradient(135deg, #FFD369 0%, #d4a64a 55%, #a87a26 100%) !important;
+  color:#1a1208 !important;
+  font-weight:800 !important;
+  letter-spacing:.5px !important;
+  border:1px solid rgba(255,228,168,.5) !important;
+  box-shadow:0 8px 22px rgba(255,215,120,.32), inset 0 1px 0 rgba(255,255,255,.3) !important;
+  transition:transform .25s ease, box-shadow .25s ease !important;
+  position:relative;
+  overflow:hidden;
+}
+body:not(.admin-mode) #contact button[type="submit"]:hover,
+body:not(.admin-mode) .qmsv:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 32px rgba(255,215,120,.5), 0 0 0 1px rgba(255,215,120,.4), inset 0 1px 0 rgba(255,255,255,.35) !important;
+}
+
+/* ── (8) FOOTER — luxury black + gold ─────────────────────────────── */
+body:not(.admin-mode) footer,
+body:not(.admin-mode) .footer{
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,215,120,.06), transparent 60%),
+    linear-gradient(180deg, #0a0704 0%, #050302 100%) !important;
+  border-top:1px solid rgba(255,215,120,.24) !important;
+  color:rgba(247,238,219,.85) !important;
+  padding-top:56px !important;
+}
+body:not(.admin-mode) footer h4,
+body:not(.admin-mode) footer h3,
+body:not(.admin-mode) .footer h4,
+body:not(.admin-mode) .footer h3,
+body:not(.admin-mode) .ft-h{
+  color:#FFD369 !important;
+  font-weight:700 !important;
+  letter-spacing:.5px;
+}
+body:not(.admin-mode) footer a,
+body:not(.admin-mode) .footer a,
+body:not(.admin-mode) .ft-in a{
+  color:rgba(247,238,219,.85) !important;
+  transition:color .22s ease, transform .22s ease !important;
+}
+body:not(.admin-mode) footer a:hover,
+body:not(.admin-mode) .footer a:hover,
+body:not(.admin-mode) .ft-in a:hover{
+  color:#FFD369 !important;
+  transform:translateX(2px);
+}
+body:not(.admin-mode) .ft-soc a,
+body:not(.admin-mode) .social-icons a,
+body:not(.admin-mode) footer .social a{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:38px; height:38px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,215,120,.25);
+  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease !important;
+}
+body:not(.admin-mode) .ft-soc a:hover,
+body:not(.admin-mode) .social-icons a:hover,
+body:not(.admin-mode) footer .social a:hover{
+  transform:translateY(-3px) scale(1.08);
+  background:linear-gradient(135deg, rgba(255,215,120,.18), rgba(255,215,120,.06));
+  border-color:#FFD369;
+  box-shadow:0 8px 18px rgba(255,215,120,.28);
+}
+
+/* ── (9) MOBILE OPTIMIZATION ───────────────────────────────────────── */
+body:not(.admin-mode){
+  overflow-x:hidden;
+}
+body:not(.admin-mode) section,
+body:not(.admin-mode) .sec{
+  max-width:100vw;
+  overflow-x:clip;
+}
+@media(max-width:768px){
+  body:not(.admin-mode) .nav-in{ padding:11px 14px !important; gap:10px !important; }
+  body:not(.admin-mode) .hero h1{ font-size:clamp(1.7rem, 7vw, 2.6rem) !important; }
+  body:not(.admin-mode) .stl,
+  body:not(.admin-mode) .sec h2{ font-size:clamp(1.3rem, 5.5vw, 2rem) !important; }
+  body:not(.admin-mode) .sdesc{ font-size:.86rem !important; padding:0 16px; }
+  body:not(.admin-mode) .h-acts{ width:100%; }
+  body:not(.admin-mode) .h-acts .btn{ flex:1; min-width:140px; }
+  body:not(.admin-mode) #contact button[type="submit"]{ width:100%; }
+  body:not(.admin-mode) footer{ padding:36px 16px 24px !important; text-align:center; }
+  body:not(.admin-mode) .ft-soc,
+  body:not(.admin-mode) .social-icons{ justify-content:center !important; }
+}
+@media(max-width:480px){
+  body:not(.admin-mode) .hero h1{ font-size:1.55rem !important; }
+  body:not(.admin-mode) .h-acts .btn{ font-size:.78rem !important; padding:10px 14px !important; }
+}
+
+/* ── (10) PERFORMANCE / ANIMATION SMOOTHNESS ──────────────────────── */
+body:not(.admin-mode) .pg-c,
+body:not(.admin-mode) .svc,
+body:not(.admin-mode) .svc-card,
+body:not(.admin-mode) .tc,
+body:not(.admin-mode) .price-card-pub,
+body:not(.admin-mode) .vc11-card,
+body:not(.admin-mode) .stg{
+  will-change:transform;
+  contain:layout style;
+}
+body:not(.admin-mode) img{
+  content-visibility:auto;
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.admin-mode) *{
+    animation-duration:.001s !important;
+    transition-duration:.001s !important;
+  }
+}
+/* End final premium polish */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FINAL POLISH v2 — Stricter Admin Privacy + Footer Soft-Green Accent
+   Apple-clean · Luxury Nepal Construction · Public-only refinements
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── (A) PUBLIC ADMIN PRIVACY — hide all admin/debug surfaces ───── */
+body:not(.admin-mode) #admin-panel,
+body:not(.admin-mode) #admin-bar,
+body:not(.admin-mode) #adminLoginOv,
+body:not(.admin-mode) [data-admin-only],
+body:not(.admin-mode) .admin-only,
+body:not(.admin-mode) .debug-box,
+body:not(.admin-mode) #devConsole,
+body:not(.admin-mode) #debugBox{
+  display:none !important;
+  visibility:hidden !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+/* Admin FAB — virtually invisible to public, reveals only on hover */
+body:not(.admin-mode) #admin-fab{
+  position:fixed !important;
+  bottom:14px !important;
+  right:14px !important;
+  width:22px !important;
+  height:22px !important;
+  opacity:.03 !important;
+  background:transparent !important;
+  border:none !important;
+  color:transparent !important;
+  font-size:.55rem !important;
+  box-shadow:none !important;
+  transition:opacity .25s ease, color .25s ease, background .25s ease, border-color .25s ease !important;
+  z-index:90 !important;
+}
+body:not(.admin-mode) #admin-fab:hover{
+  opacity:.55 !important;
+  background:rgba(15,12,10,.7) !important;
+  color:#FFD369 !important;
+  border:1px solid rgba(255,215,120,.3) !important;
+  border-radius:50% !important;
+}
+/* When admin is logged in, FAB returns to fully visible */
+body.admin-mode #admin-fab{
+  opacity:1 !important;
+  width:42px !important;
+  height:42px !important;
+  font-size:1rem !important;
+  background:linear-gradient(135deg, #FFD369, #d4a64a) !important;
+  color:#1a1208 !important;
+  border:1px solid rgba(255,228,168,.5) !important;
+  box-shadow:0 8px 22px rgba(255,215,120,.4) !important;
+  border-radius:50% !important;
+}
+/* Final guards — any element that the codebase marks as admin-tool */
+body:not(.admin-mode) [data-role="admin"],
+body:not(.admin-mode) [data-debug="1"],
+body:not(.admin-mode) .otp-config,
+body:not(.admin-mode) .emailjs-config{
+  display:none !important;
+}
+
+/* ── (B) FOOTER — black + gold + soft green accent ──────────────── */
+body:not(.admin-mode) footer,
+body:not(.admin-mode) .footer{
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(52,211,153,.05), transparent 55%),
+    radial-gradient(ellipse at 20% 0%, rgba(255,215,120,.06), transparent 55%),
+    linear-gradient(180deg, #0a0704 0%, #050302 100%) !important;
+  border-top:1px solid rgba(255,215,120,.22) !important;
+  position:relative;
+}
+body:not(.admin-mode) footer::before,
+body:not(.admin-mode) .footer::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    #FFD369 25%,
+    #34d399 50%,
+    #FFD369 75%,
+    transparent 100%);
+  opacity:.7;
+}
+body:not(.admin-mode) footer .accent-green,
+body:not(.admin-mode) .footer .accent-green,
+body:not(.admin-mode) .ft-svc a:hover{
+  color:#34d399 !important;
+}
+
+/* ── (C) FINAL TYPOGRAPHY REFINEMENT — Apple-clean rhythm ───────── */
+body:not(.admin-mode){
+  font-feature-settings: "ss01", "kern";
+}
+body:not(.admin-mode) p{
+  line-height:1.65 !important;
+}
+body:not(.admin-mode) .sec h2,
+body:not(.admin-mode) .stl{
+  letter-spacing:-.5px !important;
+  line-height:1.15 !important;
+}
+
+/* ── (D) UNIVERSAL HOVER SMOOTHNESS ─────────────────────────────── */
+body:not(.admin-mode) a,
+body:not(.admin-mode) button{
+  transition:color .22s ease, background .22s ease, transform .22s ease, border-color .22s ease, box-shadow .22s ease !important;
+}
+
+/* ── (E) SECTION SEPARATOR — subtle gold hairline ───────────────── */
+body:not(.admin-mode) .sec + .sec{
+  position:relative;
+}
+body:not(.admin-mode) .sec + .sec::before{
+  content:'';
+  position:absolute;
+  top:0; left:50%;
+  transform:translateX(-50%);
+  width:120px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(255,215,120,.30), transparent);
+  pointer-events:none;
+}
+
+/* ── (F) MOBILE FINE-TUNE — no overflow, balanced spacing ───────── */
+body:not(.admin-mode){
+  overflow-x:hidden !important;
+}
+body:not(.admin-mode) img,
+body:not(.admin-mode) video{
+  max-width:100%;
+  height:auto;
+}
+@media(max-width:768px){
+  body:not(.admin-mode) .nav-r a[href^="tel:"]{ font-size:.78rem !important; }
+  body:not(.admin-mode) .psv-card{ margin:0 12px; }
+  body:not(.admin-mode) .vc11-card{ flex:0 0 min(280px, 84vw); }
+}
+@media(max-width:380px){
+  body:not(.admin-mode) .sec{ padding:38px 14px !important; }
+  body:not(.admin-mode) .stl{ font-size:1.3rem !important; }
+}
+
+/* ── (G) SCROLL PERFORMANCE LIFT ────────────────────────────────── */
+body:not(.admin-mode){
+  scroll-behavior:smooth;
+}
+body:not(.admin-mode) .sec{
+  contain:layout style paint;
+}
+/* End final polish v2 */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FINAL MASTER UPDATE — Logo, video-hide, overlay, Nepali fix
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── LOGO — clear, circular, properly aligned ───────────────────── */
+body:not(.admin-mode) .nav .logo-img,
+body:not(.admin-mode) .nav img.logo,
+body:not(.admin-mode) .nav .b-logo img,
+body:not(.admin-mode) .nav-in .logo img{
+  width:42px !important;
+  height:42px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  border:2px solid rgba(255,215,120,.35) !important;
+  box-shadow:0 2px 10px rgba(0,0,0,.5) !important;
+  filter:brightness(1.06) contrast(1.05) !important;
+  flex-shrink:0 !important;
+}
+/* Kill any strange duplicate logo near mouse area */
+body:not(.admin-mode) #admin-fab img,
+body:not(.admin-mode) #btt img,
+body:not(.admin-mode) .flt-wa img{ display:none !important; }
+
+/* ── VIDEO SECTION — hidden by default if no video loads ────────── */
+/* JS handles the timeout hide; CSS is belt-and-braces */
+.psv-sec[style*="display:none"]{ display:none !important; }
+
+/* ── OVERLAYS — not too dark, readable text ─────────────────────── */
+body:not(.admin-mode) .hero::after{
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(255,215,120,.08), transparent 55%),
+    linear-gradient(180deg, rgba(8,5,3,.38) 0%, rgba(8,5,3,.68) 100%) !important;
+}
+
+/* ── NEPALI LANGUAGE — never show blank rows ────────────────────── */
+html[data-lang="ne"] .en:not([data-keep]),
+html:not([data-lang="ne"]) .ne:not([data-keep]),
+html:not([data-lang="ne"]) .np:not([data-keep]){ display:none !important; }
+
+/* Fallback: if no NE content and only EN exists, show EN in all modes */
+html[data-lang="ne"] .ne:empty + .en,
+html[data-lang="ne"] .np:empty + .en{ display:block !important; }
+
+/* ── CLEAN UP ANY VISIBLE ADMIN/DEBUG TEXT ──────────────────────── */
+body:not(.admin-mode) [data-prompt],
+body:not(.admin-mode) .claude-note,
+body:not(.admin-mode) .ai-prompt,
+body:not(.admin-mode) .dev-note,
+body:not(.admin-mode) #rawPromptBlock,
+body:not(.admin-mode) .prompt-block{
+  display:none !important;
+  visibility:hidden !important;
+}
+
+/* ── STATS + suffix: ensure + always visible after animation ─────── */
+.stats-sec .stg-n[data-suffix="+"]::after{
+  content:'+';
+  font-size:.75em;
+  vertical-align:super;
+  /* JS sets full text, so this ::after is insurance only */
+  display:none;
+}
+
+/* End master update */
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO IMAGE + LOGO 3D FIX — final authoritative overrides
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── HERO SLIDE — one clean rule beats every earlier conflicting version ── */
+.hsl{
+  position:absolute !important;
+  inset:0 !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+  opacity:0 !important;
+  transition:opacity 1.6s ease-in-out !important;
+  will-change:opacity, transform;
+  /* NO transform here — keyframes must be free to animate it */
+}
+/* Ken Burns slow-zoom on active slide */
+.hsl.active{
+  opacity:1 !important;
+  /* animation on transform only — opacity kept as declaration above */
+  animation:kenBurns 14s ease-in-out infinite;
+}
+@keyframes kenBurns{
+  0%  { transform:scale(1) translate(0,0); }
+  33% { transform:scale(1.06) translate(-0.8%,-0.4%); }
+  66% { transform:scale(1.08) translate(0.5%,0.3%); }
+  100%{ transform:scale(1) translate(0,0); }
+}
+/* Gradient overlay on each slide — dark enough for readability, light enough to show image */
+.hsl::after{
+  content:'' !important;
+  position:absolute !important;
+  inset:0 !important;
+  background:
+    linear-gradient(160deg, rgba(8,5,3,.42) 0%, rgba(8,5,3,.22) 45%, rgba(8,5,3,.55) 100%),
+    linear-gradient(180deg, rgba(8,5,3,.15) 0%, rgba(8,5,3,.58) 80%, rgba(8,5,3,.78) 100%) !important;
+  pointer-events:none !important;
+  z-index:1 !important;
+}
+
+/* hbg — dark fallback when image hasn't loaded */
+.hbg{
+  position:absolute !important;
+  inset:0 !important;
+  background:
+    radial-gradient(ellipse at 18% 28%, rgba(212,166,74,.08), transparent 55%),
+    radial-gradient(ellipse at 82% 72%, rgba(196,80,44,.06), transparent 55%),
+    linear-gradient(160deg, #0d0a06 0%, #1a140d 100%) !important;
+  z-index:0 !important;
+}
+/* Hero wrapper stacking */
+body:not(.admin-mode) .hero{ min-height:68vh !important; }
+body:not(.admin-mode) .hero .hbg{ z-index:0; }
+body:not(.admin-mode) .hero .hslides{ z-index:1; }
+body:not(.admin-mode) .hero .hgrain{ z-index:2; }
+body:not(.admin-mode) .hero .h-in{ z-index:3; position:relative; }
+/* Remove the body:not(.admin-mode) .hero::after we added earlier (it stacks) */
+body:not(.admin-mode) .hero::after{ display:none !important; }
+
+/* ── LOGO — clean 52px base + separate floating 3D popout preview ─── */
+#official-logo-mk{
+  transition:box-shadow .35s ease, border-color .35s ease !important;
+  cursor:pointer;
+  border-radius:50% !important;
+  width:56px !important;
+  height:56px !important;
+  /* Allow the popout child to render outside this circle */
+  overflow:visible !important;
+}
+#official-logo-mk img{
+  width:100% !important;
+  height:100% !important;
+  border-radius:50% !important;
+  object-fit:contain !important;
+  display:block !important;
+  background:#0f0b07 !important;
+  border:2px solid rgba(255,211,105,.40) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.4), inset 0 0 0 1px rgba(0,0,0,.4);
+  transition:filter .35s ease, border-color .35s ease, box-shadow .35s ease !important;
+}
+#official-logo-mk:hover img,
+.logo-w:hover #official-logo-mk img{
+  border-color:rgba(255,211,105,.85) !important;
+  filter:brightness(1.10) contrast(1.05) !important;
+  box-shadow:0 6px 20px rgba(255,211,105,.35), inset 0 0 0 1px rgba(0,0,0,.4) !important;
+}
+#logo-icon-fallback{
+  border-radius:50% !important;
+  background:linear-gradient(135deg, rgba(212,166,74,.22), rgba(212,166,74,.06)) !important;
+  border:2px solid rgba(255,211,105,.40) !important;
+  font-size:1.7rem !important;
+}
+
+/* ── FLOATING 3D POPOUT PREVIEW (hover only) ───────────────────── */
+.logo-popout-preview{
+  position:absolute;
+  top:calc(100% + 18px);
+  left:50%;
+  transform-origin:top center;
+  transform:translateX(-50%) translateY(-8px) scale(.4);
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:linear-gradient(155deg, #1a120a, #0a0704);
+  border:2px solid rgba(255,211,105,.85);
+  box-shadow:
+    0 25px 70px rgba(255,211,105,.55),
+    0 12px 30px rgba(0,0,0,.7),
+    0 0 0 4px rgba(255,211,105,.10),
+    inset 0 0 0 2px rgba(0,0,0,.3);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:
+    opacity .35s ease,
+    transform .45s cubic-bezier(.34,1.4,.64,1),
+    visibility 0s linear .35s;
+  z-index:1000;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.logo-popout-preview img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:50%;
+  display:block;
+  background:#0f0b07;
+  filter:drop-shadow(0 0 14px rgba(255,211,105,.35));
+}
+.logo-popout-preview .logo-popout-fallback{
+  display:none;
+  width:100%;
+  height:100%;
+  align-items:center;
+  justify-content:center;
+  font-size:4rem;
+  background:linear-gradient(135deg, rgba(212,166,74,.22), rgba(212,166,74,.04));
+  filter:drop-shadow(0 0 14px rgba(255,211,105,.4));
+}
+/* Gold ring decoration around preview */
+.logo-popout-preview::before{
+  content:'';
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+  border:1px solid rgba(255,211,105,.22);
+  pointer-events:none;
+  animation:popoutRingSpin 8s linear infinite;
+}
+.logo-popout-preview::after{
+  content:'';
+  position:absolute;
+  inset:-22px;
+  border-radius:50%;
+  border:1px dashed rgba(255,211,105,.14);
+  pointer-events:none;
+  animation:popoutRingSpin 14s linear infinite reverse;
+}
+@keyframes popoutRingSpin{
+  to{ transform:rotate(360deg); }
+}
+/* Activate popout on logo wrapper hover */
+.logo-w:hover .logo-popout-preview,
+#official-logo-mk:hover .logo-popout-preview,
+.logo-w:focus-within .logo-popout-preview{
+  opacity:1;
+  visibility:visible;
+  pointer-events:none; /* still non-interactive; pure visual preview */
+  transform:translateX(-50%) translateY(0)
+    perspective(900px) rotateY(-14deg) rotateX(5deg) scale(1.0);
+  transition:
+    opacity .35s ease,
+    transform .55s cubic-bezier(.22,.85,.36,1),
+    visibility 0s linear 0s;
+}
+
+/* ── LOGO LAYOUT — clean name + flag + location alignment ───────── */
+body:not(.admin-mode) .logo-nm{
+  font-size:.95rem !important;
+  font-weight:800 !important;
+  letter-spacing:2.5px !important;
+  color:#fdf6e6 !important;
+  text-shadow:0 1px 4px rgba(0,0,0,.5) !important;
+  line-height:1.1 !important;
+}
+body:not(.admin-mode) .logo-sb{
+  font-size:.52rem !important;
+  letter-spacing:1.5px !important;
+  color:rgba(247,238,219,.72) !important;
+  line-height:1.2 !important;
+}
+/* Hide strange duplicate icons near mouse area */
+body:not(.admin-mode) .logo-svc-flip{ display:none !important; }
+body:not(.admin-mode) #logo-svc-flipper{ display:none !important; }
+
+/* ── MOBILE: 42px logo, no big popout, subtle glow only ─────────── */
+@media(max-width:768px){
+  #official-logo-mk{ width:44px !important; height:44px !important; }
+  body:not(.admin-mode) .logo-nm{ font-size:.82rem !important; letter-spacing:1.8px !important; }
+  body:not(.admin-mode) .logo-sb{ font-size:.45rem !important; }
+  /* On mobile, hide the big floating popout entirely — just gentle glow */
+  .logo-popout-preview{ display:none !important; }
+  #official-logo-mk:hover img,
+  #official-logo-mk:active img{
+    border-color:rgba(255,211,105,.7) !important;
+    box-shadow:0 4px 14px rgba(255,211,105,.35) !important;
+  }
+}
+
+/* End hero image + logo 3D fix */
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO IMAGE FINAL — definitive single source of truth
+   All earlier .hsl rules preserved/cleaned; these are the final values
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Slides wrapper */
+.hslides{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:1 !important;
+  overflow:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Each individual slide */
+.hsl{
+  position:absolute !important;
+  inset:0 !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+  opacity:0;
+  transition:opacity 1.6s ease-in-out !important;
+  will-change:opacity, transform;
+}
+
+/* Active slide — fully visible, Ken Burns running */
+.hsl.active{
+  opacity:1 !important;
+  animation:kbz 16s ease-in-out infinite;
+}
+@keyframes kbz{
+  0%  { transform:scale(1)    translateX(0)     translateY(0); }
+  25% { transform:scale(1.05) translateX(-0.6%) translateY(-0.3%); }
+  75% { transform:scale(1.07) translateX(0.4%)  translateY(0.2%); }
+  100%{ transform:scale(1)    translateX(0)     translateY(0); }
+}
+
+/* Overlay: dark enough for text, light enough to see image */
+.hsl::after{
+  content:'';
+  position:absolute !important;
+  inset:0 !important;
+  background:
+    linear-gradient(180deg,
+      rgba(5,3,2,.14) 0%,
+      rgba(5,3,2,.06) 30%,
+      rgba(5,3,2,.32) 75%,
+      rgba(5,3,2,.58) 100%),
+    radial-gradient(ellipse at 25% 40%, rgba(212,166,74,.10), transparent 55%) !important;
+  pointer-events:none !important;
+  z-index:2 !important;
+}
+
+/* hbg dark fallback (visible before first image loads) */
+.hbg{
+  position:absolute !important;
+  inset:0 !important;
+  z-index:0 !important;
+  background:
+    linear-gradient(160deg, #0d0905 0%, #1f160a 50%, #0d0905 100%) !important;
+}
+
+/* Hero wrapper z-index stack */
+.hero{ isolation:isolate; }
+.hero .hbg{ z-index:0; }
+.hero .hslides{ z-index:1; }
+.hero .hgrain{ z-index:2; pointer-events:none; }
+.hero .h-in{ z-index:3; position:relative; }
+
+/* Kill the hero::after that was added by an earlier polish layer */
+body:not(.admin-mode) .hero::after{ display:none !important; }
+
+/* ── HCARD THUMBNAIL — rotating service image ─────────────────── */
+.hc-thumb-wrap{
+  position:relative;
+  width:100%;
+  height:160px;
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:12px;
+  flex-shrink:0;
+  box-shadow:0 8px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(255,215,120,.22);
+}
+.hc-thumb{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  transition:opacity .4s ease, background-image .4s ease;
+  transform:scale(1.04);
+  animation:thumbKB 8s ease-in-out infinite;
+}
+@keyframes thumbKB{
+  0%,100%{ transform:scale(1.04) translateX(0); }
+  50%{ transform:scale(1.08) translateX(-1%); }
+}
+.hc-thumb-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent 40%, rgba(5,3,2,.75) 100%);
+  z-index:1;
+}
+.hc-thumb-badge{
+  position:absolute;
+  bottom:8px; right:10px;
+  z-index:2;
+  font-size:1.6rem;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.6));
+}
+@media(max-width:768px){
+  .hc-thumb-wrap{ height:120px; }
+}
+
+/* ── SERVICE CARDS — each shows its own category image ─────────── */
+body:not(.admin-mode) .svc-img{
+  background-size:cover !important;
+  background-position:center !important;
+  aspect-ratio:16/9 !important;
+  position:relative !important;
+  overflow:hidden !important;
+  min-height:160px !important;
+}
+body:not(.admin-mode) .svc-img::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(5,3,2,.55) 100%);
+  pointer-events:none;
+}
+
+/* End hero image final */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FINAL POLISH PASS — typography, mobile, premium subtle animations
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Typography rhythm — tighter, more premium */
+body:not(.admin-mode){
+  font-feature-settings:"kern" 1, "liga" 1, "ss01" 1;
+  text-rendering:optimizeLegibility;
+}
+body:not(.admin-mode) h1,
+body:not(.admin-mode) h2,
+body:not(.admin-mode) h3{
+  font-feature-settings:"kern" 1, "ss01" 1;
+}
+body:not(.admin-mode) .sec p,
+body:not(.admin-mode) .sec li{
+  line-height:1.7;
+}
+
+/* Scroll-reveal entry — soft fade-up, runs once per element */
+.reveal:not(.vis){
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .65s cubic-bezier(.22,.85,.36,1), transform .65s cubic-bezier(.22,.85,.36,1);
+  will-change:opacity, transform;
+}
+.reveal.vis{
+  opacity:1;
+  transform:translateY(0);
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal:not(.vis){ opacity:1 !important; transform:none !important; }
+}
+
+/* Section spacing — clean rhythm */
+body:not(.admin-mode) .sec > .si{ max-width:1240px; margin:0 auto; padding:0 22px; }
+body:not(.admin-mode) .sec > .si > .sh{ margin-bottom:36px; }
+@media(max-width:768px){
+  body:not(.admin-mode) .sec > .si{ padding:0 16px; }
+  body:not(.admin-mode) .sec > .si > .sh{ margin-bottom:24px; }
+}
+
+/* Service card hover — subtle premium float */
+body:not(.admin-mode) .svc-card{
+  transition:transform .35s cubic-bezier(.34,1.2,.64,1), box-shadow .35s ease, border-color .35s ease !important;
+}
+
+/* Mobile fine-tune — kill any horizontal overflow + better touch targets */
+body:not(.admin-mode){ overflow-x:hidden; }
+@media(max-width:768px){
+  body:not(.admin-mode) section,
+  body:not(.admin-mode) .sec,
+  body:not(.admin-mode) .nav-in{ max-width:100vw; }
+  body:not(.admin-mode) .btn,
+  body:not(.admin-mode) a.btn,
+  body:not(.admin-mode) button.btn{ min-height:42px; }
+  body:not(.admin-mode) input,
+  body:not(.admin-mode) textarea,
+  body:not(.admin-mode) select{ min-height:44px; font-size:16px; /* prevent iOS zoom */ }
+  body:not(.admin-mode) .stl,
+  body:not(.admin-mode) .sec h2{ font-size:clamp(1.35rem, 5.5vw, 2rem) !important; }
+}
+
+/* Performance — GPU hint for animated layers only */
+.hsl,
+.hc-thumb,
+.psv-vid,
+.vc11-track,
+.ntc-track,
+.svc-card,
+.pg-c{
+  backface-visibility:hidden;
+}
+
+/* End final polish pass */
+
+/* ═══════════════════════════════════════════════════════════════════
+   CORPORATE FINAL — premium dial-down, less glow, more refinement
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Floating buttons — smaller, more elegant */
+#lfb{
+  padding:9px 7px !important;
+  gap:5px !important;
+  border-radius:34px !important;
+}
+#lfb .lb{
+  width:38px !important;
+  height:38px !important;
+}
+#lfb .lb svg{ width:16px !important; height:16px !important; }
+#lfb .lb-hr{ width:55% !important; }
+@media(max-width:1024px) and (min-width:769px){
+  #lfb{ padding:7px 6px !important; left:10px !important; }
+  #lfb .lb{ width:34px !important; height:34px !important; }
+}
+
+/* Reduce excessive box-shadow glow across cards */
+body:not(.admin-mode) .svc-card:hover,
+body:not(.admin-mode) .pg-c:hover,
+body:not(.admin-mode) .tc:hover,
+body:not(.admin-mode) .price-card-pub:hover{
+  box-shadow:0 14px 36px rgba(0,0,0,.45), 0 0 0 1px rgba(240,200,120,.18) !important;
+}
+
+/* Logo — premium animated ring + subtle pulse (replaces cheap neon look) */
+#official-logo-mk::before{
+  content:'';
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  border:1px solid rgba(255,211,105,.18);
+  pointer-events:none;
+  animation:logoPulseRing 3s ease-in-out infinite;
+}
+@keyframes logoPulseRing{
+  0%,100%{ transform:scale(1); opacity:.6; }
+  50%{ transform:scale(1.06); opacity:.95; }
+}
+
+/* Logo popout — slightly less aggressive glow */
+.logo-popout-preview{
+  box-shadow:
+    0 18px 50px rgba(255,211,105,.35),
+    0 8px 22px rgba(0,0,0,.6),
+    0 0 0 3px rgba(255,211,105,.08),
+    inset 0 0 0 2px rgba(0,0,0,.3) !important;
+  border-color:rgba(255,211,105,.65) !important;
+}
+
+/* Nav links — premium underline hover animation */
+body:not(.admin-mode) .nav-links a,
+body:not(.admin-mode) .nav a{
+  position:relative;
+  background:transparent !important;
+}
+body:not(.admin-mode) .nav-links a::after,
+body:not(.admin-mode) .nav a:not(.btn)::after{
+  content:'';
+  position:absolute;
+  left:14px; right:14px;
+  bottom:4px;
+  height:1.5px;
+  background:linear-gradient(90deg, transparent, #f0c878, transparent);
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:transform .3s cubic-bezier(.22,.85,.36,1);
+  pointer-events:none;
+}
+body:not(.admin-mode) .nav-links a:hover::after,
+body:not(.admin-mode) .nav a:not(.btn):hover::after{
+  transform:scaleX(1);
+}
+body:not(.admin-mode) .nav-links a:hover,
+body:not(.admin-mode) .nav a:not(.btn):hover{
+  background:transparent !important;
+}
+
+/* Ticker — balanced spacing, premium gold accent */
+.ntc-bar{
+  background:linear-gradient(90deg, #0a0704 0%, #14100a 50%, #0a0704 100%) !important;
+  border-bottom:1px solid rgba(255,211,105,.20) !important;
+  padding:0 !important;
+}
+.ntc-lbl{
+  background:linear-gradient(135deg, #d4a64a, #a87a26) !important;
+  color:#1a1208 !important;
+  font-size:.66rem !important;
+  letter-spacing:1.5px !important;
+  font-weight:800 !important;
+  padding:8px 14px !important;
+}
+.ntc-it{
+  font-size:.78rem !important;
+  letter-spacing:.3px !important;
+  padding:0 22px !important;
+  color:#fdf6e6 !important;
+}
+.ntc-track{ gap:14px !important; }
+
+/* Section header — premium typography rhythm */
+body:not(.admin-mode) .sec > .si > .sh{
+  text-align:center;
+}
+body:not(.admin-mode) .sey{
+  font-size:.66rem !important;
+  letter-spacing:3px !important;
+  font-weight:800 !important;
+  margin-bottom:10px !important;
+  display:inline-block !important;
+}
+body:not(.admin-mode) .stl{
+  margin-bottom:12px !important;
+  font-weight:600 !important;
+}
+body:not(.admin-mode) .sdesc{
+  max-width:660px;
+  margin-left:auto;
+  margin-right:auto;
+  font-size:.92rem !important;
+  line-height:1.6;
+}
+
+/* Project gallery — premium uniform aspect + smoother hover */
+body:not(.admin-mode) .pg-c{
+  border-radius:14px !important;
+}
+body:not(.admin-mode) .pg-c img{
+  transition:transform .55s cubic-bezier(.22,.85,.36,1), filter .35s ease !important;
+}
+
+/* Service cards — tighter premium feel */
+body:not(.admin-mode) .svc-card{
+  border-radius:14px !important;
+  transition:transform .32s cubic-bezier(.34,1.2,.64,1), border-color .32s ease, box-shadow .32s ease !important;
+}
+body:not(.admin-mode) .svc-card:hover{
+  transform:translateY(-5px) !important;
+}
+
+/* End corporate final */
+
+/* ═══════════════════════════════════════════════════════════════════
+   FINAL HEADER + LOGO + MOBILE MENU FIX
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Premium nav — glass + sticky + shadow scroll */
+body:not(.admin-mode) .nav{
+  position:sticky;
+  top:0;
+  z-index:500;
+  background:linear-gradient(180deg, rgba(13,9,5,.92) 0%, rgba(13,9,5,.82) 100%) !important;
+  backdrop-filter:blur(24px) saturate(140%) !important;
+  -webkit-backdrop-filter:blur(24px) saturate(140%) !important;
+  border-bottom:1px solid rgba(255,211,105,.18) !important;
+  box-shadow:0 2px 0 rgba(255,211,105,.06), 0 8px 28px rgba(0,0,0,.35) !important;
+  transition:background .3s ease, box-shadow .3s ease !important;
+}
+body:not(.admin-mode) .nav.sc{
+  background:linear-gradient(180deg, rgba(8,5,3,.97) 0%, rgba(8,5,3,.94) 100%) !important;
+  box-shadow:0 4px 24px rgba(0,0,0,.55), 0 1px 0 rgba(255,211,105,.16) !important;
+}
+body:not(.admin-mode) .nav-in{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  padding:10px 24px !important;
+  gap:14px !important;
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* Logo section — crisp alignment */
+body:not(.admin-mode) .logo-w{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  flex-shrink:0;
+  cursor:pointer;
+}
+body:not(.admin-mode) .logo-text-group{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+body:not(.admin-mode) .logo-city{
+  font-size:.52rem !important;
+  letter-spacing:1.2px !important;
+  color:rgba(247,238,219,.60) !important;
+  font-weight:600 !important;
+  margin-top:1px !important;
+}
+
+/* Right section — phone + WA + hamburger */
+body:not(.admin-mode) .nav-r{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  flex-shrink:0;
+}
+body:not(.admin-mode) .nav-phone{
+  display:flex !important;
+  align-items:center !important;
+  gap:5px !important;
+  color:#fdf6e6 !important;
+  font-size:.78rem !important;
+  font-weight:700 !important;
+  letter-spacing:.5px !important;
+  text-decoration:none !important;
+  padding:7px 12px !important;
+  border-radius:20px !important;
+  border:1px solid rgba(255,211,105,.22) !important;
+  background:rgba(255,255,255,.04) !important;
+  transition:background .22s, border-color .22s !important;
+}
+body:not(.admin-mode) .nav-phone:hover{
+  background:rgba(255,211,105,.10) !important;
+  border-color:rgba(255,211,105,.45) !important;
+  color:#f0c878 !important;
+}
+body:not(.admin-mode) .nav-wa{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:34px; height:34px !important;
+  border-radius:50% !important;
+  background:linear-gradient(135deg,#25d366,#128c7e) !important;
+  color:#fff !important;
+  transition:transform .22s, box-shadow .22s !important;
+  flex-shrink:0;
+}
+body:not(.admin-mode) .nav-wa:hover{
+  transform:scale(1.08) !important;
+  box-shadow:0 4px 14px rgba(37,211,102,.45) !important;
+}
+
+/* Hamburger button — animated to X on open */
+body:not(.admin-mode) .htog{
+  width:38px !important; height:38px !important;
+  border-radius:10px !important;
+  border:1px solid rgba(255,211,105,.22) !important;
+  background:rgba(255,255,255,.05) !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+  cursor:pointer !important;
+  transition:background .22s, border-color .22s !important;
+  padding:0 !important;
+}
+body:not(.admin-mode) .htog:hover{
+  background:rgba(255,211,105,.10) !important;
+  border-color:rgba(255,211,105,.45) !important;
+}
+body:not(.admin-mode) .htog-bar{
+  display:block;
+  width:18px; height:2px;
+  background:#fdf6e6;
+  border-radius:2px;
+  transition:transform .3s ease, opacity .3s ease, width .3s ease !important;
+  transform-origin:center;
+}
+body:not(.admin-mode) .htog.active .htog-bar:nth-child(1){
+  transform:translateY(7px) rotate(45deg) !important;
+}
+body:not(.admin-mode) .htog.active .htog-bar:nth-child(2){
+  opacity:0 !important; width:0 !important;
+}
+body:not(.admin-mode) .htog.active .htog-bar:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg) !important;
+}
+
+/* Mobile nav header branding inside drawer */
+@media(max-width:1000px){
+  body:not(.admin-mode) .nav-phone span{ display:none !important; }
+  body:not(.admin-mode) .nav-phone{ padding:7px !important; border-radius:50% !important; width:34px; height:34px; justify-content:center; }
+}
+@media(max-width:768px){
+  body:not(.admin-mode) .nav-in{ padding:9px 16px !important; }
+}
+
+/* End header + logo + mobile menu fix */
+
+/* ═══════════════════════════════════════════════════════════════════
+   HEADER FINAL — Right-side mobile drawer · Phone/WA in nav-r
+   Logo cleaned · Burger animated · Backdrop overlay · Premium glass
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* NAV BASE */
+body:not(.admin-mode) .nav{
+  position:fixed !important;
+  top:0; left:0; right:0; z-index:500 !important;
+  background:linear-gradient(180deg, rgba(12,9,6,.92) 0%, rgba(12,9,6,.82) 100%) !important;
+  backdrop-filter:blur(22px) saturate(150%) !important;
+  -webkit-backdrop-filter:blur(22px) saturate(150%) !important;
+  border-bottom:1px solid rgba(255,211,105,.18) !important;
+  box-shadow:0 2px 20px rgba(0,0,0,.45) !important;
+  transition:background .3s ease, box-shadow .3s ease !important;
+}
+body:not(.admin-mode) .nav.sc{
+  background:linear-gradient(180deg, rgba(8,5,3,.97) 0%, rgba(8,5,3,.93) 100%) !important;
+  box-shadow:0 4px 28px rgba(0,0,0,.6), 0 1px 0 rgba(255,211,105,.16) !important;
+}
+body:not(.admin-mode) .nav-in{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  padding:11px 22px !important;
+  gap:16px !important;
+  max-width:1320px;
+  margin:0 auto;
+}
+
+/* LOGO GROUP */
+body:not(.admin-mode) .logo-w{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  cursor:pointer;
+  flex-shrink:0;
+  position:relative;
+  text-decoration:none !important;
+}
+#official-logo-mk{
+  position:relative;
+  width:52px !important;
+  height:52px !important;
+  flex-shrink:0 !important;
+  border-radius:50% !important;
+  overflow:visible !important;
+  cursor:pointer;
+  transition:box-shadow .35s ease !important;
+}
+#official-logo-mk img{
+  width:100% !important;
+  height:100% !important;
+  border-radius:50% !important;
+  object-fit:contain !important;
+  display:block !important;
+  background:#0f0b07 !important;
+  border:2px solid rgba(255,211,105,.45) !important;
+  box-shadow:0 3px 12px rgba(0,0,0,.5) !important;
+  transition:filter .3s ease, border-color .3s ease !important;
+}
+#logo-icon-fallback{
+  display:none;
+  width:100%;
+  height:100%;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  border-radius:50%;
+  background:linear-gradient(135deg, rgba(212,166,74,.22), rgba(212,166,74,.05));
+  border:2px solid rgba(255,211,105,.38);
+}
+body:not(.admin-mode) .logo-text-group{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  flex-shrink:0;
+}
+body:not(.admin-mode) .logo-nm{
+  font-size:.95rem !important;
+  font-weight:900 !important;
+  letter-spacing:3px !important;
+  color:#fdf6e6 !important;
+  line-height:1.1 !important;
+  text-shadow:0 1px 4px rgba(0,0,0,.6) !important;
+}
+body:not(.admin-mode) .logo-sb{
+  font-size:.48rem !important;
+  letter-spacing:1.2px !important;
+  color:rgba(240,200,120,.75) !important;
+  line-height:1.2 !important;
+  text-transform:uppercase;
+}
+body:not(.admin-mode) .logo-flag{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  gap:2px !important;
+  border-left:1px solid rgba(255,211,105,.22) !important;
+  padding-left:10px !important;
+  flex-shrink:0 !important;
+}
+body:not(.admin-mode) .logo-city{
+  font-size:.46rem !important;
+  font-weight:700 !important;
+  letter-spacing:.5px !important;
+  color:rgba(240,200,120,.80) !important;
+  white-space:nowrap !important;
+}
+/* Hide legacy duplicate elements */
+body:not(.admin-mode) .logo-svc-flip,
+body:not(.admin-mode) #logo-svc-flipper{ display:none !important; }
+
+/* DESKTOP NAV LINKS */
+body:not(.admin-mode) .nav-links{
+  display:flex !important;
+  align-items:center !important;
+  gap:4px !important;
+  flex:1;
+  justify-content:center;
+}
+body:not(.admin-mode) .nav-links a{
+  color:#f0e8d4 !important;
+  font-size:.82rem !important;
+  font-weight:600 !important;
+  letter-spacing:.4px !important;
+  padding:8px 13px !important;
+  border-radius:8px !important;
+  transition:color .2s, background .2s !important;
+  white-space:nowrap;
+  position:relative;
+}
+body:not(.admin-mode) .nav-links a:hover{
+  color:#f0c878 !important;
+  background:rgba(255,211,105,.08) !important;
+}
+.mob-nav-close{ display:none; }
+
+/* RIGHT SIDE — phone, WA, lang, burger */
+body:not(.admin-mode) .nav-r{
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  flex-shrink:0;
+}
+body:not(.admin-mode) .nav-phone{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:#fdf6e6 !important;
+  font-size:.74rem !important;
+  font-weight:700 !important;
+  text-decoration:none !important;
+  padding:7px 11px !important;
+  border-radius:20px !important;
+  border:1px solid rgba(255,211,105,.28) !important;
+  background:rgba(255,255,255,.04) !important;
+  transition:background .22s, border-color .22s !important;
+  white-space:nowrap;
+}
+body:not(.admin-mode) .nav-phone:hover{
+  background:rgba(255,211,105,.10) !important;
+  border-color:rgba(255,211,105,.55) !important;
+  color:#f0c878 !important;
+}
+body:not(.admin-mode) .nav-wa{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px; height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg, #25d366, #128c7e) !important;
+  color:#fff !important;
+  text-decoration:none !important;
+  box-shadow:0 4px 12px rgba(37,211,102,.28) !important;
+  transition:transform .22s, box-shadow .22s !important;
+  flex-shrink:0;
+}
+body:not(.admin-mode) .nav-wa:hover{
+  transform:scale(1.10);
+  box-shadow:0 6px 18px rgba(37,211,102,.45) !important;
+}
+body:not(.admin-mode) .lang-b{
+  background:rgba(255,255,255,.06) !important;
+  border:1px solid rgba(255,211,105,.25) !important;
+  color:#f0e8d4 !important;
+  font-size:.7rem !important;
+  font-weight:700 !important;
+  padding:6px 11px !important;
+  border-radius:16px !important;
+  cursor:pointer !important;
+  transition:background .22s, border-color .22s !important;
+  letter-spacing:.5px;
+}
+body:not(.admin-mode) .lang-b:hover{
+  background:rgba(255,211,105,.12) !important;
+  border-color:rgba(255,211,105,.5) !important;
+}
+
+/* HAMBURGER BURGER BUTTON */
+.htog{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  width:40px; height:40px;
+  border-radius:10px;
+  background:rgba(255,255,255,.06) !important;
+  border:1px solid rgba(255,211,105,.22) !important;
+  cursor:pointer;
+  padding:0;
+  flex-shrink:0;
+  transition:background .22s ease !important;
+}
+.htog:hover{ background:rgba(255,211,105,.12) !important; }
+.htog-bar{
+  display:block;
+  width:18px; height:2px;
+  background:#fdf6e6;
+  border-radius:2px;
+  transition:transform .3s ease, opacity .3s ease !important;
+  transform-origin:center;
+}
+.htog.active .htog-bar:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.htog.active .htog-bar:nth-child(2){ opacity:0; transform:scaleX(0); }
+.htog.active .htog-bar:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* MOBILE — show burger, hide phone label */
+@media(max-width:768px){
+  .htog{ display:flex !important; }
+  body:not(.admin-mode) .nav-phone span{ display:none !important; }
+  body:not(.admin-mode) .nav-phone{
+    padding:7px 9px !important;
+    border-radius:50% !important;
+    width:34px; height:34px;
+    justify-content:center;
+  }
+  body:not(.admin-mode) .nav-in{ padding:9px 14px !important; }
+  body:not(.admin-mode) .logo-nm{ font-size:.82rem !important; }
+  body:not(.admin-mode) .logo-sb{ font-size:.42rem !important; }
+  #official-logo-mk{ width:44px !important; height:44px !important; }
+
+  /* MOBILE NAV LINKS — right-side full-height drawer */
+  body:not(.admin-mode) .nav-links{
+    position:fixed !important;
+    top:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:min(76vw, 300px) !important;
+    display:flex !important;         /* must be flex so transform works */
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:flex-start !important;
+    background:linear-gradient(160deg, #0d0a06 0%, #1a130a 100%) !important;
+    border-left:1px solid rgba(255,211,105,.22) !important;
+    padding:80px 22px 30px !important;
+    gap:6px !important;
+    z-index:600 !important;
+    transform:translateX(105%) !important;
+    transition:transform .38s cubic-bezier(.22,.85,.36,1) !important;
+    box-shadow:-8px 0 40px rgba(0,0,0,.6) !important;
+    overflow-y:auto !important;
+    visibility:visible !important;
+  }
+  body:not(.admin-mode) .nav-links.open{
+    transform:translateX(0) !important;
+  }
+  /* Override the old .nav-links{display:none} that blocks the drawer */
+  body:not(.admin-mode) .nav-links,
+  body:not(.admin-mode) .nav-links.mob{
+    display:flex !important;
+    left:auto !important;
+  }
+  body:not(.admin-mode) .nav-links a{
+    width:100% !important;
+    font-size:.95rem !important;
+    padding:12px 14px !important;
+    border-radius:10px !important;
+    border-bottom:1px solid rgba(255,211,105,.08) !important;
+    color:#fdf6e6 !important;
+  }
+  body:not(.admin-mode) .nav-links a:hover{
+    background:rgba(255,211,105,.10) !important;
+    border-bottom-color:rgba(255,211,105,.22) !important;
+    color:#f0c878 !important;
+  }
+  .mob-nav-close{
+    display:flex !important;
+    position:absolute !important;
+    top:18px; right:18px !important;
+    width:34px; height:34px !important;
+    border-radius:50% !important;
+    border:1px solid rgba(255,211,105,.3) !important;
+    background:rgba(255,255,255,.06) !important;
+    color:#fdf6e6 !important;
+    font-size:1.1rem !important;
+    align-items:center !important;
+    justify-content:center !important;
+    cursor:pointer !important;
+  }
+}
+@media(min-width:769px){
+  .htog{ display:none !important; }
+  body:not(.admin-mode) .nav-links{
+    position:static !important;
+    transform:none !important;
+    background:transparent !important;
+    border:none !important;
+    padding:0 !important;
+    box-shadow:none !important;
+    flex-direction:row !important;
+    width:auto !important;
+    overflow:visible !important;
+  }
+}
+
+/* BACKDROP */
+.nav-backdrop{
+  display:none;
+  position:fixed; inset:0; z-index:550;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  opacity:0;
+  transition:opacity .35s ease;
+}
+.nav-backdrop.show{
+  display:block;
+  opacity:1;
+}
+@media(min-width:769px){ .nav-backdrop{ display:none !important; } }
+
+/* End header final */
 </style>
 </head>
 <body class="show-vc-on show-cal-on">
@@ -3261,112 +4909,78 @@ body:not(.admin-mode) .mob-cta .mc2{
 <nav class="nav" id="mainNav">
   <div class="nav-in">
     <div class="logo-w" id="logoW">
-      <!-- Official logo (always shows first) -->
-      <div class="logo-mk" id="official-logo-mk" style="position:relative;width:48px;height:48px;flex-shrink:0;">
+      <!-- Official logo -->
+      <div class="logo-mk" id="official-logo-mk">
         <img id="official-logo-img" src="" alt="Prerak Logo"
-          style="width:100%;height:100%;object-fit:contain;border-radius:50%;display:block;"
           onerror="this.style.display='none';document.getElementById('logo-icon-fallback').style.display='flex'"
-          onload="this.style.display='block';document.getElementById('logo-icon-fallback').style.display='none'">
-        <div id="logo-icon-fallback" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.6rem;border-radius:50%;background:rgba(212,166,74,.1);">🏗️</div>
+          onload="this.style.display='block';document.getElementById('logo-icon-fallback').style.display='none';var p=document.getElementById('logo-popout-img');if(p)p.src=this.src;">
+        <div id="logo-icon-fallback">🏗️</div>
+        <div class="logo-popout-preview" id="logo-popout-preview" aria-hidden="true">
+          <img id="logo-popout-img" src="" alt="" onerror="this.style.display='none';this.parentElement.querySelector('.logo-popout-fallback').style.display='flex';">
+          <div class="logo-popout-fallback">🏗️</div>
+        </div>
       </div>
-      <!-- Service icon flip (shows alongside official logo) -->
-      <div class="logo-svc-flip" id="logoSvcFlip" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:28px;flex-shrink:0;">
-        <div id="hcIco" style="font-size:1.1rem;line-height:1;transition:all .3s;"></div>
+      <div class="logo-text-group">
+        <div class="logo-nm">PRERAK</div>
+        <div class="logo-sb">Multipurpose Pvt. Ltd.</div>
       </div>
-      <div style="display:flex;align-items:center;gap:9px;">
-        <div>
-          <div class="logo-nm">PRERAK</div>
-          <div class="logo-sb">Multipurpose Pvt. Ltd.</div>
-        </div>
-        <!-- Live service icon flipper -->
-        <div id="logo-svc-flipper" title="Services we offer">
-          <span id="logo-svc-ico">🏗️</span>
-          <span id="logo-svc-label">Construction</span>
-        </div>
-        <!-- 🇳🇵 Original Nepal Flag — beside company name -->
-        <div class="logo-flag" style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;border-left:1px solid rgba(212,166,74,.25);padding-left:9px;">
-          <svg viewBox="0 0 246 300" width="20" height="24" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.35));animation:logoFlagWave 3s ease-in-out infinite;transform-origin:left center;">
-  <!-- Blue outer border (the official double-pennant shape) -->
-  <path d="M0 0 L210 154 L114 154 L210 246 L0 246 Z" fill="#003893"/>
-  <!-- Red field inside blue border -->
-  <path d="M12 16 L196 152 L108 152 L196 234 L12 234 Z" fill="#DC143C"/>
-  <!-- TOP PENNANT: Moon symbol with rays -->
-  <g transform="translate(60,75)">
-    <!-- Moon outer (with 8 short rays around it, like real flag) -->
-    <g fill="white">
-      <!-- 8 small radial rays around moon -->
-      <path d="M30,-32 L33,-22 L27,-22 Z"/>
-      <path d="M48,-25 L43,-17 L39,-21 Z"/>
-      <path d="M58,-10 L48,-7 L48,-13 Z"/>
-      <path d="M58,15 L48,12 L48,18 Z"/>
-      <path d="M48,30 L43,22 L39,26 Z"/>
-      <path d="M30,37 L33,27 L27,27 Z"/>
-      <path d="M12,30 L17,22 L21,26 Z"/>
-      <path d="M2,15 L12,12 L12,18 Z"/>
-      <path d="M2,-10 L12,-7 L12,-13 Z"/>
-      <path d="M12,-25 L17,-17 L21,-21 Z"/>
-    </g>
-    <!-- Moon crescent: white disk with red disk overlay creating crescent -->
-    <circle cx="30" cy="3" r="22" fill="white"/>
-    <circle cx="38" cy="-5" r="18" fill="#DC143C"/>
-  </g>
-  <!-- BOTTOM PENNANT: Sun symbol with 12 rays -->
-  <g transform="translate(60,180)">
-    <!-- 12 sun rays -->
-    <g fill="white">
-      <path d="M30,-26 L33,-16 L27,-16 Z"/>
-      <path d="M30,32 L33,22 L27,22 Z"/>
-      <path d="M-2,3 L8,0 L8,6 Z"/>
-      <path d="M62,3 L52,0 L52,6 Z"/>
-      <path d="M8,-19 L15,-12 L11,-9 Z"/>
-      <path d="M52,25 L45,18 L49,15 Z"/>
-      <path d="M8,25 L15,18 L11,15 Z"/>
-      <path d="M52,-19 L45,-12 L49,-9 Z"/>
-      <path d="M19,-24 L23,-16 L17,-15 Z"/>
-      <path d="M41,-24 L37,-16 L43,-15 Z"/>
-      <path d="M19,30 L23,22 L17,21 Z"/>
-      <path d="M41,30 L37,22 L43,21 Z"/>
-    </g>
-    <!-- Sun disk -->
-    <circle cx="30" cy="3" r="16" fill="white"/>
-  </g>
-</svg>
-          <div style="font-size:.5rem;font-weight:700;letter-spacing:.3px;color:rgba(212,166,74,.85);white-space:nowrap;">Hetauda 🇳🇵</div>
-        </div>
+      <!-- Nepal flag -->
+      <div class="logo-flag">
+        <svg viewBox="0 0 246 300" width="18" height="22" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,.4));animation:logoFlagWave 3s ease-in-out infinite;transform-origin:left center;">
+          <path d="M0 0 L210 154 L114 154 L210 246 L0 246 Z" fill="#003893"/>
+          <path d="M12 16 L196 152 L108 152 L196 234 L12 234 Z" fill="#DC143C"/>
+          <g transform="translate(60,75)"><g fill="white"><path d="M30,-32 L33,-22 L27,-22 Z"/><path d="M48,-25 L43,-17 L39,-21 Z"/><path d="M58,-10 L48,-7 L48,-13 Z"/><path d="M58,15 L48,12 L48,18 Z"/><path d="M48,30 L43,22 L39,26 Z"/><path d="M30,37 L33,27 L27,27 Z"/><path d="M12,30 L17,22 L21,26 Z"/><path d="M2,15 L12,12 L12,18 Z"/><path d="M2,-10 L12,-7 L12,-13 Z"/><path d="M12,-25 L17,-17 L21,-21 Z"/></g><circle cx="30" cy="3" r="22" fill="white"/><circle cx="38" cy="-5" r="18" fill="#DC143C"/></g>
+          <g transform="translate(60,180)"><g fill="white"><path d="M30,-26 L33,-16 L27,-16 Z"/><path d="M30,32 L33,22 L27,22 Z"/><path d="M-2,3 L8,0 L8,6 Z"/><path d="M62,3 L52,0 L52,6 Z"/><path d="M8,-19 L15,-12 L11,-9 Z"/><path d="M52,25 L45,18 L49,15 Z"/><path d="M8,25 L15,18 L11,15 Z"/><path d="M52,-19 L45,-12 L49,-9 Z"/><path d="M19,-24 L23,-16 L17,-15 Z"/><path d="M41,-24 L37,-16 L43,-15 Z"/><path d="M19,30 L23,22 L17,21 Z"/><path d="M41,30 L37,22 L43,21 Z"/></g><circle cx="30" cy="3" r="16" fill="white"/></g>
+        </svg>
+        <div class="logo-city">Hetauda 🇳🇵</div>
       </div>
       <div class="lp" id="logoP">
-        <div class="lp-hd">
-          <span>🏗️ <span class="en">Services</span><span class="ne np">सेवाहरू</span></span>
-          <span class="lp-lv"><span class="lp-dot"></span><span class="en">Live</span><span class="ne np">सक्रिय</span></span>
-        </div>
+        <div class="lp-hd"><span>🏗️ <span class="en">Services</span><span class="ne np">सेवाहरू</span></span><span class="lp-lv"><span class="lp-dot"></span><span class="en">Live</span><span class="ne np">सक्रिय</span></span></div>
         <div class="lp-g">
-          <a href="#services" class="lp-it"><span>🏗️</span><span class="lp-it-nm en">Construction</span><span class="lp-it-nm ne np">निर्माण</span></a>
-          <a href="#services" class="lp-it"><span>🛋️</span><span class="lp-it-nm en">Interior</span><span class="lp-it-nm ne np">इन्टेरियर</span></a>
-          <a href="#services" class="lp-it"><span>🪟</span><span class="lp-it-nm en">UPVC</span><span class="lp-it-nm ne np">UPVC झ्याल</span></a>
-          <a href="#services" class="lp-it"><span>☀️</span><span class="lp-it-nm en">Solar</span><span class="lp-it-nm ne np">सोलार</span></a>
-          <a href="#services" class="lp-it"><span>🏡</span><span class="lp-it-nm en">Prefab</span><span class="lp-it-nm ne np">प्रिफ्याब</span></a>
-          <a href="#services" class="lp-it"><span>🪨</span><span class="lp-it-nm en">Gypsum</span><span class="lp-it-nm ne np">जिप्सम</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>🏗️</span><span class="lp-it-nm en">Construction</span><span class="lp-it-nm ne np">निर्माण</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>🛋️</span><span class="lp-it-nm en">Interior</span><span class="lp-it-nm ne np">इन्टेरियर</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>🪟</span><span class="lp-it-nm en">UPVC</span><span class="lp-it-nm ne np">UPVC</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>☀️</span><span class="lp-it-nm en">Solar</span><span class="lp-it-nm ne np">सोलार</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>🪨</span><span class="lp-it-nm en">Gypsum</span><span class="lp-it-nm ne np">जिप्सम</span></a>
+          <a href="#services" class="lp-it" onclick="document.getElementById('logoP').classList.remove('show')"><span>🏡</span><span class="lp-it-nm en">Prefab</span><span class="lp-it-nm ne np">प्रिफ्याब</span></a>
         </div>
         <div class="lp-ft">
-          <a href="tel:9801069733" class="lp-b lp-cl">📞 <span class="en">Call</span><span class="ne np">फोन</span></a>
+          <a href="tel:9801069733" class="lp-b lp-cl">📞 <span class="en">Call Now</span><span class="ne np">फोन गर्नुस्</span></a>
           <a href="https://wa.me/9779801069733" target="_blank" rel="noopener" class="lp-b lp-wa">💬 WhatsApp</a>
         </div>
       </div>
     </div>
+    <!-- Desktop nav links -->
     <div class="nav-links" id="navLinks">
-      <a href="#home"><span class="en">Home</span><span class="ne np">होम</span></a>
-      <a href="#services"><span class="en">Services</span><span class="ne np">सेवाहरू</span></a>
-      <a href="#projects"><span class="en">Projects</span><span class="ne np">कामहरू</span></a>
-      <a href="#why-us"><span class="en">About</span><span class="ne np">हाम्रो बारे</span></a>
-      <a href="#pricing"><span class="en">Pricing</span><span class="ne np">मूल्य</span></a>
-      <a href="#contact"><span class="en">Contact</span><span class="ne np">सम्पर्क</span></a></div>
+      <a href="#home" onclick="closeMenu()"><span class="en">Home</span><span class="ne np">होम</span></a>
+      <a href="#services" onclick="closeMenu()"><span class="en">Services</span><span class="ne np">सेवाहरू</span></a>
+      <a href="#projects" onclick="closeMenu()"><span class="en">Projects</span><span class="ne np">कामहरू</span></a>
+      <a href="#why-us" onclick="closeMenu()"><span class="en">About</span><span class="ne np">हाम्रो बारे</span></a>
+      <a href="#pricing" onclick="closeMenu()"><span class="en">Pricing</span><span class="ne np">मूल्य</span></a>
+      <a href="#contact" onclick="closeMenu()"><span class="en">Contact</span><span class="ne np">सम्पर्क</span></a>
+      <!-- Mobile-only close button -->
+      <button class="mob-nav-close" onclick="closeMenu()" aria-label="Close menu">✕</button>
+    </div>
+    <!-- Mobile menu backdrop -->
+    <div class="nav-backdrop" id="navBackdrop" onclick="closeMenu()"></div>
     <div class="nav-r">
-
+      <!-- Phone — visible on desktop -->
+      <a href="tel:9801069733" class="nav-phone" aria-label="Call us">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span>980-1069733</span>
+      </a>
+      <!-- WhatsApp button -->
+      <a href="https://wa.me/9779801069733?text=नमस्ते!" target="_blank" rel="noopener" class="nav-wa" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      </a>
       <button class="lang-b" onclick="toggleLang()" id="langB">
-        <span class="en">NP नेपाली</span>
-        <span class="ne np">EN English</span>
+        <span class="en">NP</span><span class="ne np">EN</span>
       </button>
-      <button class="htog" onclick="toggleMenu()">☰</button>
+      <button class="htog" onclick="toggleMenu()" id="menuTog" aria-label="Menu" aria-expanded="false">
+        <span class="htog-bar"></span>
+        <span class="htog-bar"></span>
+        <span class="htog-bar"></span>
+      </button>
     </div>
   </div>
 </nav>
@@ -3460,15 +5074,21 @@ body:not(.admin-mode) .mob-cta .mc2{
     <!-- (Hero corner flag removed — flag now beside company name in navbar) -->
 
     <div class="hcard reveal" data-d="2">
-      <div class="hc-b"><span class="en">Live Service</span><span class="ne np">सक्रिय सेवा</span></div>
+      <div class="hc-b"><span class="en">✦ Live Service</span><span class="ne np">✦ सक्रिय सेवा</span></div>
+      <!-- Rotating service thumbnail image -->
+      <div class="hc-thumb-wrap">
+        <div class="hc-thumb" id="hcThumb" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&auto=format&fit=crop&q=80');"></div>
+        <div class="hc-thumb-overlay"></div>
+        <div class="hc-thumb-badge" id="hcIcoBadge">🏗️</div>
+      </div>
       <div class="hc-svc"><span id="hcIco">🏗️</span> <span id="hcNm">Construction Works</span></div>
       <div class="hc-d" id="hcDesc">Complete construction — RCC, masonry &amp; premium finishing.</div>
       <div class="hc-feats">
-        <div class="hc-f"><span class="en">Licensed Engineers &amp; Architects</span><span class="ne np">लाइसेन्स प्राप्त इन्जिनियर</span></div>
-        <div class="hc-f"><span class="en">3-Year Warranty Guarantee</span><span class="ne np">३ वर्षको वारेन्टी</span></div>
-        <div class="hc-f"><span class="en">Transparent Pricing — No Hidden Costs</span><span class="ne np">पारदर्शी मूल्य — छेपा खर्च छैन</span></div>
+        <div class="hc-f"><span class="en">✓ Licensed Engineers &amp; Architects</span><span class="ne np">✓ लाइसेन्स प्राप्त इन्जिनियर</span></div>
+        <div class="hc-f"><span class="en">✓ 3-Year Warranty Guarantee</span><span class="ne np">✓ ३ वर्षको वारेन्टी</span></div>
+        <div class="hc-f"><span class="en">✓ Transparent Pricing</span><span class="ne np">✓ पारदर्शी मूल्य</span></div>
       </div>
-      <a href="#pricing" class="hc-cta"><span class="en">Get Free Quote →</span><span class="ne np">नि:शुल्क कोट पाउनुस् →</span></a>
+      <a href="#services" class="hc-cta"><span class="en">View All Services →</span><span class="ne np">सबै सेवाहरू →</span></a>
     </div>
   </div>
   <div class="hdots" id="hDots"></div>
@@ -3479,22 +5099,22 @@ body:not(.admin-mode) .mob-cta .mc2{
   <div class="stats-g">
     <div class="stg reveal">
       <div class="stg-ic" aria-hidden="true">🏗️</div>
-      <div class="stg-n" data-count="500">0</div>
+      <div class="stg-n" data-count="50" data-suffix="+">0+</div>
       <div class="stg-l en">Projects Done</div><div class="stg-l ne np">परियोजना सम्पन्न</div>
     </div>
     <div class="stg reveal" data-d="1">
       <div class="stg-ic" aria-hidden="true">😊</div>
-      <div class="stg-n" data-count="350">0</div>
+      <div class="stg-n" data-count="100" data-suffix="+">0+</div>
       <div class="stg-l en">Happy Clients</div><div class="stg-l ne np">सन्तुष्ट ग्राहक</div>
     </div>
     <div class="stg reveal" data-d="2">
       <div class="stg-ic" aria-hidden="true">⭐</div>
-      <div class="stg-n" data-count="10">0</div>
+      <div class="stg-n" data-count="12" data-suffix="+">0+</div>
       <div class="stg-l en">Years Experience</div><div class="stg-l ne np">वर्षको अनुभव</div>
     </div>
     <div class="stg reveal" data-d="3">
       <div class="stg-ic" aria-hidden="true">📍</div>
-      <div class="stg-n" data-count="25">0</div>
+      <div class="stg-n" data-count="10" data-suffix="+">0+</div>
       <div class="stg-l en">Cities Served</div><div class="stg-l ne np">शहर सेवित</div>
     </div>
   </div>
@@ -3503,12 +5123,15 @@ body:not(.admin-mode) .mob-cta .mc2{
 <!-- ═══ PROJECT SHOWCASE VIDEO (compact premium card) ═══ -->
 <section class="psv-sec" id="project-showcase" aria-labelledby="psv-heading">
   <div class="psv-wrap">
-    <div class="psv-card">
-      <video class="psv-vid" autoplay muted loop playsinline preload="metadata" poster="" aria-label="Prerak project showcase video">
+    <div class="psv-card" id="psvCard">
+      <video class="psv-vid" id="psvVid" autoplay muted loop playsinline preload="metadata" poster="" aria-label="Prerak project showcase video"
+        onerror="document.getElementById('project-showcase').style.display='none'">
         <source src="./showcase.mp4" type="video/mp4">
         <source src="./video/showcase.mp4" type="video/mp4">
         <source src="./assets/showcase.mp4" type="video/mp4">
       </video>
+      <!-- Fallback image shown while / if video fails -->
+      <div class="psv-fallback" id="psvFallback" style="display:none;position:absolute;inset:0;background:linear-gradient(135deg,#0a0704 0%,#1a140d 100%);z-index:0;"></div>
       <div class="psv-overlay" aria-hidden="true"></div>
       <div class="psv-content">
         <div class="psv-badge">★ <span class="en">PROJECT SHOWCASE</span><span class="ne np">परियोजना झलक</span></div>
@@ -3517,13 +5140,36 @@ body:not(.admin-mode) .mob-cta .mc2{
         <p class="psv-sub en">Modern construction, interior, UPVC, aluminum, gypsum, renovation and complete building solutions in Nepal.</p>
         <p class="psv-sub ne np">नेपालमा आधुनिक निर्माण, इन्टेरियर, UPVC, एल्युमिनियम, जिप्सम, पुनर्निर्माण र सम्पूर्ण भवन समाधान।</p>
         <div class="psv-acts">
-          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var v=document.querySelector('.psv-vid');if(!v)return;try{if(v.requestFullscreen)v.requestFullscreen();else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();v.muted=false;v.play();}catch(e){}})()">▶ <span class="en">Watch Full</span><span class="ne np">पूरा हेर्नुस्</span></button>
+          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var v=document.getElementById('psvVid');if(!v)return;try{if(v.requestFullscreen)v.requestFullscreen();else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();v.muted=false;v.play();}catch(e){}})()">▶ <span class="en">Watch Full</span><span class="ne np">पूरा हेर्नुस्</span></button>
           <button class="psv-btn psv-btn-sec" type="button" onclick="(function(){var m=document.getElementById('quote-modal');if(m&&typeof openQuote==='function'){openQuote();}else if(m){m.classList.add('open');}else{location.hash='#contact';}})()">📞 <span class="en">Get Free Quote</span><span class="ne np">निःशुल्क कोट</span></button>
         </div>
       </div>
     </div>
   </div>
 </section>
+<script>
+// Hide video showcase section if no source loads
+(function(){
+  var vid = document.getElementById('psvVid');
+  var sec = document.getElementById('project-showcase');
+  var fallback = document.getElementById('psvFallback');
+  if(!vid || !sec) return;
+  var sources = vid.querySelectorAll('source');
+  var errCount = 0;
+  function onSrcError(){ errCount++; if(errCount >= sources.length){ sec.style.display='none'; } }
+  sources.forEach(function(s){ s.addEventListener('error', onSrcError); });
+  vid.addEventListener('error', function(){ sec.style.display='none'; });
+  // If video can play, ensure it's shown; reveal fallback bg while buffering
+  vid.addEventListener('canplay', function(){ if(fallback) fallback.style.display='none'; });
+  vid.addEventListener('waiting', function(){ if(fallback) fallback.style.display='block'; });
+  // Timeout: if no canplay within 3s and no video, hide section
+  setTimeout(function(){
+    if(vid.readyState === 0){
+      sec.style.display='none';
+    }
+  }, 3500);
+})();
+</script>
 
 <!-- SERVICES -->
 <section class="sec svbg" id="services">
@@ -6429,8 +8075,6 @@ const ACTS = [
   {ic:'🎊',en:'<b>50+ projects</b> completed this year — Thank you Nepal!',ne:'<b>५०+ परियोजना</b> यस वर्ष सम्पन्न — धन्यवाद नेपाल!',tt:'1 hr ago'}
 ];
 
-
-
 // ═══ SAFE ARRAY / OBJECT HELPERS ═══
 const _arr  = v => (Array.isArray(v) ? v : []);
 const _obj  = v => (v && typeof v === 'object' && !Array.isArray(v) ? v : {});
@@ -7129,33 +8773,98 @@ setInterval(updateLiveTip, 60000); // every minute
 
 // ═══ HERO SLIDESHOW ═══
 function initHero(){
-  const imgs=[
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1400&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1400&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&auto=format&fit=crop'
+  // Each entry: [primary Unsplash, picsum fallback] — dual CDN for reliability
+  const imgSets=[
+    // 0 — Building Construction / RCC
+    ['https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1040/1600/900'],
+    // 1 — Modern Residential Villa
+    ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/164/1600/900'],
+    // 2 — Interior Living Room
+    ['https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1060/1600/900'],
+    // 3 — UPVC Glass Windows / Aluminum
+    ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1035/1600/900'],
+    // 4 — Modular Kitchen Premium
+    ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/431/1600/900'],
+    // 5 — Gypsum False Ceiling
+    ['https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1073/1600/900'],
+    // 6 — Bedroom Interior
+    ['https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1080/1600/900'],
+    // 7 — Renovation / Premium Finish
+    ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/116/1600/900'],
+    // 8 — Solar / Rooftop
+    ['https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/1/1600/900'],
+    // 9 — Bathroom / Tiling
+    ['https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&auto=format&fit=crop&q=80',
+     'https://picsum.photos/id/106/1600/900']
   ];
-  // Use admin-saved services if available, fallback to SVCS constants
-  const srcSvcs = (D&&Array.isArray(D.services)&&D.services.length) ? D.services : _arr(typeof SVCS!=='undefined'?SVCS:[]);
-  const svcsH = srcSvcs.map(s=>({
-    ico:  s.ico||'🏗️',
-    nm:   s.nm||s.name||'Construction',
+
+  // If admin has saved a custom hero bg, prepend it
+  if(D && D.settings && D.settings.heroBg){
+    imgSets.unshift([D.settings.heroBg, D.settings.heroBg]);
+  }
+
+  const srcSvcs=(D&&Array.isArray(D.services)&&D.services.length)?D.services:_arr(typeof SVCS!=='undefined'?SVCS:[]);
+  const svcsH=srcSvcs.map(s=>({
+    ico:s.ico||'🏗️',nm:s.nm||s.name||'Construction',
     nm_ne:s.ne||s.nm||s.name||'निर्माण',
-    desc: (s.desc||s.description||'Premium construction services.').substring(0,80)+'...'
+    bg:s.bg||imgSets[0][0],
+    desc:(s.desc||s.description||'Premium construction services.').substring(0,80)+'...'
   }));
+
   const c=document.getElementById('hSlides');
   const dots=document.getElementById('hDots');
-  c.innerHTML=imgs.map((src,i)=>`<div class="hsl${i===0?' active':''}" style="background-image:url('${src}')"></div>`).join('');
-  dots.innerHTML=imgs.map((_,i)=>`<div class="hdot${i===0?' active':''}" onclick="setHSlide(${i})"></div>`).join('');
+  if(!c) return;
+
+  // Load each slide — try primary, on error switch to fallback
+  c.innerHTML=imgSets.map(([primary, fallback],i)=>`
+    <div class="hsl${i===0?' active':''}"
+         style="background-image:url('${primary}');background-size:cover;background-position:center;"
+         data-primary="${primary}" data-fallback="${fallback}">
+    </div>`).join('');
+
+  // Validate each slide: preload image, swap to fallback if primary fails
+  c.querySelectorAll('.hsl').forEach(slide=>{
+    const primary=slide.dataset.primary;
+    const fallback=slide.dataset.fallback;
+    if(!primary) return;
+    const testImg=new Image();
+    testImg.onload=()=>{
+      // Primary loaded — ensure background is set
+      slide.style.backgroundImage=`url('${primary}')`;
+    };
+    testImg.onerror=()=>{
+      // Try fallback
+      const fb=new Image();
+      fb.onload=()=>{ slide.style.backgroundImage=`url('${fallback}')`; };
+      fb.onerror=()=>{
+        // Both failed — use service-matched gradient with pattern
+        const hues=['135deg,#1a2e1a,#0d1a0d','160deg,#1a1a2e,#0a0a1e',
+                    '140deg,#2e1a0a,#1a0d00','120deg,#1e2a1e,#0d160d'];
+        const g=hues[parseInt(slide.dataset.primary.replace(/\D/g,'').slice(-1)||'0')%hues.length];
+        slide.style.backgroundImage=`linear-gradient(${g})`;
+      };
+      fb.src=fallback;
+    };
+    testImg.src=primary;
+  });
+
+  if(dots) dots.innerHTML=imgSets.map((_,i)=>`<div class="hdot${i===0?' active':''}" onclick="setHSlide(${i})"></div>`).join('');
   heroSlide=0; cycleHSvc(svcsH,0);
   if(hSlideInt) clearInterval(hSlideInt);
   hSlideInt=setInterval(()=>{
-    heroSlide=(heroSlide+1)%imgs.length;
+    heroSlide=(heroSlide+1)%imgSets.length;
     setHSlide(heroSlide);
-    cycleHSvc(svcsH, heroSlide%svcsH.length);
-  },5000);
+    cycleHSvc(svcsH,heroSlide%svcsH.length);
+  },6000);
 }
 function setHSlide(i){
   heroSlide=i;
@@ -7167,11 +8876,20 @@ function cycleHSvc(svcs,i){
   const nm=document.getElementById('hcNm');
   const desc=document.getElementById('hcDesc');
   const ico=document.getElementById('hcIco');
+  const thumb=document.getElementById('hcThumb');
+  const icoBadge=document.getElementById('hcIcoBadge');
   if(!nm||!desc||!ico) return;
-  // Fade out
   nm.classList.add('svc-out'); desc.classList.add('svc-out');
   setTimeout(()=>{
     ico.textContent=s.ico;
+    if(icoBadge) icoBadge.textContent=s.ico;
+    if(thumb && s.bg){
+      thumb.style.opacity='0';
+      setTimeout(()=>{
+        thumb.style.backgroundImage=`url('${s.bg}')`;
+        thumb.style.opacity='1';
+      },250);
+    }
     nm.innerHTML=`<span class="en">${s.nm}</span><span class="ne np" style="font-family:'Noto Sans Devanagari',serif">${s.nm_ne||s.nm}</span>`;
     desc.innerHTML=`<span class="en">${s.desc}</span>`;
     nm.classList.remove('svc-out'); desc.classList.remove('svc-out');
@@ -7402,9 +9120,26 @@ function initScrollNav(){
 
 // ═══ MOBILE MENU ═══
 function toggleMenu(){
-  const nl=document.getElementById('navLinks');
-  nl.classList.toggle('mob');
-  nl.classList.toggle('show');
+  const nl = document.getElementById('navLinks');
+  const bd = document.getElementById('navBackdrop');
+  const tog = document.getElementById('menuTog');
+  const isOpen = nl && nl.classList.contains('open');
+  if(isOpen){ closeMenu(); }
+  else {
+    if(nl){ nl.classList.add('open'); }
+    if(bd){ bd.classList.add('show'); }
+    if(tog){ tog.classList.add('active'); tog.setAttribute('aria-expanded','true'); }
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeMenu(){
+  const nl = document.getElementById('navLinks');
+  const bd = document.getElementById('navBackdrop');
+  const tog = document.getElementById('menuTog');
+  if(nl){ nl.classList.remove('open','mob','show'); }
+  if(bd){ bd.classList.remove('show'); }
+  if(tog){ tog.classList.remove('active'); tog.setAttribute('aria-expanded','false'); }
+  document.body.style.overflow = '';
 }
 
 // ═══ REVEAL ON SCROLL ═══
@@ -7428,12 +9163,13 @@ function reReveal(parent){
 function animCtr(el){
   if(el._anim) return; el._anim=true;
   const target=parseInt(el.dataset.count)||0;
-  const dur=2000, step=20;
+  const suffix=el.dataset.suffix||(el.textContent.includes('+')?'+':'');
+  const dur=1800, step=20;
   let cur=0;
   const tm=setInterval(()=>{
     cur+=target/(dur/step);
     if(cur>=target){cur=target;clearInterval(tm);}
-    el.textContent=Math.floor(cur)+(el.textContent.includes('+')?'+':'');
+    el.textContent=Math.floor(cur)+suffix;
   },step);
 }
 
@@ -9465,8 +11201,6 @@ if(localStorage.getItem('prerak_fver')!==_FILE_VER){
   localStorage.setItem('prerak_fver',_FILE_VER);
 }
 
-
-
 // ═══ RENDER PRICING SECTION (Public Website) ═══
 function renderPricingSection() {
   // Pre-rendered pricing exists — only re-render if admin changed pricing data
@@ -9635,8 +11369,6 @@ function refreshVCardContent(){
   }
 })();
 
-
-
 // ═══ QUOTE MODAL — Image Upload & Preview ═══
 let _qmImages = []; // Stores File objects for sharing
 
@@ -9781,9 +11513,6 @@ window.closeQuoteModal = function(){
   const inp = document.getElementById('qm-imgs');
   if(inp) inp.value = '';
 };
-
-
-
 
 // ═══ DATA BACKUP & RESTORE ═══
 function exportAllData(){
@@ -9985,9 +11714,6 @@ function showTplInfo(key){
   showToast('📋 '+t.name+' — '+t.desc, 4000);
 }
 
-
-
-
 // ═══ MAIL BRANDING ═══
 function saveMailBranding(){
   if(!D.mailBrand) D.mailBrand = {};
@@ -10020,9 +11746,6 @@ if(typeof _origApSec2 === 'function'){
   };
 }
 
-
-
-
 // ═══ DATA MIGRATION (auto-fix old data) ═══
 (function migrateDataV3(){
   if(!D.pricing) return;
@@ -10037,9 +11760,6 @@ if(typeof _origApSec2 === 'function'){
   });
   if(needsSave){ saveData(); }
 })();
-
-
-
 
 // ═══ RENDER LIVE NOTICES IN CALENDAR (Hamro Patro Style) ═══
 function renderCalendarLiveNotices(){
@@ -10082,9 +11802,6 @@ if(typeof _origRenderSite === 'function'){
 
 // Also refresh notices every 60s in case dates pass
 setInterval(() => { try{ renderCalendarLiveNotices(); }catch(e){} }, 60000);
-
-
-
 
 // ═══ VISITING CARD ADMIN ═══
 function loadVCard(){
@@ -10639,9 +12356,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 1000);
 })();
 
-
-
-
 // ═══ HERO MIGRATION (auto update to construction-focused content) ═══
 (function migrateHeroV4(){
   if(!D.hero) return;
@@ -10656,9 +12370,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
-
-
-
 // ═══ COMPONENTS MIGRATION (construction-focus reset) ═══
 (function migrateComponentsV5(){
   if(!D._compMigratedV5){
@@ -10671,9 +12382,6 @@ document.addEventListener('DOMContentLoaded', () => {
     saveData();
   }
 })();
-
-
-
 
 // ═══ APPLY CONSTRUCTION-FOCUS ON FIRST LOAD ═══
 (function applyConstructionFocus(){
@@ -10698,9 +12406,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
-
-
-
 // ═══ SAFETY: Periodic body unlock check (prevent stuck overlay) ═══
 setInterval(function(){
   try{
@@ -10720,8 +12425,6 @@ setInterval(function(){
   }catch(e){}
 }, 3000);
 
-
-
 // ═══ HERO MIGRATION V6 — Updated subtitle per latest spec ═══
 (function migrateHeroV6(){
   if(!D._heroMigratedV6){
@@ -10732,8 +12435,6 @@ setInterval(function(){
     saveData();
   }
 })();
-
-
 
 // ═══════════════════════════════════════════════════════════
 // ROBUST CLICK HANDLER — Event delegation backup
@@ -10766,8 +12467,6 @@ document.addEventListener('click', function(e){
   } catch(err){ console.error('Click handler error:', err); }
 }, true);
 
-
-
 // ═══════════════════════════════════════════════════════════
 // FORCED RE-RENDER ON LOAD — Ensures pricing/FAQ work
 // ═══════════════════════════════════════════════════════════
@@ -10793,8 +12492,6 @@ window.addEventListener('load', () => {
   setTimeout(forceRenderPublicSections, 100);
 });
 
-
-
 // ═══════════════════════════════════════════════════════════
 // EXPOSE KEY FUNCTIONS GLOBALLY (window scope)
 // Ensures onclick="openQuoteModal()" works regardless of scope
@@ -10805,8 +12502,6 @@ window.openSvm = openSvm;
 window.closeSvm = closeSvm;
 window.submitSvmQ = submitSvmQ;
 window.openFullQuoteFromSvm = openFullQuoteFromSvm;
-
-
 
 // ═══════════════════════════════════════════════════════════
 // IMMEDIATE PUBLIC SECTION RENDER — Run multiple times for safety
@@ -10836,8 +12531,6 @@ window.openFullQuoteFromSvm = openFullQuoteFromSvm;
   setTimeout(tryRender, 1500);
   window.addEventListener('load', tryRender);
 })();
-
-
 
 // ═══ CONTACT FORM SUBMIT (handles both old and new field IDs) ═══
 function submitForm(e){
@@ -10880,8 +12573,6 @@ function submitForm(e){
   }
 }
 
-
-
 // ═══ RENDER VISITING CARD SECTION (Public) ═══
 function renderVCSection(){
   // Visiting card is static HTML — just refresh content from D.card
@@ -10891,8 +12582,6 @@ function renderVCSection(){
     document.body.classList.add('show-vc-on');
   }
 }
-
-
 
 // ═══════════════════════════════════════════════════════════
 // FINAL SAFETY NET — Guarantee all public sections render
@@ -11620,6 +13309,22 @@ function applyLogo(){
       officialImg.style.display = 'none';
       const fb = document.getElementById('logo-icon-fallback');
       if(fb) fb.style.display = 'flex';
+    }
+  }
+
+  // Keep the floating 3D popout preview in sync with the official logo
+  const popoutImg = document.getElementById('logo-popout-img');
+  if(popoutImg){
+    if(officialSrc){
+      popoutImg.src = officialSrc;
+      popoutImg.style.display = 'block';
+      const pfb = popoutImg.parentElement && popoutImg.parentElement.querySelector('.logo-popout-fallback');
+      if(pfb) pfb.style.display = 'none';
+    } else {
+      popoutImg.removeAttribute('src');
+      popoutImg.style.display = 'none';
+      const pfb = popoutImg.parentElement && popoutImg.parentElement.querySelector('.logo-popout-fallback');
+      if(pfb) pfb.style.display = 'flex';
     }
   }
 
