@@ -7955,13 +7955,17 @@ body:not(.admin-mode) .lang-b:hover{
           <a href="https://emailjs.com" target="_blank" rel="noopener" class="ejs-link">emailjs.com →</a>
         </div>
         <div class="ejs-desc">EmailJS को free plan मा monthly 200 emails पाइन्छ। Setup गरेपछि admin login OTP directly email मा जान्छ।</div>
+        <div id="ejs-config-status" style="display:none;padding:8px 12px;border-radius:8px;border:1px solid;font-size:.72rem;font-weight:600;margin-bottom:10px;"></div>
         <div class="afr">
-          <div id="ejs-config-status" style="display:none;padding:8px 12px;border-radius:8px;border:1px solid;font-size:.72rem;font-weight:600;margin-bottom:12px;"></div>
-        <div class="afg"><label>SERVICE ID</label><input type="text" id="ejs-sid" placeholder="service_xxxxxxx" value="service_bvxfr3q"></div>
-          <div class="afg"><label>TEMPLATE ID</label><input type="text" id="ejs-tid" placeholder="template_xxxxxxx" value="template_xs9x16u"></div>
+          <div class="afg"><label>SERVICE ID</label><input type="text" id="ejs-sid" placeholder="service_xxxxxxx (from emailjs.com)"></div>
+          <div class="afg"><label>TEMPLATE ID</label><input type="text" id="ejs-tid" placeholder="template_xxxxxxx"></div>
         </div>
-        <div class="afg"><label>PUBLIC KEY</label><input type="text" id="ejs-pk" placeholder="EmailJS Public Key" value="fpml8phlCtNwoA7rZ"></div>
-        <div class="afg" style="margin-top:8px;"><label>ADMIN EMAIL (recipient for OTP)</label><input type="email" id="ejs-adm-email" placeholder="admin@example.com"><div style="font-size:.62rem;color:#6b7280;margin-top:3px;">OTP login codes will be sent to this email address.</div></div>
+        <div class="afg"><label>PUBLIC KEY (User ID)</label><input type="text" id="ejs-pk" placeholder="Your EmailJS Public Key"></div>
+        <div class="afg" style="margin-top:8px;">
+          <label>ADMIN EMAIL (OTP received here)</label>
+          <input type="email" id="ejs-adm-email" placeholder="admin@gmail.com">
+          <div style="font-size:.62rem;color:#6b7280;margin-top:3px;">OTP login codes will be sent to this email address.</div>
+        </div>
         <div style="display:flex;align-items:flex-start;gap:8px;margin-top:11px;background:rgba(220,38,38,.05);border:1px solid rgba(220,38,38,.25);border-radius:8px;padding:10px 12px;">
           <input type="checkbox" id="ejs-debug" style="width:16px;height:16px;cursor:pointer;margin-top:2px;flex-shrink:0;">
           <label for="ejs-debug" style="font-size:.74rem;font-weight:700;color:#dc2626;cursor:pointer;flex:1;line-height:1.5;">
@@ -7971,11 +7975,19 @@ body:not(.admin-mode) .lang-b:hover{
         </div>
         <div style="display:flex;gap:9px;align-items:center;margin-top:12px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveEmailJS()" style="background:linear-gradient(135deg,#16a34a,#15803d);">💾 Save EmailJS</button>
+          <button class="cbtn" onclick="clearEmailJSFields()">🗑️ Clear All</button>
           <button class="cbtn" onclick="sendTestOTP()">📧 Send Test OTP</button>
-          <div id="ejs-test-status" style="display:none;font-size:.72rem;margin-top:8px;padding:8px 12px;border-radius:8px;border:1px solid;line-height:1.6;font-weight:500;"></div>
+          <div id="ejs-test-status" style="display:none;font-size:.72rem;margin-top:8px;padding:8px 12px;border-radius:8px;border:1px solid;line-height:1.6;font-weight:500;width:100%;"></div>
           <span class="afok" id="ejs-ok">✅ Saved!</span>
         </div>
-        <div class="ejs-tip">Setup steps: 1) emailjs.com मा free account बनाउनुस् 2) Email service add गर्नुस् (Gmail) 3) Template बनाउनुस् — variables: <code>to_email</code>, <code>otp_code</code>, <code>company</code> 4) IDs माथि paste गर्नुस्. <br>If you see <b>"Account not found"</b>, your Public Key/Service ID may belong to a deleted account — verify on emailjs.com.</div>
+        <div class="ejs-tip" style="margin-top:12px;">
+          <b>Setup steps:</b><br>
+          1️⃣ <a href="https://emailjs.com" target="_blank" style="color:#16a34a;">emailjs.com</a> मा free account बनाउनुस्<br>
+          2️⃣ Email Service add गर्नुस् (Gmail) → Service ID copy गर्नुस्<br>
+          3️⃣ Email Template बनाउनुस् → variables: <code>to_email</code>, <code>otp_code</code>, <code>company</code> → Template ID copy<br>
+          4️⃣ Account → API Keys → Public Key copy गर्नुस्<br>
+          5️⃣ माथिका fields मा paste गर्नुस् → Save EmailJS → Send Test OTP गर्नुस्
+        </div>
       </div>
 
       <!-- Nepali Calendar Preview -->
@@ -10351,17 +10363,16 @@ function saveEmailJS(){
   const admEm = v('ejs-adm-email');
   const debug = !!(document.getElementById('ejs-debug')||{}).checked;
 
-  // Refuse to save known bad placeholder/test credentials
-  const BAD = ['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'];
-  if(BAD.includes(sid)||BAD.includes(tid)||BAD.includes(pk)){
-    if(typeof showToast==='function') showToast('⚠️ These are example credentials. Enter your own EmailJS credentials from emailjs.com.',5000);
+  // Validation — just require non-empty if user is trying to set real credentials
+  if(!sid && !tid && !pk){
+    if(typeof showToast==='function') showToast('⚠️ Enter at least Service ID, Template ID and Public Key from emailjs.com',4000);
     return;
   }
 
   D.emailjs        = D.emailjs || {};
-  D.emailjs.sid    = sid;
-  D.emailjs.tid    = tid;
-  D.emailjs.pk     = pk;
+  if(sid) D.emailjs.sid    = sid;
+  if(tid) D.emailjs.tid    = tid;
+  if(pk)  D.emailjs.pk     = pk;
   D.emailjs.debug  = debug;
 
   // Sync adminEmail from this form too
@@ -10377,11 +10388,25 @@ function saveEmailJS(){
   _ejsReady   = false;
   _ejsLoading = null;
   _ejsInit()
-    .then(()=>{ if(typeof showToast==='function') showToast('✅ EmailJS saved! Send Test OTP to verify.',3500); })
-    .catch(()=>{ if(typeof showToast==='function') showToast('✅ EmailJS credentials saved.',3000); });
+    .then(()=>{ if(typeof showToast==='function') showToast('✅ EmailJS saved! Click "Send Test OTP" to verify.',3500); })
+    .catch(()=>{ if(typeof showToast==='function') showToast('✅ EmailJS credentials saved. Click Send Test OTP.',3000); });
   showOk('ejs-ok');
-  // Refresh status banner
   setTimeout(populateSettings, 100);
+}
+
+function clearEmailJSFields(){
+  if(!confirm('Clear all EmailJS credentials?')) return;
+  D.emailjs = {sid:'',tid:'',pk:'',debug:false};
+  saveData();
+  ['ejs-sid','ejs-tid','ejs-pk','ejs-adm-email'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.value='';
+  });
+  const dbg=document.getElementById('ejs-debug');
+  if(dbg) dbg.checked=false;
+  const st=document.getElementById('ejs-test-status');
+  if(st) st.style.display='none';
+  if(typeof showToast==='function') showToast('🗑️ EmailJS credentials cleared.',2500);
 }
 async function sendTestOTP(){
   // Uses exact same D.emailjs config as login OTP — validates the full chain
@@ -10621,18 +10646,9 @@ function populateSocial(){
   if(document.getElementById('sm-tg')) document.getElementById('sm-tg').value=s.tg||'';
   // Load ONLY real saved values — no hardcoded defaults that corrupt localStorage
   const ejs = _obj(D.emailjs);
-  const BAD = ['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'];
-  const ejsSid = BAD.includes(ejs.sid) ? '' : (ejs.sid||'');
-  const ejsTid = BAD.includes(ejs.tid) ? '' : (ejs.tid||'');
-  const ejsPk  = BAD.includes(ejs.pk)  ? '' : (ejs.pk ||'');
-  if(ejsSid !== ejs.sid || ejsTid !== ejs.tid || ejsPk !== ejs.pk){
-    // Purge bad default values that may have been saved previously
-    D.emailjs = D.emailjs || {};
-    D.emailjs.sid = ejsSid;
-    D.emailjs.tid = ejsTid;
-    D.emailjs.pk  = ejsPk;
-    saveData();
-  }
+  const ejsSid = ejs.sid||'';
+  const ejsTid = ejs.tid||'';
+  const ejsPk  = ejs.pk ||'';
   const _sv = (id,val) => { const el=document.getElementById(id); if(el) el.value=val; };
   _sv('ejs-sid',      ejsSid);
   _sv('ejs-tid',      ejsTid);
