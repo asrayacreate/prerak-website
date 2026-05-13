@@ -1973,6 +1973,8 @@ body.hide-vc #visiting-card { display:none; }
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+  <!-- html2canvas: capture visiting card as real image for download/share -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <style>
 /* ═══ PROFESSIONAL POLISH ═══ */
 
@@ -4838,6 +4840,24 @@ body:not(.admin-mode) .feat-card:hover{
 }
 /* End corporate contact form fix */
 
+/* Visiting card — Download button style */
+body:not(.admin-mode) .vb-dl{
+  background:linear-gradient(135deg, #d4a64a, #a87a26) !important;
+  color:#1a1208 !important;
+  border:1px solid rgba(240,200,120,.4) !important;
+  font-weight:700 !important;
+}
+body:not(.admin-mode) .vb-dl:hover{
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 20px rgba(212,166,74,.4) !important;
+}
+body:not(.admin-mode) .vb-sh{
+  background:linear-gradient(135deg, #25d366, #128c7e) !important;
+  color:#fff !important;
+  border:1px solid rgba(37,211,102,.4) !important;
+  font-weight:700 !important;
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    HEADER FINAL — Right-side mobile drawer · Phone/WA in nav-r
    Logo cleaned · Burger animated · Backdrop overlay · Premium glass
@@ -5838,7 +5858,8 @@ body:not(.admin-mode) .lang-b:hover{
         <button class="vc-btn vb-fl" onclick="flipVCard()">🔄 <span class="en">Flip</span><span class="ne np">पल्टाउनुस्</span></button>
         <button class="vc-btn vb-hl" id="vcHoloBtn" onclick="toggleVHolo()">🌈 Holo</button>
         <a href="tel:9801069733" class="vc-btn vb-cl">📞 <span class="en">Call</span><span class="ne np">फोन</span></a>
-        <a href="https://wa.me/9779801069733" target="_blank" rel="noopener" class="vc-btn vb-sh">💬 <span class="en">Share</span><span class="ne np">शेयर</span></a>
+        <button class="vc-btn vb-dl" onclick="vcDownloadCard()" title="Download card as image">⬇️ <span class="en">Download</span><span class="ne np">डाउनलोड</span></button>
+        <button class="vc-btn vb-sh" onclick="vcShareCard()" title="Share card image via WhatsApp / Save">💬 <span class="en">Share</span><span class="ne np">शेयर</span></button>
       </div>
     </div>
   </div>
@@ -8532,27 +8553,58 @@ function init(){
 // ═══ DATA PERSIST ═══
 function loadData(){
   try{
-    const raw = localStorage.getItem(STORE_KEY);
+    // Try primary key, then alias key
+    const raw = localStorage.getItem(STORE_KEY) || localStorage.getItem('PRERAK_ADMIN_DATA_V1');
     const saved = raw ? JSON.parse(raw) : {};
+
+    // Restore logo sentinel back to the embedded base64 default
+    const DEFAULT_LOGO_SENTINEL = '__PRERAK_DEFAULT_LOGO__';
+    if(saved.officialLogo === DEFAULT_LOGO_SENTINEL && typeof PRERAK_LOGO_DEFAULT !== 'undefined'){
+      saved.officialLogo = PRERAK_LOGO_DEFAULT;
+    }
+    if(saved.logo && saved.logo.value === DEFAULT_LOGO_SENTINEL && typeof PRERAK_LOGO_DEFAULT !== 'undefined'){
+      saved.logo = Object.assign({}, saved.logo, {value: PRERAK_LOGO_DEFAULT});
+    }
+
+    // Merge: saved data wins for everything (shallow for primitives + arrays)
     D = Object.assign({}, DEFAULT_DATA, saved);
-    // Deep-validate all critical arrays — never let them be undefined/non-array
-    const ensureArr = (key) => {
-      if(!Array.isArray(D[key]) || D[key].length === 0){
-        D[key] = Array.isArray(DEFAULT_DATA[key]) ? JSON.parse(JSON.stringify(DEFAULT_DATA[key])) : [];
-      }
-    };
+
+    // Deep-merge objects so sub-keys from DEFAULT_DATA fill in if missing
     const ensureObj = (key) => {
       if(!D[key] || typeof D[key] !== 'object' || Array.isArray(D[key])){
         D[key] = DEFAULT_DATA[key] ? JSON.parse(JSON.stringify(DEFAULT_DATA[key])) : {};
+      } else {
+        // Fill missing sub-keys from defaults WITHOUT overwriting existing
+        const def = DEFAULT_DATA[key] || {};
+        Object.keys(def).forEach(k => {
+          if(D[key][k] === undefined) D[key][k] = def[k];
+        });
       }
     };
+
+    // Arrays: only fall back to DEFAULT_DATA if key is truly absent (null/undefined)
+    // DO NOT reset just because array is empty — empty = user deleted everything intentionally
+    const ensureArr = (key) => {
+      if(!Array.isArray(D[key])){
+        // Key was missing from saved data — use default
+        D[key] = Array.isArray(DEFAULT_DATA[key]) ? JSON.parse(JSON.stringify(DEFAULT_DATA[key])) : [];
+      }
+      // length === 0 is valid (user deleted all items) — do NOT overwrite
+    };
+
     ensureArr('notices');
     ensureArr('pricing');
     ensureArr('testimonials');
     ensureArr('logoGallery');
-    if(!D.officialLogo && D.logo && D.logo.value && D.logo.type==='image') D.officialLogo = D.logo.value;
     ensureArr('leads');
     ensureArr('ticker');
+    ensureArr('imgs');
+    ensureArr('vc11');
+
+    if(!D.officialLogo && D.logo && D.logo.value && D.logo.type==='image') D.officialLogo = D.logo.value;
+    // If still no officialLogo, use embedded default
+    if(!D.officialLogo && typeof PRERAK_LOGO_DEFAULT !== 'undefined') D.officialLogo = PRERAK_LOGO_DEFAULT;
+
     ensureObj('settings');
     ensureObj('card');
     ensureObj('contact');
@@ -8560,13 +8612,15 @@ function loadData(){
     ensureObj('hero');
     ensureObj('components');
     ensureObj('firebase');
+
     D.brandVideo = (D.brandVideo && typeof D.brandVideo === 'object') ? D.brandVideo : {url:'',type:'youtube'};
-    // Merge objects so no sub-key is missing
+
     const dfComp = DEFAULT_DATA.components || {};
     Object.keys(dfComp).forEach(k=>{ if(D.components[k]===undefined) D.components[k]=dfComp[k]; });
     if(D.components.showVisitingCard===undefined) D.components.showVisitingCard=true;
     if(D.components.showFAQ===undefined) D.components.showFAQ=true;
     if(D.components.showPricing===undefined) D.components.showPricing=true;
+
     _log('loadData ok, notices:', D.notices.length, 'pricing:', D.pricing.length);
   }catch(e){
     _err('loadData failed:', e);
@@ -8608,8 +8662,37 @@ async function _idbLoad(){
 
 function saveData(){
   try{
-    const json = JSON.stringify(D);
-    localStorage.setItem(STORE_KEY, json);
+    // Clone D but replace the embedded base64 logo with a sentinel to avoid localStorage quota issues
+    const toSave = JSON.parse(JSON.stringify(D));
+    const DEFAULT_LOGO_SENTINEL = '__PRERAK_DEFAULT_LOGO__';
+    if(toSave.officialLogo && typeof PRERAK_LOGO_DEFAULT !== 'undefined' &&
+       toSave.officialLogo === PRERAK_LOGO_DEFAULT){
+      toSave.officialLogo = DEFAULT_LOGO_SENTINEL;
+    }
+    if(toSave.logo && toSave.logo.value && typeof PRERAK_LOGO_DEFAULT !== 'undefined' &&
+       toSave.logo.value === PRERAK_LOGO_DEFAULT){
+      toSave.logo = Object.assign({}, toSave.logo, {value: DEFAULT_LOGO_SENTINEL});
+    }
+    const json = JSON.stringify(toSave);
+    try{
+      localStorage.setItem(STORE_KEY, json);
+      // Alias key so both old and new storage keys work
+      localStorage.setItem('PRERAK_ADMIN_DATA_V1', json);
+    }catch(quotaErr){
+      _err('localStorage quota exceeded — trying to free space', quotaErr);
+      // Try saving without logo data as last resort
+      try{
+        toSave.officialLogo = DEFAULT_LOGO_SENTINEL;
+        if(toSave.logo) toSave.logo = Object.assign({}, toSave.logo, {value: DEFAULT_LOGO_SENTINEL});
+        const compactJson = JSON.stringify(toSave);
+        localStorage.setItem(STORE_KEY, compactJson);
+        localStorage.setItem('PRERAK_ADMIN_DATA_V1', compactJson);
+        if(typeof showToast === 'function') showToast('⚠️ Storage near full — logo saved as default', 3000);
+      }catch(e2){
+        _err('saveData: localStorage completely full', e2);
+        if(typeof showToast === 'function') showToast('❌ Save failed — browser storage full. Please clear browser data.', 5000);
+      }
+    }
     _idbSave(json);
     _showSaveIndicator();
     // Debounced Firestore sync
@@ -8635,6 +8718,60 @@ function _showSaveIndicator(){
 }
 
 // Enhanced loadData with IDB fallback
+// ═══════════════════════════════════════════════════════════════════
+// ADMIN PERSISTENCE API — required alias functions
+// All delegate to the core save/load system above
+// ═══════════════════════════════════════════════════════════════════
+
+/** Save all admin data persistently. Call after every admin action. */
+function saveAdminData(){ saveData(); }
+
+/** Load admin data from localStorage on startup. */
+function loadAdminData(){ loadData(); }
+
+/** Apply loaded admin data to the public page + admin panel. */
+function applyAdminData(){
+  try{ renderSite(); }catch(e){}
+  try{ applyLogo(); }catch(e){}
+  try{ updateNoticeBar(); }catch(e){}
+  try{ renderVC11(); }catch(e){}
+  try{ if(typeof renderImgMgr==='function') renderImgMgr(); }catch(e){}
+  try{ if(isAdmin){ populateAdminForms(); renderDashStats2(); } }catch(e){}
+}
+
+/** Export current D object as JSON backup string. */
+function backupAdminData(){
+  try{
+    const DEFAULT_LOGO_SENTINEL = '__PRERAK_DEFAULT_LOGO__';
+    const copy = JSON.parse(JSON.stringify(D));
+    if(copy.officialLogo && typeof PRERAK_LOGO_DEFAULT !== 'undefined' && copy.officialLogo === PRERAK_LOGO_DEFAULT) copy.officialLogo = DEFAULT_LOGO_SENTINEL;
+    if(copy.logo && copy.logo.value === PRERAK_LOGO_DEFAULT) copy.logo = Object.assign({}, copy.logo, {value: DEFAULT_LOGO_SENTINEL});
+    const json = JSON.stringify(copy, null, 2);
+    const blob = new Blob([json], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'prerak_backup_' + new Date().toISOString().split('T')[0] + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    if(typeof showToast==='function') showToast('✅ Backup downloaded!', 2500);
+  }catch(e){ if(typeof showToast==='function') showToast('❌ Backup failed: '+e.message, 3000); }
+}
+
+/** Restore D from a JSON backup string and re-apply. */
+function restoreAdminData(jsonStr){
+  try{
+    const parsed = JSON.parse(jsonStr);
+    const DEFAULT_LOGO_SENTINEL = '__PRERAK_DEFAULT_LOGO__';
+    if(parsed.officialLogo === DEFAULT_LOGO_SENTINEL && typeof PRERAK_LOGO_DEFAULT !== 'undefined') parsed.officialLogo = PRERAK_LOGO_DEFAULT;
+    if(parsed.logo && parsed.logo.value === DEFAULT_LOGO_SENTINEL && typeof PRERAK_LOGO_DEFAULT !== 'undefined') parsed.logo = Object.assign({}, parsed.logo, {value: PRERAK_LOGO_DEFAULT});
+    D = Object.assign({}, DEFAULT_DATA, parsed);
+    saveAdminData();
+    applyAdminData();
+    if(typeof showToast==='function') showToast('✅ Restore complete!', 2500);
+  }catch(e){ if(typeof showToast==='function') showToast('❌ Restore failed: '+e.message, 3000); }
+}
+
 async function loadDataWithFallback(){
   loadData(); // try localStorage first
   // If localStorage empty/failed, try IDB
@@ -9009,7 +9146,341 @@ function toggleVHolo(){
     if(c._holoInt) clearInterval(c._holoInt);
     document.getElementById('vcHolo').style.background='';
   }
+
+// ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════
+// VISITING CARD — Canvas-drawn real image (no html2canvas needed)
+// Draws the actual card design, exports PNG, shares via Web Share API
+// ═══════════════════════════════════════════════════════════════════
 }
+
+function _buildVCardCanvas(){
+  return new Promise(function(resolve, reject){
+    var W=900, H=520;
+    var c=document.createElement('canvas');
+    c.width=W*2; c.height=H*2; // 2x for retina
+    var ctx=c.getContext('2d');
+    ctx.scale(2,2);
+
+    // ── Background ──────────────────────────────────────────────────
+    var bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'#fafaf8');
+    bg.addColorStop(0.5,'#f5f0e8');
+    bg.addColorStop(1,'#ede8de');
+    ctx.fillStyle=bg;
+    var r=22;
+    ctx.beginPath();
+    ctx.moveTo(r,0);ctx.lineTo(W-r,0);ctx.arcTo(W,0,W,r,r);
+    ctx.lineTo(W,H-r);ctx.arcTo(W,H,W-r,H,r);
+    ctx.lineTo(r,H);ctx.arcTo(0,H,0,H-r,r);
+    ctx.lineTo(0,r);ctx.arcTo(0,0,r,0,r);ctx.closePath();
+    ctx.fill();
+
+    // ── Outer gold border ───────────────────────────────────────────
+    ctx.strokeStyle='rgba(180,140,70,0.45)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(r,0);ctx.lineTo(W-r,0);ctx.arcTo(W,0,W,r,r);
+    ctx.lineTo(W,H-r);ctx.arcTo(W,H,W-r,H,r);
+    ctx.lineTo(r,H);ctx.arcTo(0,H,0,H-r,r);
+    ctx.lineTo(0,r);ctx.arcTo(0,0,r,0,r);ctx.closePath();
+    ctx.stroke();
+
+    // ── Inner inset line ───────────────────────────────────────────
+    ctx.strokeStyle='rgba(180,140,70,0.20)';
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(r+6,6);ctx.lineTo(W-r-6,6);ctx.arcTo(W-6,6,W-6,r+6,r-4);
+    ctx.lineTo(W-6,H-r-6);ctx.arcTo(W-6,H-6,W-r-6,H-6,r-4);
+    ctx.lineTo(r+6,H-6);ctx.arcTo(6,H-6,6,H-r-6,r-4);
+    ctx.lineTo(6,r+6);ctx.arcTo(6,6,r+6,6,r-4);ctx.closePath();
+    ctx.stroke();
+
+    // ── Left gold accent stripe ─────────────────────────────────────
+    var stripe=ctx.createLinearGradient(0,0,0,H);
+    stripe.addColorStop(0,'rgba(180,140,70,0)');
+    stripe.addColorStop(0.3,'rgba(180,140,70,0.35)');
+    stripe.addColorStop(0.7,'rgba(180,140,70,0.35)');
+    stripe.addColorStop(1,'rgba(180,140,70,0)');
+    ctx.fillStyle=stripe;
+    ctx.fillRect(0,0,6,H);
+
+    // ── Decorative horizontal lines ─────────────────────────────────
+    ctx.strokeStyle='rgba(180,140,70,0.22)';
+    ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(20,70); ctx.lineTo(W-20,70); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(20,H-55); ctx.lineTo(W-20,H-55); ctx.stroke();
+
+    // ── Company data from D ─────────────────────────────────────────
+    var nm   = (window.D&&D.company&&D.company.name)    || 'PRERAK';
+    var sub  = (window.D&&D.company&&D.company.sub)     || 'Multipurpose Pvt. Ltd.';
+    var ph1  = (window.D&&D.contact&&D.contact.p1)      || '9801069733';
+    var ph2  = (window.D&&D.contact&&D.contact.p2)      || '9855069733';
+    var em   = (window.D&&D.contact&&D.contact.em)      || 'asrayacreate.ac@gmail.com';
+    var addr = (window.D&&D.contact&&D.contact.addr)    || 'Hetauda-2, Makwanpur, Nepal';
+    var cardNm = (window.D&&D.card&&D.card.name)        || 'Management Team';
+    var cardDg = (window.D&&D.card&&D.card.desg)        || 'Director';
+
+    // ── Draw logo if available ──────────────────────────────────────
+    var logoSrc = (window.PRERAK_LOGO_DEFAULT)||(window.D&&D.officialLogo)||null;
+    var drawText=function(){
+      // ── Company name ────────────────────────────────────────────
+      ctx.font='bold 38px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle='#1a1008';
+      ctx.letterSpacing='4px';
+      ctx.fillText(nm, 110, 50);
+
+      // ── Subtitle ────────────────────────────────────────────────
+      ctx.font='600 13px "Plus Jakarta Sans", Arial, sans-serif';
+      ctx.fillStyle='rgba(26,16,8,0.55)';
+      ctx.letterSpacing='2px';
+      ctx.fillText(sub.toUpperCase(), 112, 66);
+
+      // ── Person name ─────────────────────────────────────────────
+      ctx.font='700 22px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle='#1a1008';
+      ctx.letterSpacing='1px';
+      ctx.fillText(cardNm, 28, 115);
+
+      // ── Designation ─────────────────────────────────────────────
+      ctx.font='600 12px Arial, sans-serif';
+      ctx.fillStyle='rgba(180,60,20,0.8)';
+      ctx.letterSpacing='2px';
+      ctx.fillText(cardDg.toUpperCase(), 28, 133);
+
+      // ── Divider ─────────────────────────────────────────────────
+      var gd=ctx.createLinearGradient(28,0,200,0);
+      gd.addColorStop(0,'rgba(180,140,70,0.8)');
+      gd.addColorStop(1,'rgba(180,140,70,0)');
+      ctx.fillStyle=gd;
+      ctx.fillRect(28,142,180,1.5);
+
+      // ── Contact details ─────────────────────────────────────────
+      ctx.font='500 13px Arial, sans-serif';
+      ctx.fillStyle='rgba(26,16,8,0.7)';
+      ctx.letterSpacing='0px';
+      var y=165;
+      var row=function(ico,txt){
+        ctx.font='13px Arial'; ctx.fillStyle='rgba(180,60,20,0.75)'; ctx.fillText(ico,28,y);
+        ctx.font='500 13px Arial'; ctx.fillStyle='rgba(26,16,8,0.8)'; ctx.fillText(txt,48,y);
+        y+=22;
+      };
+      row('📞', ph1 + (ph2?' / '+ph2:''));
+      row('✉', em);
+      row('📍', addr);
+
+      // ── Services chips ──────────────────────────────────────────
+      var svcs=['🏗️ Construction','🛋️ Interior','🪟 UPVC','🪨 Gypsum','☀️ Solar','🍽️ Kitchen','🔨 Renovation'];
+      ctx.font='700 10.5px Arial, sans-serif';
+      var sx=28, sy=H-38;
+      svcs.forEach(function(s){
+        var tw=ctx.measureText(s).width;
+        var pw=tw+16, ph2=18, rad=9;
+        // chip bg
+        ctx.fillStyle='rgba(180,140,70,0.12)';
+        ctx.beginPath();
+        ctx.moveTo(sx+rad,sy-ph2+2);
+        ctx.arcTo(sx+pw,sy-ph2+2,sx+pw,sy+2,rad);
+        ctx.arcTo(sx+pw,sy+2,sx,sy+2,rad);
+        ctx.arcTo(sx,sy+2,sx,sy-ph2+2,rad);
+        ctx.arcTo(sx,sy-ph2+2,sx+pw,sy-ph2+2,rad);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle='rgba(180,140,70,0.35)';
+        ctx.lineWidth=0.8;
+        ctx.stroke();
+        ctx.fillStyle='rgba(26,16,8,0.75)';
+        ctx.fillText(s, sx+8, sy-2);
+        sx+=pw+8;
+        if(sx>W-100){sx=28;sy+=24;}
+      });
+
+      // ── Nepal flag emoji top-right ───────────────────────────────
+      ctx.font='20px Arial';
+      ctx.fillText('🇳🇵',W-48,30);
+
+      // ── Bottom tagline ──────────────────────────────────────────
+      ctx.font='italic 600 11px "Cormorant Garamond", Georgia';
+      ctx.fillStyle='rgba(26,16,8,0.4)';
+      ctx.textAlign='right';
+      ctx.fillText('Building Nepal, One Project at a Time',W-16,H-10);
+      ctx.textAlign='left';
+
+      resolve(c);
+    };
+
+    // Try to draw logo
+    if(logoSrc && !logoSrc.startsWith('__')){
+      var img=new Image();
+      img.crossOrigin='anonymous';
+      img.onload=function(){
+        // Circle-clip logo
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(55,37,32,0,Math.PI*2);
+        ctx.clip();
+        ctx.drawImage(img,23,5,64,64);
+        ctx.restore();
+        // Gold ring around logo
+        ctx.strokeStyle='rgba(180,140,70,0.6)';
+        ctx.lineWidth=2;
+        ctx.beginPath();
+        ctx.arc(55,37,33,0,Math.PI*2);
+        ctx.stroke();
+        drawText();
+      };
+      img.onerror=function(){
+        // Draw fallback house icon
+        ctx.font='38px Arial';
+        ctx.fillText('🏗️',28,50);
+        drawText();
+      };
+      img.src=logoSrc;
+    } else {
+      ctx.font='38px Arial';
+      ctx.fillText('🏗️',28,50);
+      drawText();
+    }
+  });
+}
+
+async function _showCardModal(canvas){
+  var old=document.getElementById('vcShareModal');
+  if(old) old.remove();
+
+  var dataUrl=canvas.toDataURL('image/png');
+  var ph=(window.D&&D.contact&&D.contact.p1)||'9801069733';
+  var em=(window.D&&D.contact&&D.contact.em)||'asrayacreate.ac@gmail.com';
+  var addr=(window.D&&D.contact&&D.contact.addr)||'Hetauda, Nepal';
+  var waText=encodeURIComponent(
+    '\uD83C\uDFD7\uFE0F *PRERAK Multipurpose Pvt. Ltd.*\n'
+    +'\uD83D\uDCDE '+ph+'\n'
+    +'\uD83D\uDCE7 '+em+'\n'
+    +'\uD83D\uDCCD '+addr+' \uD83C\uDDF3\uD83C\uDDF5\n\n'
+    +'\u2705 Construction \u00B7 Interior \u00B7 UPVC \u00B7 Gypsum \u00B7 Solar\n'
+    +'\uD83D\uDCCC Save the card image and attach it in WhatsApp!'
+  );
+
+  // Build modal using DOM to avoid quoting issues
+  var ov=document.createElement('div');
+  ov.id='vcShareModal';
+  ov.style.cssText='position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px);';
+  ov.addEventListener('click',function(e){if(e.target===ov)ov.remove();});
+
+  var box=document.createElement('div');
+  box.style.cssText='background:#1a1208;border:1px solid rgba(212,166,74,.4);border-radius:20px;padding:20px;max-width:520px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.6);max-height:90vh;overflow-y:auto;';
+
+  var title=document.createElement('div');
+  title.style.cssText='font-size:1rem;font-weight:800;color:#f0c878;margin-bottom:3px;letter-spacing:1px;';
+  title.textContent='\uD83E\uDEAA Visiting Card — Preview & Share';
+  box.appendChild(title);
+
+  var hint=document.createElement('div');
+  hint.style.cssText='font-size:.7rem;color:rgba(247,238,219,.55);margin-bottom:12px;';
+  hint.textContent='Long-press image to save · Then attach in WhatsApp';
+  box.appendChild(hint);
+
+  var img=document.createElement('img');
+  img.src=dataUrl;
+  img.alt='Prerak Visiting Card';
+  img.style.cssText='width:100%;border-radius:12px;border:2px solid rgba(212,166,74,.4);box-shadow:0 8px 24px rgba(0,0,0,.5);display:block;margin:0 auto 14px;';
+  box.appendChild(img);
+
+  var acts=document.createElement('div');
+  acts.style.cssText='display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;';
+
+  // Save button
+  var saveBtn=document.createElement('button');
+  saveBtn.style.cssText='background:linear-gradient(135deg,#d4a64a,#a87a26);color:#1a1208;border:none;padding:11px 22px;border-radius:24px;font-size:.82rem;font-weight:800;cursor:pointer;';
+  saveBtn.textContent='\u2B07\uFE0F Save Image';
+  saveBtn.onclick=function(){
+    var a=document.createElement('a');
+    a.download='PRERAK-Visiting-Card.png';
+    a.href=dataUrl;
+    a.click();
+    if(typeof showToast==='function') showToast('\u2705 Card saved!',2000);
+  };
+  acts.appendChild(saveBtn);
+
+  // WhatsApp button
+  var waBtn=document.createElement('button');
+  waBtn.style.cssText='background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;border:none;padding:11px 22px;border-radius:24px;font-size:.82rem;font-weight:800;cursor:pointer;';
+  waBtn.textContent='\uD83D\uDCAC WhatsApp';
+  waBtn.onclick=function(){
+    window.open('https://wa.me/?text='+waText,'_blank','noopener');
+  };
+  acts.appendChild(waBtn);
+  box.appendChild(acts);
+
+  var instr=document.createElement('div');
+  instr.style.cssText='font-size:.68rem;color:rgba(247,238,219,.5);line-height:1.65;margin-bottom:12px;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:8px;';
+  instr.innerHTML='\uD83D\uDCF1 <b style="color:rgba(247,238,219,.8)">Mobile:</b> Image long-press \u2192 Share \u2192 WhatsApp<br>'
+    +'\uD83D\uDCBB <b style="color:rgba(247,238,219,.8)">Desktop:</b> Save Image \u2192 WhatsApp \u2192 Attach file';
+  box.appendChild(instr);
+
+  var closeBtn=document.createElement('button');
+  closeBtn.style.cssText='background:rgba(255,255,255,.08);color:rgba(247,238,219,.7);border:1px solid rgba(255,255,255,.15);padding:8px 26px;border-radius:20px;font-size:.78rem;cursor:pointer;';
+  closeBtn.textContent='\u2715 Close';
+  closeBtn.onclick=function(){ov.remove();};
+  box.appendChild(closeBtn);
+
+  ov.appendChild(box);
+  document.body.appendChild(ov);
+}
+
+async function vcDownloadCard(){
+  var btn=document.querySelector('.vb-dl');
+  if(btn){btn.disabled=true;btn.textContent='⏳...';}
+  try{
+    showToast('📸 Building card...',1500);
+    var canvas=await _buildVCardCanvas();
+    var a=document.createElement('a');
+    a.download='PRERAK-Visiting-Card.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+    showToast('✅ Card saved!',2000);
+  }catch(e){
+    showToast('❌ '+e.message,3000);
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='⬇️ <span class="en">Download</span><span class="ne np">डाउनलोड</span>';}
+  }
+}
+
+async function vcShareCard(){
+  var btn=document.querySelector('.vb-sh');
+  if(btn){btn.disabled=true;btn.textContent='⏳...';}
+  try{
+    showToast('📸 Building card...',1500);
+    var canvas=await _buildVCardCanvas();
+
+    // Try native Web Share with image file first (mobile HTTPS/PWA)
+    try{
+      if(navigator.share&&navigator.canShare){
+        var blob=await new Promise(function(r){canvas.toBlob(r,'image/png');});
+        var file=new File([blob],'PRERAK-Visiting-Card.png',{type:'image/png'});
+        if(navigator.canShare({files:[file]})){
+          await navigator.share({
+            title:'PRERAK Visiting Card',
+            text:'🏗️ PRERAK Multipurpose Pvt. Ltd. — Contact Card',
+            files:[file]
+          });
+          showToast('✅ Shared!',2000);
+          if(btn){btn.disabled=false;btn.innerHTML='💬 <span class="en">Share</span><span class="ne np">शेयर</span>';}
+          return;
+        }
+      }
+    }catch(shareErr){}
+
+    // All other cases: show preview modal with save+share buttons
+    await _showCardModal(canvas);
+  }catch(e){
+    showToast('❌ '+e.message,3000);
+  }finally{
+    if(btn){btn.disabled=false;btn.innerHTML='💬 <span class="en">Share</span><span class="ne np">शेयर</span>';}
+  }
+}
+
 function initVCard(){
   const scene=document.getElementById('vcScene');
   const card=document.getElementById('vcCard');
@@ -11594,10 +12065,17 @@ function _renderCardBack(el) {
 })();
 
 // ═══ FILE VERSION SYSTEM ═══
-const _FILE_VER='v9.2';
+const _FILE_VER='v9.3';
 if(localStorage.getItem('prerak_fver')!==_FILE_VER){
-  localStorage.removeItem('prerak_v7');
+  // Version changed — update stamp but KEEP existing data (no wipe)
   localStorage.setItem('prerak_fver',_FILE_VER);
+  // Migrate PRERAK_ADMIN_DATA_V1 alias if only old key exists
+  try{
+    const oldData = localStorage.getItem('prerak_v7');
+    if(oldData && !localStorage.getItem('PRERAK_ADMIN_DATA_V1')){
+      localStorage.setItem('PRERAK_ADMIN_DATA_V1', oldData);
+    }
+  }catch(e){}
 }
 
 // ═══ RENDER PRICING SECTION (Public Website) ═══
