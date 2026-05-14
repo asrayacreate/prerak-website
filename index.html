@@ -9001,6 +9001,10 @@ function init(){
   applyLang();
   renderSite();
   applyLogo();           // ← apply saved logo immediately on page load
+  try{ applyHeroText(); }catch(e){ console.warn('applyHeroText init:',e); }  // ← apply saved hero text
+  try{ applyHeroBg(); }catch(e){}      // ← apply saved hero background
+  try{ applyContactInfo(); }catch(e){} // ← apply saved contact info
+  try{ applyCompanyInfo(); }catch(e){} // ← apply saved company info
   // Immediately hide video section if no URL — prevents black flash
   (()=>{ const s=document.getElementById('brand-video'); if(s&&(!D.brandVideo||!String(D.brandVideo.url||'').trim())){s.style.display='none';} })();
   renderBrandVideo();    // ← apply saved video section
@@ -9265,6 +9269,7 @@ window.renderAdminFaqs = function(){
 })();
 
 function saveData(){
+  let _saveOk = false;
   try{
     // Clone D but replace the embedded base64 logo with a sentinel to avoid localStorage quota issues
     const toSave = JSON.parse(JSON.stringify(D));
@@ -9280,6 +9285,9 @@ function saveData(){
     const json = JSON.stringify(toSave);
     try{
       localStorage.setItem(STORE_KEY, json);
+      // Verify: read back immediately and confirm
+      const verify = localStorage.getItem(STORE_KEY);
+      _saveOk = !!verify && verify.length === json.length;
       // Alias key so both old and new storage keys work
       localStorage.setItem('PRERAK_ADMIN_DATA_V1', json);
     }catch(quotaErr){
@@ -9309,6 +9317,8 @@ function saveData(){
     _err('saveData:', e);
     _idbSave(JSON.stringify(D));
   }
+  window.__lastSaveOk = _saveOk;
+  return _saveOk;
 }
 
 let _saveIndTimer = null;
@@ -9430,6 +9440,11 @@ function applyLang(){
 // ═══ RENDER SITE ═══
 function renderSite(){
   if(!D || typeof D !== 'object'){ _err('renderSite: D not ready'); return; }
+  // Apply saved hero/contact/company on every render
+  _render('heroText',       ()=>{ if(typeof applyHeroText==='function') applyHeroText(); });
+  _render('heroBg',         ()=>{ if(typeof applyHeroBg==='function') applyHeroBg(); });
+  _render('contactInfo',    ()=>{ if(typeof applyContactInfo==='function') applyContactInfo(); });
+  _render('companyInfo',    ()=>{ if(typeof applyCompanyInfo==='function') applyCompanyInfo(); });
   _render('services',       renderServices);
   _render('testimonials',   renderTestimonials);
   _render('projects',       renderProjects);
@@ -11044,11 +11059,29 @@ function saveHero(){
   D.hero.sub = gv('h-sub');
   D.hero.b1  = gv('h-b1')  || 'Free Site Visit';
   D.hero.b2  = gv('h-b2')  || 'Call Now';
-  applyHeroText();
-  saveData();
-  showOk('hero-ok');
-  saveAllSettingsToFirestore().catch(e=>_warn('Firestore hero sync:',e));
-  if(typeof showToast==='function') showToast('✅ Hero saved!',2500);
+  // Apply to DOM immediately
+  try{ applyHeroText(); }catch(e){ console.warn('applyHeroText:',e); }
+  // Save to localStorage AND verify
+  const ok = saveData();
+  // Verify by reading back from localStorage
+  let verified = false;
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      verified = parsed.hero && parsed.hero.l1 === D.hero.l1;
+    }
+  }catch(e){ console.error('Hero verify:',e); }
+  if(verified){
+    showOk('hero-ok');
+    if(typeof showToast==='function') showToast('✅ Hero saved & verified!', 2500);
+  } else {
+    if(typeof showToast==='function') showToast('❌ Save failed — please try again', 4000);
+    return false;
+  }
+  // Sync to Firestore (non-blocking)
+  try{ saveAllSettingsToFirestore().catch(e=>_warn('Firestore hero sync:',e)); }catch(e){}
+  return true;
 }
 
 function saveHeroStats(){
@@ -11066,17 +11099,83 @@ function saveHeroStats(){
 }
 
 function applyHeroText(){
-  const h = D.hero || {};
+  const h = (D && D.hero) || {};
   // Update hero heading in DOM
   const h1 = document.querySelector('#home h1');
-  if(h1 && h.l1){
+  if(h1){
     const enSpan = h1.querySelector('.en');
-    if(enSpan && h.l1) enSpan.innerHTML = `${h.l1||'Complete'}<br><em>${h.l2||'Construction'}</em><br><span class="st">${h.l3||'One Place'}</span>`;
+    if(enSpan){
+      const l1 = h.l1 || 'Complete';
+      const l2 = h.l2 || 'Construction';
+      const l3 = h.l3 || 'One Place';
+      enSpan.innerHTML = `${l1}<br><em>${l2}</em><br><span class="st">${l3}</span>`;
+    }
   }
+  // Eyebrow text (location)
   const eyEl = document.querySelector('#home .h-tag .en');
   if(eyEl && h.ey) eyEl.textContent = h.ey;
+  // Subtitle  
   const subEl = document.querySelector('#home .h-sub .en');
   if(subEl && h.sub) subEl.textContent = h.sub;
+  // Hero buttons
+  try{
+    const btnEls = document.querySelectorAll('#home .h-btns a, #home .h-btns button');
+    if(btnEls.length >= 1 && h.b1){
+      const en1 = btnEls[0].querySelector('.en'); if(en1) en1.textContent = h.b1;
+      else if(!btnEls[0].querySelector('.ne')) btnEls[0].textContent = h.b1;
+    }
+    if(btnEls.length >= 2 && h.b2){
+      const en2 = btnEls[1].querySelector('.en'); if(en2) en2.textContent = h.b2;
+      else if(!btnEls[1].querySelector('.ne')) btnEls[1].textContent = h.b2;
+    }
+  }catch(e){}
+}
+
+// Apply saved hero background image (saved as data URL or http URL)
+function applyHeroBg(){
+  try{
+    const h = (D && D.hero) || {};
+    if(!h.bg) return;
+    const hbg = document.querySelector('#home .hbg');
+    if(hbg){
+      hbg.style.backgroundImage = `url("${h.bg}")`;
+      hbg.style.backgroundSize = 'cover';
+      hbg.style.backgroundPosition = 'center';
+    }
+  }catch(e){ console.warn('applyHeroBg:', e); }
+}
+
+// Apply saved contact info to public page
+function applyContactInfo(){
+  try{
+    const c = (D && D.contact) || {};
+    // Update tel: links
+    document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+      if(c.p1) a.setAttribute('href', 'tel:' + c.p1);
+    });
+    // Update WhatsApp links
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+      if(c.wa) a.setAttribute('href', `https://wa.me/${c.wa}`);
+    });
+    // Update mailto: links
+    document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+      if(c.em) a.setAttribute('href', 'mailto:' + c.em);
+    });
+    // Update phone display in nav/contact section
+    document.querySelectorAll('[data-contact-phone1]').forEach(el => { if(c.p1) el.textContent = c.p1; });
+    document.querySelectorAll('[data-contact-phone2]').forEach(el => { if(c.p2) el.textContent = c.p2; });
+    document.querySelectorAll('[data-contact-email]').forEach(el => { if(c.em) el.textContent = c.em; });
+    document.querySelectorAll('[data-contact-address]').forEach(el => { if(c.addr) el.textContent = c.addr; });
+  }catch(e){ console.warn('applyContactInfo:', e); }
+}
+
+// Apply saved company info (name/sub/tagline)
+function applyCompanyInfo(){
+  try{
+    const co = (D && D.company) || {};
+    if(co.name) document.querySelectorAll('.logo-nm, [data-company-name]').forEach(el => el.textContent = co.name);
+    if(co.sub) document.querySelectorAll('.logo-sb, [data-company-sub]').forEach(el => el.textContent = co.sub);
+  }catch(e){ console.warn('applyCompanyInfo:', e); }
 }
 
 function applyHeroStats(){
@@ -11104,13 +11203,29 @@ function heroUploadBg(input){
 }
 
 function heroApplyBgUrl(){
-  const url = document.getElementById('hero-bg-url').value.trim();
-  if(!url){ showToast('⚠️ Please enter an image URL'); return; }
+  const url = (document.getElementById('hero-bg-url')||{}).value || '';
+  const trimmed = url.trim();
+  if(!trimmed){ showToast('⚠️ Please enter an image URL'); return; }
   D.hero = D.hero || {};
-  D.hero.bg = url;
-  heroApplyBg(url);
+  D.hero.bg = trimmed;
+  // Apply to DOM
+  try{ if(typeof heroApplyBg==='function') heroApplyBg(trimmed); }catch(e){}
+  try{ applyHeroBg(); }catch(e){}
+  // Save + verify
   saveData();
-  showToast('✅ Background URL applied!');
+  let verified = false;
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      verified = parsed.hero && parsed.hero.bg === trimmed;
+    }
+  }catch(e){}
+  if(verified){
+    showToast('✅ Background saved & verified!', 2500);
+  } else {
+    showToast('❌ Save failed — please try again', 4000);
+  }
 }
 
 function heroApplyBg(src){
@@ -11128,15 +11243,33 @@ function heroApplyBg(src){
   if(hslides) hslides.style.backgroundImage = `url('${src}')`;
 }
 function saveContact(){
-  D.contact={
-    p1:document.getElementById('c-p1').value,
-    p2:document.getElementById('c-p2').value,
-    wa:document.getElementById('c-wa').value,
-    em:document.getElementById('c-em').value,
-    addr:document.getElementById('c-ad').value,
-    hrs:document.getElementById('c-hr').value
+  const gv = id => (document.getElementById(id)||{}).value || '';
+  D.contact = {
+    p1:   gv('c-p1'),
+    p2:   gv('c-p2'),
+    wa:   gv('c-wa'),
+    em:   gv('c-em'),
+    addr: gv('c-ad'),
+    hrs:  gv('c-hr')
   };
-  saveData(); showOk('contact-ok');
+  // Apply to DOM immediately
+  try{ applyContactInfo(); }catch(e){ console.warn('applyContactInfo:',e); }
+  saveData();
+  // Verify
+  let verified = false;
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      verified = parsed.contact && parsed.contact.p1 === D.contact.p1;
+    }
+  }catch(e){}
+  if(verified){
+    showOk('contact-ok');
+    if(typeof showToast==='function') showToast('✅ Contact saved & verified!', 2500);
+  } else {
+    if(typeof showToast==='function') showToast('❌ Save failed — try again', 4000);
+  }
 }
 function saveSettings(){
   D.company={
@@ -17297,6 +17430,263 @@ body:not(.admin-mode) [data-admin]{
   display:none !important;
 }
 
+
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  PRICING CARDS — PREMIUM CORPORATE OVERRIDE                  ║
+   ║  Forces all white-on-dark inline styles to corporate bright  ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+/* ─── Pricing section background ─── */
+html[data-t="corporate"] #pricing-section{
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 50%, #ffffff 100%) !important;
+  padding: 70px 5% !important;
+}
+html[data-t="corporate"] #pricing-section .stl,
+html[data-t="corporate"] #pricing-section h2{
+  color: #0f2347 !important;
+}
+html[data-t="corporate"] #pricing-section .sey{
+  color: #c9933a !important;
+  font-weight: 700 !important;
+}
+
+/* ─── Pricing grid layout ─── */
+html[data-t="corporate"] #pricing,
+html[data-t="corporate"] #pricing-section #pricing{
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 30px !important;
+  max-width: 1200px !important;
+  margin: 50px auto 0 !important;
+  padding: 0 10px !important;
+  align-items: stretch !important;
+}
+
+/* ─── PRICING CARD — override ALL inline styles ─── */
+html[data-t="corporate"] .price-card-pub,
+html[data-t="corporate"] #pricing .price-card-pub{
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  backdrop-filter: none !important;
+  border: 1.5px solid rgba(15,35,71,.1) !important;
+  border-radius: 22px !important;
+  padding: 52px 30px 32px !important;
+  box-shadow:
+    0 10px 40px rgba(15,35,71,.08),
+    0 2px 8px rgba(15,35,71,.04),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+  transition: all .35s cubic-bezier(.4,0,.2,1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+html[data-t="corporate"] .price-card-pub:hover{
+  transform: translateY(-6px) !important;
+  border-color: rgba(201,147,58,.4) !important;
+  box-shadow:
+    0 24px 50px rgba(15,35,71,.15),
+    0 8px 16px rgba(15,35,71,.08),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* ─── Icon badge above card ─── */
+html[data-t="corporate"] .price-card-pub > div:first-child,
+html[data-t="corporate"] .price-card-pub > div[style*="border-radius:18px"]{
+  background: linear-gradient(135deg, #0f2347, #1a3a6e) !important;
+  box-shadow:
+    0 12px 28px rgba(15,35,71,.35),
+    0 0 0 5px #ffffff !important;
+  color: #fff !important;
+}
+
+/* ─── Plan name ─── */
+html[data-t="corporate"] .price-card-pub > div[style*="font-size:1.45rem"],
+html[data-t="corporate"] .price-card-pub div[style*="var(--fd)"]{
+  color: #0f2347 !important;
+  font-weight: 800 !important;
+  margin-bottom: 6px !important;
+}
+
+/* ─── Sub-tag (FOR RESIDENTIAL etc) ─── */
+html[data-t="corporate"] .price-card-pub > div[style*="letter-spacing:2.5px"]{
+  color: #c9933a !important;
+  font-weight: 700 !important;
+}
+
+/* ─── Price wrapper section ─── */
+html[data-t="corporate"] .price-card-pub > div[style*="text-align:center"]{
+  border-top: 1.5px solid rgba(15,35,71,.1) !important;
+  border-bottom: 1.5px solid rgba(15,35,71,.1) !important;
+  background: linear-gradient(180deg, rgba(201,147,58,.04), rgba(201,147,58,.08)) !important;
+  border-radius: 14px !important;
+  padding: 18px 12px !important;
+  margin-bottom: 24px !important;
+}
+
+/* ─── "STARTING FROM" label ─── */
+html[data-t="corporate"] .price-card-pub div[style*="STARTING FROM"],
+html[data-t="corporate"] .price-card-pub > div > div[style*="letter-spacing:2px"]{
+  color: #c9933a !important;
+  font-weight: 700 !important;
+}
+
+/* ─── Strikethrough original price ─── */
+html[data-t="corporate"] .price-card-pub div[style*="line-through"]{
+  color: #94a3b8 !important;
+  font-size: .85rem !important;
+}
+
+/* ─── MAIN PRICE — gold + bold ─── */
+html[data-t="corporate"] .price-card-pub div[style*="font-size:2.1rem"],
+html[data-t="corporate"] .price-card-pub div[style*="font-weight:800"]{
+  color: #b8851f !important;
+  font-weight: 900 !important;
+  text-shadow: 0 1px 2px rgba(184,133,31,.15) !important;
+}
+
+/* Per-unit text after price */
+html[data-t="corporate"] .price-card-pub span[style*="font-weight:400"]{
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* ─── Features list ─── */
+html[data-t="corporate"] .price-card-pub ul{
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 28px !important;
+  flex: 1 !important;
+}
+html[data-t="corporate"] .price-card-pub ul li,
+html[data-t="corporate"] .price-card-pub li{
+  color: #334155 !important;
+  font-size: .86rem !important;
+  font-weight: 500 !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(15,35,71,.06) !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+html[data-t="corporate"] .price-card-pub li span{
+  color: #16a34a !important;
+  font-weight: 800 !important;
+  flex-shrink: 0 !important;
+}
+
+/* ─── CTA Button ─── */
+html[data-t="corporate"] .price-card-pub button{
+  width: 100% !important;
+  padding: 14px 20px !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #0f2347 0%, #1a3a6e 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 800 !important;
+  font-size: .82rem !important;
+  letter-spacing: 1.5px !important;
+  cursor: pointer !important;
+  text-transform: uppercase !important;
+  transition: all .25s !important;
+  box-shadow: 0 4px 14px rgba(15,35,71,.25) !important;
+}
+html[data-t="corporate"] .price-card-pub button:hover{
+  background: linear-gradient(135deg, #1a3a6e 0%, #2550a0 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 22px rgba(15,35,71,.4) !important;
+}
+
+/* ─── POPULAR plan — premium highlight ─── */
+html[data-t="corporate"] .price-card-pub[style*="transform:scale(1.04)"],
+html[data-t="corporate"] .price-card-pub:has(div[style*="POPULAR"]){
+  background: linear-gradient(165deg, #ffffff 0%, #fef9ed 100%) !important;
+  border: 2px solid #c9933a !important;
+  box-shadow:
+    0 16px 50px rgba(201,147,58,.25),
+    0 4px 12px rgba(201,147,58,.15),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+  transform: translateY(-8px) scale(1.02) !important;
+}
+
+/* Popular ribbon */
+html[data-t="corporate"] .price-card-pub div[style*="POPULAR"]{
+  background: linear-gradient(135deg, #c9933a, #a87a26) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(201,147,58,.4) !important;
+  font-weight: 800 !important;
+}
+
+/* Popular plan button — gold */
+html[data-t="corporate"] .price-card-pub[style*="transform:scale(1.04)"] button,
+html[data-t="corporate"] .price-card-pub:has(div[style*="POPULAR"]) button{
+  background: linear-gradient(135deg, #c9933a 0%, #a87a26 100%) !important;
+  box-shadow: 0 4px 14px rgba(201,147,58,.4) !important;
+}
+html[data-t="corporate"] .price-card-pub[style*="transform:scale(1.04)"] button:hover,
+html[data-t="corporate"] .price-card-pub:has(div[style*="POPULAR"]) button:hover{
+  background: linear-gradient(135deg, #d4a64a 0%, #c9933a 100%) !important;
+  box-shadow: 0 8px 24px rgba(201,147,58,.55) !important;
+}
+
+/* Popular plan icon — gold */
+html[data-t="corporate"] .price-card-pub[style*="transform:scale(1.04)"] > div:first-child,
+html[data-t="corporate"] .price-card-pub:has(div[style*="POPULAR"]) > div:first-child{
+  background: linear-gradient(135deg, #c9933a, #a87a26) !important;
+}
+
+/* ─── Responsive ─── */
+@media(max-width: 900px){
+  html[data-t="corporate"] #pricing{
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    margin-top: 40px !important;
+  }
+  html[data-t="corporate"] .price-card-pub{
+    padding: 44px 22px 28px !important;
+    transform: none !important;
+  }
+  html[data-t="corporate"] .price-card-pub[style*="transform:scale(1.04)"],
+  html[data-t="corporate"] .price-card-pub:has(div[style*="POPULAR"]){
+    transform: none !important;
+  }
+  html[data-t="corporate"] .price-card-pub:hover{
+    transform: translateY(-3px) !important;
+  }
+  html[data-t="corporate"] .price-card-pub div[style*="font-size:2.1rem"]{
+    font-size: 1.85rem !important;
+  }
+}
+
+/* ─── Service cards subtle premium boost ─── */
+html[data-t="corporate"] .svc-card{
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1.5px solid rgba(15,35,71,.1) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 6px 24px rgba(15,35,71,.06),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+  transition: all .3s !important;
+}
+html[data-t="corporate"] .svc-card:hover{
+  transform: translateY(-4px) !important;
+  border-color: rgba(201,147,58,.35) !important;
+  box-shadow:
+    0 16px 40px rgba(15,35,71,.12),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* ─── Testimonial cards subtle premium boost ─── */
+html[data-t="corporate"] .tc{
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1.5px solid rgba(15,35,71,.1) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 6px 24px rgba(15,35,71,.06),
+    inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+
+/* End pricing premium override */
 /* End admin security guards */
 /* End production fixes */
 /* End secure admin & compact dash */
