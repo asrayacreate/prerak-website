@@ -6674,7 +6674,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   <a href="https://wa.me/9779801069733?text=नमस्ते!" target="_blank" rel="noopener" class="mc2">💬 WhatsApp</a>
 </div>
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-<button id="admin-fab" onclick="isAdmin?openAdminPanel():openLogin()" title="Admin Panel">🔒</button>
+<button id="admin-fab" onclick="isAdmin?openAdminPanel():openLogin()" title="Admin" aria-label="Admin Access" style="display:none;">🔒</button>
 
 <!-- (Removed duplicate qmOv quote modal) -->
 
@@ -8653,6 +8653,82 @@ window.forceUnlockBody = function() {
 // ═══════════════════════════════════════════════
 const ADMIN_PASS = 'prerak@2025';
 const ADMIN_EMAIL = 'asrayacreate.ac@gmail.com';
+
+// ═══════════════════════════════════════════════════════════════
+// SECURE ADMIN ACCESS — keyboard shortcut + session restore
+// ═══════════════════════════════════════════════════════════════
+(function(){
+  // 1. Keyboard shortcut: Ctrl+Shift+A → toggle admin FAB visibility
+  document.addEventListener('keydown', function(e){
+    if(e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')){
+      e.preventDefault();
+      const fab = document.getElementById('admin-fab');
+      if(fab){
+        if(fab.style.display === 'none' || !fab.classList.contains('show')){
+          fab.style.display = 'flex';
+          fab.classList.add('show');
+          // If not logged in, show login immediately
+          if(typeof isAdmin !== 'undefined' && !isAdmin){
+            if(typeof openLogin === 'function') openLogin();
+          }
+        } else {
+          if(typeof isAdmin === 'undefined' || !isAdmin){
+            fab.style.display = 'none';
+            fab.classList.remove('show');
+          }
+        }
+      }
+    }
+    // ESC to close admin panel
+    if(e.key === 'Escape'){
+      const ap = document.getElementById('admin-panel');
+      if(ap && ap.classList.contains('open') && typeof exitAdmin === 'function'){
+        exitAdmin();
+      }
+    }
+  });
+  
+  // 2. Restore admin session from localStorage on page load
+  function restoreAdminSession(){
+    try{
+      const raw = localStorage.getItem('prerak_admin_session');
+      if(!raw) return;
+      const sess = JSON.parse(raw);
+      // Check if session valid and not expired
+      if(sess && sess.isAdmin && sess.expiresAt && Date.now() < sess.expiresAt){
+        // Wait for DOM ready then auto-restore admin mode (silent)
+        const tryRestore = () => {
+          if(typeof isAdmin === 'undefined') {
+            setTimeout(tryRestore, 100);
+            return;
+          }
+          window.isAdmin = true;
+          window.isSuperAdmin = !!sess.isSuperAdmin;
+          document.body.classList.add('admin-mode');
+          const bar = document.getElementById('admin-bar');
+          if(bar) bar.classList.add('show');
+          const fab = document.getElementById('admin-fab');
+          if(fab){ fab.style.display='flex'; fab.classList.add('show'); fab.textContent='⚙️'; }
+        };
+        if(document.readyState === 'loading'){
+          document.addEventListener('DOMContentLoaded', tryRestore);
+        } else {
+          tryRestore();
+        }
+      } else if(sess){
+        // Expired - clean up
+        localStorage.removeItem('prerak_admin_session');
+      }
+    }catch(e){
+      console.warn('Admin session restore failed:', e);
+    }
+  }
+  restoreAdminSession();
+  
+  // 3. Hide loader message about admin access
+  console.log('%c🔐 Admin access: Press Ctrl+Shift+A', 'background:#0f2347;color:#fbbf24;padding:6px 12px;border-radius:4px;font-weight:bold;');
+})();
+
 const STORE_KEY = 'prerak_v7';
 
 // ═══ DEFAULT DATA ═══
@@ -9453,7 +9529,7 @@ function openSvm(id){
         : `<video src="${s.videoUrl}" controls style="width:100%;border-radius:8px;max-height:260px;"></video>`;
     } else {
       videoTab.style.display='none';
-      videoArea.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;">No video added yet.<br>Add via Super Admin → Services → Edit</div>';
+      videoArea.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;">No video yet.<br>Add via Admin → Services → Edit</div>';
     }
   }
   document.getElementById('svmOv').classList.add('show');
@@ -10814,6 +10890,15 @@ function doPasswordFallback(){
 function completeLogin(){
   closeLogin();
   isAdmin=true;
+  // Save admin session (24-hour valid)
+  try{
+    const session = {
+      isAdmin: true,
+      isSuperAdmin: !!isSuperAdmin,
+      expiresAt: Date.now() + 24*60*60*1000
+    };
+    localStorage.setItem('prerak_admin_session', JSON.stringify(session));
+  }catch(e){}
   document.getElementById('admin-bar').classList.add('show');
   const aptag=document.getElementById('ap-level-tag');
   if(aptag){aptag.textContent=isSuperAdmin?'🛡️ SUPER ADMIN':'🔧 ADMIN';aptag.style.background=isSuperAdmin?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,#1a3a6e,#2550a0)';}
@@ -10882,6 +10967,8 @@ function backToStep1(){
 function logoutAdmin(){
   isAdmin=false;
   isSuperAdmin=false;
+  // Clear admin session
+  try{ localStorage.removeItem('prerak_admin_session'); }catch(e){}
   document.getElementById('admin-bar').classList.remove('show');
   const fab=document.getElementById('admin-fab');
   if(fab){fab.style.background='';fab.textContent='🔒';fab.style.opacity='';}
@@ -16922,6 +17009,114 @@ html[data-t="corporate"] .nav.sc .logo-sb{
   color:#0f2347 !important;
 }
 
+
+/* ═══ 26. SECURE ADMIN FAB — HIDDEN BY DEFAULT ═══ */
+#admin-fab{ display:none !important; }
+body.admin-mode #admin-fab,
+#admin-fab.show{ display:flex !important; }
+
+/* ═══ 27. COMPACT ADMIN DASHBOARD ═══ */
+#admin-panel .ap-hdr{
+  padding:14px 22px !important;
+}
+#admin-panel .ap-hdr h2{
+  font-size:1.3rem !important;
+  margin-bottom:2px !important;
+}
+#admin-panel .ap-hdr p{
+  font-size:.78rem !important;
+}
+#admin-panel .ap-card{
+  padding:14px 16px !important;
+  margin-bottom:12px !important;
+  border-radius:10px !important;
+}
+#admin-panel .ap-card h3{
+  font-size:.92rem !important;
+  margin-bottom:10px !important;
+  padding-bottom:6px !important;
+}
+#admin-panel .ap-main{
+  padding:18px !important;
+}
+#admin-panel .ap-ni{
+  padding:7px 14px !important;
+  font-size:.74rem !important;
+}
+#admin-panel .ap-ng{
+  font-size:.52rem !important;
+  padding:8px 14px 3px !important;
+}
+#admin-panel .afsv,
+#admin-panel .abtn{
+  padding:7px 13px !important;
+  font-size:.78rem !important;
+}
+/* Dash stats cards smaller */
+#admin-panel .dstat,
+#admin-panel [class*="dash-stat"],
+#admin-panel [class*="stat-card"]{
+  padding:12px 14px !important;
+  font-size:.82rem !important;
+}
+/* Forms compact */
+#admin-panel .afg{
+  margin-bottom:10px !important;
+}
+#admin-panel .afg label{
+  font-size:.72rem !important;
+  margin-bottom:3px !important;
+}
+#admin-panel input,
+#admin-panel textarea,
+#admin-panel select{
+  padding:7px 10px !important;
+  font-size:.82rem !important;
+  border-radius:6px !important;
+}
+
+/* ═══ 28. NEPALI CALENDAR — COMPACT FIT ═══ */
+html[data-t="corporate"] .cal-bg{ padding:40px 0 !important; }
+html[data-t="corporate"] .cal-sp{
+  grid-template-columns:1fr 1.4fr !important;
+  gap:16px !important;
+  max-width:920px !important;
+}
+html[data-t="corporate"] .cal-ban{
+  padding:14px !important;
+  border-radius:14px !important;
+}
+html[data-t="corporate"] .cal-ban .lab,
+html[data-t="corporate"] .cal-ban [class*="date-label"]{
+  font-size:.62rem !important;
+  letter-spacing:1.5px !important;
+}
+html[data-t="corporate"] .cal-ban .val,
+html[data-t="corporate"] .cal-ban [class*="date-val"]{
+  font-size:1.1rem !important;
+}
+html[data-t="corporate"] .cal-np{
+  padding:14px !important;
+  border-radius:14px !important;
+}
+html[data-t="corporate"] .cn-ni{
+  padding:8px 10px !important;
+  font-size:.78rem !important;
+  margin-bottom:4px !important;
+}
+html[data-t="corporate"] .cn-bdt{
+  font-size:.7rem !important;
+  letter-spacing:1px !important;
+  margin-bottom:8px !important;
+}
+@media(max-width:768px){
+  html[data-t="corporate"] .cal-sp{
+    grid-template-columns:1fr !important;
+  }
+  html[data-t="corporate"] .cal-bg{ padding:30px 0 !important; }
+}
+
+/* End secure admin & compact dash */
 /* End scrolled navbar fix */
 /* End premium red branding */
 /* End final polish */
