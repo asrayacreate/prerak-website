@@ -2275,7 +2275,7 @@ img,video,iframe{max-width:100%;}
 
 /* ══════════════════════════════════════════════════════════
    PROJECT SHOWCASE VIDEO — compact premium glass card
-   Drop your MP4 at:  ./showcase.mp4  (or ./video/showcase.mp4)
+   Hero showcase section
    ══════════════════════════════════════════════════════════ */
 .psv-sec{
   padding:30px 18px 36px;
@@ -5877,14 +5877,9 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 <section class="psv-sec" id="project-showcase" aria-labelledby="psv-heading">
   <div class="psv-wrap">
     <div class="psv-card" id="psvCard">
-      <video class="psv-vid" id="psvVid" autoplay muted loop playsinline preload="metadata" poster="" aria-label="Prerak project showcase video"
-        onerror="document.getElementById('project-showcase').style.display='none'">
-        <source src="./showcase.mp4" type="video/mp4">
-        <source src="./video/showcase.mp4" type="video/mp4">
-        <source src="./assets/showcase.mp4" type="video/mp4">
-      </video>
-      <!-- Fallback image shown while / if video fails -->
-      <div class="psv-fallback" id="psvFallback" style="display:none;position:absolute;inset:0;background:linear-gradient(135deg,#0a0704 0%,#1a140d 100%);z-index:0;"></div>
+      <!-- Video removed - using image fallback to avoid 404 -->
+      <div class="psv-fallback" id="psvFallback" style="position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,#0a1a30 0%,#0f2347 35%,#1a3a6e 70%,#0f2347 100%);background-size:cover;background-position:center;"></div>
+      <img class="psv-vid" id="psvVid" alt="Prerak project showcase" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55;" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80" onerror="this.style.display='none'">
       <div class="psv-overlay" aria-hidden="true"></div>
       <div class="psv-content">
         <div class="psv-badge">★ <span class="en">PROJECT SHOWCASE</span><span class="ne np">परियोजना झलक</span></div>
@@ -17116,6 +17111,164 @@ html[data-t="corporate"] .cn-bdt{
   html[data-t="corporate"] .cal-bg{ padding:30px 0 !important; }
 }
 
+
+/* ═══ 29. PRODUCTION FIXES — LFB sizing, hero overlap, nav readability ═══ */
+
+/* LFB — reduced sizes (46px desktop / 42px mobile) */
+#lfb{
+  padding:9px 7px !important;
+  gap:9px !important;
+  border-radius:34px !important;
+}
+#lfb .lb{
+  width:46px !important;
+  height:46px !important;
+}
+#lfb .lb svg{
+  width:18px !important;
+  height:18px !important;
+}
+@media(max-width:768px){
+  #lfb{ padding:7px 5px !important; gap:7px !important; border-radius:28px !important; }
+  #lfb .lb{ width:42px !important; height:42px !important; }
+  #lfb .lb svg{ width:16px !important; height:16px !important; }
+}
+
+/* Hero overlap fix — service popup card must not overlap hero text */
+.hero{ position:relative !important; }
+.hero .h-in{
+  position:relative !important;
+  z-index:5 !important;
+  max-width:62% !important;
+}
+@media(max-width:1100px){
+  .hero .h-in{ max-width:100% !important; }
+}
+/* Service popup (psv-card or any hero overlay card) */
+.psv-card,
+.hero .psv-card,
+.hero [class*="service-popup"],
+.hero [class*="hero-card"]{
+  z-index:3 !important;
+}
+@media(max-width:900px){
+  /* On smaller screens, popup goes below hero content */
+  .hero .psv-card,
+  .hero [class*="service-popup"]{
+    position:relative !important;
+    margin-top:24px !important;
+    width:100% !important;
+    right:auto !important;
+    top:auto !important;
+    transform:none !important;
+  }
+}
+
+/* Header — darker, bolder nav for readability */
+html[data-t="corporate"] .nav-links a,
+html[data-t="corporate"] .nav a:not(.btn):not(.nav-cta):not(.nav-phone),
+html[data-t="corporate"] .nav.sc .nav-links a,
+html[data-t="corporate"] #mainNav.sc .nav-links a{
+  color:#0a1a30 !important;
+  font-weight:700 !important;
+  letter-spacing:.3px !important;
+  font-size:.92rem !important;
+}
+html[data-t="corporate"] .nav-links a:hover,
+html[data-t="corporate"] .nav.sc .nav-links a:hover{
+  color:#dc2626 !important;
+  background:rgba(220,38,38,.06) !important;
+}
+html[data-t="corporate"] .nav-cta{
+  background:linear-gradient(135deg,#c9933a,#a87a26) !important;
+  color:#0a1a30 !important;
+  font-weight:800 !important;
+  letter-spacing:.4px !important;
+}
+
+/* Right floating buttons — uniform alignment, reduced spacing, modern glass */
+#th-panel{
+  right:12px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  padding:8px 6px !important;
+  gap:6px !important;
+  border-radius:32px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(247,249,252,.92)) !important;
+  backdrop-filter:blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter:blur(28px) saturate(200%) !important;
+  border:1px solid rgba(15,35,71,.1) !important;
+  box-shadow:
+    0 10px 32px rgba(15,35,71,.16),
+    0 2px 8px rgba(15,35,71,.06),
+    inset 0 1px 0 rgba(255,255,255,.95) !important;
+}
+.th-btn{
+  width:34px !important;
+  height:34px !important;
+  font-size:.88rem !important;
+  border:1.5px solid rgba(15,35,71,.12) !important;
+  background:linear-gradient(135deg,#ffffff,#f4f7fb) !important;
+  box-shadow:0 2px 6px rgba(15,35,71,.06) !important;
+}
+.th-btn:hover{
+  transform:scale(1.12) !important;
+  box-shadow:0 4px 12px rgba(15,35,71,.18) !important;
+}
+.th-btn.on{
+  border-color:#c9933a !important;
+  box-shadow:0 0 0 2px rgba(201,147,58,.3), 0 3px 10px rgba(201,147,58,.35) !important;
+  background:linear-gradient(135deg,#fef3c7,#fde68a) !important;
+}
+
+/* Back-to-top and admin FAB — uniform glass */
+#btt, #admin-fab{
+  width:40px !important;
+  height:40px !important;
+  border-radius:50% !important;
+  right:14px !important;
+  border:1px solid rgba(15,35,71,.12) !important;
+  background:linear-gradient(135deg,#ffffff,#f4f7fb) !important;
+  color:#0f2347 !important;
+  box-shadow:
+    0 6px 20px rgba(15,35,71,.14),
+    inset 0 1px 0 rgba(255,255,255,.9) !important;
+  font-size:1rem !important;
+  font-weight:700 !important;
+  transition:all .25s cubic-bezier(.4,0,.2,1) !important;
+}
+#btt{ bottom:78px !important; }
+#admin-fab{
+  bottom:24px !important;
+  background:linear-gradient(135deg,#0f2347,#1a3a6e) !important;
+  color:#fff !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+body.admin-mode #admin-fab,
+#admin-fab.show{
+  opacity:1 !important;
+  pointer-events:auto !important;
+  display:flex !important;
+}
+#btt:hover{
+  background:linear-gradient(135deg,#0f2347,#1a3a6e) !important;
+  color:#fff !important;
+  transform:translateY(-2px) scale(1.05) !important;
+}
+#admin-fab:hover{
+  transform:scale(1.08) !important;
+  box-shadow:0 10px 28px rgba(15,35,71,.4) !important;
+}
+
+/* Logo size on navbar — slightly bolder */
+html[data-t="corporate"] .logo-nm{
+  text-shadow:
+    0 1px 2px rgba(220,38,38,.3),
+    0 2px 8px rgba(220,38,38,.2) !important;
+}
+
+/* End production fixes */
 /* End secure admin & compact dash */
 /* End scrolled navbar fix */
 /* End premium red branding */
