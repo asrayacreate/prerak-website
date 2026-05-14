@@ -17686,6 +17686,356 @@ html[data-t="corporate"] .tc{
     inset 0 1px 0 rgba(255,255,255,1) !important;
 }
 
+
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  FINAL SECTION VISIBILITY FIX — Notice / Calendar / Form / Pricing ║
+   ║  Colors: bg #f8fafc · card #fff · text #111827 · muted #475569    ║
+   ║  Accent: gold #d4a017 · blue #1e3a8a · green for WhatsApp/success ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* ═══════════ 1. NOTICE + NEPALI CALENDAR ═══════════ */
+html[data-t="corporate"] #calendar,
+html[data-t="corporate"] .cal-bg{
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #ffffff 100%) !important;
+  padding: 50px 0 !important;
+}
+html[data-t="corporate"] .cal-sp{
+  max-width: 1080px !important;
+  margin: 30px auto 0 !important;
+  padding: 0 16px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1.5fr !important;
+  gap: 20px !important;
+}
+@media(max-width: 800px){
+  html[data-t="corporate"] .cal-sp{ grid-template-columns: 1fr !important; }
+}
+
+/* Nepali date card (left side - BIKRAM SAMVAT, ENGLISH, WEEKDAY) */
+html[data-t="corporate"] .cal-ban{
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1.5px solid rgba(30,58,138,.1) !important;
+  border-radius: 16px !important;
+  padding: 18px !important;
+  box-shadow: 0 4px 20px rgba(30,58,138,.06) !important;
+}
+html[data-t="corporate"] .cal-ban *,
+html[data-t="corporate"] .cal-ban div,
+html[data-t="corporate"] .cal-ban span,
+html[data-t="corporate"] .cal-ban p{
+  color: #111827 !important;
+}
+/* Date labels (BIKRAM SAMVAT / ENGLISH / WEEKDAY) */
+html[data-t="corporate"] .cal-ban [class*="lab"],
+html[data-t="corporate"] .cal-ban [class*="label"],
+html[data-t="corporate"] .cal-ban .sey{
+  color: #d4a017 !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+}
+/* Date values */
+html[data-t="corporate"] .cal-ban [class*="val"],
+html[data-t="corporate"] .cal-ban [class*="date-val"],
+html[data-t="corporate"] .cal-ban b,
+html[data-t="corporate"] .cal-ban strong{
+  color: #1e3a8a !important;
+  font-weight: 800 !important;
+}
+/* Active work hours badge */
+html[data-t="corporate"] .cal-ban [class*="status"],
+html[data-t="corporate"] .cal-ban [class*="work-hours"],
+html[data-t="corporate"] .cal-ban [style*="background:linear-gradient"][style*="22c55e"],
+html[data-t="corporate"] .cal-ban [style*="green"]{
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+}
+
+/* Live notice board (right side) */
+html[data-t="corporate"] .cal-np{
+  background: linear-gradient(165deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1.5px solid rgba(30,58,138,.1) !important;
+  border-radius: 16px !important;
+  padding: 18px !important;
+  box-shadow: 0 4px 20px rgba(30,58,138,.06) !important;
+}
+html[data-t="corporate"] .cal-np .cn-bdt,
+html[data-t="corporate"] .cn-bdt{
+  color: #1e3a8a !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  font-size: .78rem !important;
+}
+/* LIVE badge */
+html[data-t="corporate"] .cn-lb{
+  background: linear-gradient(135deg, #d4a017, #b8851f) !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  box-shadow: 0 3px 10px rgba(212,160,23,.35) !important;
+  padding: 5px 14px !important;
+}
+html[data-t="corporate"] .cn-lb *{ color: #ffffff !important; }
+
+/* Notice rows */
+html[data-t="corporate"] .cn-bd{
+  background: transparent !important;
+  border: none !important;
+  padding: 6px 0 0 !important;
+  box-shadow: none !important;
+}
+html[data-t="corporate"] .cn-ni,
+html[data-t="corporate"] .cn-ls .cn-ni{
+  background: #f8fafc !important;
+  border: 1px solid rgba(30,58,138,.08) !important;
+  border-left: 3px solid #1e3a8a !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 7px !important;
+  color: #111827 !important;
+  transition: all .2s !important;
+}
+html[data-t="corporate"] .cn-ni:hover{
+  background: #ffffff !important;
+  border-left-color: #d4a017 !important;
+  transform: translateX(2px) !important;
+  box-shadow: 0 4px 12px rgba(30,58,138,.08) !important;
+}
+html[data-t="corporate"] .cn-ni *,
+html[data-t="corporate"] .cn-ni span,
+html[data-t="corporate"] .cn-ni p{
+  color: #111827 !important;
+  font-weight: 500 !important;
+}
+html[data-t="corporate"] .cn-ni b{ color: #1e3a8a !important; font-weight: 700 !important; }
+html[data-t="corporate"] .cn-ni .ne,
+html[data-t="corporate"] .cn-ni .en{ color: #111827 !important; }
+
+/* ═══════════ 2. INQUIRY / QUOTE FORM ═══════════ */
+html[data-t="corporate"] .svm-qf,
+html[data-t="corporate"] .ctf,
+html[data-t="corporate"] .ct-form,
+html[data-t="corporate"] .contact-form,
+html[data-t="corporate"] .cf-box{
+  background: #ffffff !important;
+  border: 1.5px solid rgba(30,58,138,.12) !important;
+  border-radius: 14px !important;
+  padding: 22px !important;
+  box-shadow: 0 4px 20px rgba(30,58,138,.06) !important;
+}
+html[data-t="corporate"] .svm-qf *,
+html[data-t="corporate"] .ctf *,
+html[data-t="corporate"] .cf-box *{
+  color: #111827 !important;
+}
+html[data-t="corporate"] .svm-qf h4,
+html[data-t="corporate"] .svm-qf label,
+html[data-t="corporate"] .ctf label,
+html[data-t="corporate"] form label{
+  color: #1e3a8a !important;
+  font-weight: 700 !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+  font-size: .82rem !important;
+}
+
+/* All form inputs */
+html[data-t="corporate"] input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]),
+html[data-t="corporate"] textarea,
+html[data-t="corporate"] select{
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1.5px solid rgba(30,58,138,.2) !important;
+  border-radius: 10px !important;
+  padding: 11px 14px !important;
+  font-size: .9rem !important;
+  font-weight: 500 !important;
+  width: 100% !important;
+  transition: border-color .2s, box-shadow .2s !important;
+}
+html[data-t="corporate"] input:focus,
+html[data-t="corporate"] textarea:focus,
+html[data-t="corporate"] select:focus{
+  border-color: #d4a017 !important;
+  box-shadow: 0 0 0 3px rgba(212,160,23,.15) !important;
+  outline: none !important;
+}
+html[data-t="corporate"] input::placeholder,
+html[data-t="corporate"] textarea::placeholder{
+  color: #94a3b8 !important;
+  font-weight: 400 !important;
+}
+
+/* File upload boxes */
+html[data-t="corporate"] input[type="file"]{
+  background: #f8fafc !important;
+  color: #111827 !important;
+  border: 1.5px dashed rgba(30,58,138,.25) !important;
+  padding: 14px !important;
+  cursor: pointer !important;
+  border-radius: 10px !important;
+}
+html[data-t="corporate"] input[type="file"]:hover{
+  background: #ffffff !important;
+  border-color: #d4a017 !important;
+}
+
+/* Select dropdown OPTIONS */
+html[data-t="corporate"] select option{
+  background: #ffffff !important;
+  color: #111827 !important;
+  padding: 8px 12px !important;
+}
+
+/* Submit / form buttons */
+html[data-t="corporate"] .svm-qf button[type="submit"],
+html[data-t="corporate"] form button[type="submit"],
+html[data-t="corporate"] .ctf button,
+html[data-t="corporate"] form .btn-submit,
+html[data-t="corporate"] [class*="submit-btn"]{
+  background: linear-gradient(135deg, #1e3a8a, #1e40af) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 13px 26px !important;
+  border-radius: 10px !important;
+  font-weight: 800 !important;
+  font-size: .88rem !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 14px rgba(30,58,138,.3) !important;
+  transition: all .25s !important;
+}
+html[data-t="corporate"] .svm-qf button[type="submit"]:hover,
+html[data-t="corporate"] form button[type="submit"]:hover{
+  background: linear-gradient(135deg, #d4a017, #b8851f) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(212,160,23,.4) !important;
+}
+
+/* Contact section cards */
+html[data-t="corporate"] .cib{
+  background: #ffffff !important;
+  border: 1.5px solid rgba(30,58,138,.1) !important;
+  color: #111827 !important;
+}
+html[data-t="corporate"] .cib:hover{
+  border-color: #d4a017 !important;
+  box-shadow: 0 8px 24px rgba(212,160,23,.15) !important;
+}
+html[data-t="corporate"] .cib *{ color: #111827 !important; }
+html[data-t="corporate"] .cib-l{ color: #d4a017 !important; font-weight: 700 !important; }
+html[data-t="corporate"] .cib-v{ color: #1e3a8a !important; font-weight: 700 !important; }
+
+/* ═══════════ 3. PRICING — REINFORCE VISIBILITY ═══════════ */
+html[data-t="corporate"] .price-card-pub div[style*="font-size:2.1rem"],
+html[data-t="corporate"] .price-card-pub div[style*="font-weight:800"]{
+  color: #b8851f !important;
+  font-weight: 900 !important;
+}
+html[data-t="corporate"] .price-card-pub li,
+html[data-t="corporate"] .price-card-pub ul li{
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+html[data-t="corporate"] .price-card-pub div[style*="line-through"]{
+  color: #94a3b8 !important;
+}
+html[data-t="corporate"] .price-card-pub > div[style*="font-size:1.45rem"]{
+  color: #111827 !important;
+}
+
+/* ═══════════ 4. FOOTER — DARK BG, BRIGHT TEXT ═══════════ */
+html[data-t="corporate"] footer.ft-pro,
+html[data-t="corporate"] .ft-pro{
+  background: linear-gradient(180deg, #0a1428 0%, #0f1f3d 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+/* Headings - bright gold */
+html[data-t="corporate"] .ft-pro h4.ft-pro-head,
+html[data-t="corporate"] .ft-pro-head{
+  color: #fbbf24 !important;
+  font-weight: 800 !important;
+  letter-spacing: 2.5px !important;
+  font-size: .8rem !important;
+}
+/* Body text - bright white */
+html[data-t="corporate"] .ft-pro-tag,
+html[data-t="corporate"] .ft-pro-list,
+html[data-t="corporate"] .ft-pro-list li,
+html[data-t="corporate"] .ft-pro-contact li,
+html[data-t="corporate"] .ft-pro-bottom{
+  color: #e2e8f0 !important;
+}
+/* Footer links */
+html[data-t="corporate"] .ft-pro-list a,
+html[data-t="corporate"] .ft-pro a{
+  color: #e2e8f0 !important;
+  font-weight: 500 !important;
+}
+html[data-t="corporate"] .ft-pro-list a:hover,
+html[data-t="corporate"] .ft-pro a:hover{
+  color: #fbbf24 !important;
+}
+/* Social icons - bright */
+html[data-t="corporate"] .ft-pro-soc{
+  background: rgba(255,255,255,.1) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+  color: #e2e8f0 !important;
+}
+html[data-t="corporate"] .ft-pro-soc svg{ color: #e2e8f0 !important; }
+html[data-t="corporate"] .ft-pro-soc:hover{
+  background: linear-gradient(135deg, #d4a017, #b8851f) !important;
+  border-color: #d4a017 !important;
+  color: #ffffff !important;
+}
+html[data-t="corporate"] .ft-pro-soc:hover svg{ color: #ffffff !important; }
+/* Contact icons */
+html[data-t="corporate"] .ft-pro-ico{ color: #fbbf24 !important; }
+/* Bottom bar */
+html[data-t="corporate"] .ft-pro-bottom{
+  border-top: 1px solid rgba(255,255,255,.1) !important;
+  margin-top: 24px !important;
+  padding-top: 22px !important;
+  color: #cbd5e1 !important;
+}
+
+/* ═══════════ 5. FLOATING BUTTONS — DON'T OVERLAP FOOTER ═══════════ */
+@media(max-width: 1100px){
+  #lfb{ z-index: 50 !important; }
+  /* Reduce vertical spacing on tablets/mobile */
+  #lfb .lb{ margin: 1px 0 !important; }
+}
+
+/* ═══════════ 6. SECTION SPACING — clean separation ═══════════ */
+html[data-t="corporate"] section{
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+html[data-t="corporate"] .hero{
+  padding-top: 120px !important;
+  padding-bottom: 60px !important;
+}
+@media(max-width: 768px){
+  html[data-t="corporate"] section{
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
+  }
+}
+
+/* ═══════════ 7. UTILITY OVERRIDES — fix any remaining dark leftovers ═══════════ */
+html[data-t="corporate"] .sec[style*="background:var(--bg2)"]{ background: #ffffff !important; }
+html[data-t="corporate"] .sec[style*="background:var(--bg3)"]{ background: #f8fafc !important; }
+html[data-t="corporate"] [style*="color:var(--paper)"]{ color: #111827 !important; }
+html[data-t="corporate"] [style*="color:var(--mt)"]{ color: #475569 !important; }
+html[data-t="corporate"] [style*="rgba(255,255,255,.85)"]{ color: #475569 !important; }
+html[data-t="corporate"] [style*="rgba(255,255,255,.6)"]{ color: #64748b !important; }
+html[data-t="corporate"] [style*="rgba(255,255,255,.5)"]{ color: #94a3b8 !important; }
+
+/* End section visibility fix */
 /* End pricing premium override */
 /* End admin security guards */
 /* End production fixes */
