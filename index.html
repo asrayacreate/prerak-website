@@ -8650,78 +8650,67 @@ const ADMIN_PASS = 'prerak@2025';
 const ADMIN_EMAIL = 'asrayacreate.ac@gmail.com';
 
 // ═══════════════════════════════════════════════════════════════
-// SECURE ADMIN ACCESS — keyboard shortcut + session restore
+// SECURE ADMIN ACCESS — login required for every session
+// NO direct bypass. NO auto-activation. Authentication required.
 // ═══════════════════════════════════════════════════════════════
 (function(){
-  // 1. Keyboard shortcut: Ctrl+Shift+A → toggle admin FAB visibility
+  // Single guarded keyboard handler (prevents duplicate listeners on hot reload)
+  if(window.__prerakAdminKeyBound) return;
+  window.__prerakAdminKeyBound = true;
+  
+  // Clean up any stale session flags on every fresh page load.
+  // Public users must NEVER see admin UI without authenticating again.
+  try{ localStorage.removeItem('prerak_admin_session'); }catch(e){}
+  
+  // Ensure baseline state — admin always OFF until proven otherwise
+  window.isAdmin = false;
+  window.isSuperAdmin = false;
+  
+  // Helper — confirm public is fully reset (defensive)
+  function _enforcePublicState(){
+    if(window.ADMIN_AUTHENTICATED === true) return;     // genuine admin session, leave alone
+    window.isAdmin = false;
+    window.isSuperAdmin = false;
+    document.body.classList.remove('admin-mode');
+    const bar = document.getElementById('admin-bar');
+    if(bar) bar.classList.remove('show');
+    const fab = document.getElementById('admin-fab');
+    if(fab){
+      fab.classList.remove('show');
+      fab.style.display = 'none';
+    }
+  }
+  
+  // Run immediately + after DOM ready
+  _enforcePublicState();
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', _enforcePublicState);
+  }
+  
+  // Keyboard shortcut — Ctrl+Shift+A → ONLY opens login modal
   document.addEventListener('keydown', function(e){
     if(e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')){
       e.preventDefault();
-      const fab = document.getElementById('admin-fab');
-      if(fab){
-        if(fab.style.display === 'none' || !fab.classList.contains('show')){
-          fab.style.display = 'flex';
-          fab.classList.add('show');
-          // If not logged in, show login immediately
-          if(typeof isAdmin !== 'undefined' && !isAdmin){
-            if(typeof openLogin === 'function') openLogin();
-          }
-        } else {
-          if(typeof isAdmin === 'undefined' || !isAdmin){
-            fab.style.display = 'none';
-            fab.classList.remove('show');
-          }
-        }
+      e.stopPropagation();
+      // If already authenticated, open admin panel; otherwise open login modal
+      if(window.ADMIN_AUTHENTICATED === true && typeof openAdminPanel === 'function'){
+        openAdminPanel();
+      } else if(typeof openLogin === 'function'){
+        openLogin();
       }
+      return false;
     }
-    // ESC to close admin panel
+    // ESC to close admin panel (only if authenticated)
     if(e.key === 'Escape'){
       const ap = document.getElementById('admin-panel');
       if(ap && ap.classList.contains('open') && typeof exitAdmin === 'function'){
         exitAdmin();
       }
     }
-  });
+  }, true);
   
-  // 2. Restore admin session from localStorage on page load
-  function restoreAdminSession(){
-    try{
-      const raw = localStorage.getItem('prerak_admin_session');
-      if(!raw) return;
-      const sess = JSON.parse(raw);
-      // Check if session valid and not expired
-      if(sess && sess.isAdmin && sess.expiresAt && Date.now() < sess.expiresAt){
-        // Wait for DOM ready then auto-restore admin mode (silent)
-        const tryRestore = () => {
-          if(typeof isAdmin === 'undefined') {
-            setTimeout(tryRestore, 100);
-            return;
-          }
-          window.isAdmin = true;
-          window.isSuperAdmin = !!sess.isSuperAdmin;
-          document.body.classList.add('admin-mode');
-          const bar = document.getElementById('admin-bar');
-          if(bar) bar.classList.add('show');
-          const fab = document.getElementById('admin-fab');
-          if(fab){ fab.style.display='flex'; fab.classList.add('show'); fab.textContent='⚙️'; }
-        };
-        if(document.readyState === 'loading'){
-          document.addEventListener('DOMContentLoaded', tryRestore);
-        } else {
-          tryRestore();
-        }
-      } else if(sess){
-        // Expired - clean up
-        localStorage.removeItem('prerak_admin_session');
-      }
-    }catch(e){
-      console.warn('Admin session restore failed:', e);
-    }
-  }
-  restoreAdminSession();
-  
-  // 3. Hide loader message about admin access
-  console.log('%c🔐 Admin access: Press Ctrl+Shift+A', 'background:#0f2347;color:#fbbf24;padding:6px 12px;border-radius:4px;font-weight:bold;');
+  // Public console — quiet hint
+  console.log('%c🔐 Press Ctrl+Shift+A to open admin login', 'background:#0f2347;color:#fbbf24;padding:6px 12px;border-radius:4px;font-weight:bold;');
 })();
 
 const STORE_KEY = 'prerak_v7';
@@ -10884,16 +10873,12 @@ function doPasswordFallback(){
 }
 function completeLogin(){
   closeLogin();
+  // Set authenticated state — this is the ONLY place that grants admin
+  window.ADMIN_AUTHENTICATED = true;
   isAdmin=true;
-  // Save admin session (24-hour valid)
-  try{
-    const session = {
-      isAdmin: true,
-      isSuperAdmin: !!isSuperAdmin,
-      expiresAt: Date.now() + 24*60*60*1000
-    };
-    localStorage.setItem('prerak_admin_session', JSON.stringify(session));
-  }catch(e){}
+  window.isAdmin = true;
+  // NO localStorage session — every page load requires fresh authentication
+  // (Removed insecure auto-restore that allowed bypass)
   document.getElementById('admin-bar').classList.add('show');
   const aptag=document.getElementById('ap-level-tag');
   if(aptag){aptag.textContent=isSuperAdmin?'🛡️ SUPER ADMIN':'🔧 ADMIN';aptag.style.background=isSuperAdmin?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,#1a3a6e,#2550a0)';}
@@ -10960,9 +10945,13 @@ function backToStep1(){
   clearInterval(otpCountdown);
 }
 function logoutAdmin(){
+  // Reset ALL admin state
+  window.ADMIN_AUTHENTICATED = false;
   isAdmin=false;
   isSuperAdmin=false;
-  // Clear admin session
+  window.isAdmin = false;
+  window.isSuperAdmin = false;
+  // Clear admin session (defensive — none should exist)
   try{ localStorage.removeItem('prerak_admin_session'); }catch(e){}
   document.getElementById('admin-bar').classList.remove('show');
   const fab=document.getElementById('admin-fab');
@@ -17268,6 +17257,47 @@ html[data-t="corporate"] .logo-nm{
     0 2px 8px rgba(220,38,38,.2) !important;
 }
 
+
+/* ═══ 30. ADMIN SECURITY — HARD HIDE BY DEFAULT ═══ */
+/* These rules ensure public users NEVER see admin UI.
+   Visibility ONLY granted via body.admin-mode (set by completeLogin). */
+   
+#admin-bar{
+  display:none !important;
+}
+body.admin-mode #admin-bar,
+body.admin-mode #admin-bar.show{
+  display:flex !important;
+}
+
+#admin-fab{
+  display:none !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+body.admin-mode #admin-fab,
+body.admin-mode #admin-fab.show{
+  display:flex !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+}
+
+#admin-panel{
+  display:none !important;
+}
+body.admin-mode #admin-panel.open{
+  display:flex !important;
+}
+
+/* Hide any admin edit controls embedded in public sections */
+body:not(.admin-mode) [class*="admin-only"],
+body:not(.admin-mode) [class*="adm-edit"],
+body:not(.admin-mode) .admin-control,
+body:not(.admin-mode) [data-admin]{
+  display:none !important;
+}
+
+/* End admin security guards */
 /* End production fixes */
 /* End secure admin & compact dash */
 /* End scrolled navbar fix */
