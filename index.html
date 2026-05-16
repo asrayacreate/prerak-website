@@ -6667,8 +6667,9 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
           <div class="svm-sl en" style="margin-top:16px">Gallery</div><div class="svm-sl ne np" style="margin-top:16px">ग्यालरी</div>
           <div class="svm-galg" id="svmGal"></div>
           <!-- Video Tab -->
-          <div id="svm-video-tab" style="display:none;margin-top:16px;align-items:center;gap:6px;background:rgba(201,147,58,.1);border:1px solid rgba(201,147,58,.3);border-radius:8px;padding:10px 14px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
-            🎬 <span class="en">Watch Service Video / Animation</span><span class="ne np">सेवा भिडियो हेर्नुस्</span>
+          <div id="svm-video-tab" style="display:none;margin-top:16px;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(201,147,58,.16),rgba(201,147,58,.06));border:1px solid rgba(201,147,58,.38);border-radius:10px;padding:11px 16px;cursor:pointer;transition:all .25s;" onmouseover="this.style.background='linear-gradient(135deg,rgba(201,147,58,.26),rgba(201,147,58,.10))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(201,147,58,.16),rgba(201,147,58,.06))'" onclick="var a=this.nextElementSibling;a.style.display=a.style.display==='none'?'block':'none';">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#dc2626;color:#fff;font-size:.8rem;flex-shrink:0;box-shadow:0 3px 8px rgba(220,38,38,.4);">▶</span>
+            <span style="font-weight:800;font-size:.86rem;color:var(--paper);"><span class="en">Watch Project Video</span><span class="ne np">परियोजना भिडियो हेर्नुस्</span></span>
           </div>
           <div id="svm-video-area" style="display:none;margin-top:8px;"></div>
         </div>
@@ -9561,19 +9562,19 @@ function openSvm(id){
       <div class="svm-gi-overlay"><span>🔍</span></div>
     </div>`).join('');
   document.getElementById('svm-svc').value = s.nm;
-  // Show video tab if service has video
+  // Show video tab if service has a video (robust: YouTube, IndexedDB upload, mp4/data/blob)
   const videoTab = document.getElementById('svm-video-tab');
   const videoArea = document.getElementById('svm-video-area');
   if(videoTab && videoArea){
-    if(s.videoUrl){
+    const _vurl = (s.videoUrl||'').trim();
+    if(_vurl){
       videoTab.style.display='flex';
-      const ytId = s.videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-      videoArea.innerHTML = ytId
-        ? `<iframe src="https://www.youtube.com/embed/${ytId[1]}?autoplay=0&rel=0" style="width:100%;height:260px;border:none;border-radius:8px;" allowfullscreen></iframe>`
-        : `<video src="${s.videoUrl}" controls style="width:100%;border-radius:8px;max-height:260px;"></video>`;
+      videoArea.style.display='block';
+      videoArea.innerHTML = '<div style="text-align:center;padding:30px;color:#9ca3af;font-size:.8rem;">⏳ Loading video…</div>';
+      try{ renderSvmVideo(_vurl, videoArea); }catch(_e){ videoArea.innerHTML = svmVideoFallback(); }
     } else {
       videoTab.style.display='none';
-      videoArea.innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af;">No video yet.<br>Add via Admin → Services → Edit</div>';
+      videoArea.innerHTML = '';
     }
   }
   document.getElementById('svmOv').classList.add('show');
@@ -14797,6 +14798,37 @@ function idbOpen(){
     req.onsuccess = e => resolve(e.target.result);
     req.onerror = e => reject(e.target.error);
   });
+}
+// ═══ ROBUST SERVICE-MODAL VIDEO (YouTube + IndexedDB uploads + mp4) ═══
+function svmVideoFallback(){
+  return '<div style="text-align:center;padding:34px 20px;border-radius:10px;background:linear-gradient(155deg,rgba(201,147,58,.12),rgba(0,0,0,.28));border:1px solid rgba(201,147,58,.32);">'
+    + '<div style="font-size:2rem;margin-bottom:8px;">🎬</div>'
+    + '<div style="font-family:var(--fd);font-size:1.02rem;font-weight:700;color:var(--paper);margin-bottom:5px;">Project Video Available on Request</div>'
+    + '<div style="font-size:.74rem;color:rgba(245,237,224,.62);line-height:1.6;margin-bottom:15px;">सेवाको पूर्ण भिडियो हेर्न हामीलाई सम्पर्क गर्नुहोस् — we will share a full walkthrough.</div>'
+    + '<a href="https://wa.me/9779801069733?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%20PRERAK!%20Service%20video%20herna%20chahanchhu." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-weight:800;font-size:.78rem;padding:9px 22px;border-radius:24px;text-decoration:none;">💬 Request Video</a>'
+    + '</div>';
+}
+async function renderSvmVideo(url, area){
+  try{
+    if(!area) return;
+    url = (url||'').trim();
+    var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([A-Za-z0-9_\-]{6,})/);
+    if(yt){
+      area.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '?rel=0" style="width:100%;height:265px;border:none;border-radius:10px;" allowfullscreen loading="lazy"></iframe>';
+      return;
+    }
+    var src = url;
+    if(url.indexOf('idb:') === 0){
+      src = (typeof idbResolveUrl === 'function') ? await idbResolveUrl(url) : '';
+    }
+    if(!src){ area.innerHTML = svmVideoFallback(); return; }
+    var vid = document.createElement('video');
+    vid.src = src; vid.controls = true; vid.preload = 'metadata'; vid.playsInline = true;
+    vid.setAttribute('playsinline',''); vid.setAttribute('controlslist','nodownload');
+    vid.style.cssText = 'width:100%;border-radius:10px;max-height:300px;background:#000;display:block;';
+    vid.onerror = function(){ area.innerHTML = svmVideoFallback(); };
+    area.innerHTML = ''; area.appendChild(vid);
+  }catch(e){ try{ area.innerHTML = svmVideoFallback(); }catch(_){ } }
 }
 async function idbSetVideo(key, blob){
   const db = await idbOpen();
