@@ -1089,6 +1089,8 @@ body.notop .nav{top:0;}
 .hbg{position:absolute;inset:0;background:radial-gradient(ellipse at 18% 28%,rgba(212,166,74,.1),transparent 55%),radial-gradient(ellipse at 82% 72%,rgba(196,80,44,.08),transparent 55%),var(--bg);z-index:0;}
 .hslides{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;}
 .hsl{position:absolute;inset:0;background-size:cover;background-position:center center;background-repeat:no-repeat;opacity:0;transition:opacity 1.5s ease-in-out;will-change:opacity,transform;}
+.hero.hero-video-active .hslides,.hero.hero-video-active .hgrain{opacity:0;visibility:hidden;transition:opacity .35s ease;}
+
 
 
 @keyframes kb{0%,100%{transform:scale(1.05);}50%{transform:scale(1.17) translate(-2%,-2%);}}@keyframes kbHero{0%{transform:scale(1);}50%{transform:scale(1.06);}100%{transform:scale(1);}}
@@ -5763,7 +5765,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div id="hero-video-wrap" style="position:absolute;inset:0;z-index:0;overflow:hidden;background:#000;">
+  <div id="hero-video-wrap" style="position:absolute;inset:0;z-index:1;overflow:hidden;background:transparent;">
     <video id="hero-video-el" playsinline muted loop autoplay preload="metadata" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
   </div>
   <div class="hgrain"></div>
@@ -13643,12 +13645,14 @@ function renderBrandVideo(){
       const heroVideo = document.getElementById('hero-video-el');
       const heroWrap  = document.getElementById('hero-video-wrap');
       if(!heroVideo || !heroWrap) return;
+      const heroSection = document.getElementById('home');
       if(!url){
         heroVideo.pause();
         heroVideo.removeAttribute('src');
         heroVideo.load();
         heroVideo.style.display='none';
-        heroWrap.style.background='#000';
+        heroWrap.style.background='transparent';
+        if(heroSection) heroSection.classList.remove('hero-video-active');
         return;
       }
       heroVideo.muted = true;
@@ -13657,7 +13661,8 @@ function renderBrandVideo(){
       heroVideo.playsInline = true;
       if(heroVideo.src !== url) heroVideo.src = url;
       heroVideo.style.display='block';
-      heroWrap.style.background='#000';
+      heroWrap.style.background='transparent';
+      if(heroSection) heroSection.classList.add('hero-video-active');
       const p = heroVideo.play();
       if(p && typeof p.catch === 'function') p.catch(()=>{});
     };
