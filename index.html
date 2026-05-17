@@ -15763,7 +15763,310 @@ function printCRM(){
   w.document.write('<html><head><title>Prerak — Leads</title><style>body{font-family:sans-serif;font-size:12px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #ccc;padding:6px 8px;}th{background:#f3f4f6;}h2{margin-bottom:10px;}</style></head><body>');
   w.document.write('<h2>PRERAK MULTIPURPOSE — Customer Leads ('+D.leads.length+')</h2>');
   w.document.write('<table><tr><th>#</th><th>Name</th><th>Phone</th><th>Service</th><th>Status</th><th>Inquiry</th><th>Follow-up</th><th>Remarks</th></tr>'+rows+'</table>');
-  w.document.write('<p style="margin-top:16px;color:#888;">Printed: '+new Date().toLocaleString()+'</p></body></html>');
+  w.document.write('<p style="margin-top:16px;color:#888;">Printed: '+new Date().toLocaleString()+'</p>
+<script>
+/* ═════════════════════════════════════════════════════
+   PRERAK TARGETED STABILITY PATCH — gallery persistence,
+   language toggle, service video disabled, safe buttons
+   ═════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  const FULL_IDB_KEY = 'data_full_v2';
+  const DEFAULT_STORE = 'prerak_v1';
+
+  function isLargeDataUrl(v){
+    return typeof v === 'string' && /^data:/i.test(v) && v.length > 120000;
+  }
+
+  function compactForLocalStorage(obj){
+    const copy = JSON.parse(JSON.stringify(obj || {}));
+    const cleanArr = arr => Array.isArray(arr) ? arr.map(u => isLargeDataUrl(u) ? '' : u).filter(Boolean) : [];
+    if(Array.isArray(copy.services)){
+      copy.services = copy.services.map(s => {
+        const x = Object.assign({}, s);
+        x.gal = cleanArr(x.gal);
+        if(isLargeDataUrl(x.bg)) x.bg = (x.gal && x.gal[0]) || '';
+        x.videoUrl = '';
+        x.videoData = '';
+        x.videoBlob = '';
+        return x;
+      });
+    }
+    copy.__hasFullIDB = true;
+    copy.__fullSavedAt = Date.now();
+    return copy;
+  }
+
+  function openIDB(){
+    if(typeof indexedDB === 'undefined') return Promise.reject(new Error('IndexedDB unavailable'));
+    return new Promise((resolve, reject)=>{
+      const req = indexedDB.open('PrerakCMS', 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if(!db.objectStoreNames.contains(DEFAULT_STORE)){
+          db.createObjectStore(DEFAULT_STORE, {keyPath:'k'});
+        }
+      };
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror = () => reject(req.error || new Error('IDB open failed'));
+    });
+  }
+
+  async function idbPutFull(json){
+    const db = await openIDB();
+    const tx = db.transaction(DEFAULT_STORE, 'readwrite');
+    tx.objectStore(DEFAULT_STORE).put({k:FULL_IDB_KEY, v:json, ts:Date.now()});
+    tx.objectStore(DEFAULT_STORE).put({k:'data', v:json, ts:Date.now()});
+    await new Promise((res, rej)=>{ tx.oncomplete=res; tx.onerror=()=>rej(tx.error); });
+  }
+
+  async function idbGetFull(){
+    const db = await openIDB();
+    return await new Promise((resolve, reject)=>{
+      const tx = db.transaction(DEFAULT_STORE, 'readonly');
+      const store = tx.objectStore(DEFAULT_STORE);
+      const req = store.get(FULL_IDB_KEY);
+      req.onsuccess = () => {
+        if(req.result && req.result.v) return resolve(req.result.v);
+        const req2 = store.get('data');
+        req2.onsuccess = () => resolve(req2.result ? req2.result.v : null);
+        req2.onerror = () => reject(req2.error);
+      };
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  function normalizeServices(){
+    try{
+      if(!Array.isArray(window.SVCS)) return;
+      window.SVCS.forEach((s, i)=>{
+        if(!s || typeof s !== 'object') return;
+        s.id = i;                       // keep index/id consistent
+        if(!Array.isArray(s.gal)) s.gal = [];
+        s.gal = s.gal.map(u => String(u||'').trim()).filter(Boolean).slice(0, 6);
+        if(!s.bg && s.gal[0]) s.bg = s.gal[0];
+        s.videoUrl = '';                // service video disabled for now
+        s.videoData = '';
+        s.videoBlob = '';
+      });
+      if(window.D && typeof window.D === 'object'){
+        window.D.services = window.SVCS.map(s => Object.assign({}, s, {videoUrl:'', videoData:'', videoBlob:''}));
+      }
+    }catch(e){ console.warn('[Prerak patch] normalizeServices:', e); }
+  }
+
+  function applyServicesFromD(){
+    try{
+      if(window.D && Array.isArray(D.services) && Array.isArray(window.SVCS) && D.services.length){
+        SVCS.length = 0;
+        D.services.forEach((x,i)=>{
+          if(x && typeof x === 'object'){
+            x.id = i;
+            if(!Array.isArray(x.gal)) x.gal = [];
+            x.videoUrl = '';
+            SVCS.push(x);
+          }
+        });
+      }
+      normalizeServices();
+    }catch(e){ console.warn('[Prerak patch] applyServicesFromD:', e); }
+  }
+
+  const oldSaveData = window.saveData;
+  window.saveData = function(){
+    try{
+      if(typeof window._dataReady !== 'undefined' && !window._dataReady) return;
+      normalizeServices();
+
+      const toSave = JSON.parse(JSON.stringify(window.D || {}));
+      const json = JSON.stringify(toSave);
+
+      // Always save full data including uploaded base64 gallery images in IndexedDB.
+      idbPutFull(json).catch(e => console.warn('[Prerak patch] IDB full save failed:', e));
+
+      try{
+        localStorage.setItem(window.STORE_KEY || 'PRERAK_SITE_DATA_V1', json);
+        localStorage.setItem('PRERAK_ADMIN_DATA_V1', json);
+      }catch(quotaErr){
+        // LocalStorage is too small for uploaded images. Save a compact marker there,
+        // while the real gallery remains safely in IndexedDB.
+        const slim = JSON.stringify(compactForLocalStorage(toSave));
+        try{
+          localStorage.setItem(window.STORE_KEY || 'PRERAK_SITE_DATA_V1', slim);
+          localStorage.setItem('PRERAK_ADMIN_DATA_V1', slim);
+        }catch(e2){}
+        if(typeof showToast === 'function'){
+          showToast('✅ Saved safely. Large uploaded images stored in browser database.', 2600);
+        }
+      }
+      try{ if(typeof window._showSaveIndicator === 'function') window._showSaveIndicator(); }catch(_){}
+    }catch(e){
+      console.error('[Prerak patch] saveData failed:', e);
+      try{ if(typeof oldSaveData === 'function') oldSaveData(); }catch(_){}
+    }
+  };
+
+  const oldLoadData = window.loadData;
+  window.loadData = function(){
+    if(typeof oldLoadData === 'function') oldLoadData();
+    try{
+      if(window.D && !Array.isArray(D.services)) D.services = [];
+      applyServicesFromD();
+    }catch(e){}
+  };
+
+  function rerenderAll(){
+    try{ applyServicesFromD(); }catch(e){}
+    try{ if(typeof renderServices === 'function') renderServices(); }catch(e){}
+    try{ if(typeof renderAdminSvcList === 'function') renderAdminSvcList(); }catch(e){}
+    try{ if(typeof renderSite === 'function') renderSite(); }catch(e){}
+    try{ if(typeof applyLang === 'function') applyLang(); }catch(e){}
+  }
+
+  // After normal init, restore the full IndexedDB copy if localStorage was compact/trimmed.
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(async function(){
+      try{
+        const full = await idbGetFull();
+        if(!full) return;
+        const parsed = JSON.parse(full);
+        if(parsed && Array.isArray(parsed.services) && parsed.services.length){
+          window.D = Object.assign({}, window.D || {}, parsed);
+          applyServicesFromD();
+          rerenderAll();
+        }
+      }catch(e){ console.warn('[Prerak patch] IDB restore skipped:', e); }
+    }, 350);
+  });
+
+  // Service admin save override: image gallery only, no service video.
+  const oldAdminSaveService = window.adminSaveService;
+  window.adminSaveService = function(){
+    try{
+      const idEl = document.getElementById('se-id');
+      const id = parseInt(idEl ? idEl.value : '-1', 10);
+      const nmEl = document.getElementById('se-nm');
+      const nm = nmEl ? nmEl.value.trim() : '';
+      if(!nm){ if(typeof showToast === 'function') showToast('⚠️ Service name required!'); return; }
+
+      const val = id => ((document.getElementById(id)||{}).value || '').trim();
+      const list = id => val(id).split('\n').map(x=>x.trim()).filter(Boolean);
+      const galUrls = list('se-gal-urls').slice(0,6);
+
+      if(!Array.isArray(window.SVCS)) window.SVCS = [];
+      const idx = id >= 0 ? id : SVCS.length;
+      const old = SVCS[idx] || {};
+
+      const newSvc = {
+        id: idx,
+        nm,
+        ne: val('se-ne') || old.ne || nm,
+        ico: val('se-ico') || old.ico || '🏗️',
+        tag: val('se-tag') || old.tag || 'Service',
+        bg: val('se-bg') || galUrls[0] || old.bg || '',
+        desc: val('se-desc') || old.desc || '',
+        ne_desc: val('se-ne-desc') || old.ne_desc || '',
+        feats: list('se-feats'),
+        ne_feats: list('se-ne-feats'),
+        tags: Array.isArray(old.tags) ? old.tags : [],
+        gal: galUrls,
+        videoUrl: ''
+      };
+
+      if(id >= 0) SVCS[idx] = newSvc; else SVCS.push(newSvc);
+      normalizeServices();
+      if(window.D) D.services = SVCS.map(x=>Object.assign({}, x));
+
+      window.saveData();
+
+      try{ if(typeof renderServices === 'function') renderServices(); }catch(e){}
+      try{ if(typeof renderAdminSvcList === 'function') renderAdminSvcList(); }catch(e){}
+      try{ if(typeof renderSite === 'function') renderSite(); }catch(e){}
+      const card = document.getElementById('svc-edit-card');
+      if(card) card.style.display = 'none';
+      if(typeof showToast === 'function') showToast('✅ Service gallery saved and public popup updated: ' + nm);
+    }catch(e){
+      console.error('[Prerak patch] adminSaveService:', e);
+      if(typeof oldAdminSaveService === 'function') return oldAdminSaveService();
+    }
+  };
+
+  // Keep service video upload UI hidden/disabled for now.
+  function disableServiceVideoUI(){
+    try{
+      ['se-video','se-video-file','se-video-upload','se-video-preview'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(el){
+          el.value = '';
+          el.disabled = true;
+          const row = el.closest('.afg, .field, .form-group, .svc-video-upload, .admin-field') || el.parentElement;
+          if(row) row.style.display = 'none';
+        }
+      });
+      document.querySelectorAll('[data-service-video], .service-video-upload, .svid-admin, #svid-grid').forEach(el=>{
+        el.style.display = 'none';
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded', ()=>setTimeout(disableServiceVideoUI, 500));
+
+  // Language toggle hardening.
+  const oldApplyLang = window.applyLang;
+  window.applyLang = function(){
+    try{ if(typeof oldApplyLang === 'function') oldApplyLang(); }catch(e){}
+    const lang = (window.D && D.lang) || document.documentElement.getAttribute('data-lang') || 'en';
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.en').forEach(el => { el.style.display = (lang === 'ne') ? 'none' : ''; });
+    document.querySelectorAll('.ne,.np').forEach(el => { el.style.display = (lang === 'ne') ? '' : 'none'; });
+  };
+
+  const oldToggleLang = window.toggleLang;
+  window.toggleLang = function(){
+    try{
+      if(!window.D || typeof D !== 'object') window.D = {};
+      D.lang = ((D.lang || document.documentElement.getAttribute('data-lang') || 'en') === 'en') ? 'ne' : 'en';
+      window.applyLang();
+      window.saveData();
+    }catch(e){
+      if(typeof oldToggleLang === 'function') oldToggleLang();
+    }
+  };
+
+  // FAQ click fallback, in case initFaq misses dynamically-rendered items.
+  document.addEventListener('click', function(e){
+    const q = e.target.closest && e.target.closest('.faq-q, .faq-head, .faq-question, .faq-item-pub');
+    if(!q) return;
+    const item = q.closest('.faq-item-pub, .faq-item, .faq');
+    if(item && !e.target.closest('a,button,input,textarea,select')){
+      item.classList.toggle('open');
+      item.classList.toggle('active');
+    }
+  }, true);
+
+  // Public modal/gallery image safety: never blank.
+  const oldOpenSvm = window.openSvm;
+  window.openSvm = function(id){
+    normalizeServices();
+    if(typeof oldOpenSvm === 'function') oldOpenSvm(id);
+    setTimeout(function(){
+      try{
+        const tab = document.getElementById('svm-video-tab');
+        const area = document.getElementById('svm-video-area');
+        if(tab) tab.style.display = 'none';
+        if(area){ area.style.display = 'none'; area.innerHTML = ''; }
+        const hero = document.getElementById('svmHeroImg');
+        const first = (window._svmGalData && window._svmGalData[0]) || '';
+        if(hero && (!hero.getAttribute('src') || hero.getAttribute('src') === 'undefined')) hero.src = first || (typeof SVM_IMG_FALLBACK !== 'undefined' ? SVM_IMG_FALLBACK : '');
+      }catch(e){}
+    }, 60);
+  };
+
+})();
+</script>
+
+</body></html>');
   w.print();
 }
 
