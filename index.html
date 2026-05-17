@@ -5763,8 +5763,10 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hbg"></div>
-  <div class="hslides" id="hSlides"></div>
+  <div class="hbg" id="hero-image-fallback"></div>
+  <div id="hero-video-wrap" style="position:absolute;inset:0;z-index:1;overflow:hidden;background:transparent;">
+    <video id="hero-video-el" playsinline muted loop autoplay preload="metadata" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+  </div>
   <div class="hgrain"></div>
   <div class="h-in">
     <div>
@@ -5867,7 +5869,6 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
       <a href="#services" class="hc-cta"><span class="en">View All Services →</span><span class="ne np">सबै सेवाहरू →</span></a>
     </div>
   </div>
-  <div class="hdots" id="hDots"></div>
 </section>
 
 <!-- STATS -->
@@ -10341,111 +10342,20 @@ setInterval(updateLiveTip, 60000); // every minute
 
 // ═══ HERO SLIDESHOW ═══
 function initHero(){
-  // Each entry: [primary Unsplash, picsum fallback] — dual CDN for reliability
-  const imgSets=[
-    // 0 — Building Construction / RCC
-    ['https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1040/1600/900'],
-    // 1 — Modern Residential Villa
-    ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/164/1600/900'],
-    // 2 — Interior Living Room
-    ['https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1060/1600/900'],
-    // 3 — UPVC Glass Windows / Aluminum
-    ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1035/1600/900'],
-    // 4 — Modular Kitchen Premium
-    ['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/431/1600/900'],
-    // 5 — Gypsum False Ceiling
-    ['https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1073/1600/900'],
-    // 6 — Bedroom Interior
-    ['https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1080/1600/900'],
-    // 7 — Renovation / Premium Finish
-    ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/116/1600/900'],
-    // 8 — Solar / Rooftop
-    ['https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/1/1600/900'],
-    // 9 — Bathroom / Tiling
-    ['https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&auto=format&fit=crop&q=80',
-     'https://picsum.photos/id/106/1600/900']
-  ];
-
-  // Prepend admin-saved custom hero image(s) so they persist after reload.
-  // (heroUploadBg / heroApplyBgUrl save to D.hero.bg — restore it here.)
-  const _customHero = [];
-  if(D && D.hero){
-    if(Array.isArray(D.hero.slides)) D.hero.slides.forEach(u => { if(u) _customHero.push(u); });
-    if(D.hero.bg) _customHero.push(D.hero.bg);
-  }
-  if(D && D.settings && D.settings.heroBg) _customHero.push(D.settings.heroBg);
-  const _seenHero = {};
-  _customHero.filter(u => u && !_seenHero[u] && (_seenHero[u] = 1))
-             .reverse()
-             .forEach(u => imgSets.unshift([u, u]));
-
   const srcSvcs=(D&&Array.isArray(D.services)&&D.services.length)?D.services:_arr(typeof SVCS!=='undefined'?SVCS:[]);
   const svcsH=srcSvcs.map(s=>({
     ico:s.ico||'🏗️',nm:s.nm||s.name||'Construction',
     nm_ne:s.ne||s.nm||s.name||'निर्माण',
-    bg:s.bg||imgSets[0][0],
+    bg:s.bg||'',
     desc:(s.desc||s.description||'Premium construction services.').substring(0,80)+'...'
   }));
-
-  const c=document.getElementById('hSlides');
-  const dots=document.getElementById('hDots');
-  if(!c) return;
-
-  // Load each slide — try primary, on error switch to fallback
-  c.innerHTML=imgSets.map(([primary, fallback],i)=>`
-    <div class="hsl${i===0?' active':''}"
-         style="background-image:url('${primary}');background-size:cover;background-position:center;"
-         data-primary="${primary}" data-fallback="${fallback}">
-    </div>`).join('');
-
-  // Validate each slide: preload image, swap to fallback if primary fails
-  c.querySelectorAll('.hsl').forEach(slide=>{
-    const primary=slide.dataset.primary;
-    const fallback=slide.dataset.fallback;
-    if(!primary) return;
-    const testImg=new Image();
-    testImg.onload=()=>{
-      // Primary loaded — ensure background is set
-      slide.style.backgroundImage=`url('${primary}')`;
-    };
-    testImg.onerror=()=>{
-      // Try fallback
-      const fb=new Image();
-      fb.onload=()=>{ slide.style.backgroundImage=`url('${fallback}')`; };
-      fb.onerror=()=>{
-        // Both failed — use service-matched gradient with pattern
-        const hues=['135deg,#1a2e1a,#0d1a0d','160deg,#1a1a2e,#0a0a1e',
-                    '140deg,#2e1a0a,#1a0d00','120deg,#1e2a1e,#0d160d'];
-        const g=hues[parseInt(slide.dataset.primary.replace(/\D/g,'').slice(-1)||'0')%hues.length];
-        slide.style.backgroundImage=`linear-gradient(${g})`;
-      };
-      fb.src=fallback;
-    };
-    testImg.src=primary;
-  });
-
-  if(dots) dots.innerHTML=imgSets.map((_,i)=>`<div class="hdot${i===0?' active':''}" onclick="setHSlide(${i})"></div>`).join('');
+  if(!svcsH.length) return;
   heroSlide=0; cycleHSvc(svcsH,0);
   if(hSlideInt) clearInterval(hSlideInt);
-  hSlideInt=setInterval(()=>{
-    heroSlide=(heroSlide+1)%imgSets.length;
-    setHSlide(heroSlide);
-    cycleHSvc(svcsH,heroSlide%svcsH.length);
-  },6000);
+  hSlideInt=setInterval(()=>{ heroSlide=(heroSlide+1)%svcsH.length; cycleHSvc(svcsH,heroSlide); },6000);
 }
 function setHSlide(i){
   heroSlide=i;
-  document.querySelectorAll('.hsl').forEach((s,idx)=>s.classList.toggle('active',idx===i));
-  document.querySelectorAll('.hdot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
 }
 function cycleHSvc(svcs,i){
   const s=svcs[i%svcs.length];
@@ -13629,7 +13539,7 @@ async function saveBrandVideo(){
   const bvOk = document.getElementById('bv-ok');
   const data = {
     url:     (document.getElementById('bv-url')?.value||'').trim(),
-    type:    document.getElementById('bv-type')?.value     || 'youtube',
+    type:    'mp4',
     eyebrow: document.getElementById('bv-eyebrow')?.value  || 'Brand Video',
     title:   document.getElementById('bv-title')?.value    || '',
     desc:    document.getElementById('bv-desc')?.value     || '',
@@ -13637,6 +13547,13 @@ async function saveBrandVideo(){
     ctaUrl:  document.getElementById('bv-cta-url')?.value  || '#contact'
   };
   if(!data.url){ if(typeof showToast==='function') showToast('⚠️ Please enter a video URL or upload a file first.', 3000); return; }
+  const isBlob = /^blob:/i.test(data.url);
+  const isMp4Data = /^data:video\/mp4/i.test(data.url);
+  const isHttpMp4 = /^https?:\/\/.+\.mp4(\?.*)?$/i.test(data.url);
+  if(!(isBlob || isMp4Data || isHttpMp4)){
+    if(typeof showToast==='function') showToast('⚠️ Please use an MP4 video URL or upload an MP4 file.', 3500);
+    return;
+  }
   // Save to localStorage first (always)
   D.brandVideo = data;
   saveData();
@@ -13671,8 +13588,8 @@ function previewBrandVideo(){
 async function adminUploadBrandVideo(input){
   const f = input.files[0];
   if(!f) return;
-  if(!f.type.startsWith('video/') && !f.name.match(/\.(mp4|webm|ogv|mov)$/i)){
-    if(typeof showToast==='function') showToast('⚠️ Please select a valid video file (MP4, WebM, etc.)', 3000);
+  if(!(f.type === 'video/mp4' || f.name.match(/\.mp4$/i))){
+    if(typeof showToast==='function') showToast('⚠️ Please select an MP4 video file only.', 3000);
     return;
   }
   const statusEl = document.getElementById('bv-upload-status');
@@ -13726,7 +13643,70 @@ function adminBrandVideoPreview(){
 
 function renderBrandVideo(){
   try{
+    const getHeroFallbackImage = () => {
+      const candidates = [
+        D && D.hero && D.hero.bg,
+        D && D.settings && D.settings.heroBg,
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&auto=format&fit=crop&q=80'
+      ].filter(Boolean);
+      return candidates[0];
+    };
+    const showHeroFallback = () => {
+      const fb = document.getElementById('hero-image-fallback');
+      if(!fb) return;
+      const img = getHeroFallbackImage();
+      fb.style.backgroundImage =
+        "radial-gradient(ellipse at 18% 28%,rgba(212,166,74,.1),transparent 55%),radial-gradient(ellipse at 82% 72%,rgba(196,80,44,.08),transparent 55%),url('" + img + "')";
+      fb.style.backgroundSize = 'cover, cover, cover';
+      fb.style.backgroundPosition = 'center, center, center';
+      fb.style.opacity = '1';
+    };
+    const hideHeroFallback = () => {
+      const fb = document.getElementById('hero-image-fallback');
+      if(!fb) return;
+      fb.style.opacity = '0';
+    };
+    const syncHeroVideo = (url) => {
+      const heroVideo = document.getElementById('hero-video-el');
+      const heroWrap  = document.getElementById('hero-video-wrap');
+      if(!heroVideo || !heroWrap) return;
+      if(!url){
+        showHeroFallback();
+        heroVideo.pause();
+        heroVideo.removeAttribute('src');
+        heroVideo.load();
+        heroVideo.style.display='none';
+        heroWrap.style.background='transparent';
+        return;
+      }
+      heroVideo.muted = true;
+      heroVideo.autoplay = true;
+      heroVideo.loop = true;
+      heroVideo.playsInline = true;
+      heroVideo.onerror = () => {
+        heroVideo.style.display='none';
+        showHeroFallback();
+      };
+      heroVideo.onloadeddata = () => {
+        hideHeroFallback();
+        heroVideo.style.display='block';
+      };
+      if(heroVideo.src !== url) heroVideo.src = url;
+      heroWrap.style.background='transparent';
+      const p = heroVideo.play();
+      if(p && typeof p.catch === 'function') p.catch(()=>{ showHeroFallback(); heroVideo.style.display='none'; });
+    };
+
+    // ── Validate URL ──────────────────────────────────────────────────────
+    D.brandVideo = (D.brandVideo && typeof D.brandVideo==='object') ? D.brandVideo : {};
+    const V = D.brandVideo;
+    const rawUrl = String(V.url||'').trim();
     const section = document.getElementById('brand-video');
+
+    // Always sync hero video first, even if brand-video section is hidden/removed.
+    if(!rawUrl || rawUrl.length < 5) syncHeroVideo('');
+    else syncHeroVideo(rawUrl);
+
     if(!section) return;
 
     // ── Hard hide helper ──────────────────────────────────────────────────
@@ -13741,11 +13721,6 @@ function renderBrandVideo(){
       const pw = document.getElementById('bv-player-wrap');
       if(pw){ pw.style.display='none'; pw.innerHTML='<div id="bv-player-inner"></div>'; }
     };
-
-    // ── Validate URL ──────────────────────────────────────────────────────
-    D.brandVideo = (D.brandVideo && typeof D.brandVideo==='object') ? D.brandVideo : {};
-    const V = D.brandVideo;
-    const rawUrl = String(V.url||'').trim();
 
     if(!rawUrl || rawUrl.length < 5){
       hideSection(); return;
