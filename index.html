@@ -8782,7 +8782,7 @@ const SVCS = [
    ne_feats:['लाइसेन्स प्राप्त इन्जिनियर','सरकार स्वीकृत डिजाइन','३ वर्षको वारेन्टी','पारदर्शी BOQ'],
    gal:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&auto=format&fit=crop']},
   {id:1,nm:'Interior Design',ne:'इन्टेरियर डिजाइन',tag:'Interior',ico:'🛋️',
-   videoUrl:'',
+   videoUrl:'./prerak-interior-residential.mp4',
    bg:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
    desc:'Modular kitchen, wardrobes, TV units, living rooms & complete home interiors. 3D design preview before work starts.',
    ne_desc:'मड्युलर किचन, वार्डरोब, TV युनिट, लिभिङ रूम र पूर्ण घर इन्टेरियर।',
@@ -9040,20 +9040,6 @@ function init(){
   try { if(typeof refreshVCardContent==='function') refreshVCardContent(); } catch(e){}
   initHero();
   initReveal();
-  // ═══ APPLY SAVED HERO CONTENT TO PUBLIC PAGE ON EVERY LOAD ═══
-  // loadData() has already merged DEFAULT_DATA + saved localStorage into D.
-  // These were previously only called from saveHero()/saveHeroStats() (admin
-  // mode), so saved hero text/buttons/stats vanished in public mode / after
-  // refresh. Calling them here applies the single source of truth (D.hero,
-  // from STORE_KEY) to the public DOM regardless of admin state.
-  try{ if(typeof applyHeroText  === 'function') applyHeroText();  }catch(e){ _warn && _warn('applyHeroText:', e); }
-  try{ if(typeof applyHeroStats === 'function') applyHeroStats(); }catch(e){ _warn && _warn('applyHeroStats:', e); }
-  // Re-assert shortly after, in case the reveal/counter observers or slide
-  // init touched the nodes — guarantees saved content is what the user sees.
-  setTimeout(function(){
-    try{ if(typeof applyHeroText  === 'function') applyHeroText();  }catch(e){}
-    try{ if(typeof applyHeroStats === 'function') applyHeroStats(); }catch(e){}
-  }, 2100);
   initScrollProg();
   initScrollNav();
   initLogoPopup();
@@ -9585,10 +9571,9 @@ function openSvm(id){
       videoTab.style.display='flex';
       videoArea.style.display='block';
       videoArea.innerHTML = '<div style="text-align:center;padding:30px;color:#9ca3af;font-size:.8rem;">⏳ Loading video…</div>';
-      try{ renderSvmVideo(_vurl, videoArea, videoTab); }catch(_e){ videoTab.style.display='none'; videoArea.style.display='none'; videoArea.innerHTML=''; }
+      try{ renderSvmVideo(_vurl, videoArea); }catch(_e){ videoArea.innerHTML = svmVideoFallback(); }
     } else {
       videoTab.style.display='none';
-      videoArea.style.display='none';
       videoArea.innerHTML = '';
     }
   }
@@ -11183,55 +11168,15 @@ function applyHeroText(){
   if(eyEl && h.ey) eyEl.textContent = h.ey;
   const subEl = document.querySelector('#home .h-sub .en');
   if(subEl && h.sub) subEl.textContent = h.sub;
-  applyHeroButtons();
-}
-
-// Apply saved hero CTA button labels to the public hero buttons.
-// Targets the two .btn-gh anchors ("Site Visit" + "Call Now") and only
-// updates their .en span (preserves emoji prefix + Nepali label).
-function applyHeroButtons(){
-  try{
-    const h = D.hero || {};
-    const btns = document.querySelectorAll('#home .h-acts a.btn-gh');
-    if(btns[0]){ const e = btns[0].querySelector('.en'); if(e && h.b1) e.textContent = h.b1; }
-    if(btns[1]){ const e = btns[1].querySelector('.en'); if(e && h.b2) e.textContent = h.b2; }
-  }catch(e){}
 }
 
 function applyHeroStats(){
   const h = D.hero || {};
   const stats = document.querySelectorAll('#home .hst');
-  const vals = [
-    [ (h.s1n!=null && h.s1n!=='') ? h.s1n : '500+', h.s1l || 'Projects' ],
-    [ (h.s2n!=null && h.s2n!=='') ? h.s2n : '10+',  h.s2l || 'Years'    ],
-    [ (h.s3n!=null && h.s3n!=='') ? h.s3n : '4.9⭐', h.s3l || 'Rating'   ],
-    [ (h.s4n!=null && h.s4n!=='') ? h.s4n : '📍',   h.s4l || 'Hetauda'  ]
-  ];
-  for(let i=0;i<4;i++){
-    const box = stats[i];
-    if(!box) continue;
-    const nEl = box.querySelector('.n');
-    const lEl = box.querySelectorAll('.l')[0];
-    if(nEl){
-      const raw = String(vals[i][0]);
-      // Pure integer (optionally a + or % suffix) → drive the count-up animation
-      // to the SAVED number so it survives a public-mode reload.
-      const m = raw.match(/^(\d+)\s*([+%]?)$/);
-      if(m){
-        nEl.dataset.count = m[1];
-        nEl.dataset.suffix = m[2] || '';
-        nEl._anim = false;
-        nEl.textContent = '0' + (m[2] || '');
-        if(typeof animCtr === 'function'){ try{ animCtr(nEl); }catch(e){} }
-      } else {
-        // Non-numeric (rating / emoji / text) → static, no animation
-        try{ delete nEl.dataset.count; }catch(e){}
-        nEl._anim = true;
-        nEl.textContent = raw;
-      }
-    }
-    if(lEl) lEl.textContent = vals[i][1];
-  }
+  if(stats[0]){ stats[0].querySelector('.n').textContent = h.s1n||'500+'; stats[0].querySelectorAll('.l')[0].textContent = h.s1l||'Projects'; }
+  if(stats[1]){ stats[1].querySelector('.n').textContent = h.s2n||'10+'; stats[1].querySelectorAll('.l')[0].textContent = h.s2l||'Years'; }
+  if(stats[2]){ stats[2].querySelector('.n').textContent = h.s3n||'4.9⭐'; stats[2].querySelectorAll('.l')[0].textContent = h.s3l||'Rating'; }
+  if(stats[3]){ stats[3].querySelector('.n').textContent = h.s4n||'📍'; stats[3].querySelectorAll('.l')[0].textContent = h.s4l||'Hetauda'; }
 }
 
 function heroUploadBg(input){
@@ -14855,33 +14800,35 @@ function idbOpen(){
   });
 }
 // ═══ ROBUST SERVICE-MODAL VIDEO (YouTube + IndexedDB uploads + mp4) ═══
-function _svmHideVideo(area, tab){
-  try{ if(area){ area.innerHTML=''; area.style.display='none'; } if(tab){ tab.style.display='none'; } }catch(_){}
+function svmVideoFallback(){
+  return '<div style="text-align:center;padding:34px 20px;border-radius:10px;background:linear-gradient(155deg,rgba(201,147,58,.12),rgba(0,0,0,.28));border:1px solid rgba(201,147,58,.32);">'
+    + '<div style="font-size:2rem;margin-bottom:8px;">🎬</div>'
+    + '<div style="font-family:var(--fd);font-size:1.02rem;font-weight:700;color:var(--paper);margin-bottom:5px;">Project Video Available on Request</div>'
+    + '<div style="font-size:.74rem;color:rgba(245,237,224,.62);line-height:1.6;margin-bottom:15px;">सेवाको पूर्ण भिडियो हेर्न हामीलाई सम्पर्क गर्नुहोस् — we will share a full walkthrough.</div>'
+    + '<a href="https://wa.me/9779801069733?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%20PRERAK!%20Service%20video%20herna%20chahanchhu." target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;font-weight:800;font-size:.78rem;padding:9px 22px;border-radius:24px;text-decoration:none;">💬 Request Video</a>'
+    + '</div>';
 }
-async function renderSvmVideo(url, area, tab){
+async function renderSvmVideo(url, area){
   try{
     if(!area) return;
     url = (url||'').trim();
-    // Treat dead/placeholder local paths as "no video"
-    if(!url || /^\.\/?prerak-interior-residential\.mp4$/i.test(url)){ _svmHideVideo(area, tab); return; }
     var yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([A-Za-z0-9_\-]{6,})/);
     if(yt){
-      area.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '?rel=0&autoplay=1&playsinline=1" style="width:100%;height:265px;border:none;border-radius:10px;background:#000;" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+      area.innerHTML = '<iframe src="https://www.youtube.com/embed/' + yt[1] + '?rel=0" style="width:100%;height:265px;border:none;border-radius:10px;" allowfullscreen loading="lazy"></iframe>';
       return;
     }
     var src = url;
     if(url.indexOf('idb:') === 0){
       src = (typeof idbResolveUrl === 'function') ? await idbResolveUrl(url) : '';
     }
-    if(!src){ _svmHideVideo(area, tab); return; }
+    if(!src){ area.innerHTML = svmVideoFallback(); return; }
     var vid = document.createElement('video');
-    vid.src = src; vid.controls = true; vid.autoplay = true; vid.preload = 'metadata'; vid.playsInline = true;
+    vid.src = src; vid.controls = true; vid.preload = 'metadata'; vid.playsInline = true;
     vid.setAttribute('playsinline',''); vid.setAttribute('controlslist','nodownload');
     vid.style.cssText = 'width:100%;border-radius:10px;max-height:300px;background:#000;display:block;';
-    vid.onerror = function(){ _svmHideVideo(area, tab); };
+    vid.onerror = function(){ area.innerHTML = svmVideoFallback(); };
     area.innerHTML = ''; area.appendChild(vid);
-    try{ var pp = vid.play(); if(pp && pp.catch) pp.catch(function(){}); }catch(_){}
-  }catch(e){ _svmHideVideo(area, tab); }
+  }catch(e){ try{ area.innerHTML = svmVideoFallback(); }catch(_){ } }
 }
 async function idbSetVideo(key, blob){
   const db = await idbOpen();
