@@ -13694,7 +13694,16 @@ function renderBrandVideo(){
       if(p && typeof p.catch === 'function') p.catch(()=>{ showHeroFallback(); heroVideo.style.display='none'; });
     };
 
+    // ── Validate URL ──────────────────────────────────────────────────────
+    D.brandVideo = (D.brandVideo && typeof D.brandVideo==='object') ? D.brandVideo : {};
+    const V = D.brandVideo;
+    const rawUrl = String(V.url||'').trim();
     const section = document.getElementById('brand-video');
+
+    // Always sync hero video first, even if brand-video section is hidden/removed.
+    if(!rawUrl || rawUrl.length < 5) syncHeroVideo('');
+    else syncHeroVideo(rawUrl);
+
     if(!section) return;
 
     // ── Hard hide helper ──────────────────────────────────────────────────
@@ -13710,17 +13719,9 @@ function renderBrandVideo(){
       if(pw){ pw.style.display='none'; pw.innerHTML='<div id="bv-player-inner"></div>'; }
     };
 
-    // ── Validate URL ──────────────────────────────────────────────────────
-    D.brandVideo = (D.brandVideo && typeof D.brandVideo==='object') ? D.brandVideo : {};
-    const V = D.brandVideo;
-    const rawUrl = String(V.url||'').trim();
-
     if(!rawUrl || rawUrl.length < 5){
-      syncHeroVideo('');
       hideSection(); return;
     }
-
-    syncHeroVideo(rawUrl);
 
     // ── Show section ──────────────────────────────────────────────────────
     section.classList.add('bv-active');
