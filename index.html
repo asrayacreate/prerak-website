@@ -5899,47 +5899,28 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   </div>
 </section>
 
-<!-- ═══ PROJECT SHOWCASE VIDEO (compact premium card) ═══ -->
+<!-- ═══ PROJECT SHOWCASE IMAGE (compact premium card) ═══ -->
 <section class="psv-sec" id="project-showcase" aria-labelledby="psv-heading">
   <div class="psv-wrap">
     <div class="psv-card" id="psvCard">
-      <!-- Video removed - using image fallback to avoid 404 -->
+      <!-- Stable image-only showcase (no video logic) -->
       <div class="psv-fallback" id="psvFallback" style="position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,#0a1a30 0%,#0f2347 35%,#1a3a6e 70%,#0f2347 100%);background-size:cover;background-position:center;"></div>
-      <img class="psv-vid" id="psvVid" alt="Prerak project showcase" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55;" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80" onerror="this.style.display='none'">
+      <img class="psv-vid" id="psvVid" alt="Prerak project showcase" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.55;" src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80" loading="lazy" onerror="this.style.display='none';">
       <div class="psv-overlay" aria-hidden="true"></div>
       <div class="psv-content">
         <div class="psv-badge">★ <span class="en">PROJECT SHOWCASE</span><span class="ne np">परियोजना झलक</span></div>
-        <h2 class="psv-h en" id="psv-heading">Real Construction & Interior Work</h2>
-        <h2 class="psv-h ne np">वास्तविक निर्माण र इन्टेरियर कार्य</h2>
+        <h2 class="psv-h en" id="psv-heading">Modern Construction & Complete Interior Solutions</h2>
+        <h2 class="psv-h ne np">आधुनिक निर्माण र सम्पूर्ण इन्टेरियर समाधान</h2>
         <p class="psv-sub en">Modern construction, interior, UPVC, aluminum, gypsum, renovation and complete building solutions in Nepal.</p>
-        <p class="psv-sub ne np">नेपालमा आधुनिक निर्माण, इन्टेरियर, UPVC, एल्युमिनियम, जिप्सम, पुनर्निर्माण र सम्पूर्ण भवन समाधान।</p>
+        <p class="psv-sub ne np">Construction, Interior, UPVC, Aluminium, Gypsum, Renovation तथा सम्पूर्ण भवन सेवा — एकै विश्वसनीय स्थानमा।</p>
         <div class="psv-acts">
-          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var v=document.getElementById('psvVid');if(!v)return;try{if(v.requestFullscreen)v.requestFullscreen();else if(v.webkitRequestFullscreen)v.webkitRequestFullscreen();else if(v.msRequestFullscreen)v.msRequestFullscreen();}catch(e){}})()">▶ <span class="en">Watch Full</span><span class="ne np">पूरा हेर्नुस्</span></button>
+          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var t=document.getElementById('projects');if(t&&t.scrollIntoView){t.scrollIntoView({behavior:'smooth',block:'start'});}else{location.hash='#projects';}})()">🏗️ <span class="en">View Projects</span><span class="ne np">परियोजनाहरू हेर्नुस्</span></button>
           <button class="psv-btn psv-btn-sec" type="button" onclick="(function(){var m=document.getElementById('quote-modal');if(m&&typeof openQuote==='function'){openQuote();}else if(m){m.classList.add('open');}else{location.hash='#contact';}})()">📞 <span class="en">Get Free Quote</span><span class="ne np">निःशुल्क कोट</span></button>
         </div>
       </div>
     </div>
   </div>
 </section>
-<script>
-// Hide showcase section only if the showcase image genuinely fails to load.
-// (#psvVid is an <img>, so use image load/error semantics — not video APIs.)
-// The fallback gradient is intentionally left visible behind the image so the
-// section's blended appearance stays exactly the same as before.
-(function(){
-  var img = document.getElementById('psvVid');
-  var sec = document.getElementById('project-showcase');
-  if(!img || !sec) return;
-  function failed(){ sec.style.display='none'; }
-  img.addEventListener('error', failed);
-  // If the image already finished loading and has no usable pixels, treat as failed.
-  if(img.complete && img.naturalWidth === 0){ failed(); }
-  // Safety net: if after 3.5s the image still hasn't loaded successfully, hide it.
-  setTimeout(function(){
-    if(!(img.complete && img.naturalWidth > 0)){ failed(); }
-  }, 3500);
-})();
-</script>
 
 <!-- SERVICES -->
 <section class="sec svbg" id="services">
@@ -8769,111 +8750,78 @@ const DEFAULT_DATA = {
 
 // ═══ SERVICES DATA ═══
 const SVCS = [
-  {id:0,nm:'Building Construction',ne:'भवन निर्माण',tag:'Construction',ico:'🏗️',
+  {id:0,nm:'Construction',ne:'भवन निर्माण',tag:'Construction',ico:'🏗️',
    bg:'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800',
-   desc:'Complete residential & commercial building construction — RCC structure, masonry, foundation to finishing. Transparent billing & licensed engineers.',
-   ne_desc:'पूर्ण आवासीय र व्यावसायिक भवन निर्माण — जग देखि फिनिशिङसम्म।',
-   tags:['RCC','Masonry','Foundation','Finishing'],
-   feats:['Licensed Engineers','Government-approved design','3-Year Warranty','Transparent BOQ'],
-   ne_feats:['लाइसेन्स प्राप्त इन्जिनियर','सरकार स्वीकृत डिजाइन','३ वर्षको वारेन्टी','पारदर्शी BOQ'],
+   desc:'Prerak Multipurpose Pvt. Ltd. ले आवासीय र व्यावसायिक भवनको पूर्ण निर्माण गर्छ — RCC structure, foundation देखि finishing सम्म, licensed engineer सहित transparent billing मा।',
+   ne_desc:'पूर्ण आवासीय र व्यावसायिक भवन निर्माण — जग देखि फिनिशिङसम्म, अनुभवी इन्जिनियर र पारदर्शी लागत अनुमान सहित।',
+   tags:['RCC Structure','Foundation','Masonry','Finishing'],
+   feats:['Licensed & experienced engineers','Government-approved structural design','3-Year structural warranty','Transparent BOQ & billing'],
+   ne_feats:['अनुभवी लाइसेन्स प्राप्त इन्जिनियर','सरकार स्वीकृत स्ट्रक्चरल डिजाइन','३ वर्षको स्ट्रक्चरल वारेन्टी','पारदर्शी BOQ र बिलिङ'],
    gal:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&auto=format&fit=crop']},
   {id:1,nm:'Interior Design',ne:'इन्टेरियर डिजाइन',tag:'Interior',ico:'🛋️',
-   videoUrl:'./prerak-interior-residential.mp4',
    bg:'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
-   desc:'Modular kitchen, wardrobes, TV units, living rooms & complete home interiors. 3D design preview before work starts.',
-   ne_desc:'मड्युलर किचन, वार्डरोब, TV युनिट, लिभिङ रूम र पूर्ण घर इन्टेरियर।',
+   desc:'Modular kitchen, wardrobe, TV unit, living र bedroom सहित पूर्ण घर interior — काम सुरु हुनु अघि 3D design preview प्रदान गरिन्छ।',
+   ne_desc:'मड्युलर किचन, वार्डरोब, TV युनिट, लिभिङ रूम र पूर्ण घर इन्टेरियर — प्रिमियम गुणस्तर र समयमै डेलिभरी।',
    tags:['Living Room','Bedroom','Kitchen','Office'],
-   feats:['3D Visualization before work','Custom modular furniture','Premium quality finishes','On-time delivery'],
-   ne_feats:['काम अघि 3D भिजुअलाइजेशन','कस्टम मड्युलर फर्निचर','प्रिमियम गुणस्तर','समयमा डेलिभरी'],
+   feats:['3D visualization before execution','Custom modular furniture','Premium quality finishes','On-time project delivery'],
+   ne_feats:['काम अघि 3D भिजुअलाइजेशन','कस्टम मड्युलर फर्निचर','प्रिमियम गुणस्तरको फिनिश','समयमै परियोजना डेलिभरी'],
    gal:['https://images.unsplash.com/photo-1616137466211-f939a420be84?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=400&auto=format&fit=crop']},
-  {id:2,nm:'UPVC & Aluminum Works',ne:'UPVC र Aluminum कार्य',tag:'UPVC',ico:'🪟',
+  {id:2,nm:'UPVC & Aluminum',ne:'UPVC र एल्युमिनियम',tag:'UPVC',ico:'🪟',
    bg:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
-   desc:'Premium UPVC windows & doors, aluminum sliding systems, glass works & curtain walls — waterproof & soundproof.',
-   ne_desc:'प्रिमियम UPVC झ्याल र ढोका, Aluminum स्लाइडिङ, काँच काम।',
-   tags:['UPVC Windows','Aluminum Doors','Glass Work','Sliding'],
-   feats:['Waterproof & dustproof','Soundproof design','Energy-efficient glass','Factory-made precision'],
-   ne_feats:['वाटरप्रुफ र धुलोप्रुफ','साउन्डप्रुफ डिजाइन','एनर्जी एफिसियन्ट','फ्याक्ट्री-मेड'],
+   desc:'Premium UPVC झ्याल र ढोका, aluminum sliding system र curtain wall — waterproof, dustproof र soundproof factory-made precision सहित।',
+   ne_desc:'प्रिमियम UPVC झ्याल र ढोका, एल्युमिनियम स्लाइडिङ प्रणाली र कर्टेन वाल — वाटरप्रुफ र साउन्डप्रुफ।',
+   tags:['UPVC Windows','Aluminum Doors','Sliding System','Curtain Wall'],
+   feats:['Waterproof & dustproof sealing','Soundproof glazing design','Energy-efficient glass','Factory-made precision fitting'],
+   ne_feats:['वाटरप्रुफ र धुलोप्रुफ सिलिङ','साउन्डप्रुफ ग्लेजिङ डिजाइन','एनर्जी एफिसियन्ट ग्लास','फ्याक्ट्री-मेड परिशुद्ध फिटिङ'],
    gal:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400','https://images.unsplash.com/photo-1595514535116-d8b2e0c03f04?w=400','https://images.unsplash.com/photo-1600607686527-6fb886090705?w=400','https://images.unsplash.com/photo-1613665813446-82a78c468a1d?w=400','https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=400','https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400']},
-  {id:3,nm:'Gypsum Ceiling & Partition',ne:'जिप्सम सिलिङ र पार्टिशन',tag:'Gypsum',ico:'🪨',
+  {id:3,nm:'Gypsum & Ceiling',ne:'जिप्सम र सिलिङ',tag:'Gypsum',ico:'🪨',
    bg:'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800',
-   desc:'Premium gypsum board false ceilings, POP designs, acoustic panels & partition walls for offices & homes.',
-   ne_desc:'प्रिमियम जिप्सम बोर्ड फल्स सिलिङ, POP डिजाइन, ध्वनिक प्यानल र पार्टिशन।',
+   desc:'Premium gypsum board false ceiling, POP design, acoustic panel र partition wall — office र घर दुवैका लागि custom LED integration सहित।',
+   ne_desc:'प्रिमियम जिप्सम बोर्ड फल्स सिलिङ, POP डिजाइन, ध्वनिक प्यानल र पार्टिशन — कस्टम LED सहित।',
    tags:['False Ceiling','POP Design','Partition','LED Integration'],
-   feats:['Fire-resistant materials','Moisture-proof design','Custom LED integration','Quick installation'],
-   ne_feats:['अग्नि प्रतिरोधी','आर्द्रता रोधी','कस्टम LED','छिटो स्थापना'],
+   feats:['Fire-resistant board materials','Moisture-proof installation','Custom LED & cove integration','Quick & clean installation'],
+   ne_feats:['अग्नि प्रतिरोधी बोर्ड सामग्री','आर्द्रता रोधी स्थापना','कस्टम LED र कोभ इन्टिग्रेसन','छिटो र सफा स्थापना'],
    gal:['https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=400','https://images.unsplash.com/photo-1600210492493-0946911123ea?w=400','https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400','https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=400','https://images.unsplash.com/photo-1497366754035-f200581e6b3f?w=400','https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=400']},
-  {id:4,nm:'Electrical Works',ne:'Electrical कार्य',tag:'Electrical',ico:'⚡',
-   bg:'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800',
-   desc:'Complete electrical wiring, DB board, LED lighting, MCB panel & solar connection for homes & commercial buildings.',
-   ne_desc:'पूर्ण Electrical वायरिङ, DB बोर्ड, LED लाइटिङ, MCB प्यानल र Solar जोडाइ।',
-   tags:['Wiring','DB Board','LED Lighting','Solar Connect'],
-   feats:['ISI certified materials','Load-balanced design','Safety-first installation','Annual maintenance'],
-   ne_feats:['ISI प्रमाणित सामग्री','लोड-ब्यालान्स','सुरक्षा पहिलो','वार्षिक मर्मत'],
-   gal:['https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400','https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400','https://images.unsplash.com/photo-1497366216548-37526070297c?w=400','https://images.unsplash.com/photo-1497366754035-f200581e6b3f?w=400','https://images.unsplash.com/photo-1609429019995-8c40f49535a5?w=400','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400']},
-  {id:5,nm:'Plumbing Works',ne:'Plumbing कार्य',tag:'Plumbing',ico:'🔧',
+  {id:4,nm:'Plumbing',ne:'प्लम्बिङ कार्य',tag:'Plumbing',ico:'🔧',
    bg:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800',
-   desc:'Complete plumbing — water supply lines, sewage, bathroom fitting, water tank installation & drainage systems.',
-   ne_desc:'पूर्ण Plumbing — पानी आपूर्ति, ढल, बाथरूम फिटिङ र ड्रेनेज।',
-   tags:['Water Supply','Sewage','Bathroom','Drainage'],
-   feats:['Leak-proof installation','ISI pipes & fittings','Complete bathroom set','Emergency repair'],
-   ne_feats:['लिक-प्रुफ','ISI पाइप','बाथरूम सेट','आपतकालीन मर्मत'],
+   desc:'पूर्ण plumbing सेवा — water supply line, sewage, bathroom fitting, water tank installation र drainage system, leak-proof ISI pipe सहित।',
+   ne_desc:'पूर्ण प्लम्बिङ — पानी आपूर्ति लाइन, ढल, बाथरूम फिटिङ, ट्यांकी जडान र ड्रेनेज प्रणाली।',
+   tags:['Water Supply','Sewage Line','Bathroom Fitting','Drainage'],
+   feats:['Leak-proof installation','ISI-grade pipes & fittings','Complete bathroom setup','Emergency repair support'],
+   ne_feats:['लिक-प्रुफ स्थापना','ISI स्तरको पाइप र फिटिङ','पूर्ण बाथरूम सेटअप','आपतकालीन मर्मत सहयोग'],
    gal:['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400','https://images.unsplash.com/photo-1552053831-71594a27632d?w=400','https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400','https://images.unsplash.com/photo-1564540574859-0dfb63985953?w=400','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400','https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400']},
-  {id:6,nm:'Painting & Renovation',ne:'Painting र Renovation',tag:'Painting',ico:'🎨',
+  {id:5,nm:'Electrical',ne:'इलेक्ट्रिकल कार्य',tag:'Electrical',ico:'⚡',
+   bg:'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=800',
+   desc:'पूर्ण electrical wiring, DB board, MCB panel, LED lighting र solar connection — घर र commercial building का लागि safety-first installation।',
+   ne_desc:'पूर्ण इलेक्ट्रिकल वायरिङ, DB बोर्ड, MCB प्यानल, LED लाइटिङ र सोलार जडान।',
+   tags:['Wiring','DB Board','LED Lighting','MCB Panel'],
+   feats:['ISI-certified materials','Load-balanced circuit design','Safety-first installation','Annual maintenance support'],
+   ne_feats:['ISI प्रमाणित सामग्री','लोड-ब्यालान्स सर्किट डिजाइन','सुरक्षा पहिलो स्थापना','वार्षिक मर्मत सहयोग'],
+   gal:['https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400','https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400','https://images.unsplash.com/photo-1497366216548-37526070297c?w=400','https://images.unsplash.com/photo-1497366754035-f200581e6b3f?w=400','https://images.unsplash.com/photo-1609429019995-8c40f49535a5?w=400','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400']},
+  {id:6,nm:'Renovation',ne:'पुनर्निर्माण',tag:'Renovation',ico:'🛠️',
    bg:'https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=800',
-   desc:'Interior & exterior painting, wall textures, waterproof coating & complete home renovation including older building upgrades.',
-   ne_desc:'इन्टेरियर र एक्सटेरियर Painting, वाल टेक्सचर, वाटरप्रुफ कोटिङ र Renovation।',
-   tags:['Interior Paint','Exterior Paint','Wall Texture','Waterproofing'],
-   feats:['Premium Asian/Berger paints','Putty + primer + paint','Waterproof coating','Neat & clean work'],
-   ne_feats:['प्रिमियम पेन्ट','पुट्टी + प्राइमर','वाटरप्रुफ','सफा काम'],
+   desc:'पुरानो भवनको पूर्ण renovation — structural repair, interior र exterior painting, wall texture, waterproof coating र complete upgrade।',
+   ne_desc:'पुरानो घर/भवनको पूर्ण पुनर्निर्माण — मर्मत, पेन्टिङ, वाटरप्रुफिङ र आधुनिक अपग्रेड।',
+   tags:['Structural Repair','Painting','Waterproofing','Upgrade'],
+   feats:['Full structural assessment','Premium paints & coatings','Waterproof treatment','Neat & dust-controlled work'],
+   ne_feats:['पूर्ण स्ट्रक्चरल मूल्यांकन','प्रिमियम पेन्ट र कोटिङ','वाटरप्रुफ ट्रिटमेन्ट','सफा र धुलो-नियन्त्रित काम'],
    gal:['https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?w=400','https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400','https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=400','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400']},
-  {id:7,nm:'Tiles / Marble / Flooring',ne:'टाइल्स / मार्बल / Flooring',tag:'Flooring',ico:'🏠',
-   bg:'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=800',
-   desc:'Premium floor & wall tiles, marble, granite, wooden flooring & anti-skid tiles for all rooms.',
-   ne_desc:'प्रिमियम फ्लोर र वाल टाइल्स, मार्बल, ग्रेनाइट र वुडेन फ्लोरिङ।',
-   tags:['Floor Tiles','Wall Tiles','Marble','Granite'],
-   feats:['800+ tile designs','Anti-skid bathroom tiles','Marble & granite cutting','Waterproof grouting'],
-   ne_feats:['800+ टाइल डिजाइन','एन्टी-स्किड','मार्बल कटिङ','वाटरप्रुफ ग्राउटिङ'],
-   gal:['https://images.unsplash.com/photo-1554995207-c18c203602cb?w=400','https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=400','https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400','https://images.unsplash.com/photo-1600210492493-0946911123ea?w=400','https://images.unsplash.com/photo-1607082349566-187342175e2f?w=400','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400']},
-  {id:8,nm:'Solar Installation',ne:'Solar स्थापना',tag:'Solar',ico:'☀️',
-   bg:'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800',
-   desc:'Solar panel installation, inverter setup, on-grid & off-grid solar systems for homes & commercial buildings.',
-   ne_desc:'सोलार प्यानल स्थापना, On-grid र Off-grid सोलार सिस्टम।',
-   tags:['Solar Panel','Inverter','On-Grid','Off-Grid'],
-   feats:['Government subsidy guidance','High-efficiency panels','Battery backup option','10-year warranty'],
-   ne_feats:['सरकारी अनुदान मार्गदर्शन','उच्च दक्षता','ब्याट्री ब्याकअप','१० वर्षको वारेन्टी'],
-   gal:['https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400','https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=400','https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=400','https://images.unsplash.com/photo-1611365892117-00ac5ef43c90?w=400','https://images.unsplash.com/photo-1497366216548-37526070297c?w=400','https://images.unsplash.com/photo-1497366754035-f200581e6b3f?w=400']},
-  {id:9,nm:'Glass Work',ne:'Glass कार्य',tag:'Glass',ico:'🔲',
+  {id:7,nm:'Prefab',ne:'प्रिफ्याब निर्माण',tag:'Prefab',ico:'🏠',
+   bg:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800',
+   desc:'Prefabricated structure, steel frame र lightweight panel प्रयोग गरी छिटो र भरपर्दो prefab building — site office, home र commercial unit का लागि।',
+   ne_desc:'छिटो निर्माण हुने प्रिफ्याब भवन — स्टिल फ्रेम र हल्का प्यानल प्रयोग गरी टिकाउ संरचना।',
+   tags:['Steel Frame','Lightweight Panel','Fast Build','Site Office'],
+   feats:['Fast on-site assembly','Durable steel structure','Cost-effective design','Relocatable units'],
+   ne_feats:['छिटो साइट एसेम्बली','टिकाउ स्टिल संरचना','किफायती डिजाइन','सार्न मिल्ने युनिट'],
+   gal:['https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&auto=format&fit=crop','https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=400','https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop']},
+  {id:8,nm:'Glass Work',ne:'ग्लास कार्य',tag:'Glass',ico:'🔲',
    bg:'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800',
-   desc:'Toughened glass, glass partitions, shower enclosures, glass railings, mirrors & structural glazing.',
-   ne_desc:'टफ्ड ग्लास, ग्लास पार्टिशन, शावर एन्क्लोजर, ग्लास रेलिङ र मिरर।',
-   tags:['Toughened Glass','Shower Glass','Partition','Mirror'],
-   feats:['ISI certified glass','Frameless options','Custom sizing','Quick install'],
-   ne_feats:['ISI प्रमाणित','फ्रेमलेस विकल्प','कस्टम साइज','छिटो स्थापना'],
-   gal:['https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400','https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400','https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?w=400','https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=400']},
-  {id:10,nm:'Modular Kitchen & Wardrobe',ne:'मड्युलर किचन र वार्डरोब',tag:'Modular',ico:'🍳',
-   bg:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800',
-   desc:'Custom modular kitchen cabinets, wardrobes, TV units & storage using plywood, MDF & PVC boards.',
-   ne_desc:'कस्टम मड्युलर किचन क्याबिनेट, वार्डरोब, TV युनिट र स्टोरेज।',
-   tags:['Modular Kitchen','Wardrobe','TV Unit','Storage'],
-   feats:['3D design before work','Soft-close hinges','Laminate finish','Lifetime support'],
-   ne_feats:['काम अघि 3D','सफ्ट-क्लोज हिन्ज','लैमिनेट फिनिश','जीवनभर सहयोग'],
-   gal:['https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400','https://images.unsplash.com/photo-1565183997392-2f6f122e5912?w=400','https://images.unsplash.com/photo-1556909044-7b7d1f07f5de?w=400','https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=400','https://images.unsplash.com/photo-1556904532-71c81975d2a4?w=400','https://images.unsplash.com/photo-1600210492493-0946911123ea?w=400']},
-  {id:11,nm:'Construction Material Supply',ne:'निर्माण सामग्री आपूर्ति',tag:'Materials',ico:'🧱',
-   bg:'https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?w=800',
-   desc:'Cement, steel, sand, bricks, tiles, plywood, UPVC pipes & all construction materials at competitive rates — Hetauda delivery.',
-   ne_desc:'सिमेन्ट, स्टिल, बालुवा, इँटा, टाइल्स, UPVC पाइप — हेटौंडामा डेलिभरी।',
-   tags:['Cement','Steel','Tiles','UPVC Pipes'],
-   feats:['All brands available','Bulk order discounts','Doorstep delivery','Quality guaranteed'],
-   ne_feats:['सबै ब्र्यान्ड','थोक छुट','डोरस्टेप डेलिभरी','गुणस्तर ग्यारेन्टी'],
-   gal:['https://images.unsplash.com/photo-1517760444937-f6397edcbbcd?w=400','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400','https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=400','https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400','https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=400']},
-  {id:12,nm:'Site Supervision & BOQ',ne:'Site Supervision र BOQ',tag:'Supervision',ico:'📋',
-   bg:'https://images.unsplash.com/photo-1507207611509-ec012433ff52?w=800',
-   desc:'Professional site supervision, structural design, quantity estimation (BOQ), cost analysis & complete project management.',
-   ne_desc:'Site supervision, BOQ estimation, cost analysis र project management।',
-   tags:['Site Visit','BOQ','Structural Design','Project Mgmt'],
-   feats:['Free initial consultation','BOQ in 48 hrs','Certified engineers','Ongoing site support'],
-   ne_feats:['नि:शुल्क परामर्श','४८ घण्टामा BOQ','प्रमाणित इन्जिनियर','जारी सहयोग'],
-   gal:['https://images.unsplash.com/photo-1507207611509-ec012433ff52?w=400','https://images.unsplash.com/photo-1582139329536-e7284fece509?w=400','https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400','https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=400','https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=400']}
+   desc:'Toughened glass, glass partition, shower enclosure, glass railing, mirror र structural glazing — frameless option र custom sizing सहित।',
+   ne_desc:'टफन्ड ग्लास, ग्लास पार्टिशन, शावर एन्क्लोजर, ग्लास रेलिङ र मिरर — कस्टम साइज सहित।',
+   tags:['Toughened Glass','Partition','Shower Glass','Railing'],
+   feats:['ISI-certified glass','Frameless design options','Custom sizing & cutting','Quick professional install'],
+   ne_feats:['ISI प्रमाणित ग्लास','फ्रेमलेस डिजाइन विकल्प','कस्टम साइज र कटिङ','छिटो व्यावसायिक स्थापना'],
+   gal:['https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=400','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400','https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400','https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?w=400','https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=400']}
 ];
 
 // ═══ TESTIMONIALS DATA ═══
@@ -13696,15 +13644,6 @@ async function adminUploadBrandVideo(input){
     setStatus('❌ Upload failed: '+(e.message||String(e)),'#991b1b');
     if(typeof showToast==='function') showToast('❌ Upload failed: '+(e.message||String(e)).substring(0,80), 4000);
   }
-}
-
-function adminBrandVideoPreview(){
-  // live preview as URL is typed
-  const url=(document.getElementById('bv-url')?.value||'').trim();
-  const type=document.getElementById('bv-type')?.value||'youtube';
-  const prev=document.getElementById('bv-preview');
-  if(!prev||!url) return;
-  prev.style.display='none';
 }
 
 function renderBrandVideo(){
