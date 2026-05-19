@@ -5914,7 +5914,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
         <p class="psv-sub en">Modern construction, interior, UPVC, aluminum, gypsum, renovation and complete building solutions in Nepal.</p>
         <p class="psv-sub ne np">नेपालमा आधुनिक निर्माण, इन्टेरियर, UPVC, एल्युमिनियम, जिप्सम, पुनर्निर्माण र सम्पूर्ण भवन समाधान।</p>
         <div class="psv-acts">
-          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var v=document.getElementById('psvVid');if(!v)return;try{if(v.requestFullscreen)v.requestFullscreen();else if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();v.muted=false;v.play();}catch(e){}})()">▶ <span class="en">Watch Full</span><span class="ne np">पूरा हेर्नुस्</span></button>
+          <button class="psv-btn psv-btn-pri" type="button" onclick="(function(){var v=document.getElementById('psvVid');if(!v)return;try{if(v.requestFullscreen)v.requestFullscreen();else if(v.webkitRequestFullscreen)v.webkitRequestFullscreen();else if(v.msRequestFullscreen)v.msRequestFullscreen();}catch(e){}})()">▶ <span class="en">Watch Full</span><span class="ne np">पूरा हेर्नुस्</span></button>
           <button class="psv-btn psv-btn-sec" type="button" onclick="(function(){var m=document.getElementById('quote-modal');if(m&&typeof openQuote==='function'){openQuote();}else if(m){m.classList.add('open');}else{location.hash='#contact';}})()">📞 <span class="en">Get Free Quote</span><span class="ne np">निःशुल्क कोट</span></button>
         </div>
       </div>
@@ -5922,25 +5922,21 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   </div>
 </section>
 <script>
-// Hide video showcase section if no source loads
+// Hide showcase section only if the showcase image genuinely fails to load.
+// (#psvVid is an <img>, so use image load/error semantics — not video APIs.)
+// The fallback gradient is intentionally left visible behind the image so the
+// section's blended appearance stays exactly the same as before.
 (function(){
-  var vid = document.getElementById('psvVid');
+  var img = document.getElementById('psvVid');
   var sec = document.getElementById('project-showcase');
-  var fallback = document.getElementById('psvFallback');
-  if(!vid || !sec) return;
-  var sources = vid.querySelectorAll('source');
-  var errCount = 0;
-  function onSrcError(){ errCount++; if(errCount >= sources.length){ sec.style.display='none'; } }
-  sources.forEach(function(s){ s.addEventListener('error', onSrcError); });
-  vid.addEventListener('error', function(){ sec.style.display='none'; });
-  // If video can play, ensure it's shown; reveal fallback bg while buffering
-  vid.addEventListener('canplay', function(){ if(fallback) fallback.style.display='none'; });
-  vid.addEventListener('waiting', function(){ if(fallback) fallback.style.display='block'; });
-  // Timeout: if no canplay within 3s and no video, hide section
+  if(!img || !sec) return;
+  function failed(){ sec.style.display='none'; }
+  img.addEventListener('error', failed);
+  // If the image already finished loading and has no usable pixels, treat as failed.
+  if(img.complete && img.naturalWidth === 0){ failed(); }
+  // Safety net: if after 3.5s the image still hasn't loaded successfully, hide it.
   setTimeout(function(){
-    if(vid.readyState === 0){
-      sec.style.display='none';
-    }
+    if(!(img.complete && img.naturalWidth > 0)){ failed(); }
   }, 3500);
 })();
 </script>
