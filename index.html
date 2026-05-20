@@ -10816,13 +10816,13 @@ function doLogin(){
   if(lb){lb.textContent=isSuperAdmin?'🛡️ Super Admin':'🔧 Admin';lb.style.display='block';}
 
   // ── Check if EmailJS is properly configured before going to OTP step ────
-  const _ejsCfg = _ejsConfig();
-  const _ejsReady_ = !!(
-    _ejsCfg.sid && _ejsCfg.tid && _ejsCfg.pk &&
-    !['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'].includes(_ejsCfg.sid) &&
-    !['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'].includes(_ejsCfg.tid) &&
-    !['service_bvxfr3q','template_xs9x16u','fpml8phlCtNwoA7rZ'].includes(_ejsCfg.pk)
-  );
+  // Use the canonical _ejsConfigValid() check (matches what _sendOTPEmail uses).
+  // Earlier brittle blacklist-based check caused false negatives → OTP path was
+  // never reached even when valid credentials were saved.
+  const _ejsCfg    = _ejsConfig();
+  const _ejsReady_ = (typeof _ejsConfigValid === 'function')
+    ? _ejsConfigValid(_ejsCfg)
+    : !!(_ejsCfg.sid && _ejsCfg.tid && _ejsCfg.pk);
 
   if(!_ejsReady_){
     // No valid EmailJS config — go directly to password fallback, skip OTP screen
