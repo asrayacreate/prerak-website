@@ -5723,6 +5723,13 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
       <a href="#why-us" onclick="closeMenu()"><span class="en">About</span><span class="ne np">हाम्रो बारे</span></a>
       <a href="#pricing" onclick="closeMenu()"><span class="en">Pricing</span><span class="ne np">मूल्य</span></a>
       <a href="#contact" onclick="closeMenu()"><span class="en">Contact</span><span class="ne np">सम्पर्क</span></a>
+      <!-- World-class theme toggle (icon-only, cycles 3 themes) — top nav, after menu links -->
+      <button type="button" class="nav-theme-btn" id="navThemeBtn" aria-label="Switch theme · थिम परिवर्तन" title="Change Theme · थिम बदल्नुहोस्"
+        onclick="(function(self){try{var t=(document.documentElement.getAttribute('data-t')||localStorage.getItem('prerak_theme')||'corporate');var order=['corporate','dark','saffron'];var n=order[(order.indexOf(t)+1)%order.length];if(typeof setTheme==='function'){setTheme(n);}else{document.documentElement.setAttribute('data-t',n);localStorage.setItem('prerak_theme',n);}self.setAttribute('data-mode',n);self.classList.add('spin');setTimeout(function(){self.classList.remove('spin');},420);}catch(e){}})(this)">
+        <svg class="ntb-ic ntb-ic-sun"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ntb-ic ntb-ic-moon"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+        <svg class="ntb-ic ntb-ic-bldg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></svg>
+      </button>
       <!-- Free Quote CTA — replaces theme toggle (public visitors care about quotes, not themes) -->
       <a href="#contact" class="nav-cta" onclick="closeMenu()" aria-label="Get a free quote">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -5748,13 +5755,6 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
       </a>
       <button class="lang-b" onclick="toggleLang()" id="langB" aria-label="Toggle language · भाषा परिवर्तन" title="Switch Language · भाषा">
         <span class="en">NP</span><span class="ne np">EN</span>
-      </button>
-      <!-- World-class theme toggle (icon-only, cycles 3 themes) -->
-      <button type="button" class="nav-theme-btn" id="navThemeBtn" aria-label="Switch theme · थिम परिवर्तन" title="Change Theme · थिम बदल्नुहोस्"
-        onclick="(function(self){try{var t=(document.documentElement.getAttribute('data-t')||localStorage.getItem('prerak_theme')||'corporate');var order=['corporate','dark','saffron'];var n=order[(order.indexOf(t)+1)%order.length];if(typeof setTheme==='function'){setTheme(n);}else{document.documentElement.setAttribute('data-t',n);localStorage.setItem('prerak_theme',n);}self.setAttribute('data-mode',n);self.classList.add('spin');setTimeout(function(){self.classList.remove('spin');},420);}catch(e){}})(this)">
-        <svg class="ntb-ic ntb-ic-sun"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="ntb-ic ntb-ic-moon"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
-        <svg class="ntb-ic ntb-ic-bldg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></svg>
       </button>
       <button class="htog" onclick="toggleMenu()" id="menuTog" aria-label="Menu" aria-expanded="false">
         <span class="htog-bar"></span>
@@ -8609,14 +8609,21 @@ const ADMIN_EMAIL = 'asrayacreate.ac@gmail.com';
 // SECURE ADMIN ACCESS — keyboard shortcut + session restore
 // ═══════════════════════════════════════════════════════════════
 (function(){
-  // 1. Keyboard shortcut: Ctrl+Alt+A → open admin login (FAB stays hidden from public via CSS)
+  // 1. Keyboard shortcut: Ctrl+Alt+A
+  //    - Public visitor → open login modal
+  //    - Already admin → toggle admin panel (open if closed, close if open)
+  //    FAB is fully hidden — keyboard is the only entry point.
   document.addEventListener('keydown', function(e){
     if(e.ctrlKey && e.altKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')){
       e.preventDefault();
       if(typeof isAdmin !== 'undefined' && isAdmin){
-        // Already admin — surface the FAB so the admin can access the panel
-        const fab = document.getElementById('admin-fab');
-        if(fab){ fab.style.display = 'flex'; fab.classList.add('show'); }
+        // Already logged in — toggle the admin panel
+        const ap = document.getElementById('admin-panel');
+        if(ap && ap.classList.contains('open')){
+          if(typeof exitAdmin === 'function') exitAdmin();
+        } else if(typeof openAdminPanel === 'function'){
+          openAdminPanel();
+        }
         return;
       }
       if(typeof openLogin === 'function'){
@@ -17569,24 +17576,13 @@ body:not(.admin-mode) .nav-theme-toggle{display:none !important;} /* legacy — 
 }
 
 
-/* ─── Admin FAB visibility: hidden from public, shown only in admin mode ─── */
-#admin-fab{display:none !important;}
+/* ─── Admin FAB: fully hidden — keyboard shortcut Ctrl+Alt+A is the only entry point ─── */
+#admin-fab,
 body.admin-mode #admin-fab{
-  display:flex !important;
-  opacity:.85 !important;
-  background:linear-gradient(135deg,rgba(20,16,12,.95),rgba(15,12,10,.92)) !important;
-  border:1.5px solid rgba(212,166,74,.65) !important;
-  box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 3px rgba(212,166,74,.10) !important;
-  animation:adminFabPulse 2.6s ease-in-out infinite;
-}
-body.admin-mode #admin-fab:hover{
-  opacity:1 !important;
-  transform:scale(1.10) !important;
-  box-shadow:0 6px 22px rgba(212,166,74,.45), 0 0 0 4px rgba(212,166,74,.18) !important;
-}
-@keyframes adminFabPulse{
-  0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 3px rgba(212,166,74,.10);}
-  50%   {box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 7px rgba(212,166,74,.04);}
+  display:none !important;
+  visibility:hidden !important;
+  opacity:0 !important;
+  pointer-events:none !important;
 }
 
 /* ─── Live pulse dot on Phone & WhatsApp icons ─── */
