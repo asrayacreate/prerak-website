@@ -5723,26 +5723,38 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
       <a href="#why-us" onclick="closeMenu()"><span class="en">About</span><span class="ne np">हाम्रो बारे</span></a>
       <a href="#pricing" onclick="closeMenu()"><span class="en">Pricing</span><span class="ne np">मूल्य</span></a>
       <a href="#contact" onclick="closeMenu()"><span class="en">Contact</span><span class="ne np">सम्पर्क</span></a>
-      <!-- Inline theme cycle button (replaces floating th-panel for public visitors) -->
-      <button type="button" class="nav-theme-toggle" aria-label="Toggle theme" title="Toggle theme"
-        onclick="(function(){try{var t=(document.documentElement.getAttribute('data-t')||localStorage.getItem('prerak_theme')||'dark');var order=['dark','corporate','saffron'];var n=order[(order.indexOf(t)+1)%order.length];if(typeof setTheme==='function'){setTheme(n);}else{document.documentElement.setAttribute('data-t',n);localStorage.setItem('prerak_theme',n);}var ic={dark:'🌙',corporate:'🏢',saffron:'🔶'};this.textContent=ic[n]||'🌙';}catch(e){}}).call(this)">🌙</button>
+      <!-- Free Quote CTA — replaces theme toggle (public visitors care about quotes, not themes) -->
+      <a href="#contact" class="nav-cta" onclick="closeMenu()" aria-label="Get a free quote">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="en">Free Quote</span><span class="ne np">निःशुल्क कोटेसन</span>
+      </a>
       <!-- Mobile-only close button -->
       <button class="mob-nav-close" onclick="closeMenu()" aria-label="Close menu">✕</button>
     </div>
     <!-- Mobile menu backdrop -->
     <div class="nav-backdrop" id="navBackdrop" onclick="closeMenu()"></div>
     <div class="nav-r">
-      <!-- Phone — visible on desktop -->
-      <a href="tel:9801069733" class="nav-phone" aria-label="Call us">
+      <!-- Phone — visible on desktop with live pulse -->
+      <a href="tel:9801069733" class="nav-phone nav-live" aria-label="Call us · हामीलाई फोन गर्नुहोस्" title="Call · फोन">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         <span>980-1069733</span>
+        <span class="nav-live-dot" aria-hidden="true"></span>
       </a>
-      <!-- WhatsApp button -->
-      <a href="https://wa.me/9779801069733?text=नमस्ते!" target="_blank" rel="noopener" class="nav-wa" aria-label="WhatsApp">
+      <!-- WhatsApp button with label + live pulse -->
+      <a href="https://wa.me/9779801069733?text=नमस्ते!" target="_blank" rel="noopener" class="nav-wa nav-live" aria-label="Chat on WhatsApp · व्हाट्सएप गर्नुहोस्" title="WhatsApp · व्हाट्सएप">
         <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+        <span class="nav-wa-lbl">WhatsApp</span>
+        <span class="nav-live-dot" aria-hidden="true"></span>
       </a>
-      <button class="lang-b" onclick="toggleLang()" id="langB">
+      <button class="lang-b" onclick="toggleLang()" id="langB" aria-label="Toggle language · भाषा परिवर्तन" title="Switch Language · भाषा">
         <span class="en">NP</span><span class="ne np">EN</span>
+      </button>
+      <!-- World-class theme toggle (icon-only, cycles 3 themes) -->
+      <button type="button" class="nav-theme-btn" id="navThemeBtn" aria-label="Switch theme · थिम परिवर्तन" title="Change Theme · थिम बदल्नुहोस्"
+        onclick="(function(self){try{var t=(document.documentElement.getAttribute('data-t')||localStorage.getItem('prerak_theme')||'corporate');var order=['corporate','dark','saffron'];var n=order[(order.indexOf(t)+1)%order.length];if(typeof setTheme==='function'){setTheme(n);}else{document.documentElement.setAttribute('data-t',n);localStorage.setItem('prerak_theme',n);}self.setAttribute('data-mode',n);self.classList.add('spin');setTimeout(function(){self.classList.remove('spin');},420);}catch(e){}})(this)">
+        <svg class="ntb-ic ntb-ic-sun"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="ntb-ic ntb-ic-moon"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+        <svg class="ntb-ic ntb-ic-bldg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></svg>
       </button>
       <button class="htog" onclick="toggleMenu()" id="menuTog" aria-label="Menu" aria-expanded="false">
         <span class="htog-bar"></span>
@@ -6581,7 +6593,12 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
       <span class="prk-fab-lbl">Projects</span>
     </button>
   </div>
-  <button type="button" class="prk-fab-toggle" aria-expanded="false" aria-controls="prk-fab" aria-label="Contact options"
+  <!-- Bhuluk-bhuluk pop-in/pop-out callout — tells public what's inside (Nepali first) -->
+  <span class="prk-fab-callout" aria-hidden="true">
+    <span class="ne np">📞 सम्पर्क गर्नुस्</span>
+    <span class="en">📞 Contact Us</span>
+  </span>
+  <button type="button" class="prk-fab-toggle" aria-expanded="false" aria-controls="prk-fab" aria-label="Contact options · सम्पर्क"
     onclick="(function(b){var f=document.getElementById('prk-fab');var o=f.getAttribute('data-open')==='true';f.setAttribute('data-open',(!o).toString());b.setAttribute('aria-expanded',(!o).toString());var m=f.querySelector('.prk-fab-menu');if(m)m.setAttribute('aria-hidden',o.toString());})(this)">
     <svg class="prk-fab-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     <svg class="prk-fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -17370,6 +17387,101 @@ html, body{ max-width:100%; overflow-x:hidden; }
 }
 @keyframes prkFabPulse{0%{transform:scale(.9);opacity:.7;}80%{transform:scale(1.6);opacity:0;}100%{opacity:0;}}
 .prk-fab[data-open="true"] .prk-fab-toggle::before{animation:none;}
+
+/* ─── Bhuluk-bhuluk Nepali callout (pop-in/pop-out attention badge) ─── */
+.prk-fab-callout{
+  position:absolute;
+  right:74px;
+  bottom:18px;
+  display:inline-flex;
+  align-items:center;
+  background:linear-gradient(135deg,#1a1208 0%,#2a1c08 100%);
+  color:#f4e1a8;
+  padding:8px 14px;
+  border-radius:22px;
+  border:1px solid rgba(212,166,74,.6);
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.2);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  opacity:0;
+  transform:translateX(14px) scale(.85);
+  pointer-events:none;
+  z-index:1;
+  animation:prkCalloutBhulukBhuluk 8s ease-in-out infinite 2s;
+}
+.prk-fab-callout::after{
+  content:"";
+  position:absolute;
+  right:-6px;
+  top:50%;
+  width:11px;
+  height:11px;
+  background:linear-gradient(135deg,#1a1208,#2a1c08);
+  border-right:1px solid rgba(212,166,74,.6);
+  border-top:1px solid rgba(212,166,74,.6);
+  transform:translateY(-50%) rotate(45deg);
+}
+[data-lang="ne"] .prk-fab-callout .en,
+[data-lang="en"] .prk-fab-callout .ne,
+[data-lang="en"] .prk-fab-callout .np{display:none;}
+[data-lang="ne"] .prk-fab-callout .ne,
+[data-lang="ne"] .prk-fab-callout .np,
+[data-lang="en"] .prk-fab-callout .en{display:inline;}
+
+/* Bhuluk-bhuluk cycle: pop in → bounce → hold → pop out → wait → repeat */
+@keyframes prkCalloutBhulukBhuluk{
+  0%   {opacity:0; transform:translateX(20px) scale(.82);}
+  5%   {opacity:1; transform:translateX(0) scale(1.04);}
+  9%   {opacity:1; transform:translateX(-2px) scale(.98);}
+  13%  {opacity:1; transform:translateX(0) scale(1.02);}
+  17%  {opacity:1; transform:translateX(0) scale(1);}
+  42%  {opacity:1; transform:translateX(0) scale(1);}
+  48%  {opacity:.8; transform:translateX(6px) scale(.96);}
+  55%  {opacity:0; transform:translateX(18px) scale(.85);}
+  100% {opacity:0; transform:translateX(18px) scale(.85);}
+}
+/* Stop callout when FAB is open or being hovered (don't compete with menu) */
+.prk-fab[data-open="true"] .prk-fab-callout{animation:none; opacity:0;}
+.prk-fab:hover .prk-fab-callout{animation-play-state:paused;}
+
+/* Second concentric pulse ring (paired with ::before for double bhuluk-bhuluk) */
+.prk-fab-toggle::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:50%;
+  border:2px solid rgba(212,166,74,.45);
+  animation:prkFabRing 2.6s ease-out infinite 1.3s;
+  pointer-events:none;
+  z-index:-1;
+}
+@keyframes prkFabRing{
+  0%   {transform:scale(1);   opacity:.7;}
+  85%  {transform:scale(1.85); opacity:0;}
+  100% {opacity:0;}
+}
+.prk-fab[data-open="true"] .prk-fab-toggle::after{animation:none; opacity:0;}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion:reduce){
+  .prk-fab-callout{animation:none; opacity:1; transform:translateX(0) scale(1);}
+  .prk-fab-toggle::before,.prk-fab-toggle::after{animation:none !important;}
+}
+
+/* Mobile: tighter callout, still readable */
+@media (max-width:560px){
+  .prk-fab-callout{
+    right:66px;
+    bottom:14px;
+    font-size:.72rem;
+    padding:6px 11px;
+  }
+  .prk-fab-callout::after{width:9px;height:9px;}
+}
 .prk-fab-menu{display:flex;flex-direction:column-reverse;align-items:flex-end;gap:10px;pointer-events:none;}
 .prk-fab-item{
   display:flex;align-items:center;gap:10px;
@@ -17404,6 +17516,7 @@ html, body{ max-width:100%; overflow-x:hidden; }
 }
 /* Inline theme toggle in nav (replacement for floating th-panel for non-admins) */
 body:not(.admin-mode) #th-panel{display:none !important;}
+body:not(.admin-mode) .nav-theme-toggle{display:none !important;} /* legacy — replaced by .nav-cta */
 .nav-theme-toggle{
   background:transparent;border:1px solid rgba(212,166,74,.45);
   color:var(--gold,#d4a64a);width:34px;height:34px;border-radius:50%;
@@ -17416,10 +17529,146 @@ body:not(.admin-mode) #th-panel{display:none !important;}
   .nav-theme-toggle{margin:8px auto;display:flex;}
 }
 
+/* ─── Nav Free-Quote CTA (replaces theme toggle for public visitors) ─── */
+.nav-cta{
+  display:inline-flex !important;
+  align-items:center;
+  gap:6px;
+  padding:7px 14px;
+  margin-left:10px;
+  background:linear-gradient(135deg, rgba(212,166,74,.18), rgba(212,166,74,.08));
+  border:1px solid rgba(212,166,74,.55);
+  border-radius:22px;
+  color:var(--gold,#d4a64a) !important;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.3px;
+  text-decoration:none !important;
+  white-space:nowrap;
+  transition:all .25s ease;
+  box-shadow:0 1px 6px rgba(212,166,74,.12);
+  flex-shrink:0;
+}
+.nav-cta svg{flex-shrink:0;opacity:.95;}
+.nav-cta:hover{
+  background:linear-gradient(135deg, rgba(212,166,74,.32), rgba(212,166,74,.16));
+  border-color:rgba(212,166,74,.85);
+  transform:translateY(-1px);
+  box-shadow:0 3px 12px rgba(212,166,74,.25);
+}
+.nav-cta:focus-visible{outline:2px solid var(--gold,#d4a64a);outline-offset:2px;}
+@media(max-width:768px){
+  .nav-cta{
+    margin:10px auto !important;
+    justify-content:center;
+    padding:10px 22px;
+    font-size:.88rem;
+    width:auto;
+    min-width:200px;
+  }
+}
+
 
 /* ─── Admin FAB visibility: hidden from public, shown only in admin mode ─── */
 #admin-fab{display:none !important;}
-body.admin-mode #admin-fab{display:flex !important;}
+body.admin-mode #admin-fab{
+  display:flex !important;
+  opacity:.85 !important;
+  background:linear-gradient(135deg,rgba(20,16,12,.95),rgba(15,12,10,.92)) !important;
+  border:1.5px solid rgba(212,166,74,.65) !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 3px rgba(212,166,74,.10) !important;
+  animation:adminFabPulse 2.6s ease-in-out infinite;
+}
+body.admin-mode #admin-fab:hover{
+  opacity:1 !important;
+  transform:scale(1.10) !important;
+  box-shadow:0 6px 22px rgba(212,166,74,.45), 0 0 0 4px rgba(212,166,74,.18) !important;
+}
+@keyframes adminFabPulse{
+  0%,100%{box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 3px rgba(212,166,74,.10);}
+  50%   {box-shadow:0 4px 14px rgba(0,0,0,.45), 0 0 0 7px rgba(212,166,74,.04);}
+}
+
+/* ─── Live pulse dot on Phone & WhatsApp icons ─── */
+.nav-live{position:relative;}
+.nav-live-dot{
+  position:absolute;
+  top:4px; right:4px;
+  width:8px; height:8px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 0 2px rgba(15,15,15,.85), 0 0 8px rgba(34,197,94,.7);
+  pointer-events:none;
+}
+.nav-live-dot::after{
+  content:'';
+  position:absolute; inset:-2px;
+  border-radius:50%;
+  border:2px solid rgba(34,197,94,.55);
+  animation:navLivePulse 1.8s ease-out infinite;
+}
+@keyframes navLivePulse{
+  0%  {transform:scale(.6);opacity:1;}
+  100%{transform:scale(2.2);opacity:0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-live-dot::after,#admin-fab{animation:none !important;}
+}
+
+/* WhatsApp label (desktop visible, mobile hidden) */
+.nav-wa-lbl{
+  font-size:.74rem;
+  font-weight:700;
+  letter-spacing:.3px;
+  margin-left:5px;
+  color:inherit;
+}
+@media(max-width:1024px){
+  .nav-wa-lbl{display:none;}
+}
+
+/* ─── World-class theme cycle button ─── */
+.nav-theme-btn{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  margin-left:6px;
+  border:1.5px solid rgba(212,166,74,.45);
+  border-radius:50%;
+  background:linear-gradient(135deg, rgba(212,166,74,.10), rgba(212,166,74,.02));
+  color:var(--gold,#d4a64a);
+  cursor:pointer;
+  transition:all .25s ease;
+  flex-shrink:0;
+  overflow:hidden;
+}
+.nav-theme-btn:hover{
+  background:linear-gradient(135deg, rgba(212,166,74,.22), rgba(212,166,74,.10));
+  border-color:rgba(212,166,74,.85);
+  box-shadow:0 0 0 4px rgba(212,166,74,.10);
+  transform:translateY(-1px);
+}
+.nav-theme-btn:focus-visible{outline:2px solid var(--gold,#d4a64a);outline-offset:2px;}
+.nav-theme-btn.spin{animation:ntbSpin .42s ease;}
+@keyframes ntbSpin{
+  0%  {transform:rotate(0) scale(1);}
+  50% {transform:rotate(180deg) scale(.85);}
+  100%{transform:rotate(360deg) scale(1);}
+}
+/* Show only one icon at a time based on data-mode (read from html[data-t]) */
+.nav-theme-btn .ntb-ic{display:none;}
+html[data-t="corporate"] .nav-theme-btn .ntb-ic-bldg,
+.nav-theme-btn[data-mode="corporate"] .ntb-ic-bldg{display:inline-block;}
+html[data-t="dark"] .nav-theme-btn .ntb-ic-moon,
+.nav-theme-btn[data-mode="dark"] .ntb-ic-moon{display:inline-block;}
+html[data-t="saffron"] .nav-theme-btn .ntb-ic-sun,
+.nav-theme-btn[data-mode="saffron"] .ntb-ic-sun{display:inline-block;}
+/* Fallback: if none active, show building icon (corporate is default) */
+html:not([data-t]) .nav-theme-btn .ntb-ic-bldg{display:inline-block;}
+@media(max-width:768px){
+  .nav-theme-btn{width:32px;height:32px;}
+  .nav-theme-btn svg{width:14px;height:14px;}
+}
 </style>
 </body>
 </html>
