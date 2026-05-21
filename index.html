@@ -7885,7 +7885,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')window.prkFa
         <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveServiceWorksVideo()">💾 Save Video</button>
           <button class="abtn" onclick="previewServiceWorksVideo()" style="background:#10b981;color:#fff;">👁️ Preview</button>
-          <button class="dbtn" onclick="if(confirm('Remove Service Works video?')){D.serviceWorksVideo={url:'',type:'mp4'};saveData();loadServiceWorksVideo();renderServiceWorksVideo();}">🗑️ Remove Video</button>
+          <button class="dbtn" onclick="(async function(){if(confirm('Remove Service Works video?')){const oldUrl=String((D.serviceWorksVideo&&D.serviceWorksVideo.url)||'');if(oldUrl.startsWith('idb:')){try{await idbRemoveVideo(oldUrl.substring(4));}catch(e){}}D.serviceWorksVideo={url:'',type:'mp4'};saveData();loadServiceWorksVideo();renderServiceWorksVideo();if(typeof showToast==='function')showToast('✅ Video removed',2500);}})()">🗑️ Remove Video</button>
           <span class="afok" id="swv-ok">✅ Saved!</span>
         </div>
       </div>
@@ -13907,48 +13907,57 @@ async function adminUploadServiceWorksVideo(input){
   const statusEl = document.getElementById('swv-upload-status');
   const prevEl   = document.getElementById('swv-preview');
   const setStatus = (msg,col)=>{ if(statusEl){statusEl.style.display='block';statusEl.style.color=col||'#374151';statusEl.innerHTML=msg;} };
+  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
 
-  if(!_fbValid()){
-    if(f.size > 50*1024*1024){
-      setStatus('❌ File too large ('+Math.round(f.size/1024/1024)+'MB) for local storage. Please configure Firebase Storage, or use a YouTube URL instead.','#991b1b');
-      return;
-    }
-    setStatus('📦 Loading video locally (no Firebase configured)…','#6b7280');
-    const reader = new FileReader();
-    reader.onload = e => {
-      const url = e.target.result;
-      const typeEl = document.getElementById('swv-type'); if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
-      const urlEl  = document.getElementById('swv-url');  if(urlEl)  urlEl.value  = url;
-      setStatus('✅ Video loaded locally. Click <b>Save Video</b> to publish.','#15803d');
-      if(prevEl){ prevEl.innerHTML='<video src="'+url+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;"></video>'; prevEl.style.display='block'; }
-    };
-    reader.readAsDataURL(f);
-    return;
-  }
-
-  setStatus('☁️ Uploading to Firebase Storage (0%)…','#6b7280');
+  // Use IndexedDB (any size, survives refresh, NOT bound by 5MB localStorage limit)
+  setStatus('⏳ Uploading ' + sizeMB + ' MB to browser storage…','#3b82f6');
   try{
-    if(!initFirebase()) throw new Error('Firebase init failed');
-    const downloadUrl = await uploadVideoToStorage(f, pct => {
-      setStatus('☁️ Uploading to Firebase Storage ('+pct+'%)…','#2563eb');
-    });
+    // Clean up previous IDB entry to free space
+    if(D.serviceWorksVideo && D.serviceWorksVideo.url && String(D.serviceWorksVideo.url).startsWith('idb:')){
+      try{ await idbRemoveVideo(String(D.serviceWorksVideo.url).substring(4)); }catch(e){}
+    }
+    const key = 'swv_' + Date.now();
+    await idbSetVideo(key, f);
+    const idbUrl = 'idb:' + key;
     const typeEl = document.getElementById('swv-type'); if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
-    const urlEl  = document.getElementById('swv-url');  if(urlEl)  urlEl.value  = downloadUrl;
-    setStatus('✅ Uploaded to Firebase Storage! URL set. Click <b>Save Video</b> to publish.','#15803d');
-    if(prevEl){ prevEl.innerHTML='<video src="'+downloadUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;"></video>'; prevEl.style.display='block'; }
-    if(typeof showToast==='function') showToast('✅ Video uploaded to Firebase Storage!', 3500);
-  }catch(e){
-    setStatus('❌ Upload failed: '+(e.message||String(e)),'#991b1b');
+    const urlEl  = document.getElementById('swv-url');  if(urlEl)  urlEl.value  = idbUrl;
+
+    // Preview via blob URL
+    const blobUrl = URL.createObjectURL(f);
+    if(prevEl){
+      prevEl.innerHTML = '<video src="'+blobUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
+      prevEl.style.display = 'block';
+    }
+    setStatus('✅ Uploaded ('+sizeMB+' MB) to IndexedDB! Click <b>💾 Save Video</b> to publish to front page.<br><small style="color:#9ca3af;">⚠️ Stored in this browser. For cross-device sharing, paste a YouTube URL instead.</small>','#15803d');
+    if(typeof showToast==='function') showToast('✅ Video uploaded ('+sizeMB+'MB)', 3500);
+
+    // Also try Firebase Storage in background (if configured) for cross-device sync
+    if(_fbValid()){
+      try{
+        if(initFirebase()){
+          uploadVideoToStorage(f).then(downloadUrl => {
+            // Quietly upgrade URL to Firebase if user hasn't saved yet
+            if(urlEl && urlEl.value === idbUrl){
+              urlEl.value = downloadUrl;
+              setStatus('✅ Uploaded to IndexedDB <b>and</b> Firebase Storage! Click <b>💾 Save Video</b>.','#15803d');
+            }
+          }).catch(()=>{});
+        }
+      }catch(e){}
+    }
+  }catch(err){
+    console.error('SWV upload error:', err);
+    setStatus('❌ Upload failed: '+(err.message||err)+'<br>YouTube link paste गर्न सक्नुहुन्छ वैकल्पिक रूपमा.','#991b1b');
     if(typeof showToast==='function') showToast('❌ Upload failed', 3500);
   }
 }
 
-function renderServiceWorksVideo(){
+async function renderServiceWorksVideo(){
   const wrap = document.getElementById('swv-player-wrap');
   if(!wrap) return;
   if(!D.serviceWorksVideo) D.serviceWorksVideo = {};
   const V = D.serviceWorksVideo;
-  const url = String(V.url||'').trim();
+  let url = String(V.url||'').trim();
 
   // Update section text (only if value provided)
   const setT = (id,val) => { const el = document.getElementById(id); if(el && val) el.textContent = val; };
@@ -13958,7 +13967,7 @@ function renderServiceWorksVideo(){
   setT('swv-desc-en',    V.desc);
   setT('swv-desc-ne',    V.ne_desc);
 
-  // Render player
+  // No URL — show placeholder
   if(!url || url.length < 5){
     wrap.innerHTML = '<div id="swv-placeholder" class="swv-placeholder">'
       + '<div class="swv-ph-ico">🎥</div>'
@@ -13967,13 +13976,31 @@ function renderServiceWorksVideo(){
       + '</div>';
     return;
   }
+
+  // Resolve idb: URLs to blob URLs (IndexedDB-backed videos)
+  if(url.startsWith('idb:')){
+    try{
+      const blob = await idbGetVideo(url.substring(4));
+      if(blob){
+        url = URL.createObjectURL(blob);
+      } else {
+        wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">⚠️</div><div class="swv-ph-text">Video data lost</div><div class="swv-ph-sub">Re-upload via admin panel</div></div>';
+        return;
+      }
+    }catch(e){
+      console.error('SWV idb resolve:', e);
+      wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">⚠️</div><div class="swv-ph-text">Video load failed</div></div>';
+      return;
+    }
+  }
+
   const type = V.type || 'mp4';
   const isVideoFile = type==='mp4' || type==='webm'
     || /\.(mp4|webm|ogv|mov)$/i.test(url)
-    || url.startsWith('data:video/')
-    || url.startsWith('blob:');
+    || url.startsWith('blob:')
+    || url.startsWith('data:video/');
   if(isVideoFile){
-    wrap.innerHTML = '<video src="'+url+'" controls playsinline preload="metadata" poster=""></video>';
+    wrap.innerHTML = '<video src="'+url+'" controls playsinline preload="metadata"></video>';
   } else if(url.includes('youtube.com') || url.includes('youtu.be')){
     let embedUrl = url;
     if(url.includes('watch?v=')) embedUrl = url.replace('watch?v=','embed/').split('&')[0];
