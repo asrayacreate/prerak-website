@@ -7842,35 +7842,54 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')window.prkFa
       <!-- ═══ SERVICE WORKS VIDEO — admin upload UI (mirror of brand video) ═══ -->
       <div class="ap-card" id="ap-service-works-video" style="border-left:3px solid #1a3a6e;background:linear-gradient(145deg,#eff6ff,#fff);margin-top:14px;">
         <h3>🎬 Service Works Showcase Video</h3>
-        <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Front page video showcasing your company's service works. Same size as a service card.</p>
+        <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Front page video showcasing your company's services. Visible on the homepage.</p>
 
-        <!-- File upload area -->
-        <div class="afg">
-          <label style="display:flex;align-items:center;gap:6px;font-size:.78rem !important;color:#1a3a6e !important;font-weight:800 !important;">
-            <span style="background:#1a3a6e;color:#fff;font-size:.55rem;padding:3px 8px;border-radius:10px;letter-spacing:1.5px;">★ NEW</span>
-            📁 UPLOAD MP4 VIDEO FILE FROM YOUR COMPUTER
-          </label>
-          <div class="proj-upload-area" onclick="document.getElementById('swv-file').click()" style="cursor:pointer;padding:34px 20px;text-align:center;margin-top:8px;background:linear-gradient(145deg,#eff6ff,#dbeafe);border:3px dashed #1a3a6e !important;border-radius:14px;transition:all .2s;" onmouseover="this.style.background='linear-gradient(145deg,#dbeafe,#bfdbfe)';this.style.transform='scale(1.01)'" onmouseout="this.style.background='linear-gradient(145deg,#eff6ff,#dbeafe)';this.style.transform=''">
-            <input type="file" id="swv-file" accept="video/*" style="display:none;" onchange="adminUploadServiceWorksVideo(this)">
-            <div style="font-size:3.2rem;margin-bottom:8px;">📹</div>
-            <div style="font-size:1.02rem;font-weight:800;color:#1a3a6e;margin-bottom:5px;">👆 CLICK HERE TO UPLOAD VIDEO</div>
-            <div style="font-size:.76rem;font-weight:700;color:#1e40af;">MP4 · WebM · OGG — Any size supported</div>
-            <div style="font-size:.64rem;color:#1e3a8a;margin-top:6px;font-style:italic;">📱 Mobile bata pani video upload garna sakinchha</div>
+        <!-- Cross-device status indicator -->
+        <div id="swv-status-banner" style="padding:12px 14px;border-radius:10px;margin-bottom:14px;font-size:.78rem;line-height:1.55;display:none;"></div>
+
+        <!-- ━━━ PRIMARY: YouTube URL (works on ALL devices, no setup) ━━━ -->
+        <div style="padding:14px;background:linear-gradient(145deg,#fef3c7,#fef9c3);border:2px solid #f59e0b;border-radius:12px;margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="background:#16a34a;color:#fff;font-size:.6rem;padding:3px 8px;border-radius:10px;letter-spacing:1.2px;font-weight:800;">✓ RECOMMENDED</span>
+            <span style="font-weight:800;color:#78350f;font-size:.88rem;">🎥 YouTube / Vimeo URL — works on ALL devices</span>
           </div>
-          <div id="swv-upload-status" style="font-size:.78rem;margin-top:8px;color:#6b7280;line-height:1.6;display:none;padding:10px;border-radius:8px;background:#f9fafb;"></div>
+          <input type="text" id="swv-url" placeholder="Paste YouTube URL: https://youtube.com/watch?v=... OR https://youtu.be/..." oninput="previewServiceWorksVideo();updateSwvStatusBanner();" style="width:100%;padding:11px 13px;border:1.5px solid #d97706;border-radius:8px;font-size:.85rem;background:#fff;">
+          <div style="font-size:.7rem;color:#92400e;margin-top:8px;line-height:1.6;">
+            <b>💡 Easiest way to make video visible everywhere:</b><br>
+            1. Upload video to <a href="https://youtube.com/upload" target="_blank" style="color:#1e40af;font-weight:700;">YouTube</a> (set as <b>Unlisted</b> if private)<br>
+            2. Copy the URL from address bar<br>
+            3. Paste here · Click <b>💾 Save Video</b> · Done — visible on mobile, tablet, laptop, everywhere
+          </div>
+        </div>
+
+        <div style="text-align:center;font-size:.65rem;color:#9ca3af;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:10px 0;display:flex;align-items:center;gap:9px;">
+          <span style="flex:1;height:1px;background:#e5e7eb;"></span><span>OR — DIRECT FILE UPLOAD (advanced)</span><span style="flex:1;height:1px;background:#e5e7eb;"></span>
+        </div>
+
+        <!-- ━━━ SECONDARY: File upload (with cross-device warnings) ━━━ -->
+        <div class="afg">
+          <label style="display:flex;align-items:center;gap:6px;font-size:.74rem !important;color:#1a3a6e !important;font-weight:800 !important;">
+            <span style="background:#1a3a6e;color:#fff;font-size:.52rem;padding:3px 7px;border-radius:10px;letter-spacing:1.2px;">UPLOAD FILE</span>
+            📁 MP4/WebM Video File
+          </label>
+          <div class="proj-upload-area" onclick="document.getElementById('swv-file').click()" style="cursor:pointer;padding:24px 18px;text-align:center;margin-top:6px;background:linear-gradient(145deg,#eff6ff,#dbeafe);border:2px dashed #1a3a6e !important;border-radius:12px;transition:all .2s;" onmouseover="this.style.background='linear-gradient(145deg,#dbeafe,#bfdbfe)'" onmouseout="this.style.background='linear-gradient(145deg,#eff6ff,#dbeafe)'">
+            <input type="file" id="swv-file" accept="video/*" style="display:none;" onchange="adminUploadServiceWorksVideo(this)">
+            <div style="font-size:2.4rem;margin-bottom:6px;">📹</div>
+            <div style="font-size:.92rem;font-weight:800;color:#1a3a6e;">👆 Click to upload video file</div>
+            <div style="font-size:.7rem;color:#1e40af;margin-top:4px;">MP4 · WebM · Any size</div>
+          </div>
+          <div id="swv-upload-status" style="font-size:.78rem;margin-top:8px;line-height:1.6;display:none;padding:11px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;"></div>
           <div id="swv-preview" style="margin-top:10px;display:none;text-align:center;"></div>
+          <div style="font-size:.68rem;color:#6b7280;margin-top:8px;line-height:1.55;padding:9px;background:#f9fafb;border-radius:7px;border-left:3px solid #f59e0b;">
+            <b>⚠️ Note:</b> File upload works best with <b>Firebase Storage</b> configured. Without Firebase, video saves to <b>THIS browser only</b> — won't show on other devices. <b>YouTube URL above is simpler!</b>
+          </div>
         </div>
 
-        <div style="text-align:center;font-size:.65rem;color:#9ca3af;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:8px 0;display:flex;align-items:center;gap:9px;">
-          <span style="flex:1;height:1px;background:#e5e7eb;"></span><span>OR</span><span style="flex:1;height:1px;background:#e5e7eb;"></span>
-        </div>
-
-        <div class="afr">
-          <div class="afg"><label>🎥 Video URL (paste link)</label><input type="text" id="swv-url" placeholder="https://youtube.com/embed/VIDEO_ID OR direct .mp4 link" oninput="previewServiceWorksVideo()"></div>
-          <div class="afg"><label>Video Type</label>
+        <div class="afr" style="margin-top:14px;">
+          <div class="afg"><label>Video Type (auto-detected)</label>
             <select id="swv-type">
-              <option value="mp4">Direct MP4</option>
               <option value="youtube">YouTube Embed</option>
+              <option value="mp4">Direct MP4</option>
               <option value="webm">WebM</option>
               <option value="vimeo">Vimeo Embed</option>
             </select>
@@ -7882,10 +7901,10 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')window.prkFa
         <div class="afg"><label>Description (English)</label><textarea id="swv-desc-i" rows="2" placeholder="Watch how Prerak delivers quality services"></textarea></div>
         <div class="afg"><label>Description (नेपाली)</label><textarea id="swv-ne-desc-i" rows="2" placeholder="प्रेरकले गुणस्तरीय सेवा कसरी प्रदान गर्छ हेर्नुहोस्"></textarea></div>
 
-        <div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;">
+        <div style="display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveServiceWorksVideo()">💾 Save Video</button>
           <button class="abtn" onclick="previewServiceWorksVideo()" style="background:#10b981;color:#fff;">👁️ Preview</button>
-          <button class="dbtn" onclick="(async function(){if(confirm('Remove Service Works video?')){const oldUrl=String((D.serviceWorksVideo&&D.serviceWorksVideo.url)||'');if(oldUrl.startsWith('idb:')){try{await idbRemoveVideo(oldUrl.substring(4));}catch(e){}}D.serviceWorksVideo={url:'',type:'mp4'};saveData();loadServiceWorksVideo();renderServiceWorksVideo();if(typeof showToast==='function')showToast('✅ Video removed',2500);}})()">🗑️ Remove Video</button>
+          <button class="dbtn" onclick="(async function(){if(confirm('Remove Service Works video?')){const oldUrl=String((D.serviceWorksVideo&&D.serviceWorksVideo.url)||'');if(oldUrl.startsWith('idb:')){try{await idbRemoveVideo(oldUrl.substring(4));}catch(e){}}D.serviceWorksVideo={url:'',type:'mp4'};saveData();if(_fbValid()){try{await saveServiceWorksVideoToFirestore({url:'',type:'mp4'});}catch(e){}}loadServiceWorksVideo();renderServiceWorksVideo();if(typeof showToast==='function')showToast('✅ Video removed',2500);}})()">🗑️ Remove Video</button>
           <span class="afok" id="swv-ok">✅ Saved!</span>
         </div>
       </div>
@@ -13878,6 +13897,45 @@ function loadServiceWorksVideo(){
   set('swv-ne-title-i', V.ne_title||'हाम्रा सेवाहरूको झलक');
   set('swv-desc-i',     V.desc||'');
   set('swv-ne-desc-i',  V.ne_desc||'');
+  // Update diagnostic status banner
+  setTimeout(updateSwvStatusBanner, 100);
+  // Background fetch latest from Firestore (cross-device)
+  fetchServiceWorksVideoFromFirestore().catch(()=>{});
+}
+
+// Diagnostic banner showing if cross-device sync is possible
+function updateSwvStatusBanner(){
+  const banner = document.getElementById('swv-status-banner');
+  if(!banner) return;
+  const urlEl = document.getElementById('swv-url');
+  const url = (urlEl?.value || (D.serviceWorksVideo||{}).url || '').trim();
+  const fbOk = _fbValid();
+  let bg, border, text;
+  if(!url){
+    if(fbOk){
+      bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
+      text='<b style="color:#15803d;">✅ Cross-device sync READY.</b> <span style="color:#166534;">Firebase is configured. Any video you upload (file OR YouTube URL) will be visible on all devices — mobile, tablet, laptop.</span>';
+    } else {
+      bg='linear-gradient(145deg,#fef3c7,#fde68a)'; border='2px solid #f59e0b';
+      text='<b style="color:#92400e;">⚠️ Firebase not configured for cloud sync.</b> <span style="color:#78350f;">File uploads will save to THIS browser only (won\'t show on other devices). <b>Recommended:</b> Use YouTube URL above — works everywhere instantly.</span>';
+    }
+  } else if(url.startsWith('idb:') || url.startsWith('data:') || url.startsWith('blob:')){
+    bg='linear-gradient(145deg,#fee2e2,#fecaca)'; border='2px solid #dc2626';
+    text='<b style="color:#991b1b;">⚠️ Current video is LOCAL ONLY.</b> <span style="color:#7f1d1d;">Stored in this browser — will NOT show on mobile/other devices. Replace with a <b>YouTube URL</b> for cross-device viewing.</span>';
+  } else if(url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo')){
+    bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
+    text='<b style="color:#15803d;">✅ YouTube/Vimeo URL — visible on ALL devices.</b> <span style="color:#166534;">Click Save Video to publish.</span>';
+  } else if(url.includes('firebasestorage') || url.includes('googleapis')){
+    bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
+    text='<b style="color:#15803d;">✅ Firebase Storage URL — visible on ALL devices.</b>';
+  } else {
+    bg='linear-gradient(145deg,#dbeafe,#bfdbfe)'; border='2px solid #2563eb';
+    text='<b style="color:#1e40af;">ℹ️ Direct video URL.</b> <span style="color:#1e3a8a;">Make sure URL is publicly accessible.</span>';
+  }
+  banner.style.background = bg;
+  banner.style.border = border;
+  banner.innerHTML = text;
+  banner.style.display = 'block';
 }
 
 async function saveServiceWorksVideo(){
