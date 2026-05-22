@@ -10575,6 +10575,8 @@ async function syncFromFirestoreOnLoad(){
       _render('video-after-sync', renderBrandVideo);
       _render('noticeBar-after-sync', updateNoticeBar);
     }
+    // Also fetch Service Works Video from Firestore (cross-device sync)
+    try{ await fetchServiceWorksVideoFromFirestore(); }catch(e){ _err('SWV fetch:', e); }
   }catch(e){ _err('syncFromFirestoreOnLoad:', e); }
 }
 
@@ -13843,7 +13845,28 @@ function renderBrandVideo(){
 // ═══════════════════════════════════════════════════════════════════
 // SERVICE WORKS VIDEO — admin-uploadable showcase video on front page
 // Mirrors brandVideo lifecycle: load → upload → save → render.
+// Cross-device: Firebase Storage primary (when configured), IDB fallback.
 // ═══════════════════════════════════════════════════════════════════
+
+async function saveServiceWorksVideoToFirestore(data){
+  if(!initFirebase()) return false;
+  try{
+    await _fbDb.collection('siteSettings').doc('serviceWorksVideo').set({
+      ...data, updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    return true;
+  }catch(e){ console.error('[Firestore] SWV save failed:', e); return false; }
+}
+
+async function loadServiceWorksVideoFromFirestore(){
+  if(!initFirebase()) return null;
+  try{
+    const doc = await _fbDb.collection('siteSettings').doc('serviceWorksVideo').get();
+    if(doc.exists) return doc.data();
+    return null;
+  }catch(e){ console.error('[Firestore] SWV load failed:', e); return null; }
+}
+
 function loadServiceWorksVideo(){
   if(!D.serviceWorksVideo) D.serviceWorksVideo = {};
   const V = D.serviceWorksVideo;
@@ -13874,7 +13897,23 @@ async function saveServiceWorksVideo(){
   D.serviceWorksVideo = data;
   saveData();
   renderServiceWorksVideo();
-  if(typeof showToast==='function') showToast('✅ Service Works Video saved!', 3000);
+  // ALSO sync to Firestore for cross-device access
+  if(_fbValid()){
+    if(typeof showToast==='function') showToast('💾 Saving & syncing to Firebase…', 2000);
+    const ok = await saveServiceWorksVideoToFirestore(data);
+    if(ok){
+      if(typeof showToast==='function') showToast('✅ Service Works Video saved — visible on all devices!', 3500);
+    } else {
+      if(typeof showToast==='function') showToast('✅ Saved locally. Firestore sync failed — check Firebase config.', 4000);
+    }
+  } else {
+    const isLocal = String(data.url).startsWith('idb:') || String(data.url).startsWith('data:') || String(data.url).startsWith('blob:');
+    if(isLocal){
+      if(typeof showToast==='function') showToast('⚠️ Saved locally — VIDEO WILL NOT SHOW ON OTHER DEVICES. Configure Firebase OR use YouTube URL for cross-device.', 6000);
+    } else {
+      if(typeof showToast==='function') showToast('✅ Service Works Video saved!', 3000);
+    }
+  }
   if(typeof showOk==='function') showOk('swv-ok');
 }
 
@@ -13889,8 +13928,8 @@ function previewServiceWorksVideo(){
     return;
   }
   let embed='';
-  if(type==='mp4'||type==='webm'||url.startsWith('data:video/')||url.startsWith('blob:'))
-    embed='<video src="'+url+'" width="100%" height="240" controls style="border-radius:10px;display:block;"></video>';
+  if(type==='mp4'||type==='webm'||url.startsWith('data:video/')||url.startsWith('blob:')||url.startsWith('idb:'))
+    embed='<video src="'+url.replace(/^idb:/,'')+'" width="100%" height="240" controls style="border-radius:10px;display:block;"></video>';
   else
     embed='<iframe src="'+url+'" width="100%" height="240" frameborder="0" allowfullscreen style="border-radius:10px;display:block;"></iframe>';
   prev.innerHTML='<div style="font-size:.82rem;font-weight:700;margin-bottom:8px;">📺 Preview:</div>'+embed;
@@ -13906,45 +13945,54 @@ async function adminUploadServiceWorksVideo(input){
   }
   const statusEl = document.getElementById('swv-upload-status');
   const prevEl   = document.getElementById('swv-preview');
+  const urlEl    = document.getElementById('swv-url');
+  const typeEl   = document.getElementById('swv-type');
   const setStatus = (msg,col)=>{ if(statusEl){statusEl.style.display='block';statusEl.style.color=col||'#374151';statusEl.innerHTML=msg;} };
   const sizeMB = (f.size / 1024 / 1024).toFixed(2);
 
-  // Use IndexedDB (any size, survives refresh, NOT bound by 5MB localStorage limit)
-  setStatus('⏳ Uploading ' + sizeMB + ' MB to browser storage…','#3b82f6');
+  // ── PREFER FIREBASE STORAGE for cross-device sync ──
+  if(_fbValid()){
+    setStatus('☁️ Uploading '+sizeMB+' MB to Firebase Storage (cross-device)…','#3b82f6');
+    try{
+      if(!initFirebase()) throw new Error('Firebase init failed');
+      const downloadUrl = await uploadVideoToStorage(f, pct => {
+        setStatus('☁️ Uploading to Firebase Storage ('+pct+'%) — visible on all devices…','#2563eb');
+      });
+      if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
+      if(urlEl)  urlEl.value  = downloadUrl;
+      // Also save to IDB as backup (so it shows immediately even on this browser)
+      try{ const k='swv_'+Date.now(); await idbSetVideo(k,f); }catch(e){}
+      if(prevEl){
+        prevEl.innerHTML='<video src="'+downloadUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
+        prevEl.style.display='block';
+      }
+      setStatus('✅ Uploaded to Firebase Storage ('+sizeMB+' MB)!<br>📱 Video will work on ALL devices.<br>👉 Click <b>💾 Save Video</b> to publish.','#15803d');
+      if(typeof showToast==='function') showToast('✅ Uploaded to cloud — visible on all devices!', 4000);
+      return;
+    }catch(fbErr){
+      console.error('SWV Firebase upload failed:', fbErr);
+      setStatus('⚠️ Firebase upload failed: '+(fbErr.message||fbErr)+'<br>Falling back to local browser storage…','#f59e0b');
+      // Fall through to IDB
+    }
+  }
+
+  // ── FALLBACK: IndexedDB (THIS BROWSER ONLY) ──
   try{
-    // Clean up previous IDB entry to free space
     if(D.serviceWorksVideo && D.serviceWorksVideo.url && String(D.serviceWorksVideo.url).startsWith('idb:')){
       try{ await idbRemoveVideo(String(D.serviceWorksVideo.url).substring(4)); }catch(e){}
     }
     const key = 'swv_' + Date.now();
     await idbSetVideo(key, f);
     const idbUrl = 'idb:' + key;
-    const typeEl = document.getElementById('swv-type'); if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
-    const urlEl  = document.getElementById('swv-url');  if(urlEl)  urlEl.value  = idbUrl;
-
-    // Preview via blob URL
+    if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
+    if(urlEl)  urlEl.value  = idbUrl;
     const blobUrl = URL.createObjectURL(f);
     if(prevEl){
-      prevEl.innerHTML = '<video src="'+blobUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
-      prevEl.style.display = 'block';
+      prevEl.innerHTML='<video src="'+blobUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
+      prevEl.style.display='block';
     }
-    setStatus('✅ Uploaded ('+sizeMB+' MB) to IndexedDB! Click <b>💾 Save Video</b> to publish to front page.<br><small style="color:#9ca3af;">⚠️ Stored in this browser. For cross-device sharing, paste a YouTube URL instead.</small>','#15803d');
-    if(typeof showToast==='function') showToast('✅ Video uploaded ('+sizeMB+'MB)', 3500);
-
-    // Also try Firebase Storage in background (if configured) for cross-device sync
-    if(_fbValid()){
-      try{
-        if(initFirebase()){
-          uploadVideoToStorage(f).then(downloadUrl => {
-            // Quietly upgrade URL to Firebase if user hasn't saved yet
-            if(urlEl && urlEl.value === idbUrl){
-              urlEl.value = downloadUrl;
-              setStatus('✅ Uploaded to IndexedDB <b>and</b> Firebase Storage! Click <b>💾 Save Video</b>.','#15803d');
-            }
-          }).catch(()=>{});
-        }
-      }catch(e){}
-    }
+    setStatus('✅ Saved locally ('+sizeMB+' MB) to THIS browser.<br>⚠️ <b>WILL NOT show on other devices.</b><br>For cross-device: <b>configure Firebase Storage</b> OR <b>paste a YouTube URL</b>.<br>👉 Click <b>💾 Save Video</b> to publish locally.','#dc2626');
+    if(typeof showToast==='function') showToast('⚠️ Video saved locally only — not visible on other devices', 4500);
   }catch(err){
     console.error('SWV upload error:', err);
     setStatus('❌ Upload failed: '+(err.message||err)+'<br>YouTube link paste गर्न सक्नुहुन्छ वैकल्पिक रूपमा.','#991b1b');
@@ -13977,14 +14025,15 @@ async function renderServiceWorksVideo(){
     return;
   }
 
-  // Resolve idb: URLs to blob URLs (IndexedDB-backed videos)
+  // Resolve idb: URLs to blob URLs (IndexedDB-backed videos — local only)
   if(url.startsWith('idb:')){
     try{
       const blob = await idbGetVideo(url.substring(4));
       if(blob){
         url = URL.createObjectURL(blob);
       } else {
-        wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">⚠️</div><div class="swv-ph-text">Video data lost</div><div class="swv-ph-sub">Re-upload via admin panel</div></div>';
+        // IDB entry missing — likely viewing from different device
+        wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">📱</div><div class="swv-ph-text">Video available on uploader\'s device only</div><div class="swv-ph-sub">Configure Firebase Storage for cross-device viewing</div></div>';
         return;
       }
     }catch(e){
@@ -13998,7 +14047,8 @@ async function renderServiceWorksVideo(){
   const isVideoFile = type==='mp4' || type==='webm'
     || /\.(mp4|webm|ogv|mov)$/i.test(url)
     || url.startsWith('blob:')
-    || url.startsWith('data:video/');
+    || url.startsWith('data:video/')
+    || url.includes('firebasestorage');
   if(isVideoFile){
     wrap.innerHTML = '<video src="'+url+'" controls playsinline preload="metadata"></video>';
   } else if(url.includes('youtube.com') || url.includes('youtu.be')){
@@ -14009,6 +14059,20 @@ async function renderServiceWorksVideo(){
   } else {
     wrap.innerHTML = '<iframe src="'+url+'" frameborder="0" allowfullscreen></iframe>';
   }
+}
+
+// Fetch serviceWorksVideo from Firestore on page load (non-blocking, cross-device sync)
+async function fetchServiceWorksVideoFromFirestore(){
+  if(!_fbValid()) return;
+  try{
+    const data = await loadServiceWorksVideoFromFirestore();
+    if(data && data.url){
+      D.serviceWorksVideo = {...(D.serviceWorksVideo||{}), ...data};
+      saveData();
+      renderServiceWorksVideo();
+      console.log('[SWV] Loaded from Firestore — cross-device sync OK');
+    }
+  }catch(e){ console.error('[SWV] Firestore fetch:', e); }
 }
 
 
@@ -19089,6 +19153,72 @@ html[data-t="saffron"] .nav-links a:not(.nav-cta):hover{
 @media (max-width:640px){
   .swv-sec{padding:40px 5%;}
   .swv-card-wrap{max-width:100%;}
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO MOBILE READABILITY — strong overlay + text shadows
+   Background images often dilute text — force visibility on small screens.
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width:768px){
+  /* Stronger dark overlay above hero background for text contrast */
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.62) 50%,rgba(0,0,0,.50) 100%);
+    z-index:1;
+    pointer-events:none;
+  }
+  .hero > *{position:relative;z-index:2;}
+  .hero h1{
+    color:#fff !important;
+    text-shadow:0 3px 18px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.7),0 1px 2px rgba(0,0,0,.6) !important;
+    font-weight:700 !important;
+  }
+  .hero .h-sub,
+  .hero p,
+  .hero .sub{
+    color:#f8f5ef !important;
+    text-shadow:0 2px 10px rgba(0,0,0,.85),0 1px 3px rgba(0,0,0,.7) !important;
+    font-weight:500 !important;
+    opacity:1 !important;
+  }
+  .hero .ey,
+  .hero .hero-tag,
+  .hero [class*="badge"]{
+    background:rgba(0,0,0,.55) !important;
+    color:#fff !important;
+    text-shadow:0 1px 4px rgba(0,0,0,.8) !important;
+    backdrop-filter:blur(4px);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SERVICE WORKS VIDEO SECTION — description visibility on corporate theme
+   Default .sdesc cream-on-light = invisible. Force dark.
+   ════════════════════════════════════════════════════════════════════ */
+html[data-t="corporate"] body #serviceWorksVideo .sdesc,
+html[data-t="corporate"] body #serviceWorksVideo .sdesc.en,
+html[data-t="corporate"] body #serviceWorksVideo .sdesc.ne,
+html[data-t="corporate"] body #serviceWorksVideo .sdesc.np,
+html[data-t="corporate"] body #serviceWorksVideo p.sdesc,
+html[data-t="corporate"][data-lang="ne"] body #serviceWorksVideo .sdesc.ne,
+html[data-t="corporate"][data-lang="ne"] body #serviceWorksVideo .sdesc.np{
+  color:#374151 !important;
+  opacity:1 !important;
+  font-weight:500 !important;
+}
+html[data-t="corporate"] body #serviceWorksVideo .sey,
+html[data-t="corporate"] body #serviceWorksVideo .sey.en,
+html[data-t="corporate"] body #serviceWorksVideo .sey.ne{
+  color:#c9933a !important;
+  opacity:1 !important;
+  font-weight:800 !important;
+}
+html[data-t="corporate"] body #serviceWorksVideo .stl,
+html[data-t="corporate"] body #serviceWorksVideo .stl.en,
+html[data-t="corporate"] body #serviceWorksVideo .stl.ne{
+  color:#0f2347 !important;
 }
 
 /* ── Calendar notice items — corporate theme contrast fix ──
