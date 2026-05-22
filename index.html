@@ -7839,72 +7839,50 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')window.prkFa
         <div id="bv-preview" style="margin-top:14px;display:none;"></div>
       </div>
 
-      <!-- ═══ SERVICE WORKS VIDEO — admin upload UI (mirror of brand video) ═══ -->
+      <!-- ═══ SERVICE WORKS VIDEO — YouTube-only admin UI ═══ -->
       <div class="ap-card" id="ap-service-works-video" style="border-left:3px solid #1a3a6e;background:linear-gradient(145deg,#eff6ff,#fff);margin-top:14px;">
         <h3>🎬 Service Works Showcase Video</h3>
-        <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Front page video showcasing your company's services. Visible on the homepage.</p>
+        <p style="font-size:.78rem;color:#6b7280;margin-bottom:12px;">Front page video showcasing your services. <b>Works on all devices instantly via YouTube embed.</b></p>
 
-        <!-- Cross-device status indicator -->
+        <!-- Live status banner -->
         <div id="swv-status-banner" style="padding:12px 14px;border-radius:10px;margin-bottom:14px;font-size:.78rem;line-height:1.55;display:none;"></div>
 
-        <!-- ━━━ PRIMARY: YouTube URL (works on ALL devices, no setup) ━━━ -->
+        <!-- YouTube URL input -->
         <div style="padding:14px;background:linear-gradient(145deg,#fef3c7,#fef9c3);border:2px solid #f59e0b;border-radius:12px;margin-bottom:14px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-            <span style="background:#16a34a;color:#fff;font-size:.6rem;padding:3px 8px;border-radius:10px;letter-spacing:1.2px;font-weight:800;">✓ RECOMMENDED</span>
-            <span style="font-weight:800;color:#78350f;font-size:.88rem;">🎥 YouTube / Vimeo URL — works on ALL devices</span>
+            <span style="background:#dc2626;color:#fff;font-size:.6rem;padding:3px 8px;border-radius:10px;letter-spacing:1.2px;font-weight:800;">📺 YOUTUBE</span>
+            <span style="font-weight:800;color:#78350f;font-size:.88rem;">Paste your YouTube video URL</span>
           </div>
-          <input type="text" id="swv-url" placeholder="Paste YouTube URL: https://youtube.com/watch?v=... OR https://youtu.be/..." oninput="previewServiceWorksVideo();updateSwvStatusBanner();" style="width:100%;padding:11px 13px;border:1.5px solid #d97706;border-radius:8px;font-size:.85rem;background:#fff;">
-          <div style="font-size:.7rem;color:#92400e;margin-top:8px;line-height:1.6;">
-            <b>💡 Easiest way to make video visible everywhere:</b><br>
-            1. Upload video to <a href="https://youtube.com/upload" target="_blank" style="color:#1e40af;font-weight:700;">YouTube</a> (set as <b>Unlisted</b> if private)<br>
-            2. Copy the URL from address bar<br>
-            3. Paste here · Click <b>💾 Save Video</b> · Done — visible on mobile, tablet, laptop, everywhere
+          <input type="text" id="swv-url" placeholder="https://youtu.be/VIDEO_ID  OR  https://youtube.com/watch?v=VIDEO_ID" oninput="updateSwvStatusBanner()" style="width:100%;padding:11px 13px;border:1.5px solid #d97706;border-radius:8px;font-size:.85rem;background:#fff;font-family:monospace;">
+          <div style="font-size:.7rem;color:#92400e;margin-top:8px;line-height:1.65;">
+            <b>How to:</b><br>
+            1. Upload your video to <a href="https://youtube.com/upload" target="_blank" style="color:#1e40af;font-weight:700;">YouTube</a> (set as <b>Unlisted</b> if private)<br>
+            2. Copy the share link (Share → Copy link)<br>
+            3. Paste above · Click <b>💾 Save Video</b> · Done — instantly visible on all devices
           </div>
-        </div>
-
-        <div style="text-align:center;font-size:.65rem;color:#9ca3af;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:10px 0;display:flex;align-items:center;gap:9px;">
-          <span style="flex:1;height:1px;background:#e5e7eb;"></span><span>OR — DIRECT FILE UPLOAD (advanced)</span><span style="flex:1;height:1px;background:#e5e7eb;"></span>
-        </div>
-
-        <!-- ━━━ SECONDARY: File upload (with cross-device warnings) ━━━ -->
-        <div class="afg">
-          <label style="display:flex;align-items:center;gap:6px;font-size:.74rem !important;color:#1a3a6e !important;font-weight:800 !important;">
-            <span style="background:#1a3a6e;color:#fff;font-size:.52rem;padding:3px 7px;border-radius:10px;letter-spacing:1.2px;">UPLOAD FILE</span>
-            📁 MP4/WebM Video File
-          </label>
-          <div class="proj-upload-area" onclick="document.getElementById('swv-file').click()" style="cursor:pointer;padding:24px 18px;text-align:center;margin-top:6px;background:linear-gradient(145deg,#eff6ff,#dbeafe);border:2px dashed #1a3a6e !important;border-radius:12px;transition:all .2s;" onmouseover="this.style.background='linear-gradient(145deg,#dbeafe,#bfdbfe)'" onmouseout="this.style.background='linear-gradient(145deg,#eff6ff,#dbeafe)'">
-            <input type="file" id="swv-file" accept="video/*" style="display:none;" onchange="adminUploadServiceWorksVideo(this)">
-            <div style="font-size:2.4rem;margin-bottom:6px;">📹</div>
-            <div style="font-size:.92rem;font-weight:800;color:#1a3a6e;">👆 Click to upload video file</div>
-            <div style="font-size:.7rem;color:#1e40af;margin-top:4px;">MP4 · WebM · Any size</div>
-          </div>
-          <div id="swv-upload-status" style="font-size:.78rem;margin-top:8px;line-height:1.6;display:none;padding:11px;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;"></div>
-          <div id="swv-preview" style="margin-top:10px;display:none;text-align:center;"></div>
-          <div style="font-size:.68rem;color:#6b7280;margin-top:8px;line-height:1.55;padding:9px;background:#f9fafb;border-radius:7px;border-left:3px solid #f59e0b;">
-            <b>⚠️ Note:</b> File upload works best with <b>Firebase Storage</b> configured. Without Firebase, video saves to <b>THIS browser only</b> — won't show on other devices. <b>YouTube URL above is simpler!</b>
+          <div style="font-size:.7rem;color:#374151;margin-top:8px;padding:7px 9px;background:#fff;border-radius:6px;border:1px dashed #d97706;">
+            <b>Supported URL formats:</b><br>
+            <code style="font-size:.66rem;">https://youtu.be/6RqP50lpE0M</code><br>
+            <code style="font-size:.66rem;">https://www.youtube.com/watch?v=6RqP50lpE0M</code><br>
+            <code style="font-size:.66rem;">https://www.youtube.com/embed/6RqP50lpE0M</code><br>
+            <code style="font-size:.66rem;">https://youtube.com/shorts/6RqP50lpE0M</code>
           </div>
         </div>
 
-        <div class="afr" style="margin-top:14px;">
-          <div class="afg"><label>Video Type (auto-detected)</label>
-            <select id="swv-type">
-              <option value="youtube">YouTube Embed</option>
-              <option value="mp4">Direct MP4</option>
-              <option value="webm">WebM</option>
-              <option value="vimeo">Vimeo Embed</option>
-            </select>
-          </div>
-        </div>
+        <!-- Section text inputs (bilingual) -->
         <div class="afg"><label>Section Eyebrow / Tag</label><input type="text" id="swv-eyebrow-i" placeholder="Watch Our Work"></div>
         <div class="afg"><label>Video Title (English)</label><input type="text" id="swv-title-i" placeholder="Our Services in Action"></div>
         <div class="afg"><label>Video Title (नेपाली)</label><input type="text" id="swv-ne-title-i" placeholder="हाम्रा सेवाहरूको झलक"></div>
         <div class="afg"><label>Description (English)</label><textarea id="swv-desc-i" rows="2" placeholder="Watch how Prerak delivers quality services"></textarea></div>
         <div class="afg"><label>Description (नेपाली)</label><textarea id="swv-ne-desc-i" rows="2" placeholder="प्रेरकले गुणस्तरीय सेवा कसरी प्रदान गर्छ हेर्नुहोस्"></textarea></div>
 
+        <!-- Preview area -->
+        <div id="swv-preview" style="margin-top:14px;display:none;"></div>
+
         <div style="display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;">
           <button class="afsv" onclick="saveServiceWorksVideo()">💾 Save Video</button>
           <button class="abtn" onclick="previewServiceWorksVideo()" style="background:#10b981;color:#fff;">👁️ Preview</button>
-          <button class="dbtn" onclick="(async function(){if(confirm('Remove Service Works video?')){const oldUrl=String((D.serviceWorksVideo&&D.serviceWorksVideo.url)||'');if(oldUrl.startsWith('idb:')){try{await idbRemoveVideo(oldUrl.substring(4));}catch(e){}}D.serviceWorksVideo={url:'',type:'mp4'};saveData();if(_fbValid()){try{await saveServiceWorksVideoToFirestore({url:'',type:'mp4'});}catch(e){}}loadServiceWorksVideo();renderServiceWorksVideo();if(typeof showToast==='function')showToast('✅ Video removed',2500);}})()">🗑️ Remove Video</button>
+          <button class="dbtn" onclick="(async function(){if(confirm('Remove Service Works video?')){D.serviceWorksVideo={url:'',type:'youtube'};saveData();if(_fbValid()){try{await saveServiceWorksVideoToFirestore({url:'',type:'youtube'});}catch(e){}}loadServiceWorksVideo();renderServiceWorksVideo();if(typeof showToast==='function')showToast('✅ Video removed',2500);}})()">🗑️ Remove Video</button>
           <span class="afok" id="swv-ok">✅ Saved!</span>
         </div>
       </div>
@@ -13862,10 +13840,30 @@ function renderBrandVideo(){
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// SERVICE WORKS VIDEO — admin-uploadable showcase video on front page
-// Mirrors brandVideo lifecycle: load → upload → save → render.
-// Cross-device: Firebase Storage primary (when configured), IDB fallback.
+// SERVICE WORKS VIDEO — YouTube-only showcase video on front page
+// Simple, robust, cross-device by design. No MP4/file/IDB complexity.
 // ═══════════════════════════════════════════════════════════════════
+
+// Robust YouTube URL → video ID extractor (handles all common URL formats)
+function extractYouTubeId(url){
+  if(!url || typeof url !== 'string') return null;
+  url = url.trim();
+  // Match formats:
+  //   https://youtu.be/VIDEO_ID[?si=...]
+  //   https://www.youtube.com/watch?v=VIDEO_ID[&...]
+  //   https://www.youtube.com/embed/VIDEO_ID
+  //   https://www.youtube.com/shorts/VIDEO_ID
+  //   https://www.youtube.com/v/VIDEO_ID
+  const re = /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const m = url.match(re);
+  return m ? m[1] : null;
+}
+
+// Convert any YouTube URL to canonical embed URL
+function toYouTubeEmbed(url){
+  const id = extractYouTubeId(url);
+  return id ? ('https://www.youtube.com/embed/' + id) : null;
+}
 
 async function saveServiceWorksVideoToFirestore(data){
   if(!initFirebase()) return false;
@@ -13891,7 +13889,6 @@ function loadServiceWorksVideo(){
   const V = D.serviceWorksVideo;
   const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.value=val||''; };
   set('swv-url',        V.url);
-  set('swv-type',       V.type||'mp4');
   set('swv-eyebrow-i',  V.eyebrow||'Watch Our Work');
   set('swv-title-i',    V.title||'Our Services in Action');
   set('swv-ne-title-i', V.ne_title||'हाम्रा सेवाहरूको झलक');
@@ -13903,34 +13900,25 @@ function loadServiceWorksVideo(){
   fetchServiceWorksVideoFromFirestore().catch(()=>{});
 }
 
-// Diagnostic banner showing if cross-device sync is possible
+// Diagnostic banner — simpler since only YouTube is supported now
 function updateSwvStatusBanner(){
   const banner = document.getElementById('swv-status-banner');
   if(!banner) return;
   const urlEl = document.getElementById('swv-url');
   const url = (urlEl?.value || (D.serviceWorksVideo||{}).url || '').trim();
-  const fbOk = _fbValid();
   let bg, border, text;
   if(!url){
-    if(fbOk){
-      bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
-      text='<b style="color:#15803d;">✅ Cross-device sync READY.</b> <span style="color:#166534;">Firebase is configured. Any video you upload (file OR YouTube URL) will be visible on all devices — mobile, tablet, laptop.</span>';
-    } else {
-      bg='linear-gradient(145deg,#fef3c7,#fde68a)'; border='2px solid #f59e0b';
-      text='<b style="color:#92400e;">⚠️ Firebase not configured for cloud sync.</b> <span style="color:#78350f;">File uploads will save to THIS browser only (won\'t show on other devices). <b>Recommended:</b> Use YouTube URL above — works everywhere instantly.</span>';
-    }
-  } else if(url.startsWith('idb:') || url.startsWith('data:') || url.startsWith('blob:')){
-    bg='linear-gradient(145deg,#fee2e2,#fecaca)'; border='2px solid #dc2626';
-    text='<b style="color:#991b1b;">⚠️ Current video is LOCAL ONLY.</b> <span style="color:#7f1d1d;">Stored in this browser — will NOT show on mobile/other devices. Replace with a <b>YouTube URL</b> for cross-device viewing.</span>';
-  } else if(url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo')){
-    bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
-    text='<b style="color:#15803d;">✅ YouTube/Vimeo URL — visible on ALL devices.</b> <span style="color:#166534;">Click Save Video to publish.</span>';
-  } else if(url.includes('firebasestorage') || url.includes('googleapis')){
-    bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
-    text='<b style="color:#15803d;">✅ Firebase Storage URL — visible on ALL devices.</b>';
+    bg='linear-gradient(145deg,#fef3c7,#fde68a)'; border='2px solid #f59e0b';
+    text='<b style="color:#92400e;">ℹ️ No video URL yet.</b> <span style="color:#78350f;">Paste a YouTube URL below to publish a video to the front page. Visible on all devices instantly.</span>';
   } else {
-    bg='linear-gradient(145deg,#dbeafe,#bfdbfe)'; border='2px solid #2563eb';
-    text='<b style="color:#1e40af;">ℹ️ Direct video URL.</b> <span style="color:#1e3a8a;">Make sure URL is publicly accessible.</span>';
+    const id = extractYouTubeId(url);
+    if(id){
+      bg='linear-gradient(145deg,#dcfce7,#bbf7d0)'; border='2px solid #16a34a';
+      text='<b style="color:#15803d;">✅ Valid YouTube URL.</b> <span style="color:#166534;">Video ID: <code style="background:#fff;padding:2px 6px;border-radius:4px;font-size:.7rem;">'+id+'</code> — Click <b>💾 Save Video</b> to publish. Visible on all devices.</span>';
+    } else {
+      bg='linear-gradient(145deg,#fee2e2,#fecaca)'; border='2px solid #dc2626';
+      text='<b style="color:#991b1b;">⚠️ Invalid URL.</b> <span style="color:#7f1d1d;">Please paste a YouTube link — e.g. <code style="background:#fff;padding:2px 6px;border-radius:4px;font-size:.7rem;">https://youtu.be/VIDEO_ID</code> or <code style="background:#fff;padding:2px 6px;border-radius:4px;font-size:.7rem;">youtube.com/watch?v=VIDEO_ID</code></span>';
+    }
   }
   banner.style.background = bg;
   banner.style.border = border;
@@ -13939,123 +13927,65 @@ function updateSwvStatusBanner(){
 }
 
 async function saveServiceWorksVideo(){
+  const rawUrl = (document.getElementById('swv-url')?.value||'').trim();
+  if(!rawUrl){
+    if(typeof showToast==='function') showToast('⚠️ Please paste a YouTube URL first.', 3000);
+    return;
+  }
+  const videoId = extractYouTubeId(rawUrl);
+  if(!videoId){
+    if(typeof showToast==='function') showToast('⚠️ Invalid YouTube URL. Paste a valid youtube.com or youtu.be link.', 4000);
+    return;
+  }
   const data = {
-    url:      (document.getElementById('swv-url')?.value||'').trim(),
-    type:     document.getElementById('swv-type')?.value || 'mp4',
+    url:      rawUrl,                              // store original URL for editing
+    embedUrl: 'https://www.youtube.com/embed/' + videoId,  // canonical embed URL
+    videoId:  videoId,
+    type:     'youtube',                           // always YouTube
     eyebrow:  document.getElementById('swv-eyebrow-i')?.value || 'Watch Our Work',
     title:    document.getElementById('swv-title-i')?.value || 'Our Services in Action',
     ne_title: document.getElementById('swv-ne-title-i')?.value || 'हाम्रा सेवाहरूको झलक',
     desc:     document.getElementById('swv-desc-i')?.value || '',
     ne_desc:  document.getElementById('swv-ne-desc-i')?.value || ''
   };
-  if(!data.url){
-    if(typeof showToast==='function') showToast('⚠️ Please enter a video URL or upload a file first.', 3000);
-    return;
-  }
   D.serviceWorksVideo = data;
   saveData();
-  renderServiceWorksVideo();
-  // ALSO sync to Firestore for cross-device access
+  renderServiceWorksVideo();          // INSTANT homepage update
+  updateSwvStatusBanner();
+  // Cross-device sync to Firestore
   if(_fbValid()){
-    if(typeof showToast==='function') showToast('💾 Saving & syncing to Firebase…', 2000);
-    const ok = await saveServiceWorksVideoToFirestore(data);
-    if(ok){
-      if(typeof showToast==='function') showToast('✅ Service Works Video saved — visible on all devices!', 3500);
-    } else {
-      if(typeof showToast==='function') showToast('✅ Saved locally. Firestore sync failed — check Firebase config.', 4000);
+    try{
+      const ok = await saveServiceWorksVideoToFirestore(data);
+      if(typeof showToast==='function') showToast(ok ? '✅ Video saved & synced — visible on all devices!' : '✅ Saved locally. Firestore sync failed.', 3500);
+    }catch(e){
+      if(typeof showToast==='function') showToast('✅ Saved locally. (Firestore sync error)', 3500);
     }
   } else {
-    const isLocal = String(data.url).startsWith('idb:') || String(data.url).startsWith('data:') || String(data.url).startsWith('blob:');
-    if(isLocal){
-      if(typeof showToast==='function') showToast('⚠️ Saved locally — VIDEO WILL NOT SHOW ON OTHER DEVICES. Configure Firebase OR use YouTube URL for cross-device.', 6000);
-    } else {
-      if(typeof showToast==='function') showToast('✅ Service Works Video saved!', 3000);
-    }
+    if(typeof showToast==='function') showToast('✅ Video saved! (Firebase not configured — saved locally only)', 3500);
   }
   if(typeof showOk==='function') showOk('swv-ok');
 }
 
 function previewServiceWorksVideo(){
-  const url  = (document.getElementById('swv-url')?.value||'').trim();
-  const type = document.getElementById('swv-type')?.value || 'mp4';
+  const url = (document.getElementById('swv-url')?.value||'').trim();
   const prev = document.getElementById('swv-preview');
   if(!prev) return;
   if(!url){
-    prev.innerHTML='<div style="padding:12px;background:#fef2f2;color:#991b1b;border-radius:8px;font-size:.78rem;">⚠️ No video URL entered</div>';
+    prev.innerHTML='<div style="padding:12px;background:#fef2f2;color:#991b1b;border-radius:8px;font-size:.78rem;">⚠️ No URL entered</div>';
     prev.style.display='block';
     return;
   }
-  let embed='';
-  if(type==='mp4'||type==='webm'||url.startsWith('data:video/')||url.startsWith('blob:')||url.startsWith('idb:'))
-    embed='<video src="'+url.replace(/^idb:/,'')+'" width="100%" height="240" controls style="border-radius:10px;display:block;"></video>';
-  else
-    embed='<iframe src="'+url+'" width="100%" height="240" frameborder="0" allowfullscreen style="border-radius:10px;display:block;"></iframe>';
-  prev.innerHTML='<div style="font-size:.82rem;font-weight:700;margin-bottom:8px;">📺 Preview:</div>'+embed;
-  prev.style.display='block';
-}
-
-async function adminUploadServiceWorksVideo(input){
-  const f = input.files[0];
-  if(!f) return;
-  if(!f.type.startsWith('video/') && !f.name.match(/\.(mp4|webm|ogv|mov)$/i)){
-    if(typeof showToast==='function') showToast('⚠️ Please select a valid video file (MP4, WebM, etc.)', 3000);
+  const embedUrl = toYouTubeEmbed(url);
+  if(!embedUrl){
+    prev.innerHTML='<div style="padding:12px;background:#fef2f2;color:#991b1b;border-radius:8px;font-size:.78rem;">⚠️ Invalid YouTube URL. Use format: https://youtu.be/VIDEO_ID</div>';
+    prev.style.display='block';
     return;
   }
-  const statusEl = document.getElementById('swv-upload-status');
-  const prevEl   = document.getElementById('swv-preview');
-  const urlEl    = document.getElementById('swv-url');
-  const typeEl   = document.getElementById('swv-type');
-  const setStatus = (msg,col)=>{ if(statusEl){statusEl.style.display='block';statusEl.style.color=col||'#374151';statusEl.innerHTML=msg;} };
-  const sizeMB = (f.size / 1024 / 1024).toFixed(2);
-
-  // ── PREFER FIREBASE STORAGE for cross-device sync ──
-  if(_fbValid()){
-    setStatus('☁️ Uploading '+sizeMB+' MB to Firebase Storage (cross-device)…','#3b82f6');
-    try{
-      if(!initFirebase()) throw new Error('Firebase init failed');
-      const downloadUrl = await uploadVideoToStorage(f, pct => {
-        setStatus('☁️ Uploading to Firebase Storage ('+pct+'%) — visible on all devices…','#2563eb');
-      });
-      if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
-      if(urlEl)  urlEl.value  = downloadUrl;
-      // Also save to IDB as backup (so it shows immediately even on this browser)
-      try{ const k='swv_'+Date.now(); await idbSetVideo(k,f); }catch(e){}
-      if(prevEl){
-        prevEl.innerHTML='<video src="'+downloadUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
-        prevEl.style.display='block';
-      }
-      setStatus('✅ Uploaded to Firebase Storage ('+sizeMB+' MB)!<br>📱 Video will work on ALL devices.<br>👉 Click <b>💾 Save Video</b> to publish.','#15803d');
-      if(typeof showToast==='function') showToast('✅ Uploaded to cloud — visible on all devices!', 4000);
-      return;
-    }catch(fbErr){
-      console.error('SWV Firebase upload failed:', fbErr);
-      setStatus('⚠️ Firebase upload failed: '+(fbErr.message||fbErr)+'<br>Falling back to local browser storage…','#f59e0b');
-      // Fall through to IDB
-    }
-  }
-
-  // ── FALLBACK: IndexedDB (THIS BROWSER ONLY) ──
-  try{
-    if(D.serviceWorksVideo && D.serviceWorksVideo.url && String(D.serviceWorksVideo.url).startsWith('idb:')){
-      try{ await idbRemoveVideo(String(D.serviceWorksVideo.url).substring(4)); }catch(e){}
-    }
-    const key = 'swv_' + Date.now();
-    await idbSetVideo(key, f);
-    const idbUrl = 'idb:' + key;
-    if(typeEl) typeEl.value = f.name.endsWith('.webm')?'webm':'mp4';
-    if(urlEl)  urlEl.value  = idbUrl;
-    const blobUrl = URL.createObjectURL(f);
-    if(prevEl){
-      prevEl.innerHTML='<video src="'+blobUrl+'" width="100%" height="200" controls style="border-radius:10px;display:block;margin-top:8px;background:#000;"></video>';
-      prevEl.style.display='block';
-    }
-    setStatus('✅ Saved locally ('+sizeMB+' MB) to THIS browser.<br>⚠️ <b>WILL NOT show on other devices.</b><br>For cross-device: <b>configure Firebase Storage</b> OR <b>paste a YouTube URL</b>.<br>👉 Click <b>💾 Save Video</b> to publish locally.','#dc2626');
-    if(typeof showToast==='function') showToast('⚠️ Video saved locally only — not visible on other devices', 4500);
-  }catch(err){
-    console.error('SWV upload error:', err);
-    setStatus('❌ Upload failed: '+(err.message||err)+'<br>YouTube link paste गर्न सक्नुहुन्छ वैकल्पिक रूपमा.','#991b1b');
-    if(typeof showToast==='function') showToast('❌ Upload failed', 3500);
-  }
+  prev.innerHTML='<div style="font-size:.82rem;font-weight:700;margin-bottom:8px;color:#15803d;">📺 Preview (16:9 responsive):</div>'
+    + '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;background:#000;">'
+    + '<iframe src="'+embedUrl+'" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>'
+    + '</div>';
+  prev.style.display='block';
 }
 
 async function renderServiceWorksVideo(){
@@ -14063,9 +13993,9 @@ async function renderServiceWorksVideo(){
   if(!wrap) return;
   if(!D.serviceWorksVideo) D.serviceWorksVideo = {};
   const V = D.serviceWorksVideo;
-  let url = String(V.url||'').trim();
+  const rawUrl = String(V.url||'').trim();
 
-  // Update section text (only if value provided)
+  // Update section text
   const setT = (id,val) => { const el = document.getElementById(id); if(el && val) el.textContent = val; };
   setT('swv-eyebrow-en', V.eyebrow);
   setT('swv-title-en',   V.title);
@@ -14074,7 +14004,7 @@ async function renderServiceWorksVideo(){
   setT('swv-desc-ne',    V.ne_desc);
 
   // No URL — show placeholder
-  if(!url || url.length < 5){
+  if(!rawUrl){
     wrap.innerHTML = '<div id="swv-placeholder" class="swv-placeholder">'
       + '<div class="swv-ph-ico">🎥</div>'
       + '<div class="swv-ph-text">Video coming soon</div>'
@@ -14083,40 +14013,18 @@ async function renderServiceWorksVideo(){
     return;
   }
 
-  // Resolve idb: URLs to blob URLs (IndexedDB-backed videos — local only)
-  if(url.startsWith('idb:')){
-    try{
-      const blob = await idbGetVideo(url.substring(4));
-      if(blob){
-        url = URL.createObjectURL(blob);
-      } else {
-        // IDB entry missing — likely viewing from different device
-        wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">📱</div><div class="swv-ph-text">Video available on uploader\'s device only</div><div class="swv-ph-sub">Configure Firebase Storage for cross-device viewing</div></div>';
-        return;
-      }
-    }catch(e){
-      console.error('SWV idb resolve:', e);
-      wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">⚠️</div><div class="swv-ph-text">Video load failed</div></div>';
-      return;
-    }
+  // Use saved embedUrl if present, else convert from raw URL
+  let embedUrl = V.embedUrl;
+  if(!embedUrl){
+    embedUrl = toYouTubeEmbed(rawUrl);
+  }
+  if(!embedUrl){
+    wrap.innerHTML = '<div class="swv-placeholder"><div class="swv-ph-ico">⚠️</div><div class="swv-ph-text">Invalid video URL</div><div class="swv-ph-sub">Please update via admin panel</div></div>';
+    return;
   }
 
-  const type = V.type || 'mp4';
-  const isVideoFile = type==='mp4' || type==='webm'
-    || /\.(mp4|webm|ogv|mov)$/i.test(url)
-    || url.startsWith('blob:')
-    || url.startsWith('data:video/')
-    || url.includes('firebasestorage');
-  if(isVideoFile){
-    wrap.innerHTML = '<video src="'+url+'" controls playsinline preload="metadata"></video>';
-  } else if(url.includes('youtube.com') || url.includes('youtu.be')){
-    let embedUrl = url;
-    if(url.includes('watch?v=')) embedUrl = url.replace('watch?v=','embed/').split('&')[0];
-    else if(url.includes('youtu.be/')) embedUrl = url.replace('youtu.be/','youtube.com/embed/');
-    wrap.innerHTML = '<iframe src="'+embedUrl+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-  } else {
-    wrap.innerHTML = '<iframe src="'+url+'" frameborder="0" allowfullscreen></iframe>';
-  }
+  // Render responsive 16:9 YouTube iframe (no autoplay, no black screen)
+  wrap.innerHTML = '<iframe class="swv-iframe" src="'+embedUrl+'" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" title="Service Works Video"></iframe>';
 }
 
 // Fetch serviceWorksVideo from Firestore on page load (non-blocking, cross-device sync)
@@ -19144,7 +19052,7 @@ html[data-t="saffron"] .nav-links a:not(.nav-cta):hover{
 }
 .swv-card{
   width:100%;
-  aspect-ratio:16/10;
+  aspect-ratio:16/9;
   border-radius:18px;
   overflow:hidden;
   background:#000;
@@ -19165,16 +19073,16 @@ html[data-t="saffron"] .nav-links a:not(.nav-cta):hover{
 [data-t="corporate"] .swv-card:hover{
   box-shadow:0 20px 50px rgba(15,35,71,.22);
 }
-.swv-card video,
+.swv-card .swv-iframe,
 .swv-card iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  border:none;
-  background:#000;
+  position:absolute !important;
+  top:0 !important;
+  left:0 !important;
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+  border:none !important;
+  background:#000 !important;
 }
 .swv-placeholder{
   position:absolute;
