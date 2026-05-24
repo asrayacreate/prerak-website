@@ -1482,8 +1482,8 @@ body.notop .nav{top:0;}
 .map-tab.on{background:var(--bb);color:var(--bt);}
 .map-tab:not(.on){background:rgba(255,255,255,.05);color:var(--paper);}
 .map-tab:not(.on):hover{background:rgba(255,255,255,.1);}
-.map-fr{position:relative;height:390px;}
-.map-fr iframe{width:100%;height:100%;border:none;display:block;}
+.map-fr{position:relative;height:450px;}
+.map-fr iframe{width:100%;height:100%;border:0;display:block;}
 .map-fr iframe.hide{display:none;position:absolute;top:0;left:0;}
 .map-bdg{position:absolute;top:12px;left:13px;z-index:3;background:var(--bb);color:var(--bt);font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:16px;box-shadow:0 4px 10px rgba(0,0,0,.28);pointer-events:none;display:flex;align-items:center;gap:5px;}
 .map-acts{display:flex;gap:8px;padding:12px;background:var(--bg2);border-top:1px solid var(--line);flex-wrap:wrap;justify-content:center;}
@@ -5888,7 +5888,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
         <span class="ne np">हेटौंडा, मकवानपुर, नेपाल</span>
       </div>
       <h1 class="reveal" data-d="1" style="font-size:clamp(2rem,5.5vw,4.5rem);line-height:1.1;">
-        <span class="en">Complete<br><em>Construction</em><br><span class="st">One Place</span></span>
+        <span class="en">Complete<br><em>Construction</em><br><span class="st">Solution in One Place</span></span>
         <span class="ne np" style="font-family:'Noto Sans Devanagari',var(--fd);">सम्पूर्ण निर्माणका<br><em>काम एउटै</em><br><span class="st">ठाउँमा</span></span>
       </h1>
       <p class="h-sub reveal" data-d="2">
@@ -6553,8 +6553,8 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
           <div style="color:var(--mt);font-size:.85rem;">Makwanpur, Nepal</div>
           <button class="btn btn-g" style="padding:10px 24px;font-size:.85rem;">📍 Load Map</button>
         </div>
-        <iframe id="mf-map" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2885838413!2d85.03386157538!3d27.429934000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1b34e706b2b5%3A0xa17f77da2f1bef62!2sKantirajpath%2C%20Hetauda-2%2C%20Makwanpur%2C%20Nepal!5e0!3m2!1sen!2snp!4v1714000000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen style="display:none;"></iframe>
-        <iframe id="mf-sat" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3536.2885838413!2d85.03386157538!3d27.429934000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1b34e706b2b5%3A0xa17f77da2f1bef62!2sKantirajpath%2C%20Hetauda-2%2C%20Makwanpur%2C%20Nepal!5e1!3m2!1sen!2snp!4v1714000000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen class="hide" style="display:none;"></iframe>
+        <iframe id="mf-map" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3364969248464!2d85.0277839!3d27.2555543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e0!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Hetauda, Nepal" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
+        <iframe id="mf-sat" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3364969248464!2d85.0277839!3d27.2555543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e1!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Satellite view" class="hide" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
         <div class="map-bdg">📍 PRERAK Office — Hetauda</div>
       </div>
       <div class="map-acts">
@@ -6667,7 +6667,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 </footer>
 
 <!-- FLOATS — consolidated expandable FAB (bottom-right) -->
-<div id="prk-fab" class="prk-fab" aria-label="Quick Contact" data-open="false">
+<div id="prk-fab" class="prk-fab" aria-label="Quick Contact" data-open="true" data-permanent="true">
   <div class="prk-fab-menu" role="menu" aria-hidden="true">
     <a href="tel:9801069733" class="prk-fab-item prk-fab-call" role="menuitem" data-tip="Call · फोन">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -9587,12 +9587,12 @@ function renderServices(){
       </div>
       <div class="svc-b">
         <h3>${s.ico} <span class="en">${s.nm}</span><span class="ne np">${s.ne}</span></h3>
-        <p class="en">${s.desc.substring(0,90)}...</p>
-        <p class="ne np">${s.ne_desc.substring(0,90)}...</p>
+        <p class="en">${s.desc}</p>
+        <p class="ne np">${s.ne_desc}</p>
         <div class="svc-tags">${_arr(s.tags).map(t=>`<span class="stag">${t}</span>`).join('')}</div>
         <div class="svc-bts">
           <button class="svc-bt sbt-d">🔍 <span class="en">View Details</span><span class="ne np">विवरण</span></button>
-          <a href="https://wa.me/9779801069733?text=नमस्ते! ${s.nm} बारे जान्न चाहन्छु।" target="_blank" rel="noopener" class="svc-bt sbt-w" onclick="event.stopPropagation()">💬 WhatsApp</a>
+          <a href="https://wa.me/9779801069733?text=नमस्ते! ${s.nm} बारे जान्न चाहन्छु।" target="_blank" rel="noopener" class="svc-bt sbt-w" onclick="event.stopPropagation()" aria-label="WhatsApp inquiry">💬</a>
         </div>
       </div>
     </div>`).join('');
@@ -19272,6 +19272,133 @@ html[data-t="saffron"] .nav-links a:not(.nav-cta):hover{
    Covers edge cases: form inputs, modals, footer, footer headings.
    ════════════════════════════════════════════════════════════════════ */
 
+/* ════════════════════════════════════════════════════════════════════
+   SERVICE CARDS — equal heights + safe text clamping + CTA hierarchy
+   Resolves: text overflow, mid-character cuts (Devanagari), button alignment
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Grid stretches children to equal heights */
+.svgrid{
+  align-items:stretch !important;
+}
+
+/* Card itself is a column flexbox so bottom buttons always align */
+.svgrid > .svc{
+  display:flex !important;
+  flex-direction:column !important;
+  height:100% !important;
+}
+
+/* Card body grows to fill remaining height; buttons pushed to bottom */
+.svgrid > .svc > .svc-b{
+  display:flex !important;
+  flex-direction:column !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+
+/* Description: visual line-clamp instead of unsafe substring(0,90) cut */
+.svgrid > .svc .svc-b p{
+  display:-webkit-box !important;
+  -webkit-line-clamp:3 !important;
+  line-clamp:3 !important;
+  -webkit-box-orient:vertical !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  margin-bottom:10px !important;
+  word-break:normal !important;
+  overflow-wrap:break-word !important;
+  hyphens:auto !important;
+}
+
+/* Nepali devanagari needs slightly more line-height for readability */
+.svgrid > .svc .svc-b p.ne,
+.svgrid > .svc .svc-b p.np{
+  line-height:1.65 !important;
+  font-size:.76rem !important;
+}
+
+/* Tags row pushes buttons to bottom of card via auto margin */
+.svgrid > .svc .svc-tags{
+  margin-top:auto !important;
+  padding-top:2px !important;
+}
+
+/* Buttons row spacing */
+.svgrid > .svc .svc-bts{
+  margin-top:10px !important;
+  display:flex !important;
+  gap:6px !important;
+  align-items:stretch !important;
+}
+
+/* CTA hierarchy — Details = primary (2× flex weight), WhatsApp = compact icon */
+.svgrid > .svc .svc-bt.sbt-d{
+  flex:2 1 auto !important;
+  padding:10px 12px !important;
+  font-size:.7rem !important;
+  letter-spacing:1px !important;
+  border-radius:10px !important;
+  cursor:pointer !important;
+}
+.svgrid > .svc .svc-bt.sbt-w{
+  flex:0 0 auto !important;
+  width:46px !important;
+  padding:10px 0 !important;
+  font-size:1.05rem !important;
+  border-radius:10px !important;
+  text-decoration:none !important;
+}
+
+/* Dark theme: primary Details = gold gradient, WhatsApp = green subtle */
+.svgrid > .svc .svc-bt.sbt-d{
+  background:linear-gradient(135deg,rgba(212,166,74,.22),rgba(212,166,74,.10)) !important;
+  color:var(--gl) !important;
+  border:1px solid rgba(212,166,74,.45) !important;
+  font-weight:800 !important;
+}
+.svgrid > .svc .svc-bt.sbt-d:hover{
+  background:linear-gradient(135deg,#d4a64a,#b8860b) !important;
+  color:#fff !important;
+  border-color:transparent !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 20px rgba(212,166,74,.35) !important;
+}
+
+/* Corporate theme: primary Details = navy filled (high contrast) */
+[data-t="corporate"] .svgrid > .svc .svc-bt.sbt-d{
+  background:linear-gradient(135deg,#1a3a6e,#0f2347) !important;
+  color:#ffffff !important;
+  border:none !important;
+}
+[data-t="corporate"] .svgrid > .svc .svc-bt.sbt-d:hover{
+  background:linear-gradient(135deg,#2c4d80,#1a3a6e) !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 20px rgba(26,58,110,.35) !important;
+}
+[data-t="corporate"] .svgrid > .svc .svc-bt.sbt-w{
+  background:#25D366 !important;
+  color:#ffffff !important;
+  border:none !important;
+}
+[data-t="corporate"] .svgrid > .svc .svc-bt.sbt-w:hover{
+  background:#1da851 !important;
+}
+
+/* Mobile — tighter card spacing, smaller fonts, single-column on very small */
+@media (max-width:480px){
+  .svgrid{
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr)) !important;
+    gap:12px !important;
+  }
+  .svgrid > .svc .svc-b{padding:13px 14px 14px !important;}
+  .svgrid > .svc .svc-b h3{font-size:1.18rem !important;}
+  .svgrid > .svc .svc-b p{font-size:.74rem !important;}
+  .svgrid > .svc .svc-b p.ne,
+  .svgrid > .svc .svc-b p.np{font-size:.74rem !important;}
+}
+
+
 /* Form inputs — readable in corporate light theme */
 html[data-t="corporate"] body input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="hidden"]),
 html[data-t="corporate"] body textarea,
@@ -19383,6 +19510,274 @@ html[data-t="corporate"] body section [class="sey"]{
   color:#c9933a !important;
   font-weight:800 !important;
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   THEME POLISH PASS — final source-order safety net
+   1. Corporate: deep navy contrast for notices + service descriptions
+   2. Dark theme: cool charcoal/slate luxury gradient (replaces warm brown)
+   3. Footer: 100% opacity links across all themes
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. CORPORATE: Calendar live notice board — deep navy text ─── */
+html[data-t="corporate"] body #calendar .cn-ni,
+html[data-t="corporate"] body #calendar .cn-ni > *,
+html[data-t="corporate"] body #calendar .cn-ni span,
+html[data-t="corporate"] body #calendar .cn-ni div,
+html[data-t="corporate"] body #calendar .cn-ni .en,
+html[data-t="corporate"] body #calendar .cn-ni .ne,
+html[data-t="corporate"] body #calendar .cn-ni .np,
+html[data-t="corporate"] body #calendar .cn-ls .cn-ni *{
+  color:#0f2347 !important;          /* deep navy — high contrast on white */
+  opacity:1 !important;
+  visibility:visible !important;
+}
+html[data-t="corporate"] body #calendar .cn-ni b,
+html[data-t="corporate"] body #calendar .cn-ni strong{
+  color:#1a3a6e !important;          /* medium navy for emphasis */
+  font-weight:800 !important;
+}
+
+/* ─── 2. CORPORATE: Service card description — solid #374151 (no fade) ─── */
+html[data-t="corporate"] body .svgrid .svc .svc-b p,
+html[data-t="corporate"] body .svgrid .svc .svc-b p.en,
+html[data-t="corporate"] body .svgrid .svc .svc-b p.ne,
+html[data-t="corporate"] body .svgrid .svc .svc-b p.np,
+html[data-t="corporate"] body .svc .svc-b p,
+html[data-t="corporate"] body .svc-card .svc-desc{
+  color:#374151 !important;          /* solid dark gray, no opacity fade */
+  opacity:1 !important;
+}
+html[data-t="corporate"] body .svc .svc-b h3,
+html[data-t="corporate"] body .svc .svc-b .svc-nm{
+  color:#0f2347 !important;          /* card title = deep navy */
+  opacity:1 !important;
+}
+
+/* ─── 3. CORPORATE: View Details button — high-contrast filled ─── */
+html[data-t="corporate"] body .svgrid > .svc .svc-bt.sbt-d,
+html[data-t="corporate"] body .svc .svc-bt.sbt-d{
+  background:linear-gradient(135deg,#1a3a6e 0%,#0f2347 100%) !important;
+  color:#ffffff !important;
+  border:none !important;
+  font-weight:800 !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.15) !important;
+  box-shadow:0 4px 12px rgba(15,35,71,.25) !important;
+}
+html[data-t="corporate"] body .svgrid > .svc .svc-bt.sbt-d span,
+html[data-t="corporate"] body .svc .svc-bt.sbt-d .en,
+html[data-t="corporate"] body .svc .svc-bt.sbt-d .ne,
+html[data-t="corporate"] body .svc .svc-bt.sbt-d .np{
+  color:#ffffff !important;
+}
+html[data-t="corporate"] body .svgrid > .svc .svc-bt.sbt-d:hover,
+html[data-t="corporate"] body .svc .svc-bt.sbt-d:hover{
+  background:linear-gradient(135deg,#2c4d80,#1a3a6e) !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 8px 22px rgba(15,35,71,.4) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   DARK THEME — cool charcoal/slate luxury gradient
+   Replaces warm brown (#201b13) with premium navy-charcoal palette.
+   Maintains gold (#fbbf24/#d4a64a) accents for high-end construction feel.
+   ════════════════════════════════════════════════════════════════════ */
+
+html[data-t="dark"] body{
+  background:linear-gradient(180deg,#0b0f19 0%,#111827 50%,#0b0f19 100%) !important;
+  color:#f8fafc !important;
+}
+html[data-t="dark"] .sec,
+html[data-t="dark"] section{
+  background:transparent !important;
+}
+html[data-t="dark"] section:nth-child(even):not(.hero){
+  background:rgba(17,24,39,.55) !important;        /* subtle alternating slate */
+}
+html[data-t="dark"] #pricing-section,
+html[data-t="dark"] #faq-section{
+  background:linear-gradient(180deg,#111827,#0b0f19,#111827) !important;
+}
+html[data-t="dark"] #calendar.sec.cal-bg,
+html[data-t="dark"] body #calendar{
+  background:linear-gradient(180deg,#111827 0%,#0b0f19 60%,#1a2333 100%) !important;
+}
+/* Gold accents preserve their warmth on cool slate */
+html[data-t="dark"] .stg-n,
+html[data-t="dark"] .hst .n,
+html[data-t="dark"] [class*="gold"]{
+  color:#fbbf24 !important;
+  text-shadow:0 0 24px rgba(251,191,36,.18) !important;
+}
+/* Cards on cool slate use subtle elevation */
+html[data-t="dark"] .svc,
+html[data-t="dark"] .svc-card,
+html[data-t="dark"] .pc{
+  background:linear-gradient(155deg,#1a2333,#111827) !important;
+  border-color:rgba(212,166,74,.20) !important;
+}
+html[data-t="dark"] .svc:hover{
+  border-color:rgba(212,166,74,.45) !important;
+  box-shadow:0 22px 55px rgba(0,0,0,.55) !important;
+}
+/* Hero overlay tweak for cool slate background */
+html[data-t="dark"] .hsl::after{
+  background:linear-gradient(180deg,
+    rgba(11,15,25,.18) 0%,
+    rgba(11,15,25,.08) 36%,
+    rgba(11,15,25,.32) 100%) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FOOTER LINK VISIBILITY — 100% opacity across all themes
+   Affects "OUR SERVICES" and "COMPANY" link columns.
+   ════════════════════════════════════════════════════════════════════ */
+
+body footer a,
+body .footer a,
+body .ft a,
+body footer .ft-col a,
+body .ft-col a,
+body footer .ft-pro-link,
+body .footer .ft-pro-link{
+  color:#f0f4fa !important;
+  opacity:1 !important;
+  text-decoration:none !important;
+  transition:color .2s ease, opacity .2s ease !important;
+}
+body footer a:hover,
+body .footer a:hover,
+body .ft a:hover,
+body .ft-col a:hover{
+  color:#fbbf24 !important;          /* gold hover for premium feel */
+  opacity:1 !important;
+}
+body footer .ft-col h4,
+body footer .ft-col-title,
+body .footer h4,
+body .ft h4{
+  color:#ffffff !important;
+  opacity:1 !important;
+  font-weight:800 !important;
+}
+/* Corporate-specific footer (navy bg already, ensure links readable) */
+html[data-t="corporate"] body footer a,
+html[data-t="corporate"] body .footer a,
+html[data-t="corporate"] body .ft a{
+  color:#f8d780 !important;          /* warm gold on navy */
+}
+html[data-t="corporate"] body footer a:hover,
+html[data-t="corporate"] body .footer a:hover{
+  color:#ffe7a3 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FLOATING FAB — PERMANENT VISIBLE CONTACT BAR (PUBLIC UX)
+   Removes click-to-expand requirement. All contact buttons are now
+   stacked vertically on the right side at all times. Toggle button
+   hidden (was the click trigger). Bhuluk-bhuluk callout pulse stays.
+   Admin shortcut (Ctrl+Alt+A) unchanged.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* 1. Always-visible contact items — override the click-trigger opacity:0 */
+#prk-fab[data-permanent="true"] .prk-fab-item,
+.prk-fab[data-permanent="true"] .prk-fab-item{
+  opacity:1 !important;
+  transform:translateY(0) scale(1) !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+#prk-fab[data-permanent="true"] .prk-fab-menu,
+.prk-fab[data-permanent="true"] .prk-fab-menu{
+  pointer-events:auto !important;
+  opacity:1 !important;
+}
+/* aria-hidden no longer applies visually when permanent */
+#prk-fab[data-permanent="true"] .prk-fab-menu[aria-hidden],
+.prk-fab[data-permanent="true"] .prk-fab-menu[aria-hidden]{
+  opacity:1 !important;
+}
+
+/* 2. Hide the toggle button — no longer needed (buttons always visible) */
+#prk-fab[data-permanent="true"] .prk-fab-toggle,
+.prk-fab[data-permanent="true"] .prk-fab-toggle{
+  display:none !important;
+  visibility:hidden !important;
+  width:0 !important;
+  height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* 3. Bhuluk-bhuluk callout stays active even with data-open="true" */
+#prk-fab[data-permanent="true"] .prk-fab-callout,
+.prk-fab[data-permanent="true"] .prk-fab-callout{
+  animation:prkCalloutBhulukBhuluk 7s ease-in-out infinite !important;
+  opacity:1 !important;
+}
+@media (prefers-reduced-motion:reduce){
+  #prk-fab[data-permanent="true"] .prk-fab-callout,
+  .prk-fab[data-permanent="true"] .prk-fab-callout{
+    animation:none !important;
+    opacity:1 !important;
+    transform:translateX(0) scale(1) !important;
+  }
+}
+
+/* 4. Position adjustments — callout now points to top item (no toggle anchor) */
+.prk-fab[data-permanent="true"]{
+  bottom:18px !important;
+  right:14px !important;
+  gap:10px !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-callout{
+  position:absolute !important;
+  right:calc(100% + 12px) !important;
+  bottom:8px !important;
+  white-space:nowrap !important;
+}
+@media (max-width:560px){
+  .prk-fab[data-permanent="true"]{
+    bottom:14px !important;
+    right:10px !important;
+    gap:8px !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-callout{
+    position:fixed !important;
+    right:auto !important;
+    left:14px !important;
+    bottom:80px !important;
+    font-size:.7rem !important;
+    padding:6px 11px !important;
+  }
+}
+
+/* 5. Enhanced visual polish for always-on bar — softer shadow stack */
+.prk-fab[data-permanent="true"] .prk-fab-item{
+  box-shadow:0 6px 18px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.25) !important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover{
+  transform:translateX(-2px) scale(1.05) !important;
+  box-shadow:0 10px 28px rgba(0,0,0,.55),0 3px 10px rgba(0,0,0,.3) !important;
+}
+
+/* Corporate theme: lighter card backgrounds for FAB items */
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item{
+  background:linear-gradient(135deg,#ffffff,#f8fafc) !important;
+  color:#0f2347 !important;
+  border:1px solid rgba(26,58,110,.18) !important;
+  box-shadow:0 6px 18px rgba(15,35,71,.18),0 2px 6px rgba(15,35,71,.10) !important;
+}
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover{
+  background:linear-gradient(135deg,#1a3a6e,#0f2347) !important;
+  color:#ffffff !important;
+  border-color:transparent !important;
+}
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover svg{
+  color:#fbbf24 !important;
+}
+
 
 /* ════════════════════════════════════════════════════════════════════
    HERO MOBILE READABILITY — strong overlay + text shadows
