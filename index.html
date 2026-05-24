@@ -5641,6 +5641,8 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 </style>
 </head>
 <body class="show-vc-on show-cal-on">
+<!-- Skip-to-content link for keyboard users (visible only when focused) -->
+<a class="skip-link" href="#home">Skip to main content</a>
 <div id="prog"></div>
 
 <!-- LOADER -->
@@ -5836,9 +5838,9 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   <div class="h-in">
     <div>
       <div class="h-tag reveal" style="display:inline-flex;align-items:center;gap:8px;">
-        <span class="h-pulse"></span>
+        <span class="h-pulse" aria-hidden="true"></span>
         <!-- Small elegant Nepal flag -->
-        <svg viewBox="0 0 246 300" width="14" height="17" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.35));">
+        <svg viewBox="0 0 246 300" width="14" height="17" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nepal flag" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,.35));">
   <!-- Blue outer border (the official double-pennant shape) -->
   <path d="M0 0 L210 154 L114 154 L210 246 L0 246 Z" fill="#003893"/>
   <!-- Red field inside blue border -->
@@ -5896,16 +5898,16 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
         <span class="ne np">घर निर्माण, इन्टेरियर डिजाइन, UPVC/Aluminum, जिप्सम, Plumbing, Electrical, Painting, Renovation तथा निर्माण सामग्री आपूर्ति — हेटौंडा, नेपाल।</span>
       </p>
       <div class="h-acts reveal" data-d="3">
-        <button onclick="openQuoteModal()" class="btn btn-g" style="border:none;cursor:pointer;font-family:inherit;">💎 <span class="en">Get Free Quote</span><span class="ne np">नि:शुल्क Quote</span></button>
+        <button onclick="openQuoteModal()" class="btn btn-g" aria-haspopup="dialog" style="border:none;cursor:pointer;font-family:inherit;">💎 <span class="en">Get Free Quote</span><span class="ne np">नि:शुल्क Quote</span></button>
         <a href="#contact" class="btn btn-gh">🏗️ <span class="en">Book Free Site Visit</span><span class="ne np">साइट भिजिट</span></a>
         <a href="tel:+9779801069733" class="btn btn-gh">📞 <span class="en">Call Now</span><span class="ne np">फोन</span></a>
         <a href="https://wa.me/9779801069733?text=Namaste!%20Prerak%20Multipurpose!" target="_blank" rel="noopener" class="btn btn-w">💬 WhatsApp</a>
       </div>
       <div class="h-badges reveal" data-d="4" style="display:flex;flex-wrap:wrap;gap:9px;margin-top:20px;">
-        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;">✅ Complete Construction Solution</span>
-        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;">✅ Quality Materials</span>
-        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;">✅ Free Site Visit</span>
-        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;">✅ Experienced Team</span>
+        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;"><span aria-hidden="true">✅</span> <span class="en">Complete Construction Solution</span><span class="ne np">सम्पूर्ण निर्माण समाधान</span></span>
+        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;"><span aria-hidden="true">✅</span> <span class="en">Quality Materials</span><span class="ne np">गुणस्तरीय सामग्री</span></span>
+        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;"><span aria-hidden="true">✅</span> <span class="en">Free Site Visit</span><span class="ne np">नि:शुल्क साइट भिजिट</span></span>
+        <span style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 13px;border-radius:6px;font-size:.76rem;font-weight:600;color:#fff;"><span aria-hidden="true">✅</span> <span class="en">Experienced Team</span><span class="ne np">अनुभवी टिम</span></span>
       </div>
       <div class="hsts reveal" data-d="5" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px;max-width:560px;">
         <div class="hst"><div class="n" data-count="500">0+</div><div class="l en">Projects</div><div class="l ne np">परियोजना</div></div>
@@ -5919,12 +5921,12 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
     <div class="hcard reveal" data-d="2">
       <div class="hc-b"><span class="en">✦ Live Service</span><span class="ne np">✦ सक्रिय सेवा</span></div>
       <!-- Rotating service thumbnail image -->
-      <div class="hc-thumb-wrap">
+      <div class="hc-thumb-wrap" role="img" aria-label="Featured service preview">
         <div class="hc-thumb" id="hcThumb" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&auto=format&fit=crop&q=80');"></div>
-        <div class="hc-thumb-overlay"></div>
-        <div class="hc-thumb-badge" id="hcIcoBadge">🏗️</div>
+        <div class="hc-thumb-overlay" aria-hidden="true"></div>
+        <div class="hc-thumb-badge" id="hcIcoBadge" aria-hidden="true">🏗️</div>
       </div>
-      <div class="hc-svc"><span id="hcIco">🏗️</span> <span id="hcNm">Construction Works</span></div>
+      <div class="hc-svc"><span id="hcIco" aria-hidden="true">🏗️</span> <span id="hcNm">Construction Works</span></div>
       <div class="hc-d" id="hcDesc">Complete construction — RCC, masonry &amp; premium finishing.</div>
       <div class="hc-feats">
         <div class="hc-f"><span class="en">✓ Licensed Engineers &amp; Architects</span><span class="ne np">✓ लाइसेन्स प्राप्त इन्जिनियर</span></div>
@@ -6667,46 +6669,419 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 </footer>
 
 <!-- FLOATS — consolidated expandable FAB (bottom-right) -->
-<div id="prk-fab" class="prk-fab" aria-label="Quick Contact" data-open="true" data-permanent="true">
-  <div class="prk-fab-menu" role="menu" aria-hidden="true">
-    <a href="tel:+9779801069733" class="prk-fab-item prk-fab-call" role="menuitem" data-tip="Call · फोन">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      <span class="prk-fab-lbl">Call</span>
-    </a>
-    <a href="https://wa.me/9779801069733?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%20PRERAK!" target="_blank" rel="noopener" class="prk-fab-item prk-fab-wa" role="menuitem" data-tip="WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.049-1.103l-.29-.172-3.004.928.949-2.945-.188-.299A7.97 7.97 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
-      <span class="prk-fab-lbl">WhatsApp</span>
-    </a>
-    <a href="mailto:prerakconstruction12@gmail.com?subject=Inquiry%20-%20PRERAK%20Multipurpose%20Pvt.%20Ltd." onclick="return prerakMail(event)" class="prk-fab-item prk-fab-mail" role="menuitem" data-tip="Email · इमेल">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      <span class="prk-fab-lbl">Email</span>
-    </a>
-    <a href="https://www.facebook.com/share/p/1CQnDEEYgP/" target="_blank" rel="noopener" class="prk-fab-item prk-fab-msg" role="menuitem" data-tip="Messenger">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.145 2 11.5c0 2.93 1.428 5.535 3.665 7.232V22l3.367-1.847c.9.248 1.853.378 2.968.378 5.523 0 10-4.145 10-9.5S17.523 2 12 2zm.996 12.793l-2.539-2.711-4.957 2.711L11.005 9.2l2.612 2.711L18.5 9.2l-5.504 5.593z"/></svg>
-      <span class="prk-fab-lbl">Messenger</span>
-    </a>
-    <button type="button" class="prk-fab-item prk-fab-gl" data-tip="Projects · कामहरू" onclick="document.getElementById('projects')?.scrollIntoView({behavior:'smooth',block:'start'});window.prkFabClose&&prkFabClose();">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-      <span class="prk-fab-lbl">Projects</span>
-    </button>
-  </div>
-  <!-- Bhuluk-bhuluk pop-in/pop-out callout — tells public what's inside (Nepali first) -->
-  <span class="prk-fab-callout" aria-hidden="true">
-    <span class="ne np">📞 सम्पर्क गर्नुस्</span>
-    <span class="en">📞 Contact Us</span>
-  </span>
-  <button type="button" class="prk-fab-toggle" aria-expanded="false" aria-controls="prk-fab" aria-label="Contact options · सम्पर्क"
-    onclick="(function(b){var f=document.getElementById('prk-fab');var o=f.getAttribute('data-open')==='true';f.setAttribute('data-open',(!o).toString());b.setAttribute('aria-expanded',(!o).toString());var m=f.querySelector('.prk-fab-menu');if(m)m.setAttribute('aria-hidden',o.toString());})(this)">
-    <svg class="prk-fab-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-    <svg class="prk-fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
-  </button>
-</div>
-<script>
-window.prkFabClose=function(){var f=document.getElementById('prk-fab');if(!f)return;f.setAttribute('data-open','false');var b=f.querySelector('.prk-fab-toggle');if(b)b.setAttribute('aria-expanded','false');var m=f.querySelector('.prk-fab-menu');if(m)m.setAttribute('aria-hidden','true');};
-document.addEventListener('click',function(e){var f=document.getElementById('prk-fab');if(!f)return;if(!f.contains(e.target)&&f.getAttribute('data-open')==='true')window.prkFabClose();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')window.prkFabClose();});
-</script>
+<!-- ══════════════════════════════════════════════════════════════════════
+     FAB v4 — STANDALONE BUTTONS (ad-blocker-safe naming, no "fab" substring)
+     6 independent fixed-positioned buttons radiating from middle-right.
+     Each <a> / <button> is its own fixed element — no wrapper, no nesting.
+     Includes a VISIBLE VERSION BADGE so you can confirm latest code loaded.
+     ══════════════════════════════════════════════════════════════════════ -->
 
+<!-- 🔵 VERSION-CHECK BADGE (top-left corner, dismissible by reload) -->
+<div id="pcm-version-badge" aria-hidden="true"
+     style="position:fixed; top:8px; left:8px; z-index:2147483646;
+            padding:6px 12px; border-radius:14px;
+            background:linear-gradient(135deg,#f0c878,#d4a64a,#a17a30); color:#1a1108;
+            font:700 11px system-ui,-apple-system,sans-serif; letter-spacing:.6px;
+            box-shadow:0 3px 10px rgba(0,0,0,.45), 0 0 0 1px rgba(212,166,74,.5);
+            pointer-events:none; opacity:.92;">
+  ✓ Contact menu v4
+</div>
+
+<!-- 1. CALL ─────────────────────────── arc position: angle -75° ─── -->
+<a id="pcm-b1" href="tel:+9779801069733" data-tip="Call · फोन"
+   aria-label="Call PRERAK Multipurpose"
+   style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+          transform:translate(-78px, 121px);
+          width:54px; height:54px; border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          background:linear-gradient(160deg,#2a2010,#14100a);
+          border:1.5px solid rgba(212,166,74,.6); color:#f0c878;
+          box-shadow:0 8px 22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+          text-decoration:none; cursor:pointer;
+          transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, border-color .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 11 19.79 19.79 0 01.1 2.38 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  </svg>
+</a>
+
+<!-- 2. WHATSAPP ─────────────────────── arc position: angle -45° ─── -->
+<a id="pcm-b2" href="https://wa.me/9779801069733?text=Namaste!%20PRERAK%20Multipurpose%20मा%20सम्पर्क%20गर्न%20चाहन्छु।"
+   target="_blank" rel="noopener" data-tip="WhatsApp"
+   aria-label="Chat on WhatsApp"
+   style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+          transform:translate(-128px, 91px);
+          width:54px; height:54px; border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          background:linear-gradient(160deg,#0f2a18,#08150c);
+          border:2px solid rgba(37,211,102,.7); color:#25d366;
+          box-shadow:0 8px 22px rgba(0,0,0,.6), 0 0 0 4px rgba(37,211,102,.12), inset 0 1px 0 rgba(255,255,255,.08);
+          text-decoration:none; cursor:pointer;
+          transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.989.537 3.85 1.473 5.45L2 22l4.697-1.45A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.049-1.103l-.29-.172-3.004.928.949-2.945-.188-.299A7.97 7.97 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/>
+  </svg>
+</a>
+
+<!-- 3. SERVICES ─────────────────────── arc position: angle -15° (middle-low) ─── -->
+<button id="pcm-b3" type="button" data-tip="Services · सेवाहरू"
+        aria-label="Jump to Services section"
+        onclick="(function(){var t=document.getElementById('services');if(t)t.scrollIntoView({behavior:'smooth',block:'start'});})()"
+        style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+               transform:translate(-152px, 33px);
+               width:54px; height:54px; border-radius:50%;
+               display:flex; align-items:center; justify-content:center;
+               background:linear-gradient(160deg,#2a2010,#14100a);
+               border:1.5px solid rgba(244,196,104,.75); color:#f4c468;
+               box-shadow:0 8px 22px rgba(0,0,0,.6), 0 0 22px rgba(244,196,104,.20), inset 0 1px 0 rgba(255,255,255,.08);
+               cursor:pointer; padding:0; margin:0; font-family:inherit;
+               transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, border-color .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" aria-hidden="true">
+    <path d="M3 21h18"/>
+    <path d="M5 21V7l8-4v18"/>
+    <path d="M19 21V11l-6-4"/>
+    <path d="M9 9h.01M9 12h.01M9 15h.01M9 18h.01"/>
+  </svg>
+</button>
+
+<!-- 4. EMAIL ─────────────────────── arc position: angle +15° (middle-high) ─── -->
+<a id="pcm-b4" href="mailto:prerakconstruction12@gmail.com?subject=Inquiry%20—%20PRERAK%20Multipurpose%20Pvt.%20Ltd."
+   data-tip="Email · इमेल"
+   aria-label="Send email inquiry"
+   style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+          transform:translate(-152px, -33px);
+          width:54px; height:54px; border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          background:linear-gradient(160deg,#2a2010,#14100a);
+          border:1.5px solid rgba(212,166,74,.6); color:#f0c878;
+          box-shadow:0 8px 22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+          text-decoration:none; cursor:pointer;
+          transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, border-color .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+  </svg>
+</a>
+
+<!-- 5. MESSENGER ─────────────────────── arc position: angle +45° ─── -->
+<a id="pcm-b5" href="https://www.facebook.com/share/p/1CQnDEEYgP/"
+   target="_blank" rel="noopener" data-tip="Messenger"
+   aria-label="Open Facebook Messenger"
+   style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+          transform:translate(-128px, -91px);
+          width:54px; height:54px; border-radius:50%;
+          display:flex; align-items:center; justify-content:center;
+          background:linear-gradient(160deg,#0f1a2a,#08101a);
+          border:1.5px solid rgba(91,156,255,.6); color:#5b9cff;
+          box-shadow:0 8px 22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+          text-decoration:none; cursor:pointer;
+          transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, border-color .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+    <path d="M12 2C6.477 2 2 6.145 2 11.5c0 2.93 1.428 5.535 3.665 7.232V22l3.367-1.847c.9.248 1.853.378 2.968.378 5.523 0 10-4.145 10-9.5S17.523 2 12 2zm.996 12.793l-2.539-2.711-4.957 2.711L11.005 9.2l2.612 2.711L18.5 9.2l-5.504 5.593z"/>
+  </svg>
+</a>
+
+<!-- 6. PROJECTS ─────────────────────── arc position: angle +75° (top-most) ─── -->
+<button id="pcm-b6" type="button" data-tip="Projects · कामहरू"
+        aria-label="View Projects section"
+        onclick="(function(){var t=document.getElementById('projects');if(t)t.scrollIntoView({behavior:'smooth',block:'start'});})()"
+        style="position:fixed; top:calc(50% - 27px); right:0; z-index:2147483647;
+               transform:translate(-78px, -121px);
+               width:54px; height:54px; border-radius:50%;
+               display:flex; align-items:center; justify-content:center;
+               background:linear-gradient(160deg,#2a2010,#14100a);
+               border:1.5px solid rgba(212,166,74,.6); color:#f0c878;
+               box-shadow:0 8px 22px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+               cursor:pointer; padding:0; margin:0; font-family:inherit;
+               transition:transform .26s cubic-bezier(.5,1.5,.5,1), box-shadow .26s, border-color .26s, filter .26s;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="2"/>
+    <circle cx="9" cy="9" r="2"/>
+    <path d="M21 15l-5-5L5 21"/>
+  </svg>
+</button>
+
+<style>
+/* ─── FAB v4 — hover bump + tooltip + mobile + WhatsApp pulse ─── */
+
+/* Hover bump (scale combines with inline translate via per-button override) */
+#pcm-b1:hover, #pcm-b1:focus-visible { transform: translate(-85px, 121px)  scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #f0c878, 0 0 30px rgba(212,166,74,.4) !important; border-color: #f4c468 !important; z-index: 2147483647 !important; }
+#pcm-b2:hover, #pcm-b2:focus-visible { transform: translate(-135px, 91px)  scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #25d366, 0 0 30px rgba(37,211,102,.45) !important; border-color: #2ecc71 !important; z-index: 2147483647 !important; }
+#pcm-b3:hover, #pcm-b3:focus-visible { transform: translate(-160px, 33px)  scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #f4c468, 0 0 30px rgba(244,196,104,.45) !important; border-color: #fbd680 !important; z-index: 2147483647 !important; }
+#pcm-b4:hover, #pcm-b4:focus-visible { transform: translate(-160px, -33px) scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #f0c878, 0 0 30px rgba(212,166,74,.4) !important; border-color: #f4c468 !important; z-index: 2147483647 !important; }
+#pcm-b5:hover, #pcm-b5:focus-visible { transform: translate(-135px, -91px) scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #5b9cff, 0 0 30px rgba(91,156,255,.45) !important; border-color: #7eb0ff !important; z-index: 2147483647 !important; }
+#pcm-b6:hover, #pcm-b6:focus-visible { transform: translate(-85px, -121px) scale(1.12) !important; filter: brightness(1.15) !important; box-shadow: 0 14px 34px rgba(0,0,0,.7), 0 0 0 2px #f0c878, 0 0 30px rgba(212,166,74,.4) !important; border-color: #f4c468 !important; z-index: 2147483647 !important; }
+
+/* Focus ring */
+#pcm-b1:focus-visible, #pcm-b2:focus-visible, #pcm-b3:focus-visible,
+#pcm-b4:focus-visible, #pcm-b5:focus-visible, #pcm-b6:focus-visible {
+  outline: 3px solid #fff !important;
+  outline-offset: 3px !important;
+}
+
+/* Premium tooltips — appear on left side on desktop hover */
+@media (hover: hover) {
+  #pcm-b1::after, #pcm-b2::after, #pcm-b3::after,
+  #pcm-b4::after, #pcm-b5::after, #pcm-b6::after {
+    content: attr(data-tip);
+    position: absolute;
+    right: calc(100% + 14px);
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+    white-space: nowrap;
+    font: 700 12.5px system-ui, -apple-system, sans-serif;
+    letter-spacing: .3px;
+    padding: 7px 13px;
+    background: rgba(16,12,6,.96);
+    color: #f0c878;
+    border: 1px solid rgba(212,166,74,.4);
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .22s ease, transform .22s ease;
+  }
+  #pcm-b1:hover::after, #pcm-b2:hover::after, #pcm-b3:hover::after,
+  #pcm-b4:hover::after, #pcm-b5:hover::after, #pcm-b6:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+/* WhatsApp pulsing green ring */
+#pcm-b2::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid rgba(37,211,102,.65);
+  pointer-events: none;
+  animation: pcmWaPulse 2.4s ease-out infinite;
+}
+@keyframes pcmWaPulse {
+  0%   { transform: scale(1);    opacity: .75; }
+  70%  { transform: scale(1.50); opacity: 0; }
+  100% { transform: scale(1.50); opacity: 0; }
+}
+
+/* Mobile (≤768px) — tighter radius (~100px), smaller buttons (44px) */
+@media (max-width: 768px) {
+  #pcm-b1, #pcm-b2, #pcm-b3, #pcm-b4, #pcm-b5, #pcm-b6 {
+    width: 44px !important;
+    height: 44px !important;
+    top: calc(50% - 22px) !important;
+  }
+  #pcm-b1 svg, #pcm-b2 svg, #pcm-b3 svg,
+  #pcm-b4 svg, #pcm-b5 svg, #pcm-b6 svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  #pcm-b1 { transform: translate(-50px, 96px)  !important; }
+  #pcm-b2 { transform: translate(-82px, 72px)  !important; }
+  #pcm-b3 { transform: translate(-100px, 26px) !important; }
+  #pcm-b4 { transform: translate(-100px, -26px) !important; }
+  #pcm-b5 { transform: translate(-82px, -72px) !important; }
+  #pcm-b6 { transform: translate(-50px, -96px) !important; }
+  /* Mobile hover bumps */
+  #pcm-b1:hover { transform: translate(-57px, 96px)  scale(1.1) !important; }
+  #pcm-b2:hover { transform: translate(-89px, 72px)  scale(1.1) !important; }
+  #pcm-b3:hover { transform: translate(-108px, 26px) scale(1.1) !important; }
+  #pcm-b4:hover { transform: translate(-108px, -26px) scale(1.1) !important; }
+  #pcm-b5:hover { transform: translate(-89px, -72px) scale(1.1) !important; }
+  #pcm-b6:hover { transform: translate(-57px, -96px) scale(1.1) !important; }
+}
+
+/* Very narrow phones (<380px) — even tighter */
+@media (max-width: 380px) {
+  #pcm-b1, #pcm-b2, #pcm-b3, #pcm-b4, #pcm-b5, #pcm-b6 {
+    width: 40px !important;
+    height: 40px !important;
+    top: calc(50% - 20px) !important;
+  }
+  #pcm-b1 { transform: translate(-42px, 82px)  !important; }
+  #pcm-b2 { transform: translate(-70px, 62px)  !important; }
+  #pcm-b3 { transform: translate(-86px, 22px)  !important; }
+  #pcm-b4 { transform: translate(-86px, -22px) !important; }
+  #pcm-b5 { transform: translate(-70px, -62px) !important; }
+  #pcm-b6 { transform: translate(-42px, -82px) !important; }
+}
+
+/* Hide ANY old FAB system entirely (defensive — multiple namespaces covered) */
+#prk-fab, #prk-fab-v3, .prk-fab, .prk-fab-arc, .prk-fab-toggle, .prk-fab-callout {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ SERVICE CARDS — LIVE ANIMATED ICONS + PREMIUM HOVER POLISH ★
+   Makes the emoji icons inside each card feel "alive":
+   - .svc-ico circle (top-right of card image) — gentle continuous float
+   - h3 emoji — wiggles excitedly when card is hovered
+   - card hover — sweep shine across top, lift, golden border glow
+   - service tags (.stag chips) — pop on hover
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Continuous gentle float on the big icon circle (top-right of card image) */
+.svgrid > .svc .svc-ico {
+  animation: svcIcoFloat 3.5s ease-in-out infinite;
+  transform-origin: center;
+  transition: transform .4s cubic-bezier(.5,1.5,.5,1), box-shadow .4s ease, background .4s ease !important;
+}
+@keyframes svcIcoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-4px) rotate(-3deg); }
+}
+/* Stronger animation when card is hovered — bounce-rotate */
+.svgrid > .svc:hover .svc-ico {
+  animation: svcIcoExcited 1.2s cubic-bezier(.36,1.6,.5,1) infinite;
+  background: rgba(212,166,74,.20) !important;
+  box-shadow: 0 0 0 2px rgba(212,166,74,.45), 0 8px 24px rgba(212,166,74,.30) !important;
+}
+@keyframes svcIcoExcited {
+  0%,100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25%     { transform: translateY(-6px) rotate(-8deg) scale(1.08); }
+  50%     { transform: translateY(-3px) rotate(0deg) scale(1.12); }
+  75%     { transform: translateY(-6px) rotate(8deg) scale(1.08); }
+}
+
+/* h3 leading emoji — wiggles on card hover */
+.svgrid > .svc .svc-b h3 > span[aria-hidden="true"]:first-child {
+  display: inline-block;
+  transform-origin: 50% 80%;
+  transition: transform .4s cubic-bezier(.36,1.6,.5,1);
+}
+.svgrid > .svc:hover .svc-b h3 > span[aria-hidden="true"]:first-child {
+  animation: emojiWaggle .8s cubic-bezier(.36,1.6,.5,1);
+}
+@keyframes emojiWaggle {
+  0%   { transform: rotate(0deg)   scale(1); }
+  20%  { transform: rotate(-14deg) scale(1.15); }
+  40%  { transform: rotate(12deg)  scale(1.12); }
+  60%  { transform: rotate(-8deg)  scale(1.08); }
+  80%  { transform: rotate(5deg)   scale(1.04); }
+  100% { transform: rotate(0deg)   scale(1); }
+}
+
+/* Card hover — premium gold shimmer sweep + outer glow */
+.svgrid > .svc {
+  position: relative;
+  overflow: hidden;
+}
+.svgrid > .svc::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255,220,140,0) 30%,
+    rgba(255,220,140,.18) 50%,
+    rgba(255,220,140,0) 70%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+  transition: left .9s cubic-bezier(.5,0,.2,1);
+}
+.svgrid > .svc:hover::after {
+  left: 150%;
+}
+
+/* Service tag chips (.stag) — pop on hover */
+.svgrid > .svc .stag {
+  transition: transform .22s cubic-bezier(.5,1.5,.5,1), background .22s, color .22s, border-color .22s !important;
+}
+.svgrid > .svc:hover .stag {
+  background: rgba(212,166,74,.18) !important;
+  color: #f4c468 !important;
+  border-color: rgba(212,166,74,.45) !important;
+}
+.svgrid > .svc .stag:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(212,166,74,.28) !important;
+}
+
+/* PREMIUM tag (.svc-tag) on image — subtle shimmer */
+.svgrid > .svc .svc-tag {
+  background: linear-gradient(120deg, rgba(196,80,44,.95), rgba(228,108,68,.95), rgba(196,80,44,.95)) !important;
+  background-size: 200% 100%;
+  animation: tagShimmer 3s linear infinite;
+}
+@keyframes tagShimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Background image — subtle Ken Burns zoom on card hover (already had scale 1.06) */
+.svgrid > .svc .svc-img {
+  transition: transform .8s cubic-bezier(.4,0,.2,1), filter .4s ease !important;
+}
+.svgrid > .svc:hover .svc-img {
+  transform: scale(1.08) !important;
+  filter: brightness(1.06) saturate(1.1);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ ADMIN PANEL — FINAL POLISH ★
+   Touches: refined borders, gold focus rings on inputs, polished tabs
+   ════════════════════════════════════════════════════════════════════════ */
+#ap-modal input[type="text"]:focus,
+#ap-modal input[type="email"]:focus,
+#ap-modal input[type="number"]:focus,
+#ap-modal input[type="url"]:focus,
+#ap-modal textarea:focus,
+#ap-modal select:focus,
+.ap-card input:focus,
+.ap-card textarea:focus,
+.ap-card select:focus {
+  outline: none !important;
+  border-color: #d4a64a !important;
+  box-shadow: 0 0 0 3px rgba(212,166,74,.20), 0 2px 8px rgba(0,0,0,.3) !important;
+}
+
+/* Admin buttons — refined hover */
+.ap-card button:not(:disabled):hover,
+#ap-modal button.dbtn:not(:disabled):hover {
+  filter: brightness(1.10);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  transition: filter .2s, transform .2s, box-shadow .2s;
+}
+
+/* Admin section headings — small gold accent */
+.ap-card h3,
+.ap-card h4,
+#ap-modal h2,
+#ap-modal h3 {
+  position: relative;
+}
+
+/* Reduced motion respect — disable card animations */
+@media (prefers-reduced-motion: reduce) {
+  .svgrid > .svc .svc-ico,
+  .svgrid > .svc:hover .svc-ico,
+  .svgrid > .svc:hover .svc-b h3 > span[aria-hidden="true"]:first-child,
+  .svgrid > .svc::after,
+  .svgrid > .svc:hover::after,
+  .svgrid > .svc .svc-tag,
+  .svgrid > .svc .svc-img,
+  .svgrid > .svc:hover .svc-img {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  #pcm-b1, #pcm-b2, #pcm-b3, #pcm-b4, #pcm-b5, #pcm-b6,
+  #pcm-b1::after, #pcm-b2::after, #pcm-b3::after, #pcm-b4::after, #pcm-b5::after, #pcm-b6::after,
+  #pcm-b2::before {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+</style>
 <div class="act-box" id="actBox">
   <div class="act-ic" id="actIc">📞</div>
   <div style="flex:1;min-width:0;">
@@ -9580,19 +9955,19 @@ function renderServices(){
   const svcs = _arr(typeof SVCS !== 'undefined' ? SVCS : []);
   if(!svcs.length){ g.innerHTML=''; return; }
   g.innerHTML = svcs.map((s,i)=>`
-    <div class="svc reveal" data-d="${i%4}" onclick="openSvm(${s.id})">
-      <div class="svc-img" style="background-image:url('${s.bg}')">
+    <div class="svc reveal" data-d="${i%4}" role="button" tabindex="0" aria-label="${(s.nm||'Service').replace(/"/g,'&quot;')} — view details" onclick="openSvm(${s.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openSvm(${s.id});}">
+      <div class="svc-img" style="background-image:url('${s.bg}')" role="img" aria-label="${(s.nm||'Service').replace(/"/g,'&quot;')} preview">
         <div class="svc-tag">${s.tag}</div>
-        <div class="svc-ico">${s.ico}</div>
+        <div class="svc-ico" aria-hidden="true">${s.ico}</div>
       </div>
       <div class="svc-b">
-        <h3>${s.ico} <span class="en">${s.nm}</span><span class="ne np">${s.ne}</span></h3>
+        <h3><span aria-hidden="true">${s.ico}</span> <span class="en">${s.nm}</span><span class="ne np">${s.ne}</span></h3>
         <p class="en">${s.desc}</p>
         <p class="ne np">${s.ne_desc}</p>
         <div class="svc-tags">${_arr(s.tags).map(t=>`<span class="stag">${t}</span>`).join('')}</div>
         <div class="svc-bts">
-          <button class="svc-bt sbt-d">🔍 <span class="en">View Details</span><span class="ne np">विवरण</span></button>
-          <a href="https://wa.me/9779801069733?text=नमस्ते! ${s.nm} बारे जान्न चाहन्छु।" target="_blank" rel="noopener" class="svc-bt sbt-w" onclick="event.stopPropagation()" aria-label="WhatsApp inquiry">💬</a>
+          <button class="svc-bt sbt-d" tabindex="-1" aria-hidden="true"><span aria-hidden="true">🔍</span> <span class="en">View Details</span><span class="ne np">विवरण</span></button>
+          <a href="https://wa.me/9779801069733?text=नमस्ते! ${s.nm} बारे जान्न चाहन्छु।" target="_blank" rel="noopener" class="svc-bt sbt-w" onclick="event.stopPropagation()" aria-label="WhatsApp inquiry about ${(s.nm||'this service').replace(/"/g,'&quot;')}"><span aria-hidden="true">💬</span></a>
         </div>
       </div>
     </div>`).join('');
@@ -16326,6 +16701,52 @@ function renderImgMgr(){
 })();
 </script>
 
+<!-- ★ FAB PERMANENT-VISIBILITY LOCK ★
+     Honors data-permanent="true" on #prk-fab. Overrides the global
+     prkFabClose() to a no-op AND uses a MutationObserver to instantly
+     restore data-open="true" if any code (incl. the outside-click /
+     Escape handlers above) tries to set it to "false". Toggle button
+     onclick is replaced with a no-op so its tap can't close the menu.
+     Result: 6 arc buttons stay visible permanently. -->
+<script>
+(function(){
+  function lockFab(){
+    var f = document.getElementById('prk-fab');
+    if(!f) return setTimeout(lockFab, 100); // retry until DOM ready
+    // 1. Force open immediately
+    f.setAttribute('data-open','true');
+    // 2. Override the global close function to a no-op
+    window.prkFabClose = function(){ /* no-op — FAB is permanent */ };
+    // 3. Neutralize the toggle button's onclick (keep visual hub, disable close)
+    var tog = f.querySelector('.prk-fab-toggle');
+    if(tog){
+      tog.onclick = function(e){ if(e){ e.preventDefault(); e.stopPropagation(); } };
+      tog.setAttribute('aria-expanded','true');
+      tog.setAttribute('aria-label','Contact menu (always open)');
+    }
+    // 4. MutationObserver — instantly fight any data-open change
+    try {
+      var obs = new MutationObserver(function(muts){
+        for(var i=0;i<muts.length;i++){
+          if(muts[i].attributeName==='data-open' && f.getAttribute('data-open')!=='true'){
+            f.setAttribute('data-open','true');
+          }
+        }
+      });
+      obs.observe(f, { attributes: true, attributeFilter: ['data-open'] });
+    } catch(_) { /* MutationObserver unsupported — older browsers fall back to no-op close */ }
+    // 5. Also unhide the menu container
+    var menu = f.querySelector('.prk-fab-menu');
+    if(menu) menu.setAttribute('aria-hidden','false');
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', lockFab);
+  } else {
+    lockFab();
+  }
+})();
+</script>
+
 
 
 
@@ -19984,6 +20405,1123 @@ html[data-t="corporate"] body .svc-bt.sbt-d .np{
   color:#ffffff !important;
   border-color:transparent !important;
   opacity:1 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PRERAK FINAL POLISH LAYER — accessibility + animations + pricing clarity
+   Appended at very end; highest specificity wins all earlier cascades.
+   Three goals: (1) keyboard a11y  (2) refined micro-interactions  (3) bigger,
+   clearer pricing typography (currently most labels < 16px = unreadable on mobile)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. ACCESSIBILITY ─── */
+
+/* Skip-to-content link — invisible until focused (WCAG 2.4.1) */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 12px;
+  z-index: 9999;
+  padding: 14px 24px;
+  background: #f0b848;
+  color: #0a0a0a;
+  font-family: var(--fd, system-ui), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.5);
+  transition: top .25s ease-out;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 12px;
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Global focus-visible — refined gold ring for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2.5px solid #f0b848 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 5px rgba(240,184,72,.20) !important;
+  border-radius: 6px;
+}
+
+/* ─── 2. SUBTLE ANIMATIONS — refined micro-interactions ─── */
+
+/* Pricing card — smoother hover lift with golden glow */
+.price-card-pub {
+  transition: transform .4s cubic-bezier(.2,.8,.2,1),
+              box-shadow .4s ease,
+              border-color .35s ease !important;
+  will-change: transform;
+}
+.price-card-pub:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(240,184,72,.35) !important;
+  box-shadow: 0 30px 70px rgba(0,0,0,.55),
+              0 0 0 1px rgba(240,184,72,.22),
+              0 0 50px rgba(240,184,72,.08) !important;
+}
+/* Preserve scale(1.04) on the POPULAR card during hover */
+.price-card-pub[style*="scale(1.04)"]:hover {
+  transform: translateY(-8px) scale(1.04) !important;
+}
+
+/* Pricing CTA — gentle lift + brightness on hover */
+#pricing-section .price-card-pub button {
+  position: relative;
+  transition: transform .22s ease, filter .22s ease, box-shadow .22s ease !important;
+}
+#pricing-section .price-card-pub button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.10);
+  box-shadow: 0 10px 26px rgba(0,0,0,.40);
+}
+#pricing-section .price-card-pub button:active {
+  transform: translateY(0);
+  filter: brightness(0.97);
+}
+
+/* ─── 3. PRICING CLARITY — fix tiny text (was 9-13px → now 15-17px) ─── */
+
+/* Plan title (e.g. "Standard Build") — clearer hierarchy */
+#pricing-section .price-card-pub > div[style*="font-family:var(--fd)"] {
+  font-size: 1.7rem !important;
+  margin-top: 22px !important;
+  letter-spacing: -0.3px;
+}
+
+/* Tag line (FOR RESIDENTIAL / BEST VALUE / CUSTOM DESIGN) */
+#pricing-section .price-card-pub > div[style*="font-size:.62rem"] {
+  font-size: 0.82rem !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 26px !important;
+}
+
+/* "✨ STARTING FROM" — readable */
+#pricing-section .price-card-pub div[style*="font-size:.6rem"] {
+  font-size: 0.8rem !important;
+  letter-spacing: 1.6px !important;
+}
+
+/* Strikethrough original price — visible */
+#pricing-section .price-card-pub div[style*="text-decoration:line-through"] {
+  font-size: 1.05rem !important;
+  opacity: 0.7;
+}
+
+/* Main price number — bigger emphasis */
+#pricing-section .price-card-pub div[style*="font-size:2.1rem"] {
+  font-size: 2.7rem !important;
+  letter-spacing: -1px;
+  margin-top: 4px !important;
+}
+#pricing-section .price-card-pub div[style*="font-size:2.1rem"] > span {
+  font-size: 1.05rem !important;
+}
+
+/* Feature list items — readable size, breathable padding */
+#pricing-section .price-card-pub ul li {
+  font-size: 1rem !important;
+  padding: 12px 0 !important;
+  line-height: 1.5 !important;
+  align-items: flex-start;
+}
+#pricing-section .price-card-pub ul li > span:first-child {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* CTA button — touch-friendly + prominent */
+#pricing-section .price-card-pub button {
+  padding: 17px 16px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 1.2px !important;
+  min-height: 56px !important;
+}
+
+/* Disclaimer text — readable */
+#pricing-section [style*="background:rgba(34,197,94,.06)"] p,
+#pricing-section [style*="background:rgba(34,197,94,.06)"] p span {
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
+}
+#pricing-section [style*="background:rgba(34,197,94,.06)"] > div {
+  font-size: 0.82rem !important;
+  letter-spacing: 1.6px !important;
+}
+
+/* Mobile pricing — ensure 16px+ everywhere */
+@media (max-width: 600px) {
+  #pricing-section .price-card-pub { padding: 44px 26px 30px !important; }
+  #pricing-section .price-card-pub ul li { font-size: 1rem !important; padding: 13px 0 !important; }
+  #pricing-section .price-card-pub button { font-size: 1rem !important; padding: 18px !important; min-height: 58px !important; }
+  #pricing-section .price-card-pub div[style*="font-size:2.1rem"] { font-size: 2.3rem !important; }
+  #pricing-section [style*="background:rgba(34,197,94,.06)"] p { font-size: 0.95rem !important; }
+}
+
+/* Respect reduced-motion preference (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  .price-card-pub,
+  .price-card-pub:hover,
+  #pricing-section .price-card-pub button,
+  #pricing-section .price-card-pub button:hover,
+  .skip-link {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   HERO REFINEMENTS — accessibility + readable badges + refined motion
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Eyebrow tag — smoother backdrop & micro-interaction */
+.hero .h-tag {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background .3s ease, border-color .3s ease, transform .3s ease;
+}
+
+/* Hero trust badges — readable size + hover state + responsive */
+.hero .h-badges > span {
+  font-size: 0.88rem !important;
+  padding: 9px 16px !important;
+  letter-spacing: 0.2px;
+  transition: background .25s ease, border-color .25s ease, transform .2s ease !important;
+  cursor: default;
+}
+.hero .h-badges > span:hover {
+  background: rgba(255,255,255,.18) !important;
+  border-color: rgba(255,255,255,.40) !important;
+  transform: translateY(-1px);
+}
+@media (max-width: 600px) {
+  .hero .h-badges > span {
+    font-size: 0.82rem !important;
+    padding: 8px 13px !important;
+  }
+}
+
+/* Hero stats — smarter mobile grid (2x2 on <480px, 4-col on tablet+) */
+@media (max-width: 480px) {
+  .hero .hsts {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Hero stat cells — subtle hover lift */
+.hero .hst {
+  transition: transform .3s ease, opacity .3s ease;
+}
+.hero .hst:hover {
+  transform: translateY(-2px);
+}
+
+/* Hero CTA buttons — refined micro-interaction (lift + brightness) */
+.hero .h-acts > .btn {
+  transition: transform .25s cubic-bezier(.25,.6,.5,1),
+              box-shadow .25s ease,
+              filter .25s ease !important;
+}
+.hero .h-acts > .btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+.hero .h-acts > .btn:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+/* Hero card (right side) — smoother thumbnail zoom on hover */
+.hcard .hc-thumb-wrap {
+  overflow: hidden;
+}
+.hcard .hc-thumb {
+  transition: transform .8s cubic-bezier(.4,0,.2,1),
+              opacity .5s ease !important;
+}
+.hcard:hover .hc-thumb {
+  transform: scale(1.05);
+}
+
+/* Hero card CTA — gentle slide on hover */
+.hcard .hc-cta {
+  transition: transform .25s ease, color .25s ease, opacity .25s ease !important;
+}
+.hcard .hc-cta:hover {
+  transform: translateX(4px);
+}
+
+/* Reduced-motion support for hero animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero .h-tag,
+  .hero .h-badges > span,
+  .hero .h-badges > span:hover,
+  .hero .hst,
+  .hero .hst:hover,
+  .hero .h-acts > .btn,
+  .hero .h-acts > .btn:hover,
+  .hcard .hc-thumb,
+  .hcard:hover .hc-thumb,
+  .hcard .hc-cta,
+  .hcard .hc-cta:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   INDUSTRIAL-LUXURY POLISH LAYER
+   3 additions:
+   (1) Subtle fixed blueprint grid pattern
+   (2) Luxury charcoal/navy gradient — DARK theme only (corporate stays)
+   (3) Gold L-bracket architectural corner accents on premium cards
+   ════════════════════════════════════════════════════════════════════ */
+
+/* (1) BLUEPRINT GRID — fixed atmospheric texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(251,191,36,.030) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251,191,36,.030) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 25%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 50% 30%, #000 25%, transparent 80%);
+  opacity: 0.7;
+}
+/* Lighter, blue-tinted grid in corporate (default light) theme */
+html[data-t="corporate"] body::before {
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(26,58,110,.030) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,58,110,.030) 1px, transparent 1px);
+}
+/* Stronger gold grid in dark theme */
+html[data-t="dark"] body::before {
+  opacity: 0.85;
+}
+
+/* (2) INDUSTRIAL LUXURY GRADIENT — DARK theme body only */
+html[data-t="dark"] body {
+  background: linear-gradient(180deg, #0b0f19 0%, #111827 50%, #0b0f19 100%) !important;
+  background-attachment: fixed !important;
+}
+
+/* (3) L-BRACKET ARCHITECTURAL CORNER ACCENTS on key cards */
+/* Targets: service cards, project showcase cards, contact info boxes,
+   testimonial cards, project cards — gold L-marks appear on hover */
+.svc-card,
+.psv-card,
+.cib,
+.test-card,
+.proj-card {
+  position: relative;
+}
+.svc-card::before, .svc-card::after,
+.psv-card::before, .psv-card::after,
+.cib::before, .cib::after,
+.test-card::before, .test-card::after,
+.proj-card::before, .proj-card::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid transparent;
+  pointer-events: none;
+  transition: border-color .35s ease, opacity .35s ease;
+}
+.svc-card::before,
+.psv-card::before,
+.cib::before,
+.test-card::before,
+.proj-card::before {
+  top: 8px;
+  left: 8px;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right: none;
+  border-bottom: none;
+}
+.svc-card::after,
+.psv-card::after,
+.cib::after,
+.test-card::after,
+.proj-card::after {
+  bottom: 8px;
+  right: 8px;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+  border-left: none;
+  border-top: none;
+}
+.svc-card:hover::before,
+.psv-card:hover::before,
+.cib:hover::before,
+.test-card:hover::before,
+.proj-card:hover::before {
+  border-top-color: rgba(251,191,36,.65);
+  border-left-color: rgba(251,191,36,.65);
+}
+.svc-card:hover::after,
+.psv-card:hover::after,
+.cib:hover::after,
+.test-card:hover::after,
+.proj-card:hover::after {
+  border-bottom-color: rgba(251,191,36,.65);
+  border-right-color: rgba(251,191,36,.65);
+}
+
+/* Reduced-motion respect for industrial-luxury layer */
+@media (prefers-reduced-motion: reduce) {
+  .svc-card::before, .svc-card::after,
+  .psv-card::before, .psv-card::after,
+  .cib::before, .cib::after,
+  .test-card::before, .test-card::after,
+  .proj-card::before, .proj-card::after {
+    transition: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FINAL UI/UX REWORK — Premium Luxury Dark + Half-Circle 6-Button FAB
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── (A) BRIGHTER LUXURY DARK THEME ───
+   Replaces flat dark with deep matte charcoal + bronze glow at top.
+   Slate-charcoal mid-tones provide depth; warm gold accents shine. */
+html[data-t="dark"] body {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -5%, rgba(212,160,74,.10) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(212,160,74,.04) 0%, transparent 60%),
+    linear-gradient(180deg, #1a1f2e 0%, #232a3d 40%, #1d2333 70%, #161a26 100%) !important;
+  background-attachment: fixed !important;
+  color: #f5f0e3 !important;
+}
+
+/* Section separator — subtle gold accent line at top of major sections */
+html[data-t="dark"] section.sec {
+  position: relative;
+}
+html[data-t="dark"] section.sec::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(40%, 280px);
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(212,160,74,.45) 50%,
+    transparent 100%);
+  pointer-events: none;
+}
+
+/* Gold accent text — clean glow effect for premium feel */
+html[data-t="dark"] .sey,
+html[data-t="dark"] .h-tag .en,
+html[data-t="dark"] .h-tag .ne {
+  text-shadow: 0 0 14px rgba(212,160,74,.22);
+}
+
+/* ─── (B) 6-BUTTON HALF-CIRCLE FAB ARC ───
+   Buttons arrange in a 8°→88° arc around bottom-right pivot.
+   Permanently visible. Tooltip on hover. Mobile-tighter. */
+
+.prk-fab.prk-fab-arc {
+  display: block !important;
+  position: fixed !important;
+  bottom: 22px !important;
+  right: 18px !important;
+  z-index: 710 !important;
+  width: 56px;
+  height: 56px;
+}
+
+.prk-fab.prk-fab-arc .prk-fab-menu {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none;
+  display: block !important;
+  flex-direction: initial !important;
+  gap: 0 !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.prk-fab.prk-fab-arc .prk-fab-item {
+  position: absolute !important;
+  bottom: 4px !important;
+  right: 4px !important;
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  pointer-events: auto;
+  margin: 0 !important;
+  background: linear-gradient(160deg, rgba(35,28,16,.96), rgba(18,14,8,.96)) !important;
+  border: 1.5px solid rgba(212,160,74,.5) !important;
+  color: var(--gold, #d4a64a) !important;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(212,160,74,.10) !important;
+  opacity: 0;
+  transform: translate(0, 0) scale(.5);
+  transition:
+    transform .45s cubic-bezier(.5, 1.4, .5, 1),
+    opacity .28s ease,
+    box-shadow .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    color .25s ease !important;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.prk-fab.prk-fab-arc .prk-fab-item svg {
+  width: 19px !important;
+  height: 19px !important;
+  flex: 0 0 19px !important;
+}
+
+/* Hide visible label (arc relies on tooltip) */
+.prk-fab.prk-fab-arc .prk-fab-item .prk-fab-lbl {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  border: 0 !important;
+}
+
+/* Tooltip (data-tip) on hover — appears to the left */
+.prk-fab.prk-fab-arc .prk-fab-item::after {
+  content: attr(data-tip);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  padding: 7px 13px;
+  background: rgba(20,15,8,.96);
+  color: #f0c878;
+  border: 1px solid rgba(212,160,74,.4);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.prk-fab.prk-fab-arc .prk-fab-item:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Hide tooltip on touch devices to avoid sticky tap state */
+@media (hover: none) {
+  .prk-fab.prk-fab-arc .prk-fab-item::after { display: none; }
+}
+
+/* OPEN: position each button on 8°–88° arc (radius ≈ 108px) */
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item { opacity: 1; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(1) { transform: translate(-107px, -15px) scale(1); transition-delay: .04s; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(2) { transform: translate(-98px, -44px) scale(1);  transition-delay: .08s; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(3) { transform: translate(-83px, -69px) scale(1);  transition-delay: .12s; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(4) { transform: translate(-60px, -89px) scale(1);  transition-delay: .16s; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(5) { transform: translate(-33px, -103px) scale(1); transition-delay: .20s; }
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(6) { transform: translate(-4px, -107px) scale(1);  transition-delay: .24s; }
+
+/* Hover — outward bump + gold border bloom */
+.prk-fab.prk-fab-arc .prk-fab-item:hover {
+  background: linear-gradient(160deg, rgba(50,38,20,.98), rgba(28,22,12,.98)) !important;
+  border-color: rgba(240,200,120,.85) !important;
+  color: #fff !important;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.6),
+    0 0 0 2px rgba(212,160,74,.35),
+    0 0 28px rgba(212,160,74,.30) !important;
+}
+
+/* Per-button accent colors */
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa { border-color: rgba(37,211,102,.6) !important; }
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa svg { color: #25d366 !important; }
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg svg { color: #5b9cff !important; }
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc svg { color: #f4c468 !important; }
+
+/* WhatsApp pulsing green ring (coordinates with luxury arc) */
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(37,211,102,.55);
+  pointer-events: none;
+  animation: fab-wa-pulse 2.4s ease-out infinite;
+}
+@keyframes fab-wa-pulse {
+  0%   { transform: scale(1);   opacity: .7; }
+  70%  { transform: scale(1.45); opacity: 0; }
+  100% { transform: scale(1.45); opacity: 0; }
+}
+
+/* Toggle button (the master button) — premium chip */
+.prk-fab.prk-fab-arc .prk-fab-toggle {
+  position: relative;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4a64a, #a17a30) !important;
+  border: 0;
+  color: #1a1108;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.25),
+    0 0 0 4px rgba(212,160,74,.18) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-toggle svg { width: 24px; height: 24px; }
+
+/* Callout badge — coordinates with the arc */
+.prk-fab.prk-fab-arc .prk-fab-callout {
+  position: absolute;
+  right: 70px;
+  bottom: 8px;
+  background: rgba(20,15,8,.95);
+  color: #f0c878;
+  border: 1px solid rgba(212,160,74,.45);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(0,0,0,.5);
+  animation: fab-callout-bob 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.prk-fab.prk-fab-arc .prk-fab-callout .en { display: none; }
+html[data-lang="en"] .prk-fab.prk-fab-arc .prk-fab-callout .en { display: inline; }
+html[data-lang="en"] .prk-fab.prk-fab-arc .prk-fab-callout .ne { display: none; }
+@keyframes fab-callout-bob {
+  0%, 100% { transform: translateX(0); opacity: .92; }
+  50%      { transform: translateX(-4px); opacity: 1; }
+}
+
+/* Hide callout once user interacts (opens menu) — UX nicety */
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-callout {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity .35s, transform .35s;
+}
+
+/* MOBILE (≤768px) — tighter arc radius, slightly smaller buttons */
+@media (max-width: 768px) {
+  .prk-fab.prk-fab-arc { bottom: 16px !important; right: 14px !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
+  .prk-fab.prk-fab-arc .prk-fab-item svg { width: 17px !important; height: 17px !important; }
+  .prk-fab.prk-fab-arc .prk-fab-toggle { width: 50px; height: 50px; }
+  .prk-fab.prk-fab-arc .prk-fab-toggle svg { width: 22px; height: 22px; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(1) { transform: translate(-84px,-12px) scale(1); }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(2) { transform: translate(-77px,-35px) scale(1); }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(3) { transform: translate(-65px,-54px) scale(1); }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(4) { transform: translate(-47px,-70px) scale(1); }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(5) { transform: translate(-26px,-81px) scale(1); }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item:nth-child(6) { transform: translate(-3px,-85px)  scale(1); }
+  .prk-fab.prk-fab-arc .prk-fab-callout {
+    right: 60px;
+    font-size: 11.5px;
+    padding: 6px 11px;
+  }
+}
+
+/* Very small phones — hide callout to save space */
+@media (max-width: 380px) {
+  .prk-fab.prk-fab-arc .prk-fab-callout { display: none; }
+}
+
+/* Reduced motion — no animations */
+@media (prefers-reduced-motion: reduce) {
+  .prk-fab.prk-fab-arc .prk-fab-item,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa::before,
+  .prk-fab.prk-fab-arc .prk-fab-callout {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   SERVICES GRID POLISH — readable typography + a11y + refined motion
+   Fixes critically small text (8-12px → 14-16px), adds keyboard focus
+   ring, refines card lift, improves mobile grid breakdown.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Readable typography — was 8-13px, now 14-16px (mobile-friendly) */
+.svgrid > .svc .svc-b h3 {
+  font-size: 1.35rem !important;
+  line-height: 1.25 !important;
+  margin-bottom: 8px !important;
+  letter-spacing: -0.2px;
+}
+.svgrid > .svc .svc-b p {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  margin-bottom: 12px !important;
+  color: rgba(245,237,224,.72) !important;
+}
+.svgrid > .svc .svc-tag {
+  font-size: 0.72rem !important;
+  letter-spacing: 1.5px !important;
+  padding: 4px 10px !important;
+  font-weight: 800;
+  bottom: 12px !important;
+  left: 12px !important;
+}
+.svgrid > .svc .svc-ico {
+  width: 42px !important;
+  height: 42px !important;
+  font-size: 1.3rem !important;
+  top: 12px !important;
+  right: 12px !important;
+}
+.svgrid > .svc .stag {
+  font-size: 0.78rem !important;
+  padding: 4px 11px !important;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+}
+
+/* Touch-friendly action buttons (44px+ min height per WCAG 2.5.5) */
+.svgrid > .svc .svc-bt {
+  font-size: 0.85rem !important;
+  padding: 11px 13px !important;
+  min-height: 44px !important;
+  letter-spacing: 0.8px !important;
+  border-radius: 10px !important;
+  transition: transform .22s ease, box-shadow .22s ease, background .22s ease !important;
+}
+.svgrid > .svc .svc-bt.sbt-d {
+  flex: 3 !important;
+}
+.svgrid > .svc .svc-bt.sbt-w {
+  flex: 0 0 52px !important;
+  font-size: 1.1rem !important;
+  background: rgba(37,211,102,.15) !important;
+  color: #25d366 !important;
+  border: 1px solid rgba(37,211,102,.35) !important;
+}
+.svgrid > .svc .svc-bt.sbt-w:hover {
+  background: #25d366 !important;
+  color: #fff !important;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Card hover — subtle lift + gold border bloom + image zoom */
+.svgrid > .svc {
+  transition: transform .35s cubic-bezier(.2,.8,.2,1),
+              border-color .3s ease,
+              box-shadow .3s ease !important;
+}
+.svgrid > .svc:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(212,166,74,.45) !important;
+  box-shadow:
+    0 18px 44px rgba(0,0,0,.45),
+    0 0 0 1px rgba(212,166,74,.20),
+    0 0 30px rgba(212,166,74,.08) !important;
+}
+.svgrid > .svc .svc-img {
+  transition: transform .6s cubic-bezier(.4,0,.2,1) !important;
+}
+.svgrid > .svc:hover .svc-img {
+  transform: scale(1.06);
+}
+
+/* Click feedback — gentle scale-down on press */
+.svgrid > .svc:active {
+  transform: translateY(-2px) scale(0.99) !important;
+  transition-duration: .12s !important;
+}
+
+/* Keyboard focus ring — clear gold outline for tab navigation */
+.svgrid > .svc:focus-visible {
+  outline: 3px solid #f0b848 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 0 6px rgba(240,184,72,.18) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* Better mobile grid — 1 column on small phones */
+@media (max-width: 540px) {
+  .svgrid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .svgrid > .svc .svc-img {
+    height: 200px !important;
+  }
+  .svgrid > .svc .svc-b {
+    padding: 18px 20px 20px !important;
+  }
+  .svgrid > .svc .svc-b h3 {
+    font-size: 1.3rem !important;
+  }
+  .svgrid > .svc .svc-b p {
+    font-size: 1rem !important;
+  }
+  .svgrid > .svc .svc-bt {
+    font-size: 0.9rem !important;
+    padding: 13px !important;
+    min-height: 48px !important;
+  }
+}
+
+/* Tablet — 2 column grid sweet spot */
+@media (min-width: 541px) and (max-width: 900px) {
+  .svgrid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 18px !important;
+  }
+}
+
+/* Reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .svgrid > .svc,
+  .svgrid > .svc:hover,
+  .svgrid > .svc:active,
+  .svgrid > .svc .svc-img,
+  .svgrid > .svc:hover .svc-img,
+  .svgrid > .svc .svc-bt,
+  .svgrid > .svc .svc-bt:hover {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   FINAL POLISH PASS — Bulletproof FAB Arc + Section Headers Premium
+   - FAB: class-based positioning (replaces fragile nth-child) with !important
+     on every transform/opacity. Guarantees buttons appear in arc regardless
+     of theme, DOM order, or earlier CSS conflicts.
+   - Section headers (.sh .sey/.stl/.sdesc) — premium decorative styling
+     with gold-line accents around eyebrow, gold gradient on emphasis,
+     consistent across "Complete Solutions" + "Build Your Dream" + all sections.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── (1) FAB BULLETPROOF: class-based positioning ─── */
+/* Each button positioned by its specific class — deterministic regardless of DOM */
+
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-call {
+  opacity: 1 !important;
+  transform: translate(-107px, -15px) scale(1) !important;
+  transition-delay: .04s !important;
+}
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-wa {
+  opacity: 1 !important;
+  transform: translate(-98px, -44px) scale(1) !important;
+  transition-delay: .08s !important;
+}
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-svc {
+  opacity: 1 !important;
+  transform: translate(-83px, -69px) scale(1) !important;
+  transition-delay: .12s !important;
+}
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-mail {
+  opacity: 1 !important;
+  transform: translate(-60px, -89px) scale(1) !important;
+  transition-delay: .16s !important;
+}
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-msg {
+  opacity: 1 !important;
+  transform: translate(-33px, -103px) scale(1) !important;
+  transition-delay: .20s !important;
+}
+.prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-gl {
+  opacity: 1 !important;
+  transform: translate(-4px, -107px) scale(1) !important;
+  transition-delay: .24s !important;
+}
+
+/* Mobile (≤768px): tighter arc radius */
+@media (max-width: 768px) {
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-call { transform: translate(-84px, -12px) scale(1) !important; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-wa   { transform: translate(-77px, -35px) scale(1) !important; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-svc  { transform: translate(-65px, -54px) scale(1) !important; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-mail { transform: translate(-47px, -70px) scale(1) !important; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-msg  { transform: translate(-26px, -81px) scale(1) !important; }
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-gl   { transform: translate(-3px, -85px) scale(1) !important; }
+}
+
+/* Force button base size (defensive against earlier CSS) */
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call,
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa,
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc,
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail,
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg,
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl {
+  display: grid !important;
+  place-items: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  background: linear-gradient(160deg, rgba(35,28,16,.96), rgba(18,14,8,.96)) !important;
+  border: 1.5px solid rgba(212,160,74,.5) !important;
+  color: var(--gold, #d4a64a) !important;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 0 0 1px rgba(212,160,74,.10) !important;
+}
+@media (max-width: 768px) {
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl {
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+/* Force gold-tinted background in light corporate theme too (visibility) */
+html[data-t="corporate"] .prk-fab.prk-fab-arc .prk-fab-item {
+  background: linear-gradient(160deg, #2a2218, #14100a) !important;
+  color: #f0c878 !important;
+}
+
+/* ─── (2) SECTION HEADERS PREMIUM POLISH ─── */
+/* Targets every <div class="sh"> across "Complete Solutions for Your Dream",
+   "Build Your Dream — Choose Your Plan", and all other section heads. */
+
+.sh {
+  text-align: center !important;
+  max-width: 760px !important;
+  margin: 0 auto 48px !important;
+  padding: 0 20px !important;
+  position: relative;
+}
+
+/* Eyebrow tag (small uppercase above title) — pill with gold accents */
+.sh .sey {
+  display: inline-block !important;
+  font-family: var(--fd, 'Cormorant Garamond', serif) !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: var(--gl, #d4a64a) !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+  padding: 7px 18px !important;
+  background: rgba(212,166,74,.10) !important;
+  border: 1px solid rgba(212,166,74,.32) !important;
+  border-radius: 100px !important;
+  position: relative;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Title — bigger, refined letter-spacing, italic gold emphasis */
+.sh .stl {
+  font-family: var(--fd, 'Cormorant Garamond', serif) !important;
+  font-size: clamp(2rem, 4.8vw, 3rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  margin: 0 0 18px !important;
+  letter-spacing: -0.8px !important;
+  color: var(--paper, #f5f0e3) !important;
+}
+.sh .stl em {
+  font-style: italic !important;
+  background: linear-gradient(135deg, #f0c878 0%, #d4a64a 50%, #a17a30 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gl, #d4a64a);
+  text-shadow: 0 0 24px rgba(212,166,74,.18);
+}
+
+/* Description — readable size, comfortable line height */
+.sh .sdesc {
+  font-size: 1.05rem !important;
+  color: var(--mt, rgba(245,237,224,.75)) !important;
+  line-height: 1.7 !important;
+  margin: 0 auto !important;
+  max-width: 600px !important;
+}
+
+/* Mobile section headers — tighter spacing */
+@media (max-width: 600px) {
+  .sh {
+    margin: 0 auto 36px !important;
+    padding: 0 16px !important;
+  }
+  .sh .sey {
+    font-size: 0.76rem !important;
+    padding: 6px 14px !important;
+    letter-spacing: 2.2px !important;
+  }
+  .sh .stl {
+    font-size: clamp(1.7rem, 7vw, 2.3rem) !important;
+    letter-spacing: -0.4px !important;
+  }
+  .sh .sdesc {
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+  }
+}
+
+/* Corporate light theme — adjust contrast for bright background */
+html[data-t="corporate"] .sh .sey {
+  background: rgba(26,58,110,.08) !important;
+  border-color: rgba(26,58,110,.30) !important;
+  color: #1a3a6e !important;
+}
+html[data-t="corporate"] .sh .stl em {
+  background: linear-gradient(135deg, #d4a64a 0%, #a17a30 50%, #6b4f1d 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-call,
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-wa,
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-svc,
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-mail,
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-msg,
+  .prk-fab.prk-fab-arc[data-open="true"] .prk-fab-item.prk-fab-gl {
+    transition: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   ★ FAB PERMANENT-VISIBILITY LOCK ★
+   Honors data-permanent="true" attribute. Removes [data-open] gating
+   so 6 buttons appear in half-circle arc ALWAYS, regardless of
+   JS close events, outside clicks, Escape key, or theme switching.
+   Paired with JS MutationObserver below to fight any data-open change.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Position each FAB button in arc — NO data-open dependency */
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call {
+  opacity: 1 !important;
+  transform: translate(-107px, -15px) scale(1) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa {
+  opacity: 1 !important;
+  transform: translate(-98px, -44px) scale(1) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc {
+  opacity: 1 !important;
+  transform: translate(-83px, -69px) scale(1) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail {
+  opacity: 1 !important;
+  transform: translate(-60px, -89px) scale(1) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg {
+  opacity: 1 !important;
+  transform: translate(-33px, -103px) scale(1) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl {
+  opacity: 1 !important;
+  transform: translate(-4px, -107px) scale(1) !important;
+}
+
+/* Mobile (≤768px): tighter arc, no data-open dependency */
+@media (max-width: 768px) {
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call { transform: translate(-84px, -12px) scale(1) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa   { transform: translate(-77px, -35px) scale(1) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc  { transform: translate(-65px, -54px) scale(1) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail { transform: translate(-47px, -70px) scale(1) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg  { transform: translate(-26px, -81px) scale(1) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl   { transform: translate(-3px, -85px) scale(1) !important; }
+}
+
+/* On-hover lift: nudge slightly outward + stronger gold glow */
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call:hover {
+  transform: translate(-115px, -16px) scale(1.08) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa:hover {
+  transform: translate(-105px, -48px) scale(1.08) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc:hover {
+  transform: translate(-89px, -74px) scale(1.08) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail:hover {
+  transform: translate(-64px, -96px) scale(1.08) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg:hover {
+  transform: translate(-35px, -110px) scale(1.08) !important;
+}
+.prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl:hover {
+  transform: translate(-4px, -115px) scale(1.08) !important;
+}
+
+@media (max-width: 768px) {
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call:hover { transform: translate(-91px, -13px) scale(1.06) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa:hover   { transform: translate(-83px, -38px) scale(1.06) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc:hover  { transform: translate(-70px, -58px) scale(1.06) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail:hover { transform: translate(-51px, -76px) scale(1.06) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg:hover  { transform: translate(-28px, -88px) scale(1.06) !important; }
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl:hover   { transform: translate(-3px, -92px) scale(1.06) !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-call,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-wa,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-svc,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-mail,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-msg,
+  .prk-fab.prk-fab-arc .prk-fab-item.prk-fab-gl {
+    transition: none !important;
+  }
+  .prk-fab.prk-fab-arc .prk-fab-item:hover {
+    /* Disable hover lift in reduced motion */
+    transform: none !important;
+  }
 }
 </style>
 </body>
