@@ -6039,6 +6039,57 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   </div>
 </section>
 
+<!-- ════════════════════════════════════════════════════════════════════
+     YOUTUBE SHORTS / SITE UPDATES SECTION
+     Placed directly below the serviceWorksVideo ('हाम्रा सेवाहरूको झलक').
+     Pure black background + #FFBA00 gold accent — matches user-specified
+     theme. Responsive grid (1 col mobile → 2-3 col desktop). Lazy loaded.
+     To add more Shorts: clone <article class="short-card"> and swap video ID.
+     ════════════════════════════════════════════════════════════════════ -->
+<section class="sec sec-shorts" id="shorts" aria-labelledby="shorts-title">
+  <div class="shorts-inner">
+    <div class="shorts-head">
+      <span class="shorts-eyebrow">
+        <span class="en">📱 Site Updates · Shorts</span>
+        <span class="ne np">📱 साइट अपडेटहरू · शर्ट्स</span>
+      </span>
+      <h2 id="shorts-title" class="shorts-title">
+        <span class="en">Live Glimpses From <em>Our Sites</em></span>
+        <span class="ne np">हाम्रा <em>साइट अपडेटहरू</em> (Shorts)</span>
+      </h2>
+      <p class="shorts-sub">
+        <span class="en">Watch construction progress and on-site moments directly from our YouTube channel.</span>
+        <span class="ne np">निर्माण कार्यको प्रत्यक्ष झलक हेर्नुहोस् — हाम्रो YouTube च्यानलबाट सिधै।</span>
+      </p>
+    </div>
+
+    <div class="shorts-grid">
+      <article class="short-card" aria-label="PRERAK Site Update Short">
+        <div class="short-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/sUK5ii8IYTo?rel=0&modestbranding=1"
+            title="PRERAK Multipurpose — Site Update Short"
+            loading="lazy"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+        </div>
+        <div class="short-meta">
+          <span class="short-label">
+            <span class="en">Latest Short</span>
+            <span class="ne np">ताजा झलक</span>
+          </span>
+        </div>
+      </article>
+
+      <!-- ➕ Add more Shorts here: copy the <article class="short-card"> block
+           and replace the YouTube video ID in iframe src. Grid auto-flows. -->
+    </div>
+  </div>
+</section>
+
 <!-- TESTIMONIALS -->
 
 <!-- ═══ WHY CHOOSE US / ABOUT SECTION ═══ -->
@@ -21876,6 +21927,230 @@ html[data-t="corporate"] .hero::after {
 }
 
 /* Reduced motion — keep overlays static (no transitions to disable here) */
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ YOUTUBE SHORTS / SITE UPDATES SECTION ★
+   Placed directly below serviceWorksVideo ('हाम्रा सेवाहरूको झलक').
+   Theme: pure #000 black background + #FFBA00 gold accents (user spec).
+   Responsive grid: 1 col mobile → 2 col tablet → 3 col desktop.
+   ════════════════════════════════════════════════════════════════════════ */
+
+.sec-shorts {
+  background-color: #000 !important;
+  padding: 70px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle bronze radial glow top-center for depth (does not obscure black bg) */
+.sec-shorts::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(ellipse at center top,
+    rgba(255,186,0,.08) 0%,
+    transparent 65%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shorts-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Header */
+.shorts-head {
+  margin-bottom: 44px;
+}
+
+.shorts-eyebrow {
+  display: inline-block;
+  font: 700 0.78rem system-ui, -apple-system, sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #FFBA00;
+  background: rgba(255,186,0,.08);
+  border: 1px solid rgba(255,186,0,.35);
+  border-radius: 100px;
+  padding: 7px 18px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.shorts-title {
+  font-family: var(--fd, 'Cormorant Garamond', serif);
+  font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
+  color: #FFBA00;
+  margin: 0 0 14px;
+}
+.shorts-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, #FFE38A 0%, #FFBA00 50%, #C68A00 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 22px rgba(255,186,0,.30));
+}
+
+.shorts-sub {
+  font-size: 1.02rem;
+  color: #dddddd;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 580px;
+}
+
+/* Responsive grid — flexbox-style with auto-fit */
+.shorts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+  justify-content: center;
+  gap: 28px;
+  margin: 0 auto;
+}
+
+/* Short card */
+.short-card {
+  position: relative;
+  padding: 14px 14px 12px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #0a0a0a, #000);
+  border: 2px solid #FFBA00;
+  box-shadow:
+    0 18px 44px rgba(0,0,0,.6),
+    0 0 0 1px rgba(255,186,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.04);
+  transition: transform .35s cubic-bezier(.5,1.4,.5,1),
+              box-shadow .35s ease,
+              border-color .35s ease;
+}
+
+.short-card:hover {
+  transform: translateY(-6px);
+  border-color: #FFD66B;
+  box-shadow:
+    0 28px 60px rgba(0,0,0,.7),
+    0 0 0 1px rgba(255,186,0,.38),
+    0 0 44px rgba(255,186,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* L-bracket corner accents on hover (architectural luxury feel) */
+.short-card::before,
+.short-card::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #FFBA00;
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.short-card::before {
+  top: 7px; left: 7px;
+  border-right: 0; border-bottom: 0;
+  border-top-left-radius: 6px;
+}
+.short-card::after {
+  bottom: 7px; right: 7px;
+  border-left: 0; border-top: 0;
+  border-bottom-right-radius: 6px;
+}
+.short-card:hover::before,
+.short-card:hover::after {
+  opacity: 1;
+}
+
+/* 9:16 vertical Shorts frame */
+.short-wrap {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  width: 100%;
+  max-width: 286px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Fallback for older browsers without aspect-ratio support */
+@supports not (aspect-ratio: 9 / 16) {
+  .short-wrap {
+    height: 0;
+    padding-bottom: 177.78%;
+  }
+}
+
+.short-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Label below video */
+.short-meta {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.short-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font: 700 0.74rem system-ui, -apple-system, sans-serif;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #FFBA00;
+  background: rgba(255,186,0,.08);
+  border: 1px solid rgba(255,186,0,.32);
+  border-radius: 100px;
+}
+
+/* Corporate (light) theme — adapt while keeping gold spirit */
+html[data-t="corporate"] .sec-shorts {
+  background-color: #0f0f0f !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .sec-shorts { padding: 54px 16px; }
+  .shorts-head { margin-bottom: 32px; }
+  .shorts-grid { gap: 20px; }
+  .short-card { padding: 12px 12px 10px; }
+  .short-wrap { max-width: 260px; }
+  .short-label { font-size: 0.68rem; letter-spacing: 1px; padding: 5px 12px; }
+  .shorts-eyebrow { font-size: 0.72rem; letter-spacing: 2px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .short-card,
+  .short-card::before,
+  .short-card::after {
+    transition: none !important;
+  }
+  .short-card:hover {
+    transform: none !important;
+  }
+}
 </style>
 </body>
 </html>
