@@ -21523,6 +21523,359 @@ html[data-t="corporate"] .sh .stl em {
     transform: none !important;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ FINAL LUXURY POLISH LAYER ★
+   - Brighter "matte charcoal + slate navy" dark theme (no more pitch black)
+   - Bronze glowing accents on section dividers, key borders, active elements
+   - Architectural-firm typography in section headers (.sh .sey/.stl/.sdesc)
+   - Higher contrast text in dark theme for 100% readability
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. BRIGHTER LUXURY DARK THEME BODY ─── */
+/* Replaces pitch-black with elevated slate-navy gradient + bronze spotlight */
+html[data-t="dark"] body {
+  background:
+    radial-gradient(ellipse 95% 65% at 50% -10%, rgba(251,191,36,.16) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 55% at 100% 100%, rgba(251,191,36,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 0% 50%, rgba(91,156,255,.05) 0%, transparent 60%),
+    linear-gradient(165deg, #1e293b 0%, #2d3a52 35%, #243044 65%, #1a2333 100%) !important;
+  background-attachment: fixed !important;
+  color: #f5f0e3 !important;
+}
+
+/* Section backgrounds — subtle elevated charcoal (let body bg show through) */
+html[data-t="dark"] section.sec,
+html[data-t="dark"] section:not(.hero):not(.nav-wrap) {
+  background: transparent !important;
+}
+html[data-t="dark"] section:nth-of-type(even):not(.hero) {
+  background: rgba(15, 23, 42, 0.30) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ─── 2. SECTION DIVIDERS — stronger bronze accent line ─── */
+html[data-t="dark"] section.sec::before {
+  width: min(55%, 340px) !important;
+  height: 1.5px !important;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(251,191,36,.25) 20%,
+    rgba(251,191,36,.85) 50%,
+    rgba(251,191,36,.25) 80%,
+    transparent 100%) !important;
+  box-shadow: 0 0 16px rgba(251,191,36,.35) !important;
+}
+
+/* ─── 3. KEY BORDERS get bronze glow in dark theme ─── */
+html[data-t="dark"] .svgrid > .svc {
+  border-color: rgba(251,191,36,.18) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.45), 0 0 0 1px rgba(251,191,36,.08) !important;
+}
+html[data-t="dark"] .svgrid > .svc:hover {
+  border-color: rgba(251,191,36,.55) !important;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.55),
+    0 0 0 1px rgba(251,191,36,.32),
+    0 0 40px rgba(251,191,36,.18) !important;
+}
+html[data-t="dark"] .price-card-pub {
+  border-color: rgba(251,191,36,.20) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.5), 0 0 0 1px rgba(251,191,36,.08) !important;
+}
+html[data-t="dark"] .cib {
+  border-color: rgba(251,191,36,.18) !important;
+}
+
+/* ─── 4. ARCHITECTURAL-FIRM TYPOGRAPHY ON SECTION HEADERS ─── */
+/* Applied to "Complete Solutions for Your Dream", "Build Your Dream — Choose Your Plan",
+   and ALL .sh-wrapped section headers across the site */
+
+/* Eyebrow tag — refined, more letter-spacing, decorative line accent */
+.sh .sey {
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  padding: 7px 20px !important;
+  background: rgba(251,191,36,.08) !important;
+  border: 1px solid rgba(251,191,36,.30) !important;
+  border-radius: 100px !important;
+  color: #d4a64a !important;
+  margin-bottom: 22px !important;
+  display: inline-block !important;
+  position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.sh .sey::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(251,191,36,.5), transparent);
+}
+
+/* Title — architectural firm scale + refined letter-spacing */
+.sh .stl {
+  font-family: var(--fd, 'Cormorant Garamond', serif) !important;
+  font-size: clamp(2.1rem, 5vw, 3.2rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -1px !important;
+  margin: 14px 0 18px !important;
+  color: #f8fafc !important;
+}
+html[data-t="dark"] .sh .stl {
+  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+}
+
+/* Italic <em> — premium gold gradient with subtle shimmer drop-shadow */
+.sh .stl em {
+  font-style: italic !important;
+  letter-spacing: -1.2px !important;
+  background: linear-gradient(135deg, #fde68a 0%, #fbbf24 40%, #d97706 80%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #fbbf24;
+  filter: drop-shadow(0 0 28px rgba(251,191,36,.30));
+}
+
+/* Description — refined readability + breathing space */
+.sh .sdesc {
+  font-size: 1.06rem !important;
+  line-height: 1.75 !important;
+  color: rgba(248, 250, 252, 0.82) !important;
+  max-width: 620px !important;
+  margin: 0 auto !important;
+  letter-spacing: 0.1px;
+}
+html[data-t="corporate"] .sh .sdesc {
+  color: rgba(15, 35, 71, 0.78) !important;
+}
+
+/* Corporate (light) theme — different accent for eyebrow + emphasis */
+html[data-t="corporate"] .sh .sey {
+  background: rgba(26, 58, 110, 0.08) !important;
+  border-color: rgba(26, 58, 110, 0.28) !important;
+  color: #1a3a6e !important;
+}
+html[data-t="corporate"] .sh .sey::after {
+  background: linear-gradient(90deg, transparent, rgba(26,58,110,.5), transparent);
+}
+html[data-t="corporate"] .sh .stl em {
+  background: linear-gradient(135deg, #d4a64a 0%, #a17a30 50%, #6b4f1d 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 18px rgba(212,166,74,.25));
+}
+
+/* ─── 5. HIGH-CONTRAST TEXT IN DARK THEME (100% readability) ─── */
+html[data-t="dark"] body,
+html[data-t="dark"] main p,
+html[data-t="dark"] section p,
+html[data-t="dark"] section li {
+  color: #f5f0e3 !important;
+}
+html[data-t="dark"] section h1,
+html[data-t="dark"] section h2,
+html[data-t="dark"] section h3,
+html[data-t="dark"] section h4 {
+  color: #fefce8 !important;
+}
+html[data-t="dark"] section a:not(.btn):not([id^="pcm-b"]) {
+  color: #fbd680 !important;
+}
+html[data-t="dark"] section a:not(.btn):not([id^="pcm-b"]):hover {
+  color: #fde68a !important;
+}
+
+/* Mobile fine-tuning for section headers */
+@media (max-width: 600px) {
+  .sh .sey {
+    font-size: 0.72rem !important;
+    letter-spacing: 3px !important;
+    padding: 6px 16px !important;
+  }
+  .sh .stl {
+    font-size: clamp(1.75rem, 7vw, 2.4rem) !important;
+    letter-spacing: -0.6px !important;
+  }
+  .sh .sdesc {
+    font-size: 1rem !important;
+    padding: 0 8px;
+  }
+}
+
+/* Reduced motion respect for this final layer */
+@media (prefers-reduced-motion: reduce) {
+  .sh .stl em {
+    filter: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ HERO TEXT CLARITY OVER BACKGROUND IMAGE — FINAL POLISH ★
+   Hero मा background image / slides माथि सबै text crystal-clear बनाउँछ:
+   - Strong dark gradient overlay (all viewports, not mobile-only)
+   - Multi-layer text-shadow on h1, subtitles, badges, stats
+   - Glass-card backdrop-blur on text-bearing chips
+   - Premium hero card glass treatment
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Establish stacking context */
+.hero { position: relative; }
+
+/* Strong dark gradient overlay over background image (was mobile-only previously) */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    /* Top-to-bottom darkening for text legibility */
+    linear-gradient(180deg,
+      rgba(8,12,20,.50) 0%,
+      rgba(8,12,20,.30) 35%,
+      rgba(8,12,20,.42) 70%,
+      rgba(8,12,20,.68) 100%),
+    /* Subtle vignette — focuses eye on center content */
+    radial-gradient(ellipse 85% 70% at 50% 50%,
+      transparent 20%,
+      rgba(8,12,20,.40) 100%);
+}
+
+/* Ensure hero content sits above the overlay */
+.hero > *,
+.hero .h-in,
+.hero .hcard,
+.hero h1,
+.hero .h-tag,
+.hero .h-sub,
+.hero .h-sub-np,
+.hero .h-acts,
+.hero .h-badges,
+.hero .hsts {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hero h1 — strong multi-layer text-shadow for premium clarity */
+.hero h1 {
+  text-shadow:
+    0 4px 28px rgba(0,0,0,.85),
+    0 2px 10px rgba(0,0,0,.70),
+    0 1px 3px rgba(0,0,0,.55) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* Hero subtitle (both EN and NE) — readable on any photo */
+.hero .h-sub,
+.hero .h-sub-np,
+.hero .h-in > p {
+  text-shadow:
+    0 3px 16px rgba(0,0,0,.85),
+    0 1px 4px rgba(0,0,0,.70) !important;
+  color: #f8f5ef !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+/* Eyebrow tag (Hetauda Makwanpur Nepal) — premium glass pill */
+.hero .h-tag {
+  text-shadow: 0 2px 8px rgba(0,0,0,.65) !important;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  background: rgba(20, 15, 8, .50) !important;
+  border-color: rgba(251,191,36,.40) !important;
+}
+
+/* Trust badges (Complete Construction Solution, etc.) — glass chips */
+.hero .h-badges > span {
+  text-shadow: 0 2px 6px rgba(0,0,0,.70) !important;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  background: rgba(20, 15, 8, .55) !important;
+  border-color: rgba(251,191,36,.32) !important;
+  color: #fefce8 !important;
+}
+
+/* Stats grid cells (500+, 10+, etc.) — premium glass */
+.hero .hsts > *,
+.hero .hst {
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  background: rgba(20, 15, 8, .55) !important;
+  border-color: rgba(251,191,36,.25) !important;
+}
+.hero .hsts > * *,
+.hero .hst * {
+  text-shadow: 0 2px 8px rgba(0,0,0,.60) !important;
+}
+/* Stat NUMBER — extra punch (gold accent) */
+.hero .hst .stn,
+.hero [class*="stat-n"]:not(p):not(div) {
+  color: #fbd680 !important;
+  text-shadow: 0 2px 14px rgba(251,191,36,.30), 0 2px 8px rgba(0,0,0,.70) !important;
+}
+
+/* CTA buttons — readable on photos */
+.hero .h-acts .btn,
+.hero .h-acts > * {
+  text-shadow: 0 1px 3px rgba(0,0,0,.40);
+}
+
+/* Hero card on right — premium glass treatment */
+.hero .hcard {
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  background: rgba(20, 15, 8, 0.72) !important;
+  border-color: rgba(251,191,36,.38) !important;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    0 0 0 1px rgba(251,191,36,.22),
+    inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.hero .hcard h3,
+.hero .hcard .hc-b,
+.hero .hcard .hc-svc {
+  text-shadow: 0 2px 8px rgba(0,0,0,.50) !important;
+  color: #ffffff !important;
+}
+
+/* Replace the mobile-only .hero::before with consistent overlay
+   (our .hero::after now handles all viewports — make mobile lighter to avoid double-dark) */
+@media (max-width: 768px) {
+  .hero::before {
+    background: linear-gradient(180deg,
+      rgba(8,12,20,.30) 0%,
+      rgba(8,12,20,.40) 50%,
+      rgba(8,12,20,.32) 100%) !important;
+  }
+}
+
+/* Corporate (light) theme — slightly lighter overlay since headers are dark */
+html[data-t="corporate"] .hero::after {
+  background:
+    linear-gradient(180deg,
+      rgba(8,12,20,.35) 0%,
+      rgba(8,12,20,.20) 35%,
+      rgba(8,12,20,.30) 70%,
+      rgba(8,12,20,.50) 100%),
+    radial-gradient(ellipse 85% 70% at 50% 50%,
+      transparent 20%,
+      rgba(8,12,20,.25) 100%);
+}
+
+/* Reduced motion — keep overlays static (no transitions to disable here) */
 </style>
 </body>
 </html>
