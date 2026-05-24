@@ -6553,8 +6553,8 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
           <div style="color:var(--mt);font-size:.85rem;">Makwanpur, Nepal</div>
           <button class="btn btn-g" style="padding:10px 24px;font-size:.85rem;">📍 Load Map</button>
         </div>
-        <iframe id="mf-map" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3364969248464!2d85.0277839!3d27.2555543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e0!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Hetauda, Nepal" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
-        <iframe id="mf-sat" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.3364969248464!2d85.0277839!3d27.2555543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e1!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Satellite view" class="hide" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
+        <iframe id="mf-map" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d886.5!2d85.0322!3d27.4278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e0!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Kantirajpath, Hetauda, Nepal" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
+        <iframe id="mf-sat" src="" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d886.5!2d85.0322!3d27.4278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb49df3e482329%3A0xc48fc3c5a242c1!2sPrerak%20Multipurpose%20Pvt.%20Ltd.!5e1!3m2!1sen!2snp!4v1716530000000!5m2!1sen!2snp" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen title="Prerak Multipurpose Pvt. Ltd. — Satellite view" class="hide" style="display:none;width:100%;height:450px;border:0;border-radius:12px;"></iframe>
         <div class="map-bdg">📍 PRERAK Office — Hetauda</div>
       </div>
       <div class="map-acts">
@@ -19776,6 +19776,327 @@ html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover{
 }
 html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover svg{
   color:#fbbf24 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   ARC LAYOUT — premium half-round curved positioning
+   Replaces vertical stack with radial fan around right pivot.
+   Items as circular icon buttons; labels hidden visually (sr-only).
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Menu becomes positioning container — not flex stack */
+.prk-fab[data-permanent="true"] .prk-fab-menu{
+  position:relative !important;
+  width:64px !important;
+  height:300px !important;
+  display:block !important;
+  gap:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  pointer-events:none !important;          /* clicks pass to items */
+}
+
+/* Each item: absolute positioned, circular icon button */
+.prk-fab[data-permanent="true"] .prk-fab-item{
+  position:absolute !important;
+  top:50% !important;
+  right:0 !important;
+  width:52px !important;
+  height:52px !important;
+  margin-top:-26px !important;             /* center on top:50% */
+  padding:0 !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:0 !important;
+  pointer-events:auto !important;
+  transform-origin:center center !important;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .25s ease,
+             background .25s ease,
+             border-color .25s ease !important;
+  animation:prkArcFadeIn .55s cubic-bezier(.34,1.56,.64,1) backwards !important;
+}
+
+/* Hide text labels visually but preserve for screen readers (sr-only pattern) */
+.prk-fab[data-permanent="true"] .prk-fab-item .prk-fab-lbl{
+  position:absolute !important;
+  width:1px !important; height:1px !important;
+  padding:0 !important; margin:-1px !important;
+  overflow:hidden !important;
+  clip:rect(0,0,0,0) !important;
+  white-space:nowrap !important;
+  border:0 !important;
+  display:inline !important;
+}
+
+/* Icon size — larger for premium feel */
+.prk-fab[data-permanent="true"] .prk-fab-item svg{
+  width:22px !important;
+  height:22px !important;
+  flex:0 0 22px !important;
+  transition:transform .25s ease, color .25s ease !important;
+}
+
+/* ─── Arc positions: 5 items across ~100° arc on right pivot ─── */
+/* DOM order: Call (1), WhatsApp (2), Email (3), Messenger (4), Projects (5) */
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(1){
+  transform:rotate(-50deg) translate(-115px) rotate(50deg) !important;
+  animation-delay:.05s !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(2){
+  transform:rotate(-25deg) translate(-115px) rotate(25deg) !important;
+  animation-delay:.12s !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(3){
+  transform:translate(-115px) !important;
+  animation-delay:.19s !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(4){
+  transform:rotate(25deg) translate(-115px) rotate(-25deg) !important;
+  animation-delay:.26s !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(5){
+  transform:rotate(50deg) translate(-115px) rotate(-50deg) !important;
+  animation-delay:.33s !important;
+}
+
+/* ─── Hover: bump outward + icon scale (overrides previous flat hover) ─── */
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(1):hover{
+  transform:rotate(-50deg) translate(-130px) rotate(50deg) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 4px rgba(212,166,74,.20) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(2):hover{
+  transform:rotate(-25deg) translate(-130px) rotate(25deg) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 4px rgba(37,211,102,.25) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(3):hover{
+  transform:translate(-130px) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 4px rgba(212,166,74,.20) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(4):hover{
+  transform:rotate(25deg) translate(-130px) rotate(-25deg) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 4px rgba(0,132,255,.25) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:nth-child(5):hover{
+  transform:rotate(50deg) translate(-130px) rotate(-50deg) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 4px rgba(212,166,74,.20) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover svg{
+  transform:scale(1.15) !important;
+}
+
+/* ─── Tooltip via ::after on hover — premium tooltip with arrow ─── */
+.prk-fab[data-permanent="true"] .prk-fab-item::after{
+  content:attr(data-tip);
+  position:absolute;
+  right:calc(100% + 14px);
+  top:50%;
+  transform:translateY(-50%) translateX(6px) scale(.92);
+  background:linear-gradient(135deg,#1a1208 0%,#2a1c08 100%);
+  color:#f4e8c8;
+  padding:7px 13px;
+  border-radius:8px;
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.3px;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease, transform .22s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 8px 22px rgba(0,0,0,.5), 0 0 0 1px rgba(212,166,74,.35);
+  z-index:720;
+  font-family:inherit;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover::after{
+  opacity:1;
+  transform:translateY(-50%) translateX(0) scale(1);
+}
+
+/* Tooltip arrow */
+.prk-fab[data-permanent="true"] .prk-fab-item::before{
+  content:"";
+  position:absolute;
+  right:calc(100% + 8px);
+  top:50%;
+  width:0; height:0;
+  margin-top:-5px;
+  border-top:5px solid transparent;
+  border-bottom:5px solid transparent;
+  border-left:6px solid #2a1c08;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .22s ease, right .22s ease;
+  z-index:720;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover::before{
+  opacity:1;
+  right:calc(100% + 4px);
+}
+
+/* ─── Theme-aware tooltip backgrounds ─── */
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item::after{
+  background:linear-gradient(135deg,#0f2347,#1a3a6e);
+  color:#ffffff;
+  box-shadow:0 8px 22px rgba(15,35,71,.45), 0 0 0 1px rgba(26,58,110,.5);
+}
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item::before{
+  border-left-color:#1a3a6e;
+}
+html[data-t="saffron"] .prk-fab[data-permanent="true"] .prk-fab-item::after{
+  background:linear-gradient(135deg,#7c2d12,#c2410c);
+  color:#fff8f0;
+  box-shadow:0 8px 22px rgba(124,45,18,.5), 0 0 0 1px rgba(249,115,22,.4);
+}
+html[data-t="saffron"] .prk-fab[data-permanent="true"] .prk-fab-item::before{
+  border-left-color:#c2410c;
+}
+
+/* ─── Pop-in entrance animation (fade + slight scale) ─── */
+@keyframes prkArcFadeIn{
+  from{opacity:0; filter:blur(2px);}
+  to{opacity:1; filter:blur(0);}
+}
+
+/* ─── Mobile: tighter arc (smaller radius, smaller icons) ─── */
+@media (max-width:560px){
+  .prk-fab[data-permanent="true"] .prk-fab-menu{
+    width:52px !important;
+    height:240px !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item{
+    width:46px !important;
+    height:46px !important;
+    margin-top:-23px !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item svg{
+    width:20px !important;
+    height:20px !important;
+    flex:0 0 20px !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(1){
+    transform:rotate(-45deg) translate(-78px) rotate(45deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(2){
+    transform:rotate(-22deg) translate(-78px) rotate(22deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(3){
+    transform:translate(-78px) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(4){
+    transform:rotate(22deg) translate(-78px) rotate(-22deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(5){
+    transform:rotate(45deg) translate(-78px) rotate(-45deg) !important;
+  }
+  /* Hover on mobile/touch: nudge outward + scale icon */
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(1):active{
+    transform:rotate(-45deg) translate(-88px) rotate(45deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(2):active{
+    transform:rotate(-22deg) translate(-88px) rotate(22deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(3):active{
+    transform:translate(-88px) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(4):active{
+    transform:rotate(22deg) translate(-88px) rotate(-22deg) !important;
+  }
+  .prk-fab[data-permanent="true"] .prk-fab-item:nth-child(5):active{
+    transform:rotate(45deg) translate(-88px) rotate(-45deg) !important;
+  }
+  /* Tooltips smaller on mobile */
+  .prk-fab[data-permanent="true"] .prk-fab-item::after{
+    font-size:.66rem;
+    padding:5px 10px;
+  }
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion:reduce){
+  .prk-fab[data-permanent="true"] .prk-fab-item{
+    animation:none !important;
+    transition:none !important;
+  }
+}
+
+/* Override the legacy .prk-fab-item background (was rounded pill) — now circular */
+.prk-fab[data-permanent="true"] .prk-fab-item{
+  background:linear-gradient(145deg,rgba(26,18,8,.96) 0%,rgba(42,28,8,.96) 100%) !important;
+  border:1px solid rgba(212,166,74,.4) !important;
+  color:#f4e8c8 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.45),
+             0 2px 6px rgba(0,0,0,.3),
+             inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover{
+  background:linear-gradient(145deg,#d4a64a 0%,#b8862c 100%) !important;
+  border-color:transparent !important;
+  color:#1a1208 !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item:hover svg{
+  color:#1a1208 !important;
+}
+/* Per-item brand colors on hover (override generic gold) */
+.prk-fab[data-permanent="true"] .prk-fab-item.prk-fab-wa:hover{
+  background:linear-gradient(145deg,#25d366,#128c7e) !important;
+  color:#fff !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item.prk-fab-wa:hover svg{ color:#fff !important; }
+.prk-fab[data-permanent="true"] .prk-fab-item.prk-fab-msg:hover{
+  background:linear-gradient(145deg,#0084ff,#0066cc) !important;
+  color:#fff !important;
+}
+.prk-fab[data-permanent="true"] .prk-fab-item.prk-fab-msg:hover svg{ color:#fff !important; }
+
+/* Corporate theme — light circular items, navy hover */
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item{
+  background:linear-gradient(145deg,#ffffff,#f8fafc) !important;
+  color:#0f2347 !important;
+  border:1px solid rgba(26,58,110,.22) !important;
+  box-shadow:0 8px 22px rgba(15,35,71,.18),
+             0 2px 6px rgba(15,35,71,.10),
+             inset 0 1px 0 rgba(255,255,255,.8) !important;
+}
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover{
+  background:linear-gradient(145deg,#1a3a6e,#0f2347) !important;
+  color:#ffffff !important;
+  border-color:transparent !important;
+}
+html[data-t="corporate"] .prk-fab[data-permanent="true"] .prk-fab-item:hover svg{
+  color:#fbbf24 !important;
+}
+
+/* Adjust FAB container — narrower since items now use absolute positioning */
+.prk-fab[data-permanent="true"]{
+  bottom:22px !important;
+  right:18px !important;
+  gap:0 !important;
+  width:auto !important;
+}
+
+/* Callout repositioned to sit inside the arc (visual center anchor) */
+.prk-fab[data-permanent="true"] .prk-fab-callout{
+  position:absolute !important;
+  right:calc(100% + 8px) !important;
+  bottom:auto !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  white-space:nowrap !important;
+  z-index:1 !important;
+}
+@media (max-width:560px){
+  .prk-fab[data-permanent="true"] .prk-fab-callout{
+    position:fixed !important;
+    right:auto !important;
+    left:12px !important;
+    bottom:14px !important;
+    top:auto !important;
+    transform:none !important;
+    font-size:.7rem !important;
+    padding:6px 11px !important;
+  }
 }
 
 
