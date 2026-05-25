@@ -6738,6 +6738,19 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   ✓ Contact menu v4
 </div>
 
+<!-- 🌙 MOBILE-ONLY THEME SWITCHER — visible in FAB arc top-gap area on small screens.
+     Hidden on desktop (theme toggle exists in nav menu). Cycles through 3 themes
+     same as the in-nav button. Position chosen above the FAB arc so it doesn't
+     overlap the half-circle. -->
+<button id="mobile-theme-btn" type="button"
+        aria-label="Switch theme · थिम परिवर्तन"
+        title="Switch Theme · थिम बदल्नुहोस्"
+        onclick="(function(self){try{var t=(document.documentElement.getAttribute('data-t')||localStorage.getItem('prerak_theme')||'corporate');var order=['corporate','dark','saffron'];var n=order[(order.indexOf(t)+1)%order.length];if(typeof setTheme==='function'){setTheme(n);}else{document.documentElement.setAttribute('data-t',n);localStorage.setItem('prerak_theme',n);}self.setAttribute('data-mode',n);self.classList.add('mtb-spin');setTimeout(function(){self.classList.remove('mtb-spin');},460);}catch(e){}})(this)">
+  <svg class="mtb-icon mtb-ic-bldg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M10 21v-3h4v3"/></svg>
+  <svg class="mtb-icon mtb-ic-moon"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+  <svg class="mtb-icon mtb-ic-sun"   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+</button>
+
 <!-- 1. CALL ─────────────────────────── arc position: angle -75° ─── -->
 <a id="pcm-b1" href="tel:+9779801069733" data-tip="Call · फोन"
    aria-label="Call PRERAK Multipurpose"
@@ -22148,6 +22161,195 @@ html[data-t="corporate"] .sec-shorts {
     transition: none !important;
   }
   .short-card:hover {
+    transform: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ★ FINAL POLISH PASS — 3 cosmetic additions ★
+   1. #mobile-theme-btn — appears only on mobile in FAB top-gap area
+   2. @keyframes logoSwing3D — continuous live swing on top-left logo image
+                                 (back-face never shown, popout untouched)
+   3. Admin cards — extra hover lift + gold heading underlines
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. MOBILE-ONLY THEME SWITCHER ─── */
+#mobile-theme-btn {
+  display: none;
+  position: fixed;
+  top: 18%;
+  right: 10px;
+  z-index: 2147483646;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0c878 0%, #d4a64a 50%, #a17a30 100%);
+  border: 2px solid #FFBA00;
+  color: #1a1108;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.5),
+    0 0 0 3px rgba(255,186,0,.15),
+    inset 0 1px 0 rgba(255,255,255,.3);
+  transition: transform .25s cubic-bezier(.5,1.5,.5,1), box-shadow .25s ease;
+  align-items: center;
+  justify-content: center;
+}
+#mobile-theme-btn:hover,
+#mobile-theme-btn:focus-visible {
+  transform: scale(1.10);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.6),
+    0 0 0 3px rgba(255,186,0,.35),
+    0 0 26px rgba(255,186,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.35);
+  outline: none;
+}
+#mobile-theme-btn .mtb-icon { display: none; }
+html[data-t="corporate"] #mobile-theme-btn .mtb-ic-bldg { display: block; width:20px; height:20px; }
+html[data-t="dark"]      #mobile-theme-btn .mtb-ic-moon { display: block; width:20px; height:20px; }
+html[data-t="saffron"]   #mobile-theme-btn .mtb-ic-sun  { display: block; width:20px; height:20px; }
+
+#mobile-theme-btn.mtb-spin { animation: mtbSpinFlip .46s ease-out; }
+@keyframes mtbSpinFlip {
+  0%   { transform: rotateY(0deg)   scale(1); }
+  50%  { transform: rotateY(180deg) scale(1.12); }
+  100% { transform: rotateY(360deg) scale(1); }
+}
+
+@media (max-width: 768px) {
+  #mobile-theme-btn {
+    display: grid;
+    place-items: center;
+  }
+}
+@media (max-width: 380px) {
+  #mobile-theme-btn {
+    width: 40px;
+    height: 40px;
+    top: 14%;
+  }
+}
+
+/* ─── 2. LOGO 3D FLIP — continuous "live" animation ─── */
+/* IMPORTANT FIX: animation moved from .logo-mk parent → ONLY to the logo image
+   itself. Why: the popout preview (.logo-popout-preview) is a child of .logo-mk,
+   so rotating the parent dragged the popout to the wrong side. Also, the old
+   360° rotation exposed the back-face which rendered the logo MIRRORED.
+   New approach: swing animation (max ±65°), only on the img, with perspective
+   on the parent for depth — never shows the back, never affects siblings. */
+
+/* Reset .logo-mk to ensure popout stays positioned correctly (right side only) */
+.logo-mk,
+#official-logo-mk {
+  animation: none !important;          /* override any previous animation */
+  perspective: 900px;                  /* gives child img a 3D stage */
+  transform-style: flat;               /* siblings (popout) won't be transformed */
+}
+
+/* Apply the flip ONLY to the inner logo image + emoji fallback */
+.logo-mk > img,
+#official-logo-img,
+#logo-icon-fallback {
+  animation: logoSwing3D 5.5s cubic-bezier(.45,.05,.55,.95) infinite;
+  transform-origin: center center;
+  backface-visibility: hidden;         /* extra safety — back face never shown */
+  will-change: transform;
+  display: inline-block;               /* fallback emoji needs this for transform */
+}
+
+/* Swing animation: 0 → +65° → 0 → -65° → 0 — back face NEVER exposed */
+@keyframes logoSwing3D {
+  0%   { transform: rotateY(0deg)   scale(1); }
+  20%  { transform: rotateY(60deg)  scale(1.04); }
+  35%  { transform: rotateY(0deg)   scale(1); }
+  50%  { transform: rotateY(0deg)   scale(1); }
+  65%  { transform: rotateY(-60deg) scale(1.04); }
+  80%  { transform: rotateY(0deg)   scale(1); }
+  100% { transform: rotateY(0deg)   scale(1); }
+}
+
+/* Slow & subtler on mobile */
+@media (max-width: 600px) {
+  .logo-mk > img,
+  #official-logo-img,
+  #logo-icon-fallback {
+    animation-duration: 8s;
+  }
+}
+
+/* Reduced-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .logo-mk > img,
+  #official-logo-img,
+  #logo-icon-fallback { animation: none !important; }
+  #mobile-theme-btn.mtb-spin { animation: none !important; }
+}
+
+/* ─── POPOUT FIX: force RIGHT-side only, immune to parent transforms ─── */
+.logo-popout-preview {
+  /* Override any inherited 3D context — popout sits on its own plane */
+  transform-style: flat !important;
+  perspective: none !important;
+  /* Explicit right-side anchor (re-declared with !important to defeat overrides) */
+  left: calc(100% + 16px) !important;
+  right: auto !important;
+}
+/* Match the show-state transform to preserve animation but force right side */
+.logo-w:hover .logo-popout-preview,
+#official-logo-mk:hover .logo-popout-preview,
+.logo-w:focus-within .logo-popout-preview {
+  transform: translateY(-50%) translateX(0) scale(1) !important;
+}
+
+/* ─── 3. ADMIN PANEL ADDITIONAL POLISH ─── */
+.ap-card {
+  transition: transform .25s cubic-bezier(.5,1.4,.5,1), box-shadow .25s ease, border-color .25s ease;
+}
+.ap-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,0,0,.18), 0 0 0 1px rgba(212,166,74,.18);
+}
+
+.ap-card > h3,
+.ap-card > h4,
+#ap-modal section > h3,
+#ap-modal section > h4 {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+.ap-card > h3::after,
+.ap-card > h4::after,
+#ap-modal section > h3::after,
+#ap-modal section > h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 38px;
+  height: 2px;
+  background: linear-gradient(90deg, #d4a64a 0%, rgba(212,166,74,0) 100%);
+  border-radius: 2px;
+}
+
+#ap-modal button.dbtn[style*="background:#d4a64a"]:hover,
+.ap-card button[style*="background:#d4a64a"]:hover {
+  box-shadow: 0 6px 18px rgba(212,166,74,.40), 0 0 18px rgba(212,166,74,.25) !important;
+}
+
+.ap-card .afg label,
+#ap-modal .afg label {
+  letter-spacing: 0.3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-card,
+  .ap-card:hover {
+    transition: none !important;
     transform: none !important;
   }
 }
