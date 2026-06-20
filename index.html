@@ -5776,7 +5776,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 <a class="skip-link" href="#home">Skip to main content</a>
 <!-- ═══ VERSION BANNER — confirms newest build is open; click ✕ to dismiss ═══ -->
 <div id="prkVerBanner" style="position:fixed;top:0;left:0;right:0;z-index:2147483647;background:linear-gradient(90deg,#0f2347,#1a3a6e);color:#f4d27a;font:700 12px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:1px;text-align:center;padding:7px 34px 7px 14px;box-shadow:0 2px 12px rgba(0,0,0,.3);">
-  ✅ PRERAK build <b style="color:#fff;font-size:14px;">PRK-FINAL · 2026-06-15q</b> — यो नयाँ version हो / newest version. पुराना download delete गर्नुस्।
+  ✅ PRERAK build <b style="color:#fff;font-size:14px;">PRK-FINAL · 2026-06-15r</b> — यो नयाँ version हो / newest version. पुराना download delete गर्नुस्।
   <button onclick="this.parentElement.style.display='none'" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:0;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1;">✕</button>
 </div>
 <script>document.documentElement.style.setProperty('scroll-padding-top','40px');</script>
@@ -7010,7 +7010,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
         <span class="ft-pro-flag">🇳🇵</span>
         <span class="en">For Nepal — Hetauda <span class="np-real-flag" style="display:inline-block;width:16px;height:20px;vertical-align:-4px;margin-left:3px;" role="img" aria-label="Nepal flag"></span></span>
         <span class="ne np">नेपालकै लागि — हेटौंडा, <span class="np-real-flag" style="display:inline-block;width:16px;height:20px;vertical-align:-4px;margin-left:3px;" role="img" aria-label="Nepal flag"></span></span>
-        <span class="prk-build" id="prkBuildBadge" title="File version — फाइल संस्करण">PRK-FINAL · 2026-06-15q</span>
+        <span class="prk-build" id="prkBuildBadge" title="File version — फाइल संस्करण">PRK-FINAL · 2026-06-15r</span>
       </div>
     </div>
   </div>
@@ -24240,32 +24240,30 @@ html[data-t="dark"] [class*="card"] p[style*="--mt"]{
 
 /* ── FORCE pricing cards solid + text bright (beats heavy inline styles) ──
    Cards carry inline background:linear-gradient + backdrop-filter:blur(22px)
-   and li text at rgba(255,255,255,.85) which washes out. Override hard. */
-html[data-t="dark"] .price-card-pub[style]{
+   and li text at rgba(255,255,255,.85) which washes out. Override hard.
+   THEME-INDEPENDENT: the card is always dark-styled, so fix in all themes. */
+.price-card-pub[style]{
   background:#1C1C20 !important;
   background-image:none !important;
   backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
   border:1px solid rgba(255,255,255,.12) !important;
 }
-html[data-t="dark"] .price-card-pub[style] li[style]{
+.price-card-pub[style] li[style]{
   color:#ECECEC !important; -webkit-text-fill-color:#ECECEC !important;
 }
-html[data-t="dark"] .price-card-pub[style] li[style] span[style]{
+.price-card-pub[style] li[style] span[style]{
   color:#3ECF7A !important; -webkit-text-fill-color:#3ECF7A !important;
 }
+.price-card-pub[style] li[style] > *{ color:inherit; }
 /* the big price number + "STARTING FROM" + struck original */
-html[data-t="dark"] .price-card-pub[style] > div[style*="2.1rem"],
-html[data-t="dark"] .price-card-pub[style] > div[style*="font-family"]{ color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; }
-html[data-t="dark"] .price-card-pub[style] div[style*="line-through"]{ color:#9A9A9A !important; -webkit-text-fill-color:#9A9A9A !important; }
-html[data-t="dark"] .price-card-pub[style] div[style*="#22c55e"]{ color:#3ECF7A !important; -webkit-text-fill-color:#3ECF7A !important; }
-/* bright theme: same hard-solid so light theme pricing is crisp too */
-html[data-t="corporate"] .price-card-pub[style]{
-  background:#ffffff !important; background-image:none !important;
-  backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
-  border:1px solid rgba(15,35,71,.12) !important;
-}
-html[data-t="corporate"] .price-card-pub[style] li[style]{ color:#1f2937 !important; -webkit-text-fill-color:#1f2937 !important; }
-html[data-t="corporate"] .price-card-pub[style] > div[style*="2.1rem"]{ color:#0f2347 !important; -webkit-text-fill-color:#0f2347 !important; }
+.price-card-pub[style] div[style*="2.1rem"],
+.price-card-pub[style] div[style*="2.1rem"] *{ color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; }
+.price-card-pub[style] div[style*="line-through"]{ color:#9A9A9A !important; -webkit-text-fill-color:#9A9A9A !important; }
+.price-card-pub[style] div[style*="#22c55e"]{ color:#3ECF7A !important; -webkit-text-fill-color:#3ECF7A !important; }
+.price-card-pub[style] h3,.price-card-pub[style] .pc-nm{ color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF !important; }
+/* popular card (red highlight) keeps its identity but text stays white */
+.price-card-pub[style*="POPULAR"] li[style],
+.price-card-pub[style*="best"] li[style]{ color:#F0F0F0 !important; -webkit-text-fill-color:#F0F0F0 !important; }
 
 /* ═══ 27 · HERO PILLAR CHIPS — always bright on the hero photo ═══ */
 /* The 4 hero chips (Licensed/Engineer/On-Time/Warranty) sit on a dark hero
@@ -24895,8 +24893,8 @@ function boot(){
   prkStorageHeal();
   hydrateRetry(0); heroMerge(); armNoticeGuard(); prkInitTilt();
   try{
-    document.documentElement.setAttribute('data-prk-build','PRK-FINAL-2026-06-15q');
-    console.log('%cPRERAK build PRK-FINAL · 2026-06-15q — all readability + engine layers active','color:#d4a64a;font-weight:bold;font-size:12px');
+    document.documentElement.setAttribute('data-prk-build','PRK-FINAL-2026-06-15r');
+    console.log('%cPRERAK build PRK-FINAL · 2026-06-15r — all readability + engine layers active','color:#d4a64a;font-weight:bold;font-size:12px');
   }catch(e){}
 }
 /* One-time storage self-heal: if saved data already overflows from old
