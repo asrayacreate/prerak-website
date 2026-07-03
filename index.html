@@ -39,7 +39,7 @@
   <meta property="og:site_name" content="Prerak Multipurpose Pvt. Ltd.">
   <meta property="og:locale" content="ne_NP">
   <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:image" content="https://prerakmultipurpose.com/og-image.jpg">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&auto=format&fit=crop&q=80">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Prerak Multipurpose Pvt. Ltd. — Construction & Interior Services">
@@ -48,7 +48,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Prerak Multipurpose Pvt. Ltd. | Construction & Interior Services">
   <meta name="twitter:description" content="घर निर्माण, इन्टेरियर, UPVC/Aluminum सेवा — Hetauda, Nepal. Call: 980-1069733">
-  <meta name="twitter:image" content="https://prerakmultipurpose.com/og-image.jpg">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&auto=format&fit=crop&q=80">
 
   <!-- Structured Data (JSON-LD) for Google Rich Results -->
   <script type="application/ld+json">
@@ -5714,7 +5714,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
   "name": "Prerak Multipurpose Pvt. Ltd.",
-  "image": "https://prerakmultipurpose.com/og-image.jpg",
+  "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&h=630&auto=format&fit=crop&q=80",
   "url": "https://prerakmultipurpose.com/",
   "telephone": "+977-980-1069733",
   "email": "prerakconstruction12@gmail.com",
@@ -5777,7 +5777,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
 <a class="skip-link" href="#home">Skip to main content</a>
 <!-- ═══ VERSION BANNER — confirms newest build is open; click ✕ to dismiss ═══ -->
 <div id="prkVerBanner" style="position:fixed;top:0;left:0;right:0;z-index:2147483647;background:linear-gradient(90deg,#0f2347,#1a3a6e);color:#f4d27a;font:700 12px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:1px;text-align:center;padding:7px 34px 7px 14px;box-shadow:0 2px 12px rgba(0,0,0,.3);">
-  ✅ PRERAK build <b style="color:#fff;font-size:14px;">PRK-FINAL · 2026-06-15y</b> — Single-file (सबै image भित्रै). पुराना download delete गर्नुस्।
+  ✅ PRERAK build <b style="color:#fff;font-size:14px;">PRK-FINAL · 2026-06-15z</b> — Single-file (सबै image भित्रै). पुराना download delete गर्नुस्।
   <button onclick="this.parentElement.style.display='none'" aria-label="Dismiss" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:0;color:#fff;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:13px;line-height:1;">✕</button>
 </div>
 <script>document.documentElement.style.setProperty('scroll-padding-top','40px');</script>
@@ -7013,7 +7013,7 @@ body.admin-mode body:not(.admin-mode) .nav{top:0!important;}
         <span class="ft-pro-flag">🇳🇵</span>
         <span class="en">For Nepal — Hetauda <span class="np-real-flag" style="display:inline-block;width:16px;height:20px;vertical-align:-4px;margin-left:3px;" role="img" aria-label="Nepal flag"></span></span>
         <span class="ne np">नेपालकै लागि — हेटौंडा, <span class="np-real-flag" style="display:inline-block;width:16px;height:20px;vertical-align:-4px;margin-left:3px;" role="img" aria-label="Nepal flag"></span></span>
-        <span class="prk-build" id="prkBuildBadge" title="File version — फाइल संस्करण">PRK-FINAL · 2026-06-15y</span>
+        <span class="prk-build" id="prkBuildBadge" title="File version — फाइल संस्करण">PRK-FINAL · 2026-06-15z</span>
       </div>
     </div>
   </div>
@@ -12630,10 +12630,12 @@ function savePricing(i){
 function renderDashStats(){
   const c=document.getElementById('dashStats');
   if(!c) return;
+  let _clk={}; try{ _clk = (typeof prkGetClicks==='function') ? prkGetClicks() : JSON.parse(localStorage.getItem('PRK_CLICKS')||'{}'); }catch(e){}
   c.innerHTML=[
     {n:_arr(D.notices).length,l:'Notices',ic:'📢',cl:'#22c55e'},
     {n:_arr(D.pricing).length,l:'Plans',ic:'💰',cl:'#c9933a'},
-    {n:'3',l:'Themes',ic:'🎨',cl:'#3b82f6'},
+    {n:'<span id="dash-wa">'+(_clk.wa||0)+'</span>',l:'WA Clicks',ic:'📲',cl:'#25D366'},
+    {n:'<span id="dash-call">'+(_clk.call||0)+'</span>',l:'Call Clicks',ic:'📞',cl:'#3b82f6'},
     {n:isAdmin?'Active':'—',l:'Session',ic:'🔐',cl:'#dc2626'}
   ].map(s=>`
     <div style="background:#fff;border:1px solid #e5e7eb;border-radius:11px;padding:16px;text-align:center;border-top:3px solid ${s.cl};">
@@ -12643,6 +12645,19 @@ function renderDashStats(){
     </div>`).join('');
   const dt=document.getElementById('dash-theme');
   if(dt) dt.textContent='Current: '+(D.theme==='dark'?'🌙 Dark Gold':D.theme==='corporate'?'🏢 Corporate Blue':'🔶 Bold Saffron');
+  /* If Firebase is configured, replace local counts with ALL-visitor totals */
+  try{
+    if(typeof initFirebase==='function' && initFirebase() &&
+       typeof _fbDb!=='undefined' && _fbDb){
+      _fbDb.collection('stats').doc('clicks').get().then(function(snap){
+        if(snap && snap.exists){
+          var d=snap.data()||{};
+          var w=document.getElementById('dash-wa');   if(w && d.wa!=null)   w.textContent = d.wa;
+          var p=document.getElementById('dash-call'); if(p && d.call!=null) p.textContent = d.call;
+        }
+      }).catch(function(){});
+    }
+  }catch(e){}
 }
 
 // ═══ EXPORT / RESET ═══
@@ -24994,6 +25009,42 @@ function hydrateRetry(tries){
   syncProjsFromD(); syncSvcsFromD();
   if(!ready && tries<30){ setTimeout(function(){ hydrateRetry(tries+1); }, 250); }
 }
+/* ── CONTACT CLICK TRACKING — counts WhatsApp / Call / Email clicks ──
+   Always counts locally (this browser). If Firebase is configured in admin,
+   ALSO increments a shared Firestore counter so the dashboard shows totals
+   across ALL visitors. Fire-and-forget; can never break the site. */
+(function(){
+  if(window.__prkTrk) return; window.__prkTrk = true;
+  function bump(key){
+    try{
+      var t = JSON.parse(localStorage.getItem('PRK_CLICKS')||'{}');
+      t[key] = (t[key]||0) + 1;
+      localStorage.setItem('PRK_CLICKS', JSON.stringify(t));
+    }catch(e){}
+    /* shared aggregate (all visitors) when Firebase is configured */
+    try{
+      if(typeof initFirebase==='function' && initFirebase() &&
+         typeof _fbDb!=='undefined' && _fbDb &&
+         typeof firebase!=='undefined' && firebase.firestore){
+        var upd = {}; upd[key] = firebase.firestore.FieldValue.increment(1);
+        _fbDb.collection('stats').doc('clicks').set(upd, {merge:true}).catch(function(){});
+      }
+    }catch(e){}
+  }
+  document.addEventListener('click', function(e){
+    try{
+      var a = e.target.closest && e.target.closest('a[href],button[onclick]');
+      if(!a) return;
+      var h = (a.getAttribute('href')||'') + ' ' + (a.getAttribute('onclick')||'');
+      if(h.indexOf('wa.me')>-1 || h.indexOf('whatsapp')>-1) bump('wa');
+      else if(h.indexOf('tel:')>-1) bump('call');
+      else if(h.indexOf('mailto:')>-1 || h.indexOf('prerakMail')>-1) bump('mail');
+    }catch(_){}
+  }, true);
+  window.prkGetClicks = function(){
+    try{ return JSON.parse(localStorage.getItem('PRK_CLICKS')||'{}'); }catch(e){ return {}; }
+  };
+})();
 /* ── YouTube click-to-load: swap thumbnail facade for real player on click ── */
 function prkLoadYT(el){
   try{
@@ -25041,8 +25092,8 @@ function boot(){
   prkStorageHeal();
   hydrateRetry(0); heroMerge(); armNoticeGuard(); prkInitTilt();
   try{
-    document.documentElement.setAttribute('data-prk-build','PRK-FINAL-2026-06-15y');
-    console.log('%cPRERAK build PRK-FINAL · 2026-06-15y — all readability + engine layers active','color:#d4a64a;font-weight:bold;font-size:12px');
+    document.documentElement.setAttribute('data-prk-build','PRK-FINAL-2026-06-15z');
+    console.log('%cPRERAK build PRK-FINAL · 2026-06-15z — all readability + engine layers active','color:#d4a64a;font-weight:bold;font-size:12px');
   }catch(e){}
 }
 /* One-time storage self-heal: if saved data already overflows from old
