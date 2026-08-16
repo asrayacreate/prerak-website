@@ -1,7 +1,7 @@
 /* PRERAK PWA Service Worker
    Strategy: network-first for the page (always fresh when online; cached copy offline),
    cache-first for static assets (manifest, icons). Same-origin GET only. */
-var CACHE = "prerak-cache-v1";
+var CACHE = "prerak-cache-v2";
 var ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", function (e) {
