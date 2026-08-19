@@ -1,13 +1,23 @@
-PRERAK WEBSITE — COMPLETE SET (z19 + SAHAYAK APP · sw v4)
-==========================================================
-मुख्य site:
-1. index.html (z19) · 2. manifest.json · 3. icon-192.png · 4. icon-512.png
-5. sw.js (v4 — दुई-app-safe, यसपालि फेरिएको)
+PRERAK — z20 FINAL POLISH PACK (unveil-fix + दुई-app समाधान)
+=============================================================
+ROOT का file हरू:
+  index.html (z20) · manifest.json · sw.js (v5) · icon-192/512.png
+  sahayak-manifest.json (v2) · sahayak-icon-192/512.png
+FOLDER:
+  sahayak/index.html   ← Sahayak app को नयाँ घर
 
-नयाँ — Marketing Sahayak app:
-6. sahayak.html · 7. sahayak-manifest.json · 8-9. sahayak-icon-192/512.png
+UPLOAD (laptop बाट):
+1) ZIP EXTRACT गर्नुहोस्
+2) GitHub → Add file → Upload files
+3) Extract भएका सबै file + "sahayak" FOLDER — सबै एकैचोटि DRAG → Commit
+   (folder drag गर्दा GitHub ले भित्रको file सहित लिन्छ)
+4) CNAME कहिल्यै नछुने!
 
-UPLOAD: ZIP EXTRACT गरेर ९ वटै file repo root मा → Commit। CNAME नछुने!
+INSTALL:
+- Main app: पहिलेजस्तै (भइसकेको)
+- Sahayak: phone Chrome मा  prerakmultipurpose.com/sahayak/  खोल्ने
+  → अब "Install app" आउँछ (आफ्नै इलाका भएकाले!) → सुनौलो icon
+- दुवै app अब सँगसँगै बस्छन्, एकले अर्कालाई छेक्दैन
 
-SAHAYAK INSTALL (एकपटक): phone Chrome मा
-prerakmultipurpose.com/sahayak.html खोल्ने → "Install app" → सुनौलो icon!
+जाँच: site खोल्दा loader हटेपछि hero पूरै तयार देखिनुपर्छ (खाली/भाँचिएको होइन);
+💬 greeting = z20

@@ -2,8 +2,8 @@
    Page: STALE-WHILE-REVALIDATE — cached copy opens instantly, fresh copy downloads in the
    background; if it changed, open tabs get a PRK_UPDATE message (site shows a refresh toast).
    Static assets (manifest, icons): cache-first. Same-origin GET only. */
-var CACHE = "prerak-cache-v4";
-var ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./sahayak.html", "./sahayak-manifest.json", "./sahayak-icon-192.png", "./sahayak-icon-512.png"];
+var CACHE = "prerak-cache-v5";
+var ASSETS = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./sahayak.html", "./sahayak/", "./sahayak/index.html", "./sahayak-manifest.json", "./sahayak-icon-192.png", "./sahayak-icon-512.png"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(
