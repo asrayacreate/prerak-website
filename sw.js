@@ -18,6 +18,13 @@ self.addEventListener("activate", function (e) {
     caches.keys().then(function (keys) {
       return Promise.all(keys.map(function (k) { if (k !== CACHE) return caches.delete(k); }));
     }).then(function () { return self.clients.claim(); })
+      .then(function () {
+        /* self-heal: when a NEW worker version takes over, refresh open tabs once
+           so any page served from an old/poisoned cache is replaced instantly */
+        return self.clients.matchAll({ type: "window" }).then(function (cs) {
+          cs.forEach(function (c) { try { if (c.navigate) c.navigate(c.url); } catch (err) {} });
+        });
+      })
   );
 });
 
