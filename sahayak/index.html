@@ -178,6 +178,39 @@ function gen2(){var keep=$("#out").innerHTML;gen();$("#out").innerHTML=keep+$("#
 </script>
 <script>
 (function(){try{
+  var defP=null;
+  function btn(){
+    if(document.getElementById("skInstB")||!defP)return;
+    var b=document.createElement("button");b.id="skInstB";b.type="button";
+    b.textContent="📲 Sahayak app बनाउनुहोस्";
+    b.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:99999;background:linear-gradient(135deg,#b98a2e,#d4a64a);color:#101623;border:0;border-radius:999px;padding:11px 18px;font-weight:800;font-size:.85rem;box-shadow:0 10px 28px rgba(0,0,0,.5);cursor:pointer;font-family:inherit;";
+    b.onclick=function(){try{b.remove();defP.prompt()}catch(e){}};
+    document.body.appendChild(b);
+  }
+  window.addEventListener("beforeinstallprompt",function(ev){try{ev.preventDefault()}catch(e){}defP=ev;btn()});
+  window.addEventListener("appinstalled",function(){try{var b=document.getElementById("skInstB");if(b)b.remove()}catch(e){}});
+  window.addEventListener("load",function(){
+    setTimeout(function(){try{
+      if(defP||window.matchMedia("(display-mode: standalone)").matches)return;
+      var t=document.createElement("div");
+      t.style.cssText="text-align:center;font-size:.68rem;color:#9fb0c7;margin:6px 0 0;";
+      t.innerHTML="App बनाउन: ⋮ menu → <b style='color:#f2d491'>Install app / Add to Home screen</b>";
+      var hd=document.querySelector(".hd");if(hd)hd.appendChild(t);
+    }catch(e){}},4000);
+    // ⚙️ जाँच-पाटी: manifest scope + offline-प्रणाली स्थिति
+    setTimeout(function(){try{
+      var card=document.querySelector("#sec-set .card");if(!card)return;
+      var d=document.createElement("p");d.className="small";d.id="skDiag";
+      d.textContent="जाँच: ...";card.appendChild(d);
+      var ctrl=(navigator.serviceWorker&&navigator.serviceWorker.controller)?"✓":"✗";
+      var link=document.querySelector('link[rel="manifest"]');
+      fetch(link?link.href:"/sahayak-manifest.json",{cache:"no-store"}).then(function(r){return r.json()})
+      .then(function(m){d.textContent="जाँच: scope="+(m.scope||"?")+" · offline-प्रणाली "+ctrl})
+      .catch(function(){d.textContent="जाँच: manifest पढ्न सकिएन · offline-प्रणाली "+ctrl});
+    }catch(e){}},1500);
+  });
+}catch(e){}})();
+(function(){try{
   if(!("serviceWorker" in navigator))return;
   if(location.protocol!=="https:"&&location.hostname!=="localhost")return;
   window.addEventListener("load",function(){try{navigator.serviceWorker.register("/sw.js").catch(function(){})}catch(e){}});
