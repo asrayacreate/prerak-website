@@ -11,47 +11,61 @@
 <style>
 :root{--nv:#0f2347;--nv2:#1a3a6e;--gd:#d4a64a;--gl:#f2d491;--bg:#0c1322;--cd:#101a2c;--tx:#e2e9f3;--mut:#9fb0c7}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,var(--bg),#0a1020);color:var(--tx);min-height:100vh;padding:14px 12px 40px}
-.wrap{max-width:520px;margin:0 auto}
-.hd{text-align:center;margin-bottom:14px}
-.hd h1{font-size:1.15rem;color:var(--gl);letter-spacing:.5px}
-.hd p{font-size:.68rem;color:var(--mut);margin-top:3px}
-.card{background:var(--cd);border:1px solid rgba(212,166,74,.25);border-radius:15px;padding:14px;margin-bottom:12px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,var(--bg),#0a1020);color:var(--tx);min-height:100vh;padding:14px 12px 46px}
+.wrap{max-width:560px;margin:0 auto}
+.hd{text-align:center;margin-bottom:12px}
+.hd h1{font-size:1.12rem;color:var(--gl);letter-spacing:.5px}
+.hd p{font-size:.66rem;color:var(--mut);margin-top:3px}
+.card{background:var(--cd);border:1px solid rgba(212,166,74,.25);border-radius:15px;padding:13px;margin-bottom:12px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .tip{background:linear-gradient(135deg,var(--nv),var(--nv2));border-color:rgba(212,166,74,.4)}
-.tip b{color:var(--gl);font-size:.82rem}.tip p{font-size:.76rem;margin-top:5px;line-height:1.55}
-label{display:block;font-size:.68rem;font-weight:700;color:var(--gl);margin:9px 0 4px;letter-spacing:.5px}
+.tip b{color:var(--gl);font-size:.8rem}.tip p{font-size:.74rem;margin-top:5px;line-height:1.55}
+label{display:block;font-size:.66rem;font-weight:700;color:var(--gl);margin:9px 0 4px;letter-spacing:.5px}
 select,input,textarea{width:100%;background:#0f1626;border:1px solid rgba(148,163,184,.28);color:var(--tx);border-radius:10px;padding:10px 12px;font-size:.85rem;font-family:inherit}
-select:focus,input:focus,textarea:focus{outline:none;border-color:var(--gd)}
+select:focus,input:focus{outline:none;border-color:var(--gd)}
 .plats{display:flex;gap:7px;margin-top:4px}
-.plat{flex:1;text-align:center;padding:9px 4px;border-radius:10px;border:1px solid rgba(148,163,184,.28);background:#0f1626;font-size:.74rem;font-weight:700;cursor:pointer;transition:.2s}
+.plat{flex:1;text-align:center;padding:9px 4px;border-radius:10px;border:1px solid rgba(148,163,184,.28);background:#0f1626;font-size:.72rem;font-weight:700;cursor:pointer;transition:.2s}
 .plat.on{background:linear-gradient(135deg,#b98a2e,var(--gd));color:#101623;border-color:var(--gd)}
-.btn{width:100%;margin-top:13px;background:linear-gradient(135deg,#b98a2e,var(--gd));border:0;color:#101623;font-weight:800;font-size:.92rem;padding:13px;border-radius:11px;cursor:pointer;font-family:inherit}
+.btn{width:100%;margin-top:12px;background:linear-gradient(135deg,#b98a2e,var(--gd));border:0;color:#101623;font-weight:800;font-size:.9rem;padding:12px;border-radius:11px;cursor:pointer;font-family:inherit}
 .btn2{background:#152036;color:var(--gl);border:1px solid rgba(212,166,74,.4)}
+.btn.sm{width:auto;padding:8px 13px;font-size:.74rem;margin-top:8px}
 .out{margin-top:12px;display:none}
-.cap{background:#0f1626;border:1px solid rgba(148,163,184,.2);border-radius:11px;padding:11px;margin-bottom:9px;font-size:.82rem;line-height:1.6;white-space:pre-wrap;word-break:break-word}
-.cap .cph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.cap .cph span{font-size:.62rem;color:var(--gd);font-weight:800;letter-spacing:1px}
-.cpy{background:rgba(212,166,74,.15);border:1px solid rgba(212,166,74,.45);color:var(--gl);font-size:.66rem;font-weight:800;padding:5px 11px;border-radius:8px;cursor:pointer;font-family:inherit}
+.cap{background:#0f1626;border:1px solid rgba(148,163,184,.2);border-radius:11px;padding:11px;margin-bottom:9px;font-size:.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.cap .cph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.cap .cph span{font-size:.6rem;color:var(--gd);font-weight:800;letter-spacing:1px}
+.cpy{background:rgba(212,166,74,.15);border:1px solid rgba(212,166,74,.45);color:var(--gl);font-size:.64rem;font-weight:800;padding:5px 11px;border-radius:8px;cursor:pointer;font-family:inherit;flex-shrink:0}
 .cpy.ok{background:#164a2e;border-color:#2c7a4b;color:#9be3b3}
-.tabs{display:flex;gap:6px;margin-bottom:12px}
-.tab{flex:1;text-align:center;padding:10px 4px;border-radius:11px;background:#0f1626;border:1px solid rgba(148,163,184,.25);font-size:.7rem;font-weight:800;cursor:pointer}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.tab{flex:1 1 30%;text-align:center;padding:9px 3px;border-radius:11px;background:#0f1626;border:1px solid rgba(148,163,184,.25);font-size:.66rem;font-weight:800;cursor:pointer;white-space:nowrap}
 .tab.on{background:var(--nv2);border-color:var(--gd);color:var(--gl)}
 .sec{display:none}.sec.on{display:block}
 .hookbox{background:rgba(212,166,74,.08);border:1px dashed rgba(212,166,74,.45);border-radius:10px;padding:9px 11px;font-size:.78rem;margin-bottom:9px}
-.hookbox b{color:var(--gl);font-size:.66rem;letter-spacing:1px;display:block;margin-bottom:3px}
-.small{font-size:.68rem;color:var(--mut);line-height:1.5;margin-top:8px}
-.foot{text-align:center;font-size:.62rem;color:var(--mut);margin-top:16px}
+.hookbox b{color:var(--gl);font-size:.62rem;letter-spacing:1px;display:block;margin-bottom:3px}
+.small{font-size:.66rem;color:var(--mut);line-height:1.5;margin-top:8px}
+.calrow{background:#0f1626;border:1px solid rgba(148,163,184,.18);border-radius:10px;padding:9px 11px;margin-bottom:7px;cursor:pointer}
+.calrow .crh{display:flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700}
+.calrow .crh .dt{color:var(--gl);min-width:64px}
+.badge{font-size:.56rem;font-weight:800;letter-spacing:.5px;padding:3px 8px;border-radius:999px;background:rgba(212,166,74,.16);border:1px solid rgba(212,166,74,.4);color:var(--gl)}
+.calrow .body{display:none;margin-top:9px}
+.calrow.open .body{display:block}
+.chiprow{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.chip{background:rgba(255,255,255,.05);border:1px solid rgba(148,163,184,.28);color:#cdd8e6;padding:5px 11px;border-radius:999px;font-size:.62rem;font-weight:700;cursor:pointer}
+.chip.on{color:#f2d491;border-color:rgba(212,166,74,.6);background:rgba(212,166,74,.12)}
+.hitem{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#0f1626;border:1px solid rgba(148,163,184,.16);border-radius:9px;padding:8px 10px;margin-bottom:7px;font-size:.76rem;line-height:1.5}
+.foot{text-align:center;font-size:.6rem;color:var(--mut);margin-top:16px}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="hd"><h1>📣 PRERAK Marketing Sahayak</h1><p>TikTok · Facebook · Status — caption, video-idea, review सबै एकै ठाउँ</p></div>
+<div class="hd"><h1>📣 PRERAK Marketing Sahayak <span style="font-size:.6rem;color:var(--gd);vertical-align:super;">v2</span></h1><p>Content Studio — calendar · caption · hooks · script · series · review</p></div>
 
 <div class="card tip" id="dayTip"></div>
 
 <div class="tabs">
 <div class="tab on" data-s="cap" onclick="tab('cap')">✍️ Caption</div>
-<div class="tab" data-s="vid" onclick="tab('vid')">🎬 Video Idea</div>
+<div class="tab" data-s="cal" onclick="tab('cal')">🗓️ Calendar</div>
+<div class="tab" data-s="hk" onclick="tab('hk')">🎣 Hook/सवाल</div>
+<div class="tab" data-s="vid" onclick="tab('vid')">🎬 Video</div>
+<div class="tab" data-s="ser" onclick="tab('ser')">🧵 Series</div>
 <div class="tab" data-s="rev" onclick="tab('rev')">⭐ Review</div>
 <div class="tab" data-s="set" onclick="tab('set')">⚙️</div>
 </div>
@@ -65,21 +79,48 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--gd)}
 </div>
 <label>कुन सेवा?</label>
 <select id="svc"><option>UPVC/Aluminum झ्याल-ढोका</option><option>Interior Design</option><option>घर निर्माण</option><option>Gypsum Ceiling</option><option>Solar जडान</option><option>Painting</option><option>Plumbing</option><option>Electrical</option><option>Renovation</option><option>Construction Material</option></select>
-<label>ठाउँ</label><input id="loc" value="हेटौंडा" placeholder="जस्तै: हेटौंडा-४">
-<label>Post किसिम</label>
-<select id="kind"><option value="work">आजको काम देखाउने</option><option value="ba">Before → After</option><option value="offer">Offer / छुट</option><option value="fest">चाडपर्व (दशैं-तिहार)</option><option value="info">जानकारी / टिप्स</option></select>
+<label>ठाउँ</label><input id="loc" value="हेटौंडा">
+<label>Post किसिम (१२ शैली)</label>
+<select id="kind"></select>
 <label>विशेष कुरा (ऐच्छिक)</label><input id="extra" placeholder="जस्तै: 3.5kW, २ दिनमै सकियो, 10% छुट">
 <button class="btn" onclick="gen()">✨ Caption बनाउनुहोस्</button>
 <button class="btn btn2" id="aiBtn" style="display:none" onclick="genAI()">🤖 AI बाट नयाँ बनाउनुहोस्</button>
 <div class="out" id="out"></div>
 </div></div>
 
+<div class="sec" id="sec-cal"><div class="card">
+<p class="small" style="margin-top:0">एक click — <b style="color:var(--gl)">३० दिनको पूरा plan</b>: हरेक दिन फरक शैली (१२ किसिम घुम्छन्), caption+hook+video-idea तयार। दिनमा click गरे खुल्छ।</p>
+<button class="btn" onclick="calMake()">🗓️ ३० दिने plan बनाउनुहोस्</button>
+<div id="calWrap" style="margin-top:12px"></div>
+<button class="btn sm btn2" id="calDel" style="display:none" onclick="calClear()">🗑 Plan मेट्नुहोस्</button>
+</div></div>
+
+<div class="sec" id="sec-hk"><div class="card">
+<label>🎣 Hook-बैंक (पहिलो २ सेकेन्डको वाक्य)</label>
+<div class="chiprow" id="hkChips"></div>
+<button class="btn sm" onclick="hkRandom()">🎲 जुनसुकै एउटा देऊ</button>
+<div id="hkList" style="margin-top:10px"></div>
+<div style="border-top:1px solid rgba(148,163,184,.15);margin:13px 0 4px;"></div>
+<label>💬 सवाल/Poll post (comment तान्ने)</label>
+<button class="btn sm" onclick="pollGen()">🎲 एउटा सवाल-post देऊ</button>
+<div class="out" id="pollOut"></div>
+</div></div>
+
 <div class="sec" id="sec-vid"><div class="card">
 <label>कुन सेवाको video?</label>
 <select id="vsvc"><option>UPVC/Aluminum झ्याल-ढोका</option><option>Interior Design</option><option>घर निर्माण</option><option>Gypsum Ceiling</option><option>Solar जडान</option><option>Painting</option><option>Renovation</option></select>
-<button class="btn" onclick="vid()">🎬 Video Idea दिनुहोस्</button>
+<button class="btn" onclick="vid()">🎬 Shot-list (के खिच्ने)</button>
+<button class="btn btn2" onclick="scriptGen()">🎙️ बोल्ने Script (15–30 सेक)</button>
 <div class="out" id="vout"></div>
-<p class="small">📌 TikTok नियम: पहिलो २ सेकेन्डमा hook-text देखाउनुहोस्, video 15-30 सेकेन्ड, अन्त्यमा फोन नम्बर ठूलो अक्षरमा। Profile bio मा website link राख्न नबिर्सनुहोस्: prerakmultipurpose.com</p>
+<p class="small">📌 TikTok नियम: पहिलो २ सेकेन्डमा hook-text, video 15–30 सेक, अन्त्यमा नम्बर ठूलो। Bio मा: prerakmultipurpose.com</p>
+</div></div>
+
+<div class="sec" id="sec-ser"><div class="card">
+<p class="small" style="margin-top:0">Series ले दर्शक <b style="color:var(--gl)">फर्काउँछ</b> — हरेक २-३ दिनमा एक भाग post गर्नुहोस्।</p>
+<label>विषय छान्नुहोस्</label>
+<select id="serSel"></select>
+<button class="btn" onclick="serGen()">🧵 सबै भाग बनाऊ</button>
+<div class="out" id="serOut"></div>
 </div></div>
 
 <div class="sec" id="sec-rev"><div class="card">
@@ -93,88 +134,267 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--gd)}
 <label>AI Worker URL (ऐच्छिक — website को AI assistant वालै URL)</label>
 <input id="wurl" placeholder="https://prerak-ai.xxxx.workers.dev">
 <button class="btn" onclick="saveW()">💾 Save</button>
-<p class="small">यो राखे "🤖 AI बाट नयाँ" बटन खुल्छ — हरेकपल्ट ताजा caption AI ले लेख्छ। नराखे पनि tool को आफ्नै दिमागले चलिरहन्छ।</p>
+<p class="small">यो राखे "🤖 AI बाट नयाँ" बटन खुल्छ। नराखे पनि tool को आफ्नै दिमागले चलिरहन्छ। v2 मा नयाँ: नदोहोरिने-memory — भर्खर दिएका caption/hook फेरि आउँदैनन्।</p>
 </div></div>
 
-<div class="foot">PRERAK Multipurpose Pvt. Ltd. · 9801069733 · prerakmultipurpose.com</div>
+<div class="foot">PRERAK Multipurpose Pvt. Ltd. · 9801069733 · prerakmultipurpose.com · Sahayak v2</div>
 </div>
 <script>
 "use strict";
 var PH="9801069733", SITE="prerakmultipurpose.com";
 function $(s){return document.querySelector(s)}
+function esc(s){return String(s==null?"":s).replace(/</g,"&lt;")}
 var P="tiktok";
 function plat(p){P=p;document.querySelectorAll(".plat").forEach(function(x){x.classList.toggle("on",x.dataset.p===p)})}
 function tab(s){document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("on",x.dataset.s===s)});document.querySelectorAll(".sec").forEach(function(x){x.classList.toggle("on",x.id==="sec-"+s)})}
+
+/* ── नदोहोरिने-memory ── */
+function usedGet(){try{return JSON.parse(localStorage.getItem("prkUsed2")||"{}")}catch(e){return{}}}
+function usedPut(u){try{localStorage.setItem("prkUsed2",JSON.stringify(u))}catch(e){}}
+function pickFresh(poolId,arr){
+  var u=usedGet(),last=u[poolId]||[],cand=[];
+  for(var i=0;i<arr.length;i++){if(last.indexOf(i)===-1)cand.push(i)}
+  if(!cand.length){last=[];for(var j=0;j<arr.length;j++)cand.push(j)}
+  var idx=cand[Math.floor(Math.random()*cand.length)];
+  last.push(idx);var keep=Math.max(1,Math.floor(arr.length/2));
+  while(last.length>keep)last.shift();
+  u[poolId]=last;usedPut(u);
+  return arr[idx];
+}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-var HOOKS={work:["यस्तो काम {LOC} मा! 😍","{SVC} यसरी बन्छ 👇","आजको site बाट सिधै 🔥","हेर्नुहोस् त कस्तो निखार!"],
-ba:["पहिले कस्तो, अहिले कस्तो! 😱","Before देखेर After सम्म रोकिनुहोस् 👀","यही कोठा हो त?! 🤯"],
-offer:["{LOC} बासीलाई खुसीको खबर! 🎉","सीमित समय — नछुटाउनुहोस्! ⏳"],
-fest:["यो दशैं नयाँ घरमा! 🪔","चाडपर्वअघि घर चम्काऔं ✨"],
-info:["यो कुरा घर बनाउनुअघि जान्नैपर्छ! 💡","धेरैले नजानेको कुरा 👇"]};
-var BODIES={work:["{LOC} मा {SVC} को काम सम्पन्न{EX}। गुणस्तर र समयमै काम — हाम्रो वाचा।","आज {LOC} मा {SVC}{EX}। हरेक काममा engineer-निगरानी, लिखित warranty।"],
-ba:["{LOC} को यो transformation हेर्नुहोस् — {SVC}{EX}। तपाईंको घर पनि यस्तै बन्न सक्छ!","पुरानोलाई नयाँ बनाउने हाम्रो काम: {SVC}, {LOC}{EX}।"],
-offer:["{SVC} मा विशेष छुट{EX}! {LOC} र वरपर — निःशुल्क site visit सहित। आजै बुक गर्नुहोस्।","सीमित समयको offer: {SVC}{EX}। पहिलो आउनेलाई प्राथमिकता!"],
-fest:["चाडपर्व विशेष: {SVC}{EX}। दशैं-तिहारअघि नै काम सक्ने ग्यारेन्टी — {LOC} र वरपर।","यो चाडपर्व, घरलाई नयाँ रूप — {SVC}{EX}। अहिले बुक गर्नुहोस्, भीड अघि।"],
-info:["{SVC} गर्दा ध्यान दिनुपर्ने कुरा{EX} — विस्तृत सल्लाह निःशुल्क। भरपर्दो काम, लिखित warranty।","{SVC} को सही तरिका र मूल्य जान्न सिधै सोध्नुहोस्{EX} — निःशुल्क परामर्श।"]};
-var CTA=["📞 "+PH+" — निःशुल्क site visit!","📞/💬 "+PH+" मा आजै सम्पर्क गर्नुहोस्!","WhatsApp: "+PH+" — तुरुन्तै जवाफ!"];
-var TAG_SVC={"UPVC":"#UPVC #UPVCWindows #AluminumWindows","Interior":"#InteriorDesign #HomeDecor #InteriorNepal","निर्माण":"#Construction #GharNirman #NewHouse","Gypsum":"#GypsumCeiling #FalseCeiling","Solar":"#SolarNepal #SolarPanel","Painting":"#Painting #HousePainting","Plumbing":"#Plumbing","Electrical":"#Electrical","Renovation":"#Renovation #HomeMakeover","Material":"#ConstructionMaterial"};
+
+/* ── १२ शैली (archetypes) ── */
+var ARCH={
+ work:{l:"आजको काम",ico:"🏗️",hooks:["यस्तो काम {LOC} मा! 😍","{SVC} यसरी बन्छ 👇","आजको site बाट सिधै 🔥","हेर्नुहोस् त कस्तो निखार!"],
+  bodies:["{LOC} मा {SVC} को काम सम्पन्न{EX}। गुणस्तर र समयमै काम — हाम्रो वाचा।","आज {LOC} मा {SVC}{EX}। हरेक काममा engineer-निगरानी, लिखित warranty।","{SVC} — {LOC}{EX}। काम बोल्छ, हामी होइन। 💪"]},
+ ba:{l:"Before→After",ico:"✨",hooks:["पहिले कस्तो, अहिले कस्तो! 😱","Before देखेर After सम्म रोकिनुहोस् 👀","यही कोठा हो त?! 🤯"],
+  bodies:["{LOC} को यो transformation — {SVC}{EX}। तपाईंको घर पनि यस्तै बन्न सक्छ!","पुरानोलाई नयाँ बनाउने हाम्रो काम: {SVC}, {LOC}{EX}।","२ photo, १ कथा: {SVC} ले के फरक पार्छ — {LOC}{EX}।"]},
+ tips:{l:"Tips/शिक्षा",ico:"💡",hooks:["यो कुरा घर बनाउनुअघि जान्नैपर्छ! 💡","धेरैले नजानेको कुरा 👇","पैसा जोगाउने १ सजिलो तरिका:"],
+  bodies:["{SVC} गर्दा ध्यान दिनुपर्ने ३ कुरा{EX} — comment मा सोध्नुहोस्, निःशुल्क सल्लाह दिन्छौं।","{SVC} छान्नुअघि यी कुरा हेर्नुहोस्{EX}। सही जानकारी = सही लगानी।","सस्तो कि टिकाउ? {SVC} मा यो फरक बुझ्नुहोस्{EX}।"]},
+ price:{l:"मूल्य-पारदर्शिता",ico:"💰",hooks:["{LOC} मा यसको rate कति? 🤔","लुकाउने कुरा छैन — rate यही हो:","बजेट यति भए के-के हुन्छ?"],
+  bodies:["{SVC} — मूल्य तपाईंको काम-आकारअनुसार; रु.1,200/sq ft देखि सुरु{EX}। निःशुल्क नाप-जाँचपछि ठ्याक्कै अंक।","पारदर्शी मूल्य, लिखित estimate — {SVC}{EX}। लुकेको शुल्क शून्य।","{SVC} को खर्च कति पर्छ? {EX} — site हेरेर १ दिनभित्र quotation।"]},
+ myth:{l:"भ्रम vs सत्य",ico:"🚫",hooks:["यो भ्रम अझै पाल्नुभएको छ? ❌","सत्य यो पो रहेछ! 👇","मिस्त्रीले भनेको सबै सही हुँदैन:"],
+  bodies:["भ्रम: {SVC} महँगो मात्र हुन्छ। सत्य: सही योजनाले बजेटमै अटाउँछ{EX}।","भ्रम: जो-कोहीले गर्न सक्छ। सत्य: {SVC} मा अनुभव र warranty नै फरक हो{EX}।","भ्रम: पछि गरौंला। सत्य: ढिलो गर्दा {SVC} को खर्च बढ्छ{EX}।"]},
+ team:{l:"Team/भित्री-दृश्य",ico:"👷",hooks:["काम पछाडिको मेहनत 👷","हाम्रो टोली, तपाईंको भरोसा 🤝","Site को साँचो दृश्य:"],
+  bodies:["यो काम गर्ने हात हरू — हाम्रो {LOC} टोली, {SVC} मा {EX}। मान्छे राम्रो भए काम राम्रो।","Behind the scenes: {SVC} — योजना, नाप, मिहिनेत{EX}। त्यसपछि मात्र निखार।","१३+ वर्षको अनुभव बोकेको टोली — {SVC}, {LOC}{EX}।"]},
+ story:{l:"ग्राहक-कथा",ico:"📖",hooks:["एउटा ग्राहकको कथा सुन्नुहोस् 📖","उहाँले पहिला अरूलाई देखाउनुभएछ...","'ढुक्क भएँ' — किन भन्नुभयो?"],
+  bodies:["{LOC} का एक ग्राहक — {SVC} चाहिएको, बजेटको चिन्ता। नाप-जाँच निःशुल्क, काम समयमै{EX}। अहिले: खुसी परिवार, हामीलाई referral!","सुरुमा शंका, अन्त्यमा भरोसा — {SVC} को यो काम {LOC} मा{EX}। ग्राहककै शब्द: 'फेरि पनि यहीँ आउँछु।'","{SVC} — सपना उहाँको, जिम्मेवारी हाम्रो। {LOC}{EX}।"]},
+ poll:{l:"सवाल/Poll",ico:"💬",hooks:["तपाईंको राय के? 👇","Comment मा भन्नुहोस्:","हामी जान्न चाहन्छौं —"],
+  bodies:["{SVC} बारे तपाईंको सबैभन्दा ठूलो प्रश्न के छ? Comment गर्नुहोस् — हरेकलाई जवाफ दिन्छौं!{EX}","A कि B? {SVC} मा तपाईं के रोज्नुहुन्छ — comment मा! {EX}","घर बनाउँदा सबैभन्दा गाह्रो के लाग्छ? भन्नुहोस्, समाधान हामी दिन्छौं।{EX}"]},
+ fest:{l:"चाडपर्व",ico:"🪔",hooks:["यो चाडपर्व नयाँ घरमा! 🪔","पर्वअघि घर चम्काऔं ✨","शुभकामनासँगै एउटा खबर:"],
+  bodies:["चाडपर्व विशेष: {SVC}{EX} — पर्वअघि नै सक्ने ग्यारेन्टी, {LOC} र वरपर।","यो पर्व, घरलाई नयाँ रूप — {SVC}{EX}। भीड अघि बुक गर्नुहोस्।","परिवार जुट्ने बेला, घर पनि तयार होस् — {SVC}{EX}।"]},
+ offer:{l:"Offer/छुट",ico:"🎉",hooks:["{LOC} बासीलाई खुसीको खबर! 🎉","सीमित समय — नछुटाउनुहोस्! ⏳","यो offer दोहोरिँदैन:"],
+  bodies:["{SVC} मा विशेष offer{EX}! निःशुल्क site visit सहित — {LOC} र वरपर। आजै सम्पर्क।","सीमित slot: {SVC}{EX}। पहिलो आउनेलाई प्राथमिकता!","यो महिना मात्र: {SVC}{EX} — बुक गर्न ढिलो नगर्नुहोस्।"]},
+ faq:{l:"FAQ-जवाफ",ico:"❓",hooks:["सबैले सोध्ने प्रश्न: 👇","यसको जवाफ खोज्दै हुनुहुन्छ?","छोटो प्रश्न, सिधा जवाफ:"],
+  bodies:["प्रश्न: {SVC} मा कति समय लाग्छ? जवाफ: काम-आकारअनुसार; नाप-जाँचपछि ठ्याक्कै मिति दिन्छौं{EX}।","प्रश्न: warranty कति? जवाफ: {SVC} मा लिखित warranty — कागजमै{EX}।","प्रश्न: पहिलो पाइला के? जवाफ: निःशुल्क site visit — फोन गरे पुग्छ{EX}।"]},
+ series:{l:"Series-भाग",ico:"🧵",hooks:["नयाँ series सुरु! भाग १ 👇","अघिल्लो भाग हेर्नुभयो? अब यो:","Series जारी छ —"],
+  bodies:["Series: {SVC} बुझौं — आजको भाग{EX}। भोलि अर्को भाग, follow गरिराख्नुहोस्!","{SVC} को यात्रा, भाग-भाग गरेर{EX}। छुटे profile मा सबै छन्।","सिक्दै जाऔं: {SVC}{EX} — अर्को भाग पर्सि!"]}
+};
+var CTA=["📞 "+PH+" — निःशुल्क site visit!","📞/💬 "+PH+" मा आजै सम्पर्क!","WhatsApp: "+PH+" — तुरुन्तै जवाफ!"];
+var TAG_SVC={"UPVC":"#UPVC #UPVCWindows","Interior":"#InteriorDesign #InteriorNepal","निर्माण":"#Construction #GharNirman","Gypsum":"#GypsumCeiling","Solar":"#SolarNepal","Painting":"#Painting","Plumbing":"#Plumbing","Electrical":"#Electrical","Renovation":"#Renovation","Material":"#ConstructionMaterial"};
 function tags(svc){var t="";for(var k in TAG_SVC){if(svc.indexOf(k)>-1){t=TAG_SVC[k];break}}
 var base="#PrerakMultipurpose #Hetauda #Nepal "+t;
-if(P==="tiktok")return base+" #NepaliTikTok #ForYou #fyp #GharBanau #ViralNepal";
+if(P==="tiktok")return base+" #NepaliTikTok #ForYou #fyp #GharBanau";
 if(P==="fb")return base+" #HetaudaConstruction #Makwanpur";
 return base}
 function fill(s,svc,loc,ex){return s.split("{SVC}").join(svc).split("{LOC}").join(loc).split("{EX}").join(ex?" — "+ex:"")}
-function capHTML(i,body,hook){
-var full=(P==="tiktok"?hook+"\n\n":"")+body+"\n\n"+pick(CTA)+"\n\n"+tags($("#svc").value);
-return '<div class="cap"><div class="cph"><span>CAPTION '+i+(P==="tiktok"?" · TIKTOK":"")+'</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+full.replace(/</g,"&lt;").replace(/\n/g,"<br>")+'</div></div>'}
+function compose(kind,svc,loc,ex){
+  var A=ARCH[kind]||ARCH.work;
+  var hook=fill(pickFresh("h_"+kind,A.hooks),svc,loc,"");
+  var body=fill(pickFresh("b_"+kind,A.bodies),svc,loc,ex);
+  return {hook:hook,text:body+"\n\n"+pick(CTA)+"\n\n"+tags(svc)};
+}
+function capHTML(tag,c,withHook){
+  var full=(withHook?c.hook+"\n\n":"")+c.text;
+  return '<div class="cap"><div class="cph"><span>'+tag+'</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+esc(full).replace(/\n/g,"<br>")+'</div></div>';
+}
 function gen(){var svc=$("#svc").value,loc=$("#loc").value||"हेटौंडा",k=$("#kind").value,ex=$("#extra").value.trim();
-var o=$("#out");o.style.display="block";var html="";
-if(P==="tiktok")html+='<div class="hookbox"><b>🎬 VIDEO मा लेख्ने HOOK (पहिलो २ सेकेन्ड)</b>'+fill(pick(HOOKS[k]),svc,loc,"")+'</div>';
-var used=[];
-for(var i=1;i<=3;i++){var b;do{b=pick(BODIES[k])}while(used.indexOf(b)>-1&&used.length<BODIES[k].length);used.push(b);
-html+=capHTML(i,fill(b,svc,loc,ex),fill(pick(HOOKS[k]),svc,loc,""))}
-o.innerHTML=html;try{o.scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){}}
-function cp(btn){var t=btn.closest(".cap").querySelector(".ct").innerText;
+  var o=$("#out");o.style.display="block";var html="";
+  var A=ARCH[k];
+  if(P==="tiktok")html+='<div class="hookbox"><b>🎬 VIDEO HOOK (पहिलो २ सेक)</b>'+esc(fill(pickFresh("hh_"+k,A.hooks),svc,loc,""))+'</div>';
+  for(var i=1;i<=3;i++){var c=compose(k,svc,loc,ex);
+    html+=capHTML("CAPTION "+i+" · "+A.l.toUpperCase(),{hook:c.hook,text:c.text},P==="tiktok");}
+  o.innerHTML=html;try{o.scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){}}
+function cp(btn){var t=btn.closest(".cap, .hitem").querySelector(".ct").innerText;
 (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){ok(btn)}).catch(function(){
 var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");ok(btn)}catch(e){}ta.remove()})}
-function ok(btn){btn.textContent="✓ Copied";btn.classList.add("ok");setTimeout(function(){btn.textContent="📋 Copy";btn.classList.remove("ok")},1800)}
-var VIDS={"UPVC":["1️⃣ पुरानो झ्याल देखाउनुहोस् (2 सेक)","2️⃣ नाप-जाँच + frame बस्दै (timelapse)","3️⃣ नयाँ झ्याल खोल्दै-बन्द गर्दै (smooth!)","4️⃣ अन्त्यमा: फोन नम्बर ठूलो text मा"],
-"Interior":["1️⃣ खाली/पुरानो कोठा (2 सेक)","2️⃣ काम चल्दैको 3 झलक (छिटो-छिटो)","3️⃣ तयार कोठाको slow reveal 😍","4️⃣ नम्बर + 'निःशुल्क design सल्लाह'"],
-"निर्माण":["1️⃣ जग/ढलान को दृश्य","2️⃣ मिस्त्री-टोली काम गर्दै","3️⃣ माथिल्लो तला/finish झलक","4️⃣ 'तपाईंको सपनाको घर — ' + नम्बर"],
-"Gypsum":["1️⃣ खाली ceiling","2️⃣ frame बन्दै (timelapse)","3️⃣ light सहितको final look ✨","4️⃣ नम्बर + rate जान्न 'सोध्नुहोस्'"],
-"Solar":["1️⃣ छत खाली","2️⃣ panel उठाउँदै-जड्दै","3️⃣ meter/battery + बत्ती बल्दै","4️⃣ 'बिजुली bill घटाउनुहोस्' + नम्बर"],
-"Painting":["1️⃣ पुरानो भित्ता","2️⃣ रंग लाग्दै (satisfying strokes!)","3️⃣ before-after split","4️⃣ नम्बर"],
-"Renovation":["1️⃣ जीर्ण अवस्था","2️⃣ भत्काउँदै-बनाउँदै झलक","3️⃣ नयाँ रूप reveal","4️⃣ 'पुरानो घर, नयाँ जीवन' + नम्बर"]};
-function vid(){var s=$("#vsvc").value,list=null;for(var k in VIDS){if(s.indexOf(k)>-1){list=VIDS[k];break}}
-list=list||VIDS["निर्माण"];
-var hook=fill(pick(HOOKS.work),s,$("#loc")?($("#loc").value||"हेटौंडा"):"हेटौंडा","");
-$("#vout").style.display="block";
-$("#vout").innerHTML='<div class="hookbox"><b>🎬 HOOK TEXT</b>'+hook+'</div><div class="cap"><div class="cph"><span>SHOT LIST (15–30 सेक)</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+list.join("<br>")+'<br><br>🎵 Trending nepali sound राख्नुहोस् · अन्त्यमा: '+PH+'</div></div>'}
+function ok(btn){btn.textContent="✓";btn.classList.add("ok");setTimeout(function(){btn.textContent="📋 Copy";btn.classList.remove("ok")},1600)}
+
+/* ── 🗓️ ३०-दिने Calendar ── */
+var WD=["आइत","सोम","मंगल","बुध","बिही","शुक्र","शनि"];
+var DAYRULE={3:"ba",5:"offer",6:"team"}; /* बुध=B/A, शुक्र=offer, शनि=team */
+function calBuild(){
+  var kinds=Object.keys(ARCH);
+  var svcs=[];document.querySelectorAll("#svc option").forEach(function(o){svcs.push(o.value)});
+  var seq=[],pool=[];
+  for(var d=0;d<30;d++){
+    var dt=new Date();dt.setDate(dt.getDate()+d);
+    var wd=dt.getDay(),k;
+    if(DAYRULE[wd]!==undefined){k=DAYRULE[wd]}
+    else{
+      if(!pool.length){pool=kinds.slice();for(var s=pool.length-1;s>0;s--){var r=Math.floor(Math.random()*(s+1)),t=pool[s];pool[s]=pool[r];pool[r]=t}}
+      k=pool.pop();
+      if(seq.length&&seq[seq.length-1].k===k){pool.unshift(k);k=pool.pop()||k}
+    }
+    var svc=svcs[d%svcs.length];
+    var c=compose(k,svc,"हेटौंडा","");
+    seq.push({d:dt.toISOString().slice(0,10),wd:wd,k:k,svc:svc,hook:c.hook,text:c.text});
+  }
+  return seq;
+}
+function calSave(seq){try{localStorage.setItem("prkCal2",JSON.stringify({made:Date.now(),seq:seq}))}catch(e){}}
+function calLoad(){try{var x=JSON.parse(localStorage.getItem("prkCal2")||"null");return x&&x.seq?x.seq:null}catch(e){return null}}
+function calMake(){var seq=calBuild();calSave(seq);calRender(seq);dayTip();}
+function calClear(){try{localStorage.removeItem("prkCal2")}catch(e){}$("#calWrap").innerHTML="";$("#calDel").style.display="none";dayTip();}
+function calRender(seq){
+  if(!seq){$("#calWrap").innerHTML="";$("#calDel").style.display="none";return}
+  var html="";
+  for(var i=0;i<seq.length;i++){var e=seq[i],A=ARCH[e.k];
+    html+='<div class="calrow" onclick="this.classList.toggle(\'open\')">'
+      +'<div class="crh"><span class="dt">'+e.d.slice(5)+' '+WD[e.wd]+'</span>'
+      +'<span class="badge">'+A.ico+' '+A.l+'</span>'
+      +'<span style="font-size:.66rem;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+esc(e.svc)+'</span></div>'
+      +'<div class="body">'
+      +'<div class="hookbox"><b>🎬 HOOK</b>'+esc(e.hook)+'</div>'
+      +'<div class="cap"><div class="cph"><span>CAPTION</span><button class="cpy" onclick="event.stopPropagation();cp(this)">📋 Copy</button></div><div class="ct">'+esc(e.hook+"\n\n"+e.text).replace(/\n/g,"<br>")+'</div></div>'
+      +'</div></div>';
+  }
+  $("#calWrap").innerHTML=html;$("#calDel").style.display="";
+}
+
+/* ── 🎣 Hook-बैंक + Poll ── */
+var HOOKBANK={
+ "Transformation":["पहिले कस्तो थियो, हेर्नुहोस् त! 😱","यो before देखेर after नहेरी नबस्नुहोस् 👀","३० दिनमा यत्रो फरक?! 🤯","पुरानो घर, नयाँ ज्यान ✨","यही कोठा हो भन्दा पत्याउनुहुन्न!"],
+ "मूल्य/बजेट":["{यति} बजेटमा के-के हुन्छ? 🤔","Rate लुकाउनेहरूदेखि सावधान 👇","सस्तो खोज्दा महँगो पर्ने कथा:","हेटौंडामा यसको साँचो rate:","बजेट सानो? तरिका ठूलो! 💡"],
+ "Tips/ज्ञान":["घर बनाउनुअघि यो नजाने पछुताउनुहुन्छ!","मिस्त्रीले नभन्ने १ कुरा 👇","UPVC कि Aluminum? २० सेकेन्डमा जवाफ","यो गल्ती ९०% ले गर्छन् ❌","पैसा जोगाउने सानो जुक्ति:"],
+ "जिज्ञासा":["यसभित्र के छ, अनुमान गर्नुहोस् 👀","अन्त्यसम्म हेर्नुहोस्, surprise छ 🎁","यो काम कति दिनमा सकियो होला?","Site मा आज यस्तो भयो...","सबैले सोध्ने त्यही प्रश्नको जवाफ:"],
+ "Local/हेटौंडा":["हेटौंडाबासीका लागि खास खबर 📍","मकवानपुरमै यस्तो काम! 🇳🇵","चितवनसम्म सेवा — प्रमाण यो:","तपाईंकै टोलमा हाम्रो काम 👇","हेटौंडाको सबैभन्दा व्यस्त टोली?"],
+ "Urgency/Offer":["यो offer भोलि हुँदैन ⏳","Slot सकिँदै — छिटो! 🏃","पर्वअघिको अन्तिम मौका 🪔","पहिलो १० जनालाई मात्र:","आज सोध्नेलाई प्राथमिकता!"]
+};
+var POLLS=[
+ "तपाईंको घरमा पहिले के बनाउने: 🍳 Kitchen कि 🛏️ Bedroom? Comment मा!",
+ "झ्यालमा के रोज्नुहुन्छ: A) UPVC  B) Aluminum? किन — comment गर्नुहोस्!",
+ "घर बनाउँदा सबैभन्दा गाह्रो: A) बजेट B) मिस्त्री C) डिजाइन? भन्नुहोस् 👇",
+ "Ceiling: A) साधारण B) Gypsum design? तपाईंको छनोट?",
+ "बिजुली bill घटाउन solar हाल्ने सोच छ? हो/होइन — comment!",
+ "पुरानो घर: A) Renovation B) नयाँ बनाउने? तपाईं के गर्नुहुन्थ्यो?",
+ "रङ छान्दा: A) आफैं B) designer को सल्लाह? 🎨",
+ "तपाईंको सपनाको घरको १ चीज के हो? Comment मा लेख्नुहोस् 🏡"
+];
+var hkCat=Object.keys(HOOKBANK)[0];
+function hkChips(){var html="";Object.keys(HOOKBANK).forEach(function(c){html+='<span class="chip'+(c===hkCat?" on":"")+'" onclick="hkSet(\''+c+'\')">'+c+'</span>'});$("#hkChips").innerHTML=html}
+function hkSet(c){hkCat=c;hkChips();hkRender()}
+function hkRender(){var html="";HOOKBANK[hkCat].forEach(function(h){html+='<div class="hitem"><span class="ct">'+esc(h)+'</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div>'});$("#hkList").innerHTML=html}
+function hkRandom(){var all=[];Object.keys(HOOKBANK).forEach(function(c){HOOKBANK[c].forEach(function(h){all.push(h)})});
+ var h=pickFresh("hkbank",all);
+ $("#hkList").innerHTML='<div class="hitem" style="border-color:rgba(212,166,74,.55)"><span class="ct">'+esc(h)+'</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div>'+$("#hkList").innerHTML}
+function pollGen(){var p=pickFresh("polls",POLLS);
+ var full=p+"\n\n"+pick(CTA)+"\n\n#PrerakMultipurpose #Hetauda"+(P==="tiktok"?" #NepaliTikTok #fyp":"");
+ $("#pollOut").style.display="block";
+ $("#pollOut").innerHTML=capHTML("POLL POST",{hook:"",text:full},false)}
+
+/* ── 🎬 Video: shot-list + script ── */
+var VIDS={"UPVC":["1️⃣ पुरानो झ्याल (2 सेक)","2️⃣ नाप-जाँच + frame बस्दै (timelapse)","3️⃣ नयाँ झ्याल smooth खुल्दै","4️⃣ नम्बर ठूलो text मा"],
+"Interior":["1️⃣ खाली/पुरानो कोठा","2️⃣ काम चल्दैका ३ झलक","3️⃣ तयार कोठाको slow reveal 😍","4️⃣ नम्बर + 'निःशुल्क सल्लाह'"],
+"निर्माण":["1️⃣ जग/ढलान","2️⃣ टोली काम गर्दै","3️⃣ माथिल्लो तला/finish","4️⃣ 'सपनाको घर' + नम्बर"],
+"Gypsum":["1️⃣ खाली ceiling","2️⃣ frame बन्दै (timelapse)","3️⃣ light सहित final ✨","4️⃣ नम्बर"],
+"Solar":["1️⃣ छत खाली","2️⃣ panel जड्दै","3️⃣ meter + बत्ती बल्दै","4️⃣ 'bill घटाउनुहोस्' + नम्बर"],
+"Painting":["1️⃣ पुरानो भित्ता","2️⃣ रङ लाग्दै (satisfying!)","3️⃣ before-after split","4️⃣ नम्बर"],
+"Renovation":["1️⃣ जीर्ण अवस्था","2️⃣ भत्काउँदै-बनाउँदै","3️⃣ नयाँ रूप reveal","4️⃣ नम्बर"]};
+function vlist(s){for(var k in VIDS){if(s.indexOf(k)>-1)return VIDS[k]}return VIDS["निर्माण"]}
+function vid(){var s=$("#vsvc").value;
+ var hook=fill(pickFresh("vh",ARCH.work.hooks),s,"हेटौंडा","");
+ $("#vout").style.display="block";
+ $("#vout").innerHTML='<div class="hookbox"><b>🎬 HOOK TEXT</b>'+esc(hook)+'</div><div class="cap"><div class="cph"><span>SHOT LIST (15–30 सेक)</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+vlist(s).join("<br>")+'<br><br>🎵 Trending nepali sound · अन्त्यमा: '+PH+'</div></div>'}
+var SCRIPT_OPEN=["नमस्ते! म Prerak बाट।","हेटौंडाबाट नमस्कार!","एउटा काम देखाउँछु है आज —"];
+var SCRIPT_MID={
+ "UPVC":["पुरानो झ्यालले हावा-धुलो छिराउँछ, आवाज रोक्दैन।","UPVC ले घर शान्त, सफा र सुरक्षित बनाउँछ।","जडान २-३ दिनमै, लिखित warranty सहित।"],
+ "Interior":["कोठा उही, तर design ले जीवन फेरिन्छ।","तपाईंको बजेटमै मिल्ने plan हामी बनाउँछौं।","काम सकिएपछि सफाइसमेत हाम्रै जिम्मा।"],
+ "Solar":["बिजुलीको bill महिनैपिच्छे बढ्दो छ?","एकपटकको solar जडानले वर्षौं बचत।","सरकारी मापदण्ड अनुसार, warranty सहित।"],
+ "def":["गुणस्तरमा सम्झौता छैन — सामान होस् या काम।","हरेक site मा engineer-निगरानी हुन्छ।","समयमै काम सक्ने हाम्रो पहिचान हो।"]};
+function scriptGen(){var s=$("#vsvc").value;
+ var mid=SCRIPT_MID.def;for(var k in SCRIPT_MID){if(k!=="def"&&s.indexOf(k)>-1){mid=SCRIPT_MID[k];break}}
+ var hook=fill(pickFresh("sch",ARCH.tips.hooks),s,"हेटौंडा","");
+ var sc="[HOOK — screen मा लेख्ने]\n"+hook+"\n\n[बोल्ने]\n"+pickFresh("sco",SCRIPT_OPEN)+"\n"+mid.join("\n")+"\n\n[अन्त्य]\nनिःशुल्क site visit को लागि "+PH+" — screen मा नम्बर ठूलो देखाउनुहोस्।";
+ $("#vout").style.display="block";
+ $("#vout").innerHTML=capHTML("🎙️ VOICEOVER SCRIPT (15–30 सेक)",{hook:"",text:sc},false)}
+
+/* ── 🧵 Series ── */
+var SERIES=[
+ {t:"घर बनाउने ५ चरण",parts:["जग्गा र नक्सा — कहाँबाट सुरु?","जग र ढलान — बलियोपनको आधार","गारो, छत, झ्याल-ढोका","Wiring, plumbing, plaster","Finishing + रङ — घर तयार!"]},
+ {t:"UPVC बुझौं (४ भाग)",parts:["UPVC के हो, किन चर्चा?","UPVC vs Aluminum — फरक","मूल्य र आयु — के पाइन्छ?","जडान-प्रक्रिया, २ दिनको काम"]},
+ {t:"बजेटमा Interior — ५ idea",parts:["रङले फेर्ने जादु","Lighting = आधा design","Gypsum को सानो टच","Furniture को सही नाप","पर्दा-कार्पेटको तालमेल"]},
+ {t:"Solar जान्नैपर्ने ४ कुरा",parts:["कति kW चाहिन्छ?","खर्च र बचतको हिसाब","Battery चाहिन्छ कि चाहिँदैन?","Warranty र मर्मत"]},
+ {t:"Renovation कथा (३ भाग)",parts:["पुरानो घरको जाँच","के फेर्ने, के जोगाउने","नयाँ रूप — नतिजा!"]}
+];
+function serFill(){var html="";SERIES.forEach(function(s,i){html+='<option value="'+i+'">'+s.t+' ('+s.parts.length+' भाग)</option>'});$("#serSel").innerHTML=html}
+function serGen(){var s=SERIES[parseInt($("#serSel").value,10)||0];
+ var html="",n=s.parts.length;
+ for(var i=0;i<n;i++){
+   var hook="🧵 "+s.t+" — भाग "+(i+1)+"/"+n;
+   var body=s.parts[i]+"\n\nयो series मा हरेक भाग छोटो र काम-लाग्ने छ — follow गरिराख्नुहोस्!\n\n"+pick(CTA)+"\n\n#PrerakMultipurpose #Hetauda"+(P==="tiktok"?" #NepaliTikTok #fyp":"")+" #भाग"+(i+1);
+   html+=capHTML("भाग "+(i+1)+"/"+n,{hook:hook,text:body},true);
+ }
+ $("#serOut").style.display="block";$("#serOut").innerHTML=html}
+
+/* ── ⭐ Review ── */
 function rev(){var n=$("#cname").value.trim()||"दाइ/दिदी",w=$("#cwork").value.trim()||"काम";
 var msg="नमस्ते "+n+" 🙏\n\nतपाईंको "+w+" को काम मन पर्‍यो होला भन्ने आशा छ! हामीलाई २ मिनेट निकालेर Google मा ⭐ review लेखिदिनुभयो भने हाम्रो सानो व्यवसायलाई ठूलो सहयोग हुनेछ।\n\nGoogle मा 'Prerak Multipurpose Hetauda' खोजेर review लेख्न सकिन्छ।\n\nधन्यवाद!\n— Prerak Multipurpose Pvt. Ltd.\n"+PH;
 $("#rout").style.display="block";
-$("#rout").innerHTML='<div class="cap"><div class="cph"><span>WHATSAPP MESSAGE</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+msg.replace(/\n/g,"<br>")+'</div></div><a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank">💬 WhatsApp मा Share गर्नुहोस्</a>'}
-var DAYS=[["आइतबार","हप्ताको सुरु — यो हप्ताको काम-योजना post गर्नुहोस्; ग्राहकलाई 'यो हप्ता slot खाली छ' भन्ने सन्देश राम्रो जान्छ।"],
-["सोमबार","आजको site बाट 'काम-देखाउने' TikTok — बिहानको काम, बेलुका ६-९ बजे post।"],
-["मंगलबार","सेवा-जानकारी/टिप्स post — 'UPVC कि Aluminum?' जस्ता प्रश्नले comment तान्छ।"],
-["बुधबार","Before → After दिन! सबैभन्दा धेरै हेरिने content — दुवै photo/video जोडेर।"],
-["बिहीबार","ग्राहक-कथा/review screenshot post गर्नुहोस् — भरोसा बढ्छ।"],
-["शुक्रबार","Offer/छुट post — शनिबार बिदामा मान्छे निर्णय गर्छन्, अघिल्लो साँझ नै पुग्नुहोस्।"],
-["शनिबार","हल्का post — team photo वा behind-the-scenes; अनि हप्ताभरको video बाट best clip फेरि post।"]];
-(function(){var d=new Date().getDay();var t=DAYS[d];
-$("#dayTip").innerHTML="<b>📅 आज "+t[0]+" — के post गर्ने?</b><p>"+t[1]+"</p><p style='margin-top:6px;opacity:.85'>⏰ TikTok उत्तम समय: बेलुका ६–९ · FB: दिउँसो १२–२ र बेलुका ७–९</p>";
-var u=localStorage.getItem("prkWURL")||"";if(u){$("#wurl").value=u;$("#aiBtn").style.display="block"}})();
-function saveW(){var u=$("#wurl").value.trim();localStorage.setItem("prkWURL",u);$("#aiBtn").style.display=u?"block":"none";alert(u?"✅ Saved — अब AI बटन खुल्यो!":"URL हटाइयो — template-mode मा चल्नेछ")}
+$("#rout").innerHTML='<div class="cap"><div class="cph"><span>WHATSAPP MESSAGE</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+esc(msg).replace(/\n/g,"<br>")+'</div></div><a class="btn" style="display:block;text-align:center;text-decoration:none" href="https://wa.me/?text='+encodeURIComponent(msg)+'" target="_blank">💬 WhatsApp मा Share</a>'}
+
+/* ── 🪔 Festival-radar + आजको सुझाव ── */
+var FESTS=[
+ {n:"दशैं",main:"2026-10-20",from:"2026-09-22"},
+ {n:"तिहार",main:"2026-11-08",from:"2026-10-22"},
+ {n:"माघे संक्रान्ति",main:"2027-01-15",from:"2027-01-01"},
+ {n:"नयाँ वर्ष २०८४",main:"2027-04-14",from:"2027-03-25"}
+];
+function festFor(now){
+ for(var i=0;i<FESTS.length;i++){var f=FESTS[i];
+  var a=new Date(f.from),b=new Date(f.main);b.setDate(b.getDate()+3);
+  if(now>=a&&now<=b){var days=Math.ceil((new Date(f.main)-now)/864e5);return{n:f.n,days:days}}}
+ return null}
+window.festFor=festFor;
+var DAYS=[["आइतबार","हप्ताको योजना-post: 'यो हप्ता slot खाली छ' सन्देश राम्रो जान्छ।"],
+["सोमबार","आजको site बाट काम-देखाउने TikTok — बेलुका ६–९ मा post।"],
+["मंगलबार","Tips/ज्ञान post — 'UPVC कि Aluminum?' जस्ताले comment तान्छ।"],
+["बुधबार","Before → After दिन! सबैभन्दा हेरिने content।"],
+["बिहीबार","ग्राहक-कथा/review post — भरोसा बढ्छ।"],
+["शुक्रबार","Offer post — शनिबारअघिको साँझ निर्णयको बेला।"],
+["शनिबार","Team/behind-the-scenes — हल्का, मान्छे देखिने post।"]];
+function dayTip(){
+ var now=new Date(),d=now.getDay(),t=DAYS[d],extra="";
+ var f=festFor(now);
+ if(f)extra='<p style="margin-top:6px"><b style="color:#ffd98a">🪔 '+f.n+' आउन '+(f.days>0?f.days+' दिन':"आज/भोलि!")+'</b> — festival-post सुरु गर्नुहोस् (Caption tab → किसिम: चाडपर्व)</p>';
+ var cal=calLoad(),calLine="";
+ if(cal){var today=new Date().toISOString().slice(0,10);
+   for(var i=0;i<cal.length;i++){if(cal[i].d===today){var A=ARCH[cal[i].k];
+     calLine='<p style="margin-top:6px">🗓️ आजको plan: <b style="color:var(--gl)">'+A.ico+' '+A.l+'</b> — '+esc(cal[i].svc)+' (Calendar tab मा तयार छ)</p>';break}}}
+ $("#dayTip").innerHTML="<b>📅 आज "+t[0]+" — के post गर्ने?</b><p>"+t[1]+"</p>"+calLine+extra+"<p style='margin-top:6px;opacity:.85'>⏰ TikTok: बेलुका ६–९ · FB: १२–२ र ७–९</p>";
+}
+
+/* ── ⚙️ + AI ── */
+function saveW(){var u=$("#wurl").value.trim();localStorage.setItem("prkWURL",u);$("#aiBtn").style.display=u?"block":"none";alert(u?"✅ Saved — AI बटन खुल्यो!":"URL हटाइयो")}
 function genAI(){var u=localStorage.getItem("prkWURL");if(!u)return;
 var svc=$("#svc").value,loc=$("#loc").value||"हेटौंडा",k=$("#kind").value,ex=$("#extra").value.trim();
-var kindNe={work:"आजको काम देखाउने",ba:"before-after",offer:"offer/छुट",fest:"चाडपर्व",info:"जानकारी"}[k];
-var q="Write 3 short catchy "+(P==="tiktok"?"TikTok":"Facebook")+" captions in simple Nepali (Devanagari) for a construction company post. Service: "+svc+". Location: "+loc+". Type: "+kindNe+"."+(ex?" Detail: "+ex+".":"")+" Each caption max 3 lines, with emoji, end with phone "+PH+". Number them 1,2,3.";
+var kindNe=(ARCH[k]||{}).l||"post";
+var q="Write 3 short catchy "+(P==="tiktok"?"TikTok":"Facebook")+" captions in simple Nepali (Devanagari) for a construction company. Style: "+kindNe+". Service: "+svc+". Location: "+loc+"."+(ex?" Detail: "+ex+".":"")+" Max 3 lines each, emoji, end with phone "+PH+". Number 1,2,3.";
 var o=$("#out");o.style.display="block";o.innerHTML='<div class="cap">⏳ AI ले लेख्दैछ...</div>';
 fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:q}],context:"Company: Prerak Multipurpose Pvt. Ltd., Hetauda. Phone: "+PH,lang:"ne"})})
 .then(function(r){return r.json()}).then(function(j){var rep=(j&&j.reply)||"";if(!rep)throw 0;
-o.innerHTML='<div class="cap"><div class="cph"><span>🤖 AI CAPTIONS</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+rep.replace(/</g,"&lt;").replace(/\n/g,"<br>")+"<br><br>"+tags(svc)+'</div></div>';})
-.catch(function(){o.innerHTML='<div class="cap">❌ AI जोडिएन — तलको template-caption प्रयोग गर्नुहोस्।</div>';gen2()})}
-function gen2(){var keep=$("#out").innerHTML;gen();$("#out").innerHTML=keep+$("#out").innerHTML}
+o.innerHTML='<div class="cap"><div class="cph"><span>🤖 AI CAPTIONS</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+esc(rep).replace(/\n/g,"<br>")+"<br><br>"+tags(svc)+'</div></div>';})
+.catch(function(){o.innerHTML='<div class="cap">❌ AI जोडिएन — Caption बटनको template प्रयोग गर्नुहोस्।</div>'})}
+
+/* ── boot ── */
+(function(){
+ var ks=$("#kind"),html="";
+ Object.keys(ARCH).forEach(function(k){html+='<option value="'+k+'">'+ARCH[k].ico+' '+ARCH[k].l+'</option>'});
+ ks.innerHTML=html;
+ hkChips();hkRender();serFill();dayTip();
+ var saved=calLoad();if(saved)calRender(saved);
+ var u=localStorage.getItem("prkWURL")||"";if(u){$("#wurl").value=u;$("#aiBtn").style.display="block"}
+})();
 </script>
 <script>
 (function(){try{

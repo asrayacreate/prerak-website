@@ -1,24 +1,9 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v11  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v9  (Sahayak v2 Content Studio)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
 icon) उही — दोहोरो जाँच गरिसकिएको, टच गरिएको छैन।
-
-
-── v11 मा नयाँ (z24) ──
-🖱️ Hover-tooltip: laptop मा mouse नजिक लैजाँदा हरेक float-बटनमा
-   label देखिन्छ (Call · फोन, WhatsApp, थप विकल्प; 💬 मा पनि)
-
-📲 WA-BRIDGE: form का दुवै बटन (कोट अनुरोध + WhatsApp) ले
-   अब WhatsApp खोल्नुअघि lead आफैं admin-CRM मा save गर्छ —
-   visitor ले WhatsApp मा send नगरे पनि inquiry हराउँदैन।
-   (source-tag सहित: "Website form", status New, 2-min dedupe)
-🎯 FLOATS नयाँ रूप: ६-बटने भीड हट्यो → दायाँ-तल Call(सुनौलो)
-   + WhatsApp(हरियो) मात्र; बाँकी (Projects, Messenger,
-   Email, Services, Theme) "⋯" भित्र — tap गरे खुल्ने/बन्द हुने
-💬 Chat-bubble अब बायाँ-तल — Call/WA सँग कहिल्यै नजुध्ने
-यसपटक फेरिएको file: index.html मात्र (बाँकी सबै v9 कै)
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
