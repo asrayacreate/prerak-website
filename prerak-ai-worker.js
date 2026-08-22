@@ -64,6 +64,17 @@ export default {
       });
     }
 
+    // First visitor message (no prior assistant turns) gets a warm greeting opener.
+    const isFirstTurn = !messages.some(m => m && m.role === "assistant");
+    const greetRule = isFirstTurn
+      ? (lang === "ne"
+          ? "यो visitor को पहिलो सन्देश हो: जवाफको सुरुमा एक-line न्यानो सम्बोधन गर्नुहोस् — " +
+            "\"नमस्ते! 🙏 प्रेरक मल्टिपर्पोजमा स्वागत छ।\" जस्तो — अनि तुरुन्तै उनको प्रश्नको " +
+            "विस्तृत जवाफ दिनुहोस्। "
+          : "This is the visitor's first message: open with one warm welcome line " +
+            "(e.g. \"Namaste! Welcome to Prerak Multipurpose.\") then answer their question in detail. ")
+      : "";
+
     const sys =
       "You are the helpful assistant for Prerak Multipurpose Pvt. Ltd., a construction " +
       "and interior company in Hetauda, Nepal. Services: building construction, interior " +
@@ -94,6 +105,7 @@ export default {
       "Never invent prices, warranty terms, discounts/promotions, or completed-project " +
       "counts beyond what's given in this context — if unsure, say the exact figure needs " +
       "a quick call/WhatsApp rather than guessing. " +
+      greetRule +
       (context ? ("\n\nAdditional context:\n" + context) : "");
 
     // Gemini expects its own turn shape; fold system + prior turns into one contents array.

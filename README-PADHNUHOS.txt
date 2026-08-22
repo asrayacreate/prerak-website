@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v13  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v14  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -38,6 +38,18 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
    • mouse नजिक आउँदा आफैं popout हुन्छ (desktop)
    • click-गर्दा-नखुल्ने bug fix (hover र click को जुधाइ थियो)
    • ✕ / बाहिर-click / Esc ले बन्द हुन्छ
+
+
+── v14 मा नयाँ (z27) — Final Polish ──
+✨ "थप विवरण" panel नयाँ रूप: उज्यालो ivory-card, प्रस्ट गाढा
+   अक्षर, icon-chips, छुट्टिने rows — अब धमिलो/dark छैन
+ℹ️ Tab मा "थप" label + हल्का pulse — आँखा तान्ने
+💬 Welcome-bubble v2: सेतो card, "नमस्ते! प्रेरक मल्टिपर्पोजमा
+   स्वागत छ..." — ~2 सेकेन्डमा आउने, ~16 सेकेन्डमा आफैं जाने,
+   click गरे chat खुल्ने
+🙏 AI को पहिलो जवाफ अब "नमस्ते"-सम्बोधनबाट सुरु हुन्छ
+   (worker paste गर्नुपर्छ — ZIP भित्रकै prerak-ai-worker.js)
+यसपटक फेरिएका: index.html + prerak-ai-worker.js
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
