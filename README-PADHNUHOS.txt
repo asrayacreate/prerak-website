@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v11  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v13  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -19,6 +19,25 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
    Email, Services, Theme) "⋯" भित्र — tap गरे खुल्ने/बन्द हुने
 💬 Chat-bubble अब बायाँ-तल — Call/WA सँग कहिल्यै नजुध्ने
 यसपटक फेरिएको file: index.html मात्र (बाँकी सबै v9 कै)
+
+
+── v12 मा नयाँ (z25) — Chat Assistant Upgrade ──
+🎨 PRERAK Assistant नयाँ look: ठूलो panel, गोलाकार-icon header
+   (🏠 avatar), "अनलाइन · तुरुन्तै जवाफ" हरियो-डट सहित, हरेक
+   bot-जवाफमा समय + 👍👎 feedback बटन
+🧠 जवाफ अझ राम्रो: Worker ले अब लामो, ठोस, site-engineer-शैलीको
+   जवाफ दिन्छ (900 token सम्म, "जे पर्छ" जस्ता खाली जवाफ बेवास्ता)
+⚠️ यसपटक फेरिएका DUई FILE: index.html + prerak-ai-worker.js
+   (दुवै छुट्टै-छुट्टै संलग्न — worker.js Cloudflare मै paste गर्नुपर्छ,
+   README स्तर-३ हेर्नुहोस्)
+
+
+── v13 मा नयाँ (z26) — "थप विवरण" tab fix ──
+ℹ️ दायाँ-किनारको half-round "थप विवरण" tab:
+   • बायाँबाट दायाँ सारियो (सही ठाउँ)
+   • mouse नजिक आउँदा आफैं popout हुन्छ (desktop)
+   • click-गर्दा-नखुल्ने bug fix (hover र click को जुधाइ थियो)
+   • ✕ / बाहिर-click / Esc ले बन्द हुन्छ
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
