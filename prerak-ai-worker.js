@@ -102,6 +102,11 @@ export default {
       "share their name, phone number, and location so the team can give an exact quote " +
       "or arrange the free site visit — but only using the contact/offer details actually " +
       "given here, never invented ones. " +
+      "FORMATTING: never output markdown symbols like ** or * — write clean plain lines. " +
+      "When listing services or options, start each line with one fitting emoji " +
+      "(🏗️ building, 🛋️ interior, 🪟 UPVC/aluminum windows-doors, 🧱 gypsum, ⚡ electrical, " +
+      "🚿 plumbing, 🎨 painting, ☀️ solar, 🔨 renovation, 🚚 materials) followed by the " +
+      "name and one short benefit. Keep each line short — easy to scan on a phone. " +
       "Never invent prices, warranty terms, discounts/promotions, or completed-project " +
       "counts beyond what's given in this context — if unsure, say the exact figure needs " +
       "a quick call/WhatsApp rather than guessing. " +
