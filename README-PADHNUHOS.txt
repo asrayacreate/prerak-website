@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v15  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v16  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -62,6 +62,21 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
    • उही उज्यालो ivory-card design, Call/WhatsApp सहित
 यसपटक फेरिएको: index.html मात्र (worker v14 कै — फेरि paste
 गर्नु पर्दैन यदि v14 को worker deploy गरिसक्नुभएको छ भने)
+
+
+── v16 मा नयाँ (z29) — FINAL POLISH ──
+ℹ️ थप-विवरण v2.1:
+   • mouse दायाँ-किनार नजिक पुग्नेबित्तिकै panel आफैं popout
+     (document-तह tracking — कसैले छेक्नै नसक्ने प्रविधि)
+   • पहिलो भ्रमणमा panel आफैं ~3 सेकेन्ड देखिएर चिनाउँछ
+     (session मा एकपटक मात्र — code चलेको प्रमाण पनि)
+🎨 AI chat नयाँ look: सेतो card (Chatbase-शैली) — सेतो header,
+   हल्का-खैरो bot-bubble गाढा अक्षरसहित, सुनौलो user-bubble,
+   उज्यालो input/chips — पढ्न सजिलो, आधुनिक
+📱 Mobile सफा: दायाँका Call/WhatsApp गोला लुकाइए (तलको
+   बारमा उही बटन छँदैछन्) — ⋯ More मात्र; भीड सकियो
+जाँच: greeting z29 · site खोलेको ~3 सेकेन्डमा थप-विवरण आफैं
+एकपटक देखिनुपर्छ — देखिए code चल्दैछ भन्ने पक्का!
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
