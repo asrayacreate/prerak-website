@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v14  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v15  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -50,6 +50,18 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
 🙏 AI को पहिलो जवाफ अब "नमस्ते"-सम्बोधनबाट सुरु हुन्छ
    (worker paste गर्नुपर्छ — ZIP भित्रकै prerak-ai-worker.js)
 यसपटक फेरिएका: index.html + prerak-ai-worker.js
+
+
+── v15 मा नयाँ (z28) — थप-विवरण BULLETPROOF rebuild ──
+ℹ️ पुरानो tab पूर्ण निष्क्रिय; शून्यबाट नयाँ:
+   • mouse "नजिकै" पुग्नेबित्तिकै popout (ठ्याक्कै माथि नपुगे पनि
+     — किनारमा 56px अदृश्य-क्षेत्रले समात्छ)
+   • click / touch / hover — जुनसुकैले खुल्ने
+   • page-load को जुनसुकै अवस्थामा बन्ने (triple-retry)
+   • सर्वोच्च तह — कुनै element ले छेक्नै नसक्ने
+   • उही उज्यालो ivory-card design, Call/WhatsApp सहित
+यसपटक फेरिएको: index.html मात्र (worker v14 कै — फेरि paste
+गर्नु पर्दैन यदि v14 को worker deploy गरिसक्नुभएको छ भने)
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
