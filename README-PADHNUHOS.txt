@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v19  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v20  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -118,6 +118,16 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
    रहेछ; अब router नै एकमात्र मालिक — एक tap = खुल्छ, बस्छ
 💬 AI panel साँघुरो (368px) + अझ अग्लो (86vh) — chat गर्न
    अझ आरामदायी
+यसपटक फेरिएको: index.html मात्र
+
+
+── v20 मा नयाँ (z33) — MOBILE जरो #2 + अग्लो chat ──
+📱 MOBILE अन्तिम fix: औंलाको tap ले आफैंसँग जुध्दो रहेछ —
+   tap-अघिको सूक्ष्म pointermove ले "mouse-नजिक" खोल्थ्यो,
+   त्यही tap को click ले बन्द गर्थ्यो। अब "नजिक-खुल्ने" साँचो
+   mouse मा मात्र; mobile मा tap = खुल्छ, बस्छ (⋯/ℹ️/💬 तीनै)
+💬 Chat panel अब सधैं अग्लो (Chatbase-जस्तै) — खाली हुँदा
+   पनि होचो नदेखिने, पूरा 86vh
 यसपटक फेरिएको: index.html मात्र
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
