@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════
- PRERAK — FINAL PACK v20  (z23: floats-redesign + WA-bridge)
+ PRERAK — FINAL PACK v22  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
 यसपटक फेरिएको FILE एउटै मात्र: sahayak/index.html
 बाँकी सबै (main site z22, sw.js v6, दुवै manifest, चारै
@@ -129,6 +129,30 @@ icon) उही — दोहोरो जाँच गरिसकिएको,
 💬 Chat panel अब सधैं अग्लो (Chatbase-जस्तै) — खाली हुँदा
    पनि होचो नदेखिने, पूरा 86vh
 यसपटक फेरिएको: index.html मात्र
+
+
+── v21 मा नयाँ (z34) — Advisor-audit fixes ──
+🔐 Debug-OTP सुरक्षा-कवच: "Show OTP on screen" toggle अब
+   session-only — reload गर्नेबित्तिकै आफैं OFF (Firebase बाट
+   ढिलो आए पनि पहिलो १२ सेकेन्ड बल-पूर्वक OFF); testing
+   चाहिए session-भित्र अझै tick गर्न मिल्छ
+🌐 lang="ne" (manifest सँग मिल्यो — SEO/accessibility)
+🔢 Stats मा static-default (500+/13+) बेक — JS-नचल्ने
+   crawler ले पनि अंक देख्छ; page मा count-up उही
+नोट: advisor का अरू ३ दाबी (stats-0+, pricing-दुई-मूल्य,
+calendar-stale) जाँच्दा गलत-अलार्म ठहरिए — केही परिवर्तन छैन
+यसपटक फेरिएको: index.html मात्र
+
+
+── v22 मा नयाँ (z35) — FINAL POLISH (audit-आधारित) ──
+📱 iOS input-zoom अन्त्य: mobile मा contact-form + chat का
+   input अब 16px — focus गर्दा page आफैं zoom हुने झर्को सकियो
+♿ Chat a11y: सन्देश-क्षेत्रमा role="log" + aria-live —
+   screen-reader ले AI-जवाफ आफैं सुनाउँछ
+📋 Audit-नतिजा: focus-states(41), reduced-motion(38),
+   CRUD-feedback(229 toast+27 confirm), image-fallback(36)
+   — पहिल्यै स्वस्थ, केही छोइएन
+यसपटक फेरिएको: index.html मात्र (2 surgical edits + 1 block)
 
 ── UPLOAD (सजिलो — १ FILE मात्र EDIT/PASTE) ──
 1) यो ZIP EXTRACT गर्नुहोस्
