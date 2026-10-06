@@ -1,3 +1,15 @@
+── ⚠️ नयाँ (2026-10): IMAGES अब छुट्टै `img/` FOLDER मा ──
+📁 index.html भित्रका सबै photo अब `img/` folder मा छुट्टाछुट्टै
+   file भएर बसेका छन् (index.html 4.2MB → 1.1MB, site छिटो खुल्छ)।
+📤 Upload गर्दा index.html सँगै `img/` folder पनि अनिवार्य
+   राख्नुहोस् — नत्र photo देखिँदैनन्।
+🔁 sw.js (v7) ले यी सबै image background मा cache गर्छ, त्यसैले
+   app/offline मा पनि photo देखिन्छन्। img/ मा file थप्दा/फेर्दा
+   sw.js को IMAGES सूची र CACHE version पनि अद्यावधिक गर्नुहोस्।
+📊 Google Analytics: index.html मा GA_ID="G-XXXXXXXXXX" लाई
+   आफ्नो असली Measurement ID ले बदलेपछि मात्र tracking चल्छ।
+
+
 ═══════════════════════════════════════════════════════════
  PRERAK — FINAL PACK v22  (z23: floats-redesign + WA-bridge)
 ═══════════════════════════════════════════════════════════
