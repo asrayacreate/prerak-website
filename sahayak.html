@@ -170,7 +170,7 @@ var svc=$("#svc").value,loc=$("#loc").value||"हेटौंडा",k=$("#kind"
 var kindNe={work:"आजको काम देखाउने",ba:"before-after",offer:"offer/छुट",fest:"चाडपर्व",info:"जानकारी"}[k];
 var q="Write 3 short catchy "+(P==="tiktok"?"TikTok":"Facebook")+" captions in simple Nepali (Devanagari) for a construction company post. Service: "+svc+". Location: "+loc+". Type: "+kindNe+"."+(ex?" Detail: "+ex+".":"")+" Each caption max 3 lines, with emoji, end with phone "+PH+". Number them 1,2,3.";
 var o=$("#out");o.style.display="block";o.innerHTML='<div class="cap">⏳ AI ले लेख्दैछ...</div>';
-fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:q}],context:"Company: Prerak Multipurpose Pvt. Ltd., Hetauda. Phone: "+PH,lang:"ne"})})
+fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:[{role:"user",content:q}],context:"Company: Prerak Multipurpose Pvt. Ltd., Hetauda. Phone: "+PH,lang:"ne",mode:"content"})})
 .then(function(r){return r.json()}).then(function(j){var rep=(j&&j.reply)||"";if(!rep)throw 0;
 o.innerHTML='<div class="cap"><div class="cph"><span>🤖 AI CAPTIONS</span><button class="cpy" onclick="cp(this)">📋 Copy</button></div><div class="ct">'+rep.replace(/</g,"&lt;").replace(/\n/g,"<br>")+"<br><br>"+tags(svc)+'</div></div>';})
 .catch(function(){o.innerHTML='<div class="cap">❌ AI जोडिएन — तलको template-caption प्रयोग गर्नुहोस्।</div>';gen2()})}
