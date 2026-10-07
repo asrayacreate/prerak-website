@@ -90,9 +90,8 @@ function buildSystemPrompt(lang, contentMode, isFirstTurn, context) {
     "design, UPVC/aluminum windows and doors, gypsum ceiling, plumbing, electrical, " +
     "painting, renovation, solar water heater & geyser installation, construction material supply. " +
     "SOLAR: the only solar-related service is solar water heater and geyser installation. " +
-    "Prerak does NOT provide solar panels, solar power systems, batteries, inverters or " +
-    "government subsidy help — if asked, say so politely and offer the solar water heater " +
-    "and geyser service instead. " +
+    "Prerak does NOT provide solar panels, batteries, or inverters — if asked, say so " +
+    "politely and offer the solar water heater and geyser service instead. " +
     "Phone: 9801069733 / 9855069733. WhatsApp: 9779801069733. " +
     "Hours: 8AM-6PM, Sunday-Friday. Free site visit is available. " +
     "Keep the tone simple, warm and friendly — no stiff or difficult words. " +
