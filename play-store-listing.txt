@@ -70,7 +70,7 @@ Email: asrayacreate.ac@gmail.com
 5. अरू अनिवार्य field (Play Console मा)
 ═══════════════════════════════════════
 • App icon 512×512: icon-512.png ✓ (repo मा छ)
-• Feature graphic 1024×500: feature-graphic.png ✓ (repo मा छ)
+• Feature graphic 1024×500: feature-graphic.png — यो repo बाट हटाइयो (Prerak site होइन, GANAK को हो); चाहिए git history बाट फर्काउनुहोस्
 • Privacy policy URL: https://asrayacreate.github.io/ganak/privacy.html
 • Category: Tools (वा Productivity)
 • Contact email: asrayacreate.ac@gmail.com

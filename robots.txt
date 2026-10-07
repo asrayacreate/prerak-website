@@ -1,0 +1,5 @@
+# Prerak Multipurpose Pvt. Ltd. — https://prerakmultipurpose.com
+User-agent: *
+Allow: /
+
+Sitemap: https://prerakmultipurpose.com/sitemap.xml
