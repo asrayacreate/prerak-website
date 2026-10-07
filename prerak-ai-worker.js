@@ -22,6 +22,49 @@ function corsHeaders(origin) {
   };
 }
 
+// ── Reply-language rule ──────────────────────────────────────────────────────
+const LANGUAGE_RULE =
+  "STRICT LANGUAGE RULE (highest priority — overrides every other instruction): " +
+  "Always reply in the exact language and script the user uses. " +
+  "If the user asks in Nepali, reply in Nepali. If the user asks in English, reply in English. " +
+  "Nepali written in Devanagari (e.g. 'घर बनाउन कति लाग्छ?') → reply only in Devanagari Nepali. " +
+  "Nepali typed in Roman letters (e.g. 'ghar banauna kati lagcha?') → reply in the same " +
+  "Roman-letter Nepali, not Devanagari and not English. " +
+  "Decide from the user's latest message only — not from the website language setting, " +
+  "earlier messages, or the language of the context below. Do not mix languages in one " +
+  "reply; only brand names, technical terms (UPVC, gypsum, geyser) and numbers may stay as they are.\n\n";
+
+const LANG_TURN = {
+  ne: "The user's latest message is in Nepali (Devanagari script). Reply ONLY in Nepali, written in Devanagari.",
+  rom: "The user's latest message is in Nepali typed in Roman letters. Reply ONLY in Nepali written in Roman letters, like the user — not Devanagari, not English.",
+  en: "The user's latest message is in English. Reply ONLY in English."
+};
+const LANG_ACK = {
+  ne: "बुझें। म प्रयोगकर्ताकै भाषा र लिपिमा जवाफ दिन्छु।",
+  rom: "Bujhe. Ma prayogkarta kai bhasa ra lipi ma jawaf dinchhu.",
+  en: "Understood. I will reply in the user's own language and script."
+};
+
+// Common Nepali words as typed in Roman letters (to tell "kati lagcha?" from English).
+const ROMAN_NE = new Set(("ko ma ho cha chha xa chaina chhaina hunchha huncha hunxa kati kasari kaha kahile kaile " +
+  "kun ke kina garnu garne garna gardinu garchha garcha garxa garnuhunchha garnuhuncha garnuhos garnus malai mero " +
+  "hamro tapai tapain tapaiko hajur ghar banauna banaune lagcha lagchha lagxa parcha parchha paisa sakincha " +
+  "sakinchha milcha milchha chahiyo chaiyo chahincha dinus dinuhos ra pani ani ki hola thiyo chu chhu xu kaam kam " +
+  "sasto mahango bhayo vayo dekhi samma ahile aaja bholi thau thegana sampark khulcha khulchha baje rakhnu lagaune " +
+  "lagaunu jadan mulya bhanda ramro sabai yo tyo").split(" "));
+
+/** "ne" = Devanagari Nepali, "rom" = Roman-letter Nepali, "en" = English. */
+function detectLang(text, hint) {
+  const t = String(text || "");
+  const dev = (t.match(/[ऀ-ॿ]/g) || []).length;
+  const lat = (t.match(/[A-Za-z]/g) || []).length;
+  if (dev && dev >= lat * 0.5) return "ne";
+  if (!lat) return dev ? "ne" : (hint === "rom" || hint === "en" ? hint : "ne");
+  const words = t.toLowerCase().match(/[a-z]+/g) || [];
+  const hits = words.filter(w => ROMAN_NE.has(w)).length;
+  return (hits >= 2 || (hits >= 1 && words.length <= 3)) ? "rom" : "en";
+}
+
 export default {
   async fetch(request, env, ctx) {
     const origin = request.headers.get("Origin") || "";
@@ -47,7 +90,13 @@ export default {
 
     const messages = Array.isArray(body.messages) ? body.messages : [];
     const context = typeof body.context === "string" ? body.context : "";
-    const lang = body.lang === "en" ? "en" : "ne";
+    // Reply language comes from the user's latest message itself (language AND script),
+    // never from the website's EN/NE switch. body.lang is only a fallback hint.
+    const lastUser = [...messages].reverse().find(m => m && m.role !== "assistant");
+    // mode:"content" = Sahayak caption/script generator: its instruction names the output
+    // language itself, so the chat language rule and the welcome line are not applied.
+    const contentMode = body.mode === "content";
+    const lang = contentMode ? (body.lang === "en" ? "en" : "ne") : detectLang(lastUser ? lastUser.content : "", body.lang);
     if (!messages.length) {
       return new Response(JSON.stringify({ error: "messages चाहिन्छ" }), {
         status: 400, headers: { "Content-Type": "application/json", ...cors }
@@ -65,26 +114,32 @@ export default {
     }
 
     // First visitor message (no prior assistant turns) gets a warm greeting opener.
-    const isFirstTurn = !messages.some(m => m && m.role === "assistant");
+    const isFirstTurn = !contentMode && !messages.some(m => m && m.role === "assistant");
     const greetRule = isFirstTurn
       ? (lang === "ne"
           ? "यो visitor को पहिलो सन्देश हो: जवाफको सुरुमा एक-line न्यानो सम्बोधन गर्नुहोस् — " +
             "\"नमस्ते! 🙏 प्रेरक मल्टिपर्पोजमा स्वागत छ।\" जस्तो — अनि तुरुन्तै उनको प्रश्नको " +
             "विस्तृत जवाफ दिनुहोस्। "
+          : lang === "rom"
+          ? "This is the visitor's first message: open with one warm welcome line in Roman-letter " +
+            "Nepali (e.g. \"Namaste! 🙏 Prerak Multipurpose ma swagat chha.\") then answer their question in detail. "
           : "This is the visitor's first message: open with one warm welcome line " +
             "(e.g. \"Namaste! Welcome to Prerak Multipurpose.\") then answer their question in detail. ")
       : "";
 
     const sys =
+      (contentMode ? "Write the output in exactly the language and script the instruction asks for. " : LANGUAGE_RULE) +
       "You are the helpful assistant for Prerak Multipurpose Pvt. Ltd., a construction " +
       "and interior company in Hetauda, Nepal. Services: building construction, interior " +
       "design, UPVC/aluminum windows and doors, gypsum ceiling, plumbing, electrical, " +
-      "painting, renovation, solar installation, construction material supply. " +
+      "painting, renovation, solar water heater & geyser installation, construction material supply. " +
+      "SOLAR: the only solar-related service is solar water heater and geyser installation. " +
+      "Prerak does NOT provide solar panels, solar power systems, batteries, inverters or " +
+      "government subsidy help — if asked, say so politely and offer the solar water heater " +
+      "and geyser service instead. " +
       "Phone: 9801069733 / 9855069733. WhatsApp: 9779801069733. " +
-      "Hours: 10AM-6PM, Sunday-Friday. Free site visit is available. " +
-      (lang === "ne"
-        ? "हमेशा सजिलो, न्यानो नेपाली (Devanagari) मा जवाफ दिनुहोस् — औपचारिक/कठिन शब्द नचलाउनुहोस्। "
-        : "Always reply in short, friendly English. ") +
+      "Hours: 8AM-6PM, Sunday-Friday. Free site visit is available. " +
+      "Keep the tone simple, warm and friendly — no stiff or difficult words. " +
       "MATCH DEPTH TO THE QUESTION: a simple factual question (hours, phone, location, " +
       "yes/no) gets 1-3 short lines. A comparison, technical explanation, or 'which is " +
       "better/how does X work' question deserves a structured, genuinely useful answer: " +
@@ -105,23 +160,28 @@ export default {
       "FORMATTING: never output markdown symbols like ** or * — write clean plain lines. " +
       "When listing services or options, start each line with one fitting emoji " +
       "(🏗️ building, 🛋️ interior, 🪟 UPVC/aluminum windows-doors, 🧱 gypsum, ⚡ electrical, " +
-      "🚿 plumbing, 🎨 painting, ☀️ solar, 🔨 renovation, 🚚 materials) followed by the " +
+      "🚿 plumbing, 🎨 painting, ☀️ solar water heater/geyser, 🔨 renovation, 🚚 materials) followed by the " +
       "name and one short benefit. Keep each line short — easy to scan on a phone. " +
       "Never invent prices, warranty terms, discounts/promotions, or completed-project " +
       "counts beyond what's given in this context — if unsure, say the exact figure needs " +
       "a quick call/WhatsApp rather than guessing. " +
       greetRule +
-      (context ? ("\n\nAdditional context:\n" + context) : "");
+      (context ? ("\n\nAdditional context (facts only — its language does NOT decide your reply language):\n" + context) : "") +
+      (contentMode ? "" : "\n\n" + LANG_TURN[lang]);
 
     // Gemini expects its own turn shape; fold system + prior turns into one contents array.
     const contents = [];
     contents.push({ role: "user", parts: [{ text: sys }] });
-    contents.push({ role: "model", parts: [{ text: lang === "ne" ? "बुझें, सहयोगका लागि तयार छु।" : "Understood, ready to help." }] });
+    contents.push({ role: "model", parts: [{ text: contentMode ? "Understood." : LANG_ACK[lang] }] });
     for (const m of messages.slice(-12)) {
       const role = m.role === "assistant" ? "model" : "user";
       const text = String(m.content || "").slice(0, 4000);
       if (text) contents.push({ role, parts: [{ text }] });
     }
+    // Re-state the language rule right on the latest user turn: earlier turns may be in a
+    // different language, and the model otherwise tends to continue the previous one.
+    const last = contents[contents.length - 1];
+    if (!contentMode && last && last.role === "user") last.parts[0].text += "\n\n[" + LANG_TURN[lang] + "]";
 
     // 2026-08 नोट: gemini-2.0-flash जुन १, २०२६ मा बन्द भयो; यसको आधिकारिक
     // migration-target 3.1 Flash-Lite प्रयोग गरिएको — free-tier मै, उदार rate-limit।
