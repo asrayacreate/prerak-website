@@ -338,6 +338,82 @@ if(/^G-X+$/.test(GA_ID))return;var g=document.createElement("script");g.async=tr
   #projGrid .pi.tall{aspect-ratio:auto;min-height:480px}
 }
 </style>
+<style id="prkContactFormCss">
+/* ═══ Contact form: strict validation + Firebase success / error states ═══ */
+#prkContactForm{position:relative}
+#prkContactForm .cf-sub{font-size:.78rem;color:#6b7280;margin:0 0 16px;line-height:1.45}
+#prkContactForm .cf-req{color:#dc2626;margin-left:3px;font-weight:800}
+#prkContactForm .cf-invalid{border-color:#dc2626!important;background:#fff6f6!important;box-shadow:0 0 0 3px rgba(220,38,38,.12)!important}
+#prkContactForm .cf-valid{border-color:#16a34a!important}
+#prkContactForm .cf-err{display:none;align-items:flex-start;gap:6px;margin:6px 2px 0;font-size:.74rem;line-height:1.4;color:#b91c1c;font-weight:600}
+#prkContactForm .cf-err.show{display:flex;animation:cfErrIn .18s ease}
+#prkContactForm .cf-err::before{content:"!";flex:0 0 16px;height:16px;border-radius:50%;background:#dc2626;color:#fff;font-size:.64rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
+#prkContactForm .cf-meta{display:flex;align-items:flex-start;gap:10px}
+#prkContactForm .cf-count{margin:6px 2px 0 auto;font-size:.68rem;color:#6b7280;white-space:nowrap;font-variant-numeric:tabular-nums}
+#prkContactForm .cf-count.low{color:#b45309}
+#prkContactForm .cf-hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden}
+#prkContactForm .cf-summary{display:none;margin:14px 0 0;padding:10px 12px;border-radius:10px;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;font-size:.8rem;font-weight:600;line-height:1.4}
+#prkContactForm .cf-summary.show{display:block;animation:cfErrIn .18s ease}
+#prkContactForm .cf-note{margin:12px 0 0;font-size:.72rem;color:#6b7280;line-height:1.45}
+#prkContactForm .cf-note a{color:inherit;text-decoration:underline}
+#prkContactForm.cf-shake{animation:cfShake .42s ease}
+#prkContactForm button.is-loading{opacity:.85;cursor:progress;pointer-events:none}
+#prkContactForm .cf-spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;display:inline-block;animation:cfSpin .7s linear infinite;vertical-align:-3px}
+/* result overlay (sits on top of the form card) */
+#prkContactForm .cf-status{position:absolute;inset:0;z-index:6;border-radius:inherit;display:flex;align-items:center;justify-content:center;padding:24px 18px;background:rgba(255,255,255,.97);opacity:0;transition:opacity .25s ease}
+#prkContactForm .cf-status[hidden]{display:none}
+#prkContactForm .cf-status.show{opacity:1}
+#prkContactForm .cf-card{width:100%;max-width:400px;text-align:center;transform:translateY(8px);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+#prkContactForm .cf-status.show .cf-card{transform:none}
+#prkContactForm .cf-ico{width:76px;height:76px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+#prkContactForm .cf-ok .cf-ico{background:linear-gradient(135deg,#22c55e,#15803d);box-shadow:0 12px 30px rgba(22,163,74,.35),0 0 0 8px rgba(34,197,94,.12)}
+#prkContactForm .cf-bad .cf-ico{background:linear-gradient(135deg,#f87171,#b91c1c);box-shadow:0 12px 30px rgba(220,38,38,.3),0 0 0 8px rgba(239,68,68,.12)}
+#prkContactForm .cf-ico svg{width:38px;height:38px;fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+#prkContactForm .cf-ico path{stroke-dasharray:48;stroke-dashoffset:48;animation:cfDraw .5s .15s ease forwards}
+#prkContactForm .cf-title{font-family:var(--fd);font-size:1.55rem;font-weight:700;line-height:1.2;color:#0f2347!important;margin:0 0 8px}
+#prkContactForm .cf-text{font-size:.9rem;line-height:1.55;color:#374151!important;margin:0 0 6px}
+#prkContactForm .cf-hint{font-size:.78rem;color:#6b7280!important;margin:4px 0 0}
+#prkContactForm .cf-ref{display:inline-block;margin-top:10px;padding:5px 12px;border-radius:999px;background:#f1f5f9;border:1px dashed #cbd5e1;color:#1e293b!important;font:700 .76rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.5px}
+#prkContactForm .cf-acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+#prkContactForm .cf-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:10px 18px;border-radius:999px;border:1.5px solid transparent;font:700 .84rem/1 inherit;font-family:inherit;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s,background .15s}
+#prkContactForm .cf-btn:hover{transform:translateY(-1px)}
+#prkContactForm .cf-btn:focus-visible{outline:3px solid rgba(26,58,110,.35);outline-offset:2px}
+#prkContactForm .cf-btn-pri{background:#1a3a6e;color:#fff!important;box-shadow:0 6px 16px rgba(26,58,110,.25)}
+#prkContactForm .cf-btn-wa{background:#22c55e;color:#fff!important;box-shadow:0 6px 16px rgba(34,197,94,.28)}
+#prkContactForm .cf-btn-ghost{background:transparent;border-color:#cbd5e1;color:#1f2937!important}
+/* the theme forces `span{color:#374151!important}`, so colour the bilingual spans explicitly */
+#prkContactForm .cf-err,#prkContactForm .cf-err *{color:#b91c1c!important;-webkit-text-fill-color:#b91c1c!important}
+#prkContactForm .cf-summary,#prkContactForm .cf-summary *{color:#991b1b!important;-webkit-text-fill-color:#991b1b!important}
+#prkContactForm .cf-title *{color:#0f2347!important;-webkit-text-fill-color:#0f2347!important}
+#prkContactForm .cf-text *{color:#374151!important;-webkit-text-fill-color:#374151!important}
+#prkContactForm .cf-text b{color:#0f2347!important;-webkit-text-fill-color:#0f2347!important}
+#prkContactForm .cf-hint *,#prkContactForm .cf-sub *,#prkContactForm .cf-note *,#prkContactForm .cf-count{color:#6b7280!important;-webkit-text-fill-color:#6b7280!important}
+#prkContactForm .cf-count.low{color:#b45309!important;-webkit-text-fill-color:#b45309!important}
+#prkContactForm .cf-ref *{color:#1e293b!important;-webkit-text-fill-color:#1e293b!important}
+#prkContactForm .cf-btn-pri *,#prkContactForm .cf-btn-wa *{color:#fff!important;-webkit-text-fill-color:#fff!important}
+#prkContactForm .cf-btn-ghost *{color:#1f2937!important;-webkit-text-fill-color:#1f2937!important}
+html[data-t="dark"] #prkContactForm .cf-title *,html[data-t="dark"] #prkContactForm .cf-text b{color:#fbf4e8!important;-webkit-text-fill-color:#fbf4e8!important}
+html[data-t="dark"] #prkContactForm .cf-text *{color:rgba(251,244,232,.85)!important;-webkit-text-fill-color:rgba(251,244,232,.85)!important}
+html[data-t="dark"] #prkContactForm .cf-hint *,html[data-t="dark"] #prkContactForm .cf-sub *,html[data-t="dark"] #prkContactForm .cf-note *,html[data-t="dark"] #prkContactForm .cf-count{color:rgba(251,244,232,.6)!important;-webkit-text-fill-color:rgba(251,244,232,.6)!important}
+html[data-t="dark"] #prkContactForm .cf-ref *,html[data-t="dark"] #prkContactForm .cf-btn-ghost *{color:#fbf4e8!important;-webkit-text-fill-color:#fbf4e8!important}
+html[data-t="dark"] #prkContactForm .cf-err,html[data-t="dark"] #prkContactForm .cf-err *{color:#fca5a5!important;-webkit-text-fill-color:#fca5a5!important}
+html[data-t="dark"] #prkContactForm .cf-summary,html[data-t="dark"] #prkContactForm .cf-summary *{color:#fecaca!important;-webkit-text-fill-color:#fecaca!important}
+html[data-t="dark"] #prkContactForm .cf-status{background:rgba(24,22,20,.97)}
+html[data-t="dark"] #prkContactForm .cf-title{color:#fbf4e8!important}
+html[data-t="dark"] #prkContactForm .cf-text{color:rgba(251,244,232,.85)!important}
+html[data-t="dark"] #prkContactForm .cf-hint,html[data-t="dark"] #prkContactForm .cf-sub,html[data-t="dark"] #prkContactForm .cf-note,html[data-t="dark"] #prkContactForm .cf-count{color:rgba(251,244,232,.6)!important}
+html[data-t="dark"] #prkContactForm .cf-ref{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fbf4e8!important}
+html[data-t="dark"] #prkContactForm .cf-btn-ghost{border-color:rgba(255,255,255,.25);color:#fbf4e8!important}
+html[data-t="dark"] #prkContactForm .cf-invalid{background:rgba(220,38,38,.08)!important}
+html[data-t="dark"] #prkContactForm .cf-err{color:#fca5a5}
+html[data-t="dark"] #prkContactForm .cf-summary{background:rgba(220,38,38,.12);border-color:rgba(248,113,113,.35);color:#fecaca}
+@media (max-width:600px){#prkContactForm .cf-status{align-items:flex-start;padding-top:48px}#prkContactForm .cf-title{font-size:1.35rem}}
+@keyframes cfErrIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+@keyframes cfShake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes cfSpin{to{transform:rotate(360deg)}}
+@keyframes cfDraw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){#prkContactForm.cf-shake,#prkContactForm .cf-err.show,#prkContactForm .cf-summary.show{animation:none}#prkContactForm .cf-ico path{animation:none;stroke-dashoffset:0}#prkContactForm .cf-status,#prkContactForm .cf-card{transition:none}}
+</style>
 </head>
 <body class="show-vc-on show-cal-on">
 <!-- Skip-to-content link for keyboard users (visible only when focused) -->
@@ -1353,27 +1429,31 @@ if(/^G-X+$/.test(GA_ID))return;var g=document.createElement("script");g.async=tr
         <div class="cib"><div class="cib-ic">📍</div><div><div class="cib-l en">Our Office</div><div class="cib-l ne np">हाम्रो कार्यालय</div><div class="cib-v np" style="font-size:.88rem;">Kantirajpath, Hetauda-2, Makwanpur</div></div></div>
         <div class="cib"><div class="cib-ic">🕐</div><div><div class="cib-l en">Working Hours</div><div class="cib-l ne np">कार्य समय</div><div class="cib-v en" style="font-size:.88rem;">8 AM – 6 PM, Sun–Fri</div><div class="cib-v ne np" style="font-size:.88rem;">बिहान ८ – साँझ ६, आइत–शुक्र</div></div></div>
       </div>
-      <form class="cf-box reveal" data-d="1" onsubmit="submitForm(event)">
-        <h3 style="font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--txt);margin-bottom:18px;">
+      <form class="cf-box reveal" id="prkContactForm" data-d="1" onsubmit="submitForm(event)" novalidate>
+        <h3 style="font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--txt);margin-bottom:6px;">
           <span class="en">📋 Request Free Site Visit / Quote</span>
           <span class="ne np">📋 नि:शुल्क Site Visit / Quote अनुरोध</span>
         </h3>
+        <p class="cf-sub"><span class="en">All fields are required — we reply within 24 hours.</span><span class="ne np">सबै विवरण अनिवार्य छन् — हामी २४ घण्टाभित्र जवाफ दिन्छौं।</span></p>
         <div class="afr" style="gap:12px;">
           <div class="afg">
-            <label><span class="en">Full Name *</span><span class="ne np">पूरा नाम *</span></label>
-            <input type="text" id="cf-name" placeholder="तपाईंको नाम / Your name" required>
+            <label for="cf-name"><span class="en">Full Name</span><span class="ne np">पूरा नाम</span><span class="cf-req" aria-hidden="true">*</span></label>
+            <input type="text" id="cf-name" name="name" placeholder="तपाईंको नाम / Your name" autocomplete="name" maxlength="60" required aria-required="true" aria-describedby="cf-name-err">
+            <p class="cf-err" id="cf-name-err" aria-live="polite"></p>
           </div>
           <div class="afg">
-            <label><span class="en">Phone Number *</span><span class="ne np">फोन नम्बर *</span></label>
-            <input type="tel" id="cf-phone" placeholder="98XXXXXXXX" required>
+            <label for="cf-phone"><span class="en">Phone Number</span><span class="ne np">फोन नम्बर</span><span class="cf-req" aria-hidden="true">*</span></label>
+            <input type="tel" id="cf-phone" name="phone" placeholder="98XXXXXXXX" autocomplete="tel" inputmode="tel" maxlength="20" required aria-required="true" aria-describedby="cf-phone-err">
+            <p class="cf-err" id="cf-phone-err" aria-live="polite"></p>
           </div>
           <div class="afg">
-            <label><span class="en">Location</span><span class="ne np">ठेगाना</span></label>
-            <input type="text" id="cf-location" placeholder="Hetauda / तपाईंको ठेगाना">
+            <label for="cf-location"><span class="en">Location</span><span class="ne np">ठेगाना</span><span class="cf-req" aria-hidden="true">*</span></label>
+            <input type="text" id="cf-location" name="location" placeholder="Hetauda / तपाईंको ठेगाना" autocomplete="address-level2" maxlength="100" required aria-required="true" aria-describedby="cf-location-err">
+            <p class="cf-err" id="cf-location-err" aria-live="polite"></p>
           </div>
           <div class="afg">
-            <label><span class="en">Service Needed</span><span class="ne np">चाहिएको सेवा</span></label>
-            <select id="cf-service" style="background:var(--cbg2);border:1px solid var(--brd2);color:var(--txt);padding:10px 12px;border-radius:var(--r2);width:100%;font-size:.9rem;">
+            <label for="cf-service"><span class="en">Service Needed</span><span class="ne np">चाहिएको सेवा</span><span class="cf-req" aria-hidden="true">*</span></label>
+            <select id="cf-service" name="service" required aria-required="true" aria-describedby="cf-service-err" style="background:var(--cbg2);border:1px solid var(--brd2);color:var(--txt);padding:10px 12px;border-radius:var(--r2);width:100%;font-size:.9rem;">
               <option value="">-- सेवा छान्नुस् / Select Service --</option>
               <option>Building Construction</option>
               <option>Interior Design</option>
@@ -1390,20 +1470,26 @@ if(/^G-X+$/.test(GA_ID))return;var g=document.createElement("script");g.async=tr
               <option>Solar Installation</option>
               <option>Other / अन्य</option>
             </select>
+            <p class="cf-err" id="cf-service-err" aria-live="polite"></p>
           </div>
           <div class="afg" style="grid-column:1/-1;">
-            <label><span class="en">Message</span><span class="ne np">सन्देश</span></label>
-            <textarea id="cf-msg" rows="3" placeholder="तपाईंको परियोजनाको विवरण... / Project details..." style="resize:vertical;"></textarea>
+            <label for="cf-msg"><span class="en">Message</span><span class="ne np">सन्देश</span><span class="cf-req" aria-hidden="true">*</span></label>
+            <textarea id="cf-msg" name="message" rows="3" placeholder="तपाईंको परियोजनाको विवरण... / Project details..." maxlength="1000" required aria-required="true" aria-describedby="cf-msg-err cf-msg-count" style="resize:vertical;"></textarea>
+            <div class="cf-meta"><p class="cf-err" id="cf-msg-err" aria-live="polite"></p><span class="cf-count" id="cf-msg-count">0 / 1000</span></div>
           </div>
         </div>
+        <div class="cf-hp" aria-hidden="true"><label>Website <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="cf-summary" id="cf-summary" role="alert"></p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
-          <button type="submit" class="afsv" style="flex:1;min-width:140px;padding:13px;font-size:.9rem;">
+          <button type="submit" class="afsv" id="cf-submit" style="flex:1;min-width:140px;padding:13px;font-size:.9rem;">
             📨 <span class="en">Request Quote</span><span class="ne np">कोट अनुरोध</span>
           </button>
           <button type="button" onclick="sendWhatsAppForm()" class="btn btn-w" style="flex:1;min-width:140px;padding:13px;border-radius:var(--r2);font-size:.9rem;">
             💬 <span class="en">Send via WhatsApp</span><span class="ne np">WhatsApp मा पठाउनुस्</span>
           </button>
         </div>
+        <p class="cf-note">🔒 <span class="en">Your details are only used to contact you about your project.</span><span class="ne np">तपाईंको विवरण तपाईंको कामबारे सम्पर्क गर्न मात्र प्रयोग हुन्छ।</span> <a href="privacy.html">Privacy</a></p>
+        <div class="cf-status" id="cf-status" role="dialog" aria-modal="false" aria-labelledby="cf-status-title" hidden></div>
       </form>
     </div>
     <!-- GOOGLE MAPS EMBED -->
@@ -4832,6 +4918,337 @@ body:has(#prkAiHint) #prkAiFab::after{display:none}
     try{var f=_grab();if(f.nm.trim()&&f.ph.trim())_saveLead("Website form (कोट अनुरोध)")}catch(e){}
     if(typeof _oSub==="function")return _oSub.apply(this,arguments)};
 }catch(e){}})();
+</script>
+<script id="prkContactFormJs">
+(function(){"use strict";
+/* ═══ CONTACT FORM v2 — strict validation · Firestore "inquiries" · success/error panel ═══
+   Replaces the WA-bridge handlers above for this form. Inquiries are written to Firestore
+   (collection "inquiries"), and pulled into the admin CRM once the admin is signed in to
+   Firebase, so a visitor's request reaches the admin instead of staying in the visitor's
+   own browser storage. */
+var COL="inquiries", SAVE_TIMEOUT=15000;
+var FIELDS=[
+  {k:"name",    id:"cf-name"},
+  {k:"phone",   id:"cf-phone"},
+  {k:"location",id:"cf-location"},
+  {k:"service", id:"cf-service"},
+  {k:"message", id:"cf-msg"}
+];
+var MSG={
+  name_empty:  ["Please enter your full name.","कृपया आफ्नो पूरा नाम लेख्नुहोस्।"],
+  name_len:    ["Name must be 2–60 characters.","नाम २ देखि ६० अक्षरसम्मको हुनुपर्छ।"],
+  name_chars:  ["Use letters only — no numbers or symbols.","अक्षर मात्र प्रयोग गर्नुहोस् — अंक वा चिन्ह होइन।"],
+  phone_empty: ["Please enter your phone number.","कृपया फोन नम्बर लेख्नुहोस्।"],
+  phone_bad:   ["Enter a valid Nepal number, e.g. 98XXXXXXXX or 057-XXXXXX.","मान्य नेपाली नम्बर लेख्नुहोस्, जस्तै 98XXXXXXXX वा 057-XXXXXX।"],
+  location_empty:["Please enter your location.","कृपया आफ्नो ठेगाना लेख्नुहोस्।"],
+  location_len:["Location must be 2–100 characters.","ठेगाना २ देखि १०० अक्षरसम्मको हुनुपर्छ।"],
+  location_bad:["Please enter a real place name.","कृपया ठाउँको नाम लेख्नुहोस्।"],
+  service_empty:["Please choose the service you need.","कृपया चाहिएको सेवा छान्नुहोस्।"],
+  message_empty:["Please tell us a little about your project.","कृपया आफ्नो कामको बारेमा केही लेख्नुहोस्।"],
+  message_short:["Please write at least 10 characters.","कृपया कम्तीमा १० अक्षर लेख्नुहोस्।"],
+  message_long:["Message can be at most 1000 characters.","सन्देश बढीमा १००० अक्षरको हुन सक्छ।"],
+  message_bad: ["Please describe your project in words.","कृपया आफ्नो कामबारे शब्दमा लेख्नुहोस्।"]
+};
+var state={busy:false,touched:{},tried:false};
+var form=null;
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function bi(en,ne){return '<span class="en">'+esc(en)+'</span><span class="ne np">'+esc(ne)+'</span>'}
+function biRaw(en,ne){return '<span class="en">'+en+'</span><span class="ne np">'+ne+'</span>'}
+function toAscii(s){return String(s||"").replace(/[०-९]/g,function(d){return String(d.charCodeAt(0)-0x966)})}
+function clean(s){return String(s||"").replace(/\s+/g," ").trim()}
+function hasLetter(s){try{return /\p{L}/u.test(s)}catch(e){return /[A-Za-zऀ-ॿ]/.test(s)}}
+var NAME_RE=(function(){try{return new RegExp("^[\\p{L}\\p{M}][\\p{L}\\p{M} .'\\-]*$","u")}catch(e){return /^[A-Za-zऀ-ॿ][A-Za-zऀ-ॿ .'\-]*$/}})();
+function waNum(){try{var w=D&&D.contact&&D.contact.wa;w=String(w||"").replace(/\D/g,"");return w.length>=10?w:"9779801069733"}catch(e){return "9779801069733"}}
+
+/* Nepal phone → {local, e164} or null. Accepts +977 / 00977 / 977 prefixes, spaces, dashes,
+   Devanagari digits; mobiles 96/97/98XXXXXXXX (optionally with a leading 0), landlines 0XX-XXXXXX. */
+function parsePhone(raw){
+  var p=toAscii(raw).replace(/[\s\-().\/]/g,"");
+  p=p.replace(/^(\+|00)?977/,"");
+  if(/^0?9[678]\d{8}$/.test(p)){p=p.replace(/^0/,"");return{local:p,e164:"+977"+p}}
+  if(/^0[1-9]\d{6,8}$/.test(p))return{local:p,e164:"+977"+p.slice(1)};
+  return null;
+}
+function values(){
+  var v={};FIELDS.forEach(function(f){var el=$(f.id);v[f.k]=el?String(el.value||""):""});return v;
+}
+function check(k,v){
+  var s=clean(k==="phone"?toAscii(v):v);
+  switch(k){
+    case "name":
+      if(!s)return "name_empty";
+      if(s.length<2||s.length>60)return "name_len";
+      if(!NAME_RE.test(s))return "name_chars";
+      return "";
+    case "phone":
+      if(!s)return "phone_empty";
+      return parsePhone(s)?"":"phone_bad";
+    case "location":
+      if(!s)return "location_empty";
+      if(s.length<2||s.length>100)return "location_len";
+      if(!hasLetter(s))return "location_bad";
+      return "";
+    case "service":
+      return s?"":"service_empty";
+    case "message":
+      if(!s)return "message_empty";
+      if(s.length<10)return "message_short";
+      if(s.length>1000)return "message_long";
+      if(!hasLetter(s))return "message_bad";
+      return "";
+  }
+  return "";
+}
+function paint(f,err){
+  var el=$(f.id),box=$(f.id+"-err");if(!el)return;
+  el.classList.toggle("cf-invalid",!!err);
+  el.classList.toggle("cf-valid",!err&&clean(el.value)!=="");
+  if(err)el.setAttribute("aria-invalid","true");else el.removeAttribute("aria-invalid");
+  if(box){if(err){var m=MSG[err];box.innerHTML=bi(m[0],m[1]);box.classList.add("show")}else{box.innerHTML="";box.classList.remove("show")}}
+}
+function validateAll(){
+  var v=values(),bad=[];
+  FIELDS.forEach(function(f){var e=check(f.k,v[f.k]);paint(f,e);if(e)bad.push(f)});
+  var sum=$("cf-summary");
+  if(sum){
+    if(bad.length){var n=bad.length;
+      sum.innerHTML=bi("Please fix the "+n+" highlighted field"+(n>1?"s":"")+" before sending.","पठाउनुअघि रातो चिन्ह लागेका "+toNe(n)+" वटा विवरण मिलाउनुहोस्।");
+      sum.classList.add("show")}
+    else{sum.innerHTML="";sum.classList.remove("show")}
+  }
+  return bad;
+}
+function toNe(n){return String(n).replace(/\d/g,function(d){return "०१२३४५६७८९"[d]})}
+function payloadFrom(v){
+  var ph=parsePhone(clean(toAscii(v.phone)));
+  return{
+    name:clean(v.name),phone:ph.local,phoneE164:ph.e164,location:clean(v.location),
+    service:clean(v.service).slice(0,60),message:String(v.message||"").trim().replace(/\n{3,}/g,"\n\n"),
+    status:"New",source:"website-form",
+    lang:String((typeof D!=="undefined"&&D&&D.lang)||document.documentElement.getAttribute("data-lang")||"en").slice(0,5),
+    page:String(location.href).slice(0,300),userAgent:String(navigator.userAgent||"").slice(0,300)
+  };
+}
+function waText(p,ref){
+  var L=["Namaste! Prerak Multipurpose Pvt. Ltd.","📋 *WEBSITE INQUIRY*"+(ref?" ("+ref+")":""),"",
+    "👤 *Name:* "+p.name,"📱 *Phone:* "+p.phone,"📍 *Location:* "+p.location,"🏗️ *Service:* "+p.service,"📝 *Message:* "+p.message,
+    "","🙏 Please contact me. Thank you!"];
+  return "https://wa.me/"+waNum()+"?text="+encodeURIComponent(L.join("\n"));
+}
+function hash(p){return [p.name,p.phone,p.location,p.service,p.message].join("|").toLowerCase()}
+function refOf(id){return "PRK-"+String(id||"").slice(0,6).toUpperCase()}
+
+/* ── Firestore ── */
+function saveInquiry(p,source){
+  return new Promise(function(resolve,reject){
+    try{
+      if(typeof firebase==="undefined"||!firebase.firestore)return reject({code:"sdk-missing"});
+      if(typeof initFirebase!=="function"||!initFirebase()||typeof _fbDb==="undefined"||!_fbDb)return reject({code:"not-configured"});
+      var ref=_fbDb.collection(COL).doc();
+      var data={};for(var k in p)data[k]=p[k];
+      data.source=source||"website-form";
+      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      var t=setTimeout(function(){reject({code:"timeout"})},SAVE_TIMEOUT);
+      ref.set(data).then(function(){clearTimeout(t);resolve(ref.id)},function(e){clearTimeout(t);reject(e||{code:"unknown"})});
+    }catch(e){reject(e||{code:"unknown"})}
+  });
+}
+
+/* ── result overlay ── */
+var CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+var CROSS='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+function openStatus(html,focusSel){
+  var st=$("cf-status");if(!st)return;
+  st.innerHTML=html;st.hidden=false;
+  requestAnimationFrame(function(){st.classList.add("show")});
+  try{var c=st.querySelector(".cf-card"),r=c.getBoundingClientRect();if(r.top<80||r.bottom>window.innerHeight-90)c.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}
+  setTimeout(function(){var b=st.querySelector(focusSel||".cf-btn");if(b)try{b.focus({preventScroll:true})}catch(e){}},260);
+}
+function closeStatus(){
+  var st=$("cf-status");if(!st||st.hidden)return;
+  st.classList.remove("show");setTimeout(function(){st.hidden=true;st.innerHTML=""},250);
+  var s=$("cf-submit");if(s)try{s.focus({preventScroll:true})}catch(e){}
+}
+function showSuccess(p,id,viaWa){
+  var ref=refOf(id),first=esc(p.name.split(" ")[0]);
+  openStatus(
+    '<div class="cf-card cf-ok">'+
+      '<div class="cf-ico">'+CHECK+'</div>'+
+      '<h4 class="cf-title" id="cf-status-title">'+bi("Request received!","अनुरोध प्राप्त भयो!")+'</h4>'+
+      '<p class="cf-text">'+biRaw("Thank you, <b>"+first+"</b>. Our team will call you on <b>"+esc(p.phone)+"</b> within 24 hours.",
+        "धन्यवाद, <b>"+first+"</b> जी। हाम्रो टिमले २४ घण्टाभित्र <b>"+esc(p.phone)+"</b> मा सम्पर्क गर्नेछ।")+'</p>'+
+      '<span class="cf-ref">'+bi("Reference: ","सन्दर्भ नं.: ")+esc(ref)+'</span>'+
+      '<div class="cf-acts">'+
+        (viaWa?'':'<a class="cf-btn cf-btn-wa" data-cf="wa" href="'+esc(waText(p,ref))+'" target="_blank" rel="noopener">💬 '+bi("Also send on WhatsApp","WhatsApp मा पनि पठाउनुहोस्")+'</a>')+
+        '<button type="button" class="cf-btn cf-btn-pri" data-cf="close">✓ '+bi("Done","ठीक छ")+'</button>'+
+      '</div>'+
+    '</div>',".cf-btn-pri");
+}
+function showError(kind,p){
+  var why={
+    offline:["You appear to be offline. Please check your internet connection and try again.","तपाईं अफलाइन देखिनुहुन्छ। इन्टरनेट जडान जाँचेर फेरि प्रयास गर्नुहोस्।"],
+    timeout:["The connection is too slow right now. Please try again.","अहिले इन्टरनेट धेरै ढिलो छ। कृपया फेरि प्रयास गर्नुहोस्।"],
+    server: ["Our system could not save your request right now.","हाम्रो प्रणालीले अहिले तपाईंको अनुरोध सुरक्षित गर्न सकेन।"]
+  }[kind]||["Our system could not save your request right now.","हाम्रो प्रणालीले अहिले तपाईंको अनुरोध सुरक्षित गर्न सकेन।"];
+  openStatus(
+    '<div class="cf-card cf-bad">'+
+      '<div class="cf-ico">'+CROSS+'</div>'+
+      '<h4 class="cf-title" id="cf-status-title">'+bi("Couldn't send your request","अनुरोध पठाउन सकिएन")+'</h4>'+
+      '<p class="cf-text">'+bi(why[0],why[1])+'</p>'+
+      '<p class="cf-hint">'+bi("Your details are still in the form — nothing was lost.","तपाईंले भरेको विवरण form मै सुरक्षित छ।")+'</p>'+
+      '<div class="cf-acts">'+
+        '<button type="button" class="cf-btn cf-btn-pri" data-cf="retry">↻ '+bi("Try again","फेरि प्रयास")+'</button>'+
+        '<a class="cf-btn cf-btn-wa" data-cf="wa" href="'+esc(waText(p))+'" target="_blank" rel="noopener">💬 '+bi("Send via WhatsApp","WhatsApp बाट पठाउनुहोस्")+'</a>'+
+        '<a class="cf-btn cf-btn-ghost" href="tel:+'+waNum()+'">📞 '+bi("Call us","फोन गर्नुहोस्")+'</a>'+
+      '</div>'+
+    '</div>',".cf-btn-pri");
+}
+function errKind(e){
+  var c=String(e&&e.code||"");
+  if(c==="timeout"||c==="deadline-exceeded")return navigator.onLine===false?"offline":"timeout";
+  if(c==="unavailable")return navigator.onLine===false?"offline":"timeout";
+  return "server";
+}
+function setLoading(on){
+  var b=$("cf-submit");if(!b)return;
+  if(on){if(!b.dataset.orig)b.dataset.orig=b.innerHTML;b.classList.add("is-loading");b.setAttribute("aria-busy","true");
+    b.innerHTML='<span class="cf-spin" aria-hidden="true"></span> '+bi("Sending…","पठाउँदै…")}
+  else{b.classList.remove("is-loading");b.removeAttribute("aria-busy");if(b.dataset.orig)b.innerHTML=b.dataset.orig}
+}
+function resetForm(){
+  try{form.reset()}catch(e){}
+  state.touched={};state.tried=false;
+  FIELDS.forEach(function(f){paint(f,"");var el=$(f.id);if(el)el.classList.remove("cf-valid")});
+  var sum=$("cf-summary");if(sum){sum.classList.remove("show");sum.innerHTML=""}
+  updateCount();
+}
+function shake(){if(!form)return;form.classList.remove("cf-shake");void form.offsetWidth;form.classList.add("cf-shake")}
+function failValidation(bad){
+  shake();
+  var el=$(bad[0].id);if(el)try{el.focus({preventScroll:true});el.scrollIntoView({behavior:"smooth",block:"center"})}catch(e){}
+}
+
+/* ── handlers (global: the form's markup calls these by name) ── */
+window.submitForm=function(ev){
+  if(ev&&ev.preventDefault)ev.preventDefault();
+  if(!form)form=$("prkContactForm");
+  if(state.busy)return false;
+  state.tried=true;
+  var hp=$("cf-website");
+  var bad=validateAll();
+  if(bad.length){failValidation(bad);return false}
+  var p=payloadFrom(values());
+  if(hp&&hp.value){showSuccess(p,"BOT"+Date.now().toString(36));resetForm();return false} /* honeypot: pretend, don't store */
+  var h=hash(p);
+  try{var prev=JSON.parse(sessionStorage.getItem("prk_cf_last")||"null");
+    if(prev&&prev.h===h&&Date.now()-prev.t<10*60e3){showSuccess(p,prev.id);resetForm();return false}}catch(e){} /* same request already saved: no duplicate */
+  if(navigator.onLine===false){showError("offline",p);return false}
+  state.busy=true;setLoading(true);
+  saveInquiry(p,"website-form").then(function(id){
+    try{sessionStorage.setItem("prk_cf_last",JSON.stringify({h:h,id:id,t:Date.now()}))}catch(e){}
+    showSuccess(p,id);resetForm();
+  },function(e){
+    try{console.warn("[contact] inquiry not saved:",e&&e.code||e)}catch(_){}
+    showError(errKind(e),p);
+  }).then(function(){state.busy=false;setLoading(false)});
+  return false;
+};
+window.sendWhatsAppForm=function(){
+  if(!form)form=$("prkContactForm");
+  state.tried=true;
+  var bad=validateAll();
+  if(bad.length){failValidation(bad);return}
+  var p=payloadFrom(values());
+  /* open WhatsApp synchronously (inside the click) so it isn't popup-blocked … */
+  window.open(waText(p),"_blank");
+  /* … and also record the lead for the CRM in the background */
+  if($("cf-website")&&$("cf-website").value)return;
+  saveInquiry(p,"website-whatsapp").then(function(id){showSuccess(p,id,true);resetForm()},function(e){try{console.warn("[contact] WhatsApp lead not saved:",e&&e.code||e)}catch(_){}});
+};
+
+function updateCount(){
+  var t=$("cf-msg"),c=$("cf-msg-count");if(!t||!c)return;
+  var n=String(t.value||"").trim().length;
+  c.textContent=n+" / 1000";c.classList.toggle("low",n>0&&n<10);
+}
+function bind(){
+  form=$("prkContactForm");if(!form||form.__cfBound)return;form.__cfBound=true;
+  FIELDS.forEach(function(f){
+    var el=$(f.id);if(!el)return;
+    var live=function(){
+      if(!(state.tried||state.touched[f.k]))return;
+      paint(f,check(f.k,el.value));
+      if(state.tried){var sum=$("cf-summary");if(sum&&sum.classList.contains("show"))validateAll()}
+    };
+    el.addEventListener("input",live);el.addEventListener("change",function(){state.touched[f.k]=true;live()});
+    el.addEventListener("blur",function(){if(clean(el.value)!==""){state.touched[f.k]=true;live()}});
+  });
+  var ph=$("cf-phone");
+  if(ph)ph.addEventListener("blur",function(){var r=parsePhone(clean(toAscii(ph.value)));if(r&&ph.value!==r.local){ph.value=r.local;paint(FIELDS[1],"")}});
+  var t=$("cf-msg");if(t)t.addEventListener("input",updateCount);updateCount();
+  form.addEventListener("click",function(e){
+    var b=e.target.closest&&e.target.closest("[data-cf]");if(!b)return;
+    var a=b.getAttribute("data-cf");
+    if(a==="close")closeStatus();
+    else if(a==="retry"){closeStatus();setTimeout(function(){window.submitForm()},260)}
+  });
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){var st=$("cf-status");if(st&&!st.hidden)closeStatus()}});
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bind);else bind();
+
+/* ── Admin CRM: pull website inquiries from Firestore once signed in ── */
+function pullInquiries(){
+  try{
+    if(typeof D==="undefined"||!D||typeof _fbDb==="undefined"||!_fbDb)return;
+    _fbDb.collection(COL).orderBy("createdAt","desc").limit(300).get().then(function(snap){
+      D.leads=Array.isArray(D.leads)?D.leads:[];
+      D.leadsImported=Array.isArray(D.leadsImported)?D.leadsImported:[];
+      var seen={};D.leadsImported.forEach(function(x){seen[x]=1});
+      D.leads.forEach(function(l){if(l&&l.fsId)seen[l.fsId]=1});
+      var fresh=[];
+      snap.forEach(function(doc){
+        if(seen[doc.id])return;
+        var d=doc.data()||{};
+        var ts=d.createdAt&&d.createdAt.toDate?d.createdAt.toDate():new Date();
+        var iso=ts.toISOString();
+        fresh.push({id:"fs_"+doc.id,fsId:doc.id,name:d.name||"(no name)",phone:d.phone||"",phone2:"",addr:"",
+          loc:d.location||"",svc:d.service||"",status:"New",idate:iso.split("T")[0],fdate:"",followUp:"",
+          remarks:d.message||"",updated:iso,created:iso,
+          history:[{ts:ts.getTime(),action:"Lead created — "+(d.source==="website-whatsapp"?"Website form (WhatsApp बटन)":"Website form (कोट अनुरोध)")+" · "+refOf(doc.id),by:"Website"}]});
+        D.leadsImported.push(doc.id);
+      });
+      if(D.leadsImported.length>3000)D.leadsImported=D.leadsImported.slice(-3000);
+      if(!fresh.length)return;
+      D.leads=fresh.concat(D.leads);
+      try{if(typeof saveData==="function")saveData()}catch(e){}
+      try{if(typeof renderCRM==="function")renderCRM();
+        if(typeof updateCRMStats==="function")updateCRMStats();
+        if(typeof renderFollowUps==="function")renderFollowUps();
+        if(typeof renderRecentActivity==="function")renderRecentActivity()}catch(e){}
+      try{if(typeof showToast==="function")showToast("📥 "+fresh.length+" नयाँ website inquiry CRM मा थपियो / new website inquir"+(fresh.length>1?"ies":"y")+" added to CRM",5e3)}catch(e){}
+    }).catch(function(e){try{console.warn("[inquiries] CRM sync skipped:",e&&e.code||e)}catch(_){}});
+  }catch(e){}
+}
+var watching=false,timer=null;
+function watchAuth(){
+  if(watching)return true;
+  try{
+    if(typeof firebase==="undefined"||!firebase.auth||typeof initFirebase!=="function"||!initFirebase())return false;
+    watching=true;
+    firebase.auth().onAuthStateChanged(function(u){
+      clearInterval(timer);
+      if(!u)return;
+      setTimeout(pullInquiries,1200);
+      timer=setInterval(pullInquiries,5*60e3);
+    });
+    return true;
+  }catch(e){return false}
+}
+var tries=0,poll=setInterval(function(){if(watchAuth()||++tries>40)clearInterval(poll)},1500);
+window.prkPullInquiries=pullInquiries;
+})();
 </script>
 <style id="apLeftInfoTabCss">
 /* dead dev-badge को अन्त्य */
