@@ -2,8 +2,8 @@
 🗣️ Assistant ले अब प्रयोगकर्ताकै भाषा र लिपिमा जवाफ दिन्छ:
    नेपाली (देवनागरी) → नेपाली · Roman नेपाली ("kati lagcha?") →
    Roman नेपाली · English → English (site को EN/NE बटनले होइन)।
-☀️ Solar सेवा = सोलार वाटर हिटर र गिजर जडान मात्र (panel,
-   battery, inverter, अनुदान होइन) — site, FAQ, team card सबैतिर।
+☀️ Solar सेवा = सोलार वाटर हिटर र गिजर जडान मात्र (सोलार panel,
+   battery वा inverter होइन) — site, FAQ, team card सबैतिर।
 ⚠️ अनिवार्य: नयाँ prerak-ai-worker.js लाई Cloudflare → Workers →
    prerak-ai → Edit code मा पूरै paste गरी Deploy गर्नुहोस्।
    (paste नगरेसम्म AI जवाफमा पुरानै नियम चल्छ; website को
