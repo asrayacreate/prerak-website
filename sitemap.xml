@@ -7,7 +7,10 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://prerakmultipurpose.com/og-image.jpg</image:loc>
+      <image:loc>https://prerakmultipurpose.com/og-logo.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://prerakmultipurpose.com/prerak-logo.jpg</image:loc>
     </image:image>
     <image:image>
       <image:loc>https://prerakmultipurpose.com/img/5544329e456f.webp</image:loc>
