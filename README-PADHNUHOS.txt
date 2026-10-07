@@ -1,3 +1,39 @@
+── 📨 नयाँ (2026-10): CONTACT FORM → FIREBASE "inquiries" ──
+✅ Form का सबै ५ विवरण अनिवार्य; नाम/फोन/ठेगाना/सेवा/सन्देश
+   कडाइका साथ जाँचिन्छ (नेपाली नम्बर, देवनागरी अंक पनि चल्छ)।
+☁️ "कोट अनुरोध" थिचेपछि inquiry Firebase Firestore को
+   `inquiries` collection मा save हुन्छ → सफल भए हरियो
+   "अनुरोध प्राप्त भयो!" (सन्दर्भ नं. PRK-XXXXXX सहित),
+   असफल भए रातो panel (फेरि प्रयास / WhatsApp / फोन)।
+📥 Admin login गरेपछि ती inquiries आफैं CRM मा "New" lead भएर
+   आउँछन् (हरेक ५ मिनेटमा पनि जाँच्छ, दोहोरिँदैनन्)।
+🔐 अनिवार्य: Firebase Console → Firestore Database → Rules मा
+   आफ्नो पुरानो `match /databases/{database}/documents { … }`
+   भित्र तलको block थपेर Publish गर्नुहोस् (बाँकी rules नछुनुहोस्)।
+   नथपे visitor को form मा "अनुरोध पठाउन सकिएन" आउँछ।
+   (admin email फेर्नुभएको छ भने तलको email पनि फेर्नुहोस्)
+
+    match /inquiries/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['name','phone','phoneE164','location','service','message','status','source','lang','page','userAgent','createdAt'])
+        && request.resource.data.keys().hasAll(['name','phone','location','service','message','status','createdAt'])
+        && request.resource.data.name is string && request.resource.data.name.size() >= 2 && request.resource.data.name.size() <= 60
+        && request.resource.data.phone is string && request.resource.data.phone.matches('^[0-9]{8,10}$')
+        && request.resource.data.location is string && request.resource.data.location.size() >= 2 && request.resource.data.location.size() <= 100
+        && request.resource.data.service is string && request.resource.data.service.size() >= 1 && request.resource.data.service.size() <= 60
+        && request.resource.data.message is string && request.resource.data.message.size() >= 10 && request.resource.data.message.size() <= 1000
+        && request.resource.data.status == 'New'
+        && request.resource.data.source in ['website-form', 'website-whatsapp']
+        && request.resource.data.page.size() <= 300 && request.resource.data.userAgent.size() <= 300
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if request.auth != null
+        && request.auth.token.email == 'asrayacreate.ac@gmail.com';
+    }
+
+⚠️ Rules मा "allow read, write: if true" वा मिति-सीमा भएको
+   "test mode" rule छ भने त्यो कुनै दिन expire भएर site को
+   content पनि load हुन छोड्छ — एकपटक जाँच्नुहोस्।
+
+
 ── ⚠️ नयाँ (2026-10): IMAGES अब छुट्टै `img/` FOLDER मा ──
 📁 index.html भित्रका सबै photo अब `img/` folder मा छुट्टाछुट्टै
    file भएर बसेका छन् (index.html 4.2MB → 1.1MB, site छिटो खुल्छ)।
