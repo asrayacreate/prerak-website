@@ -56,7 +56,7 @@ const ROMAN_NE = new Set(("ko ma ho cha chha xa chaina chhaina hunchha huncha hu
 /** "ne" = Devanagari Nepali, "rom" = Roman-letter Nepali, "en" = English. */
 function detectLang(text, hint) {
   const t = String(text || "");
-  const dev = (t.match(/[ऀ-ॿ]/g) || []).length;
+  const dev = (t.match(/[\u0900-\u097F]/g) || []).length;
   const lat = (t.match(/[A-Za-z]/g) || []).length;
   if (dev && dev >= lat * 0.5) return "ne";
   if (!lat) return dev ? "ne" : (hint === "rom" || hint === "en" ? hint : "ne");

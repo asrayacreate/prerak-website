@@ -4657,7 +4657,7 @@ var hist=[],sent=0,lastSend=0,busy=false;
 var PLG="ne";
 var PROM={ko:1,ma:1,ho:1,cha:1,chha:1,xa:1,chaina:1,chhaina:1,hunchha:1,huncha:1,hunxa:1,kati:1,kasari:1,kaha:1,kahile:1,kaile:1,kun:1,ke:1,kina:1,garnu:1,garne:1,garna:1,gardinu:1,garchha:1,garcha:1,garxa:1,garnuhunchha:1,garnuhuncha:1,garnuhos:1,garnus:1,malai:1,mero:1,hamro:1,tapai:1,tapain:1,tapaiko:1,hajur:1,ghar:1,banauna:1,banaune:1,lagcha:1,lagchha:1,lagxa:1,parcha:1,parchha:1,paisa:1,sakincha:1,sakinchha:1,milcha:1,milchha:1,chahiyo:1,chaiyo:1,chahincha:1,dinus:1,dinuhos:1,ra:1,pani:1,ani:1,ki:1,hola:1,thiyo:1,chu:1,chhu:1,xu:1,kaam:1,kam:1,sasto:1,mahango:1,bhayo:1,vayo:1,dekhi:1,samma:1,ahile:1,aaja:1,bholi:1,thau:1,thegana:1,sampark:1,khulcha:1,khulchha:1,baje:1,rakhnu:1,lagaune:1,lagaunu:1,jadan:1,mulya:1,bhanda:1,ramro:1,sabai:1,yo:1,tyo:1};
 function plangOf(t){t=String(t||"");
-  var dev=(t.match(/[ऀ-ॿ]/g)||[]).length,lat=(t.match(/[A-Za-z]/g)||[]).length;
+  var dev=(t.match(/[\u0900-\u097F]/g)||[]).length,lat=(t.match(/[A-Za-z]/g)||[]).length;
   if(dev&&dev>=lat*0.5)return "ne";
   if(!lat)return dev?"ne":"en";
   var w=t.toLowerCase().match(/[a-z]+/g)||[],h=0;for(var i=0;i<w.length;i++){if(PROM[w[i]])h++}
@@ -5229,8 +5229,8 @@ function bi(en,ne){return '<span class="en">'+esc(en)+'</span><span class="ne np
 function biRaw(en,ne){return '<span class="en">'+en+'</span><span class="ne np">'+ne+'</span>'}
 function toAscii(s){return String(s||"").replace(/[०-९]/g,function(d){return String(d.charCodeAt(0)-0x966)})}
 function clean(s){return String(s||"").replace(/\s+/g," ").trim()}
-function hasLetter(s){try{return /\p{L}/u.test(s)}catch(e){return /[A-Za-zऀ-ॿ]/.test(s)}}
-var NAME_RE=(function(){try{return new RegExp("^[\\p{L}\\p{M}][\\p{L}\\p{M} .'\\-]*$","u")}catch(e){return /^[A-Za-zऀ-ॿ][A-Za-zऀ-ॿ .'\-]*$/}})();
+function hasLetter(s){try{return /\p{L}/u.test(s)}catch(e){return /[A-Za-z\u0900-\u097F]/.test(s)}}
+var NAME_RE=(function(){try{return new RegExp("^[\\p{L}\\p{M}][\\p{L}\\p{M} .'\\-]*$","u")}catch(e){return /^[A-Za-z\u0900-\u097F][A-Za-z\u0900-\u097F .'\-]*$/}})();
 function waNum(){try{var w=D&&D.contact&&D.contact.wa;w=String(w||"").replace(/\D/g,"");return w.length>=10?w:"9779801069733"}catch(e){return "9779801069733"}}
 
 /* Nepal phone → {local, e164} or null. Accepts +977 / 00977 / 977 prefixes, spaces, dashes,
