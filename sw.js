@@ -81,13 +81,19 @@ self.addEventListener("install", function (e) {
 });
 
 self.addEventListener("activate", function (e) {
+  var isUpdate = false;
   e.waitUntil(
     caches.keys().then(function (keys) {
+      /* an older prerak-cache-* means this worker is an UPDATE, not the first install */
+      isUpdate = keys.some(function (k) { return k !== CACHE && k.indexOf("prerak-cache-") === 0; });
       return Promise.all(keys.map(function (k) { if (k !== CACHE) return caches.delete(k); }));
     }).then(function () { return self.clients.claim(); })
       .then(function () {
         /* self-heal: when a NEW worker version takes over, refresh open tabs once
-           so any page served from an old/poisoned cache is replaced instantly */
+           so any page served from an old/poisoned cache is replaced instantly.
+           Never on the first install: that page came straight from the network, and
+           reloading it made every first visit load the whole site twice. */
+        if (!isUpdate) return;
         return self.clients.matchAll({ type: "window" }).then(function (cs) {
           cs.forEach(function (c) { try { if (c.navigate) c.navigate(c.url); } catch (err) {} });
         });
