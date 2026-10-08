@@ -1,6 +1,6 @@
 /**
  * PRERAK AI Worker — Gemini-powered assistant for the website chat-widget
- * and the Sahayak Marketing tool. Both send: { messages:[{role,content}], context, lang }
+ * and the Sahayak Marketing tool. Both send: { messages:[{role,content}], context, lang[, mode] }
  * and expect back: { reply: "..." }
  *
  * Setup: Cloudflare dashboard → this Worker → Settings → Variables and Secrets
@@ -22,108 +22,116 @@ function corsHeaders(origin) {
   };
 }
 
-// ── Reply-language rule ──────────────────────────────────────────────────────
-const LANGUAGE_RULE =
-  "STRICT LANGUAGE RULE (highest priority — overrides every other instruction): " +
-  "Always reply in the exact language and script the user uses. " +
-  "If the user asks in Nepali, reply in Nepali. If the user asks in English, reply in English. " +
-  "Nepali written in Devanagari (e.g. 'घर बनाउन कति लाग्छ?') → reply only in Devanagari Nepali. " +
-  "Nepali typed in Roman letters (e.g. 'ghar banauna kati lagcha?') → reply in the same " +
-  "Roman-letter Nepali, not Devanagari and not English. " +
-  "Decide from the user's latest message only — not from the website language setting, " +
-  "earlier messages, or the language of the context below. Do not mix languages in one " +
-  "reply; only brand names, technical terms (UPVC, gypsum, geyser) and numbers may stay as they are.\n\n";
+// ── Permanent system prompt (owner-provided, keep verbatim) ─────────────────
+const SYSTEM_PROMPT = `You are the official AI Customer Support Assistant for 'Prerak Multipurpose Pvt. Ltd.', a leading construction and interior design company based in Hetauda, Nepal. CRITICAL LANGUAGE RULE: You MUST strictly reply in the EXACT SAME language and script that the user uses to ask the question.
 
+* If the user writes in English -> Reply in English.
+* If the user writes in pure Nepali (Devanagari / नेपाली) -> Reply in pure Nepali (Devanagari).
+* If the user writes in Romanized Nepali (e.g., 'K chha khabar') -> Reply ONLY in Romanized Nepali (Pinglish).
+* If the user writes in Hindi -> Reply in Hindi.
+
+Be polite, helpful, and concise. Do not use Markdown formatting like bold or italics unnecessarily. Focus on answering queries related to construction, interior design, UPVC, gypsum, plumbing, and other services provided by Prerak Multipurpose.`;
+
+// Company facts the assistant must not get wrong (contacts, hours, what is / isn't offered).
+const BUSINESS_FACTS =
+  "Company facts: Services — building construction, interior design, UPVC/aluminium windows and " +
+  "doors, gypsum ceiling, plumbing, electrical, painting, renovation, solar water heater & geyser " +
+  "installation, construction material supply. The only solar-related service is solar water heater " +
+  "and geyser installation; Prerak does NOT provide solar panels, batteries, or inverters — if asked, " +
+  "say so politely and offer the solar water heater and geyser service instead. " +
+  "Phone: 9801069733 / 9855069733. WhatsApp: 9779801069733. Hours: 8AM-6PM, Sunday-Friday. " +
+  "Free site visit is available. Never invent prices, warranty terms, discounts or project counts " +
+  "beyond what is given here or in the context — if unsure, suggest a quick call/WhatsApp.";
+
+// Per-turn reminder, chosen from the user's latest message (the model otherwise tends to
+// continue in the language of earlier turns or of the context).
 const LANG_TURN = {
-  ne: "The user's latest message is in Nepali (Devanagari script). Reply ONLY in Nepali, written in Devanagari.",
-  rom: "The user's latest message is in Nepali typed in Roman letters. Reply ONLY in Nepali written in Roman letters, like the user — not Devanagari, not English.",
-  en: "The user's latest message is in English. Reply ONLY in English."
-};
-const LANG_ACK = {
-  ne: "बुझें। म प्रयोगकर्ताकै भाषा र लिपिमा जवाफ दिन्छु।",
-  rom: "Bujhe. Ma prayogkarta kai bhasa ra lipi ma jawaf dinchhu.",
-  en: "Understood. I will reply in the user's own language and script."
+  en: "The user's latest message is in English. Reply ONLY in English.",
+  ne: "The user's latest message is in Nepali (Devanagari script). Reply ONLY in pure Nepali, written in Devanagari.",
+  rom: "The user's latest message is in Romanized Nepali (Nepali typed in Roman letters). Reply ONLY in Romanized Nepali — not Devanagari, not English, not Hindi.",
+  hi: "The user's latest message is in Hindi (Devanagari script). Reply ONLY in Hindi, written in Devanagari — not Nepali.",
+  hirom: "The user's latest message is in Hindi typed in Roman letters (Hinglish). Reply ONLY in Hindi written in Roman letters, like the user — not Nepali, not Devanagari."
 };
 
-// Common Nepali words as typed in Roman letters (to tell "kati lagcha?" from English).
-const ROMAN_NE = new Set(("ko ma ho cha chha xa chaina chhaina hunchha huncha hunxa kati kasari kaha kahile kaile " +
-  "kun ke kina garnu garne garna gardinu garchha garcha garxa garnuhunchha garnuhuncha garnuhos garnus malai mero " +
-  "hamro tapai tapain tapaiko hajur ghar banauna banaune lagcha lagchha lagxa parcha parchha paisa sakincha " +
-  "sakinchha milcha milchha chahiyo chaiyo chahincha dinus dinuhos ra pani ani ki hola thiyo chu chhu xu kaam kam " +
+// Marker words. Hindi and Nepali share the Devanagari script, so they are told apart by
+// common function words (है/क्या/नहीं vs छ/हो/लाई); same idea for Roman-letter text.
+const DEV_NE = new Set(("छ छन् छैन छु छौं हो होइन लाई मा ले बाट गर्न गर्ने गर्नु गर्नुहोस् गर्छ गर्छौं कति कसरी किन " +
+  "चाहिन्छ चाहियो हुन्छ हुन्छन् पर्छ तपाईं तपाईंको तपाईँ हामी हाम्रो मलाई मेरो पनि अनि सक्छ सकिन्छ भयो थियो " +
+  "लाग्छ लाग्ने बनाउन छन").split(" "));
+const DEV_HI = new Set(("है हैं था थी थे क्या नहीं नही मुझे मैं हम आप आपका आपकी आपके कितना कितनी कितने कैसे " +
+  "चाहिए करना करते करें करेंगे होगा होगी होंगे रहा रही रहे लिए वाला वाली में भी तो यह वह इस उस कौन कब क्यों " +
+  "बनवाना बनाना लगेगा सकते सकता मिलेगा").split(" "));
+const ROMAN_NE = new Set(("ko ma cha chha xa chaina chhaina hunchha huncha hunxa kati kasari kaha kahile kaile " +
+  "kun kina garnu garne garna gardinu garchha garcha garxa garnuhunchha garnuhuncha garnuhos garnus malai mero " +
+  "hamro tapai tapain tapaiko hajur banauna banaune lagcha lagchha lagxa parcha parchha paisa sakincha " +
+  "sakinchha milcha milchha chahiyo chaiyo chahincha dinus dinuhos ra pani ani hola thiyo chu chhu xu " +
   "sasto mahango bhayo vayo dekhi samma ahile aaja bholi thau thegana sampark khulcha khulchha baje rakhnu lagaune " +
-  "lagaunu jadan mulya bhanda ramro sabai yo tyo").split(" "));
+  "lagaunu jadan mulya bhanda ramro sabai yo tyo khabar k").split(" "));
+const ROMAN_HI = new Set(("hai hain tha thi kya nahi nahin mujhe hum aap aapka aapki aapke kitna kitni kitne kaise " +
+  "chahiye karna karte karein karenge hoga hogi rahe raha rahi liye wala wali mein bhi kaun kab kyun kyon " +
+  "banwana banana lagega sakte sakta milega accha acha theek thik").split(" "));
 
-/** "ne" = Devanagari Nepali, "rom" = Roman-letter Nepali, "en" = English. */
+/** Reply language of a message: "en" | "ne" | "rom" | "hi" | "hirom". */
 function detectLang(text, hint) {
   const t = String(text || "");
   const dev = (t.match(/[\u0900-\u097F]/g) || []).length;
   const lat = (t.match(/[A-Za-z]/g) || []).length;
-  if (dev && dev >= lat * 0.5) return "ne";
-  if (!lat) return dev ? "ne" : (hint === "rom" || hint === "en" ? hint : "ne");
+  if (dev && dev >= lat * 0.5) {
+    const toks = t.split(/[\s।,.!?;:()"'\-]+/).filter(Boolean);
+    const ne = toks.filter(w => DEV_NE.has(w)).length;
+    const hi = toks.filter(w => DEV_HI.has(w)).length;
+    return hi > ne ? "hi" : "ne";
+  }
+  if (!lat) return dev ? "ne" : (LANG_TURN[hint] ? hint : "ne");
   const words = t.toLowerCase().match(/[a-z]+/g) || [];
-  const hits = words.filter(w => ROMAN_NE.has(w)).length;
-  return (hits >= 2 || (hits >= 1 && words.length <= 3)) ? "rom" : "en";
+  const ne = words.filter(w => ROMAN_NE.has(w)).length;
+  const hi = words.filter(w => ROMAN_HI.has(w)).length;
+  const enough = n => n >= 2 || (n >= 1 && words.length <= 3);
+  if (hi > ne && enough(hi)) return "hirom";
+  if (enough(ne)) return "rom";
+  return "en";
 }
 
 /** One warm welcome line on the visitor's first message, in the reply language. */
 function greetingFor(lang, isFirstTurn) {
   if (!isFirstTurn) return "";
-  if (lang === "ne") {
-    return "यो visitor को पहिलो सन्देश हो: जवाफको सुरुमा एक-line न्यानो सम्बोधन गर्नुहोस् — " +
-      "\"नमस्ते! 🙏 प्रेरक मल्टिपर्पोजमा स्वागत छ।\" जस्तो — अनि तुरुन्तै उनको प्रश्नको " +
-      "विस्तृत जवाफ दिनुहोस्। ";
-  }
-  if (lang === "rom") {
-    return "This is the visitor's first message: open with one warm welcome line in Roman-letter " +
-      "Nepali (e.g. \"Namaste! 🙏 Prerak Multipurpose ma swagat chha.\") then answer their question in detail. ";
-  }
-  return "This is the visitor's first message: open with one warm welcome line " +
-    "(e.g. \"Namaste! Welcome to Prerak Multipurpose.\") then answer their question in detail. ";
+  const line = {
+    en: "\"Namaste! Welcome to Prerak Multipurpose.\"",
+    ne: "\"नमस्ते! 🙏 प्रेरक मल्टिपर्पोजमा स्वागत छ।\"",
+    rom: "\"Namaste! 🙏 Prerak Multipurpose ma swagat chha.\"",
+    hi: "\"नमस्ते! 🙏 प्रेरक मल्टिपर्पज़ में आपका स्वागत है।\"",
+    hirom: "\"Namaste! 🙏 Prerak Multipurpose mein aapka swagat hai.\""
+  }[lang] || "\"Namaste!\"";
+  return "\n\nThis is the visitor's first message: start with one short welcome line such as " + line +
+    " (in the reply language), then answer the question.";
 }
 
-/** Full system prompt. contentMode = Sahayak caption requests (no chat language rule). */
+/** Full system instruction. contentMode = Sahayak caption requests (their instruction names the language). */
 function buildSystemPrompt(lang, contentMode, isFirstTurn, context) {
-  return (
-    (contentMode ? "Write the output in exactly the language and script the instruction asks for. " : LANGUAGE_RULE) +
-    "You are the helpful assistant for Prerak Multipurpose Pvt. Ltd., a construction " +
-    "and interior company in Hetauda, Nepal. Services: building construction, interior " +
-    "design, UPVC/aluminum windows and doors, gypsum ceiling, plumbing, electrical, " +
-    "painting, renovation, solar water heater & geyser installation, construction material supply. " +
-    "SOLAR: the only solar-related service is solar water heater and geyser installation. " +
-    "Prerak does NOT provide solar panels, batteries, or inverters — if asked, say so " +
-    "politely and offer the solar water heater and geyser service instead. " +
-    "Phone: 9801069733 / 9855069733. WhatsApp: 9779801069733. " +
-    "Hours: 8AM-6PM, Sunday-Friday. Free site visit is available. " +
-    "Keep the tone simple, warm and friendly — no stiff or difficult words. " +
-    "MATCH DEPTH TO THE QUESTION: a simple factual question (hours, phone, location, " +
-    "yes/no) gets 1-3 short lines. A comparison, technical explanation, or 'which is " +
-    "better/how does X work' question deserves a structured, genuinely useful answer: " +
-    "use short bullet points (2-4 per option), name the real trade-offs (cost, " +
-    "durability, insulation, maintenance, best-use-case), and close with one practical " +
-    "recommendation based on common scenarios — the kind of answer a knowledgeable " +
-    "site engineer would give a customer, not a one-line brush-off. " +
-    "For substantive answers, write like the most respected site engineer at the " +
-    "company would: specific, concrete, grounded in how the work actually gets done — " +
-    "mention typical steps, timelines, materials, or what most customers in that " +
-    "situation choose, whenever you can reasonably infer them from general construction " +
-    "knowledge. Avoid vague filler ('it depends', 'many factors') as the whole answer — " +
-    "give the best concrete answer first, THEN note what would refine it further. " +
-    "End every substantive answer (not simple factual ones) by inviting the person to " +
-    "share their name, phone number, and location so the team can give an exact quote " +
-    "or arrange the free site visit — but only using the contact/offer details actually " +
-    "given here, never invented ones. " +
-    "FORMATTING: never output markdown symbols like ** or * — write clean plain lines. " +
-    "When listing services or options, start each line with one fitting emoji " +
-    "(🏗️ building, 🛋️ interior, 🪟 UPVC/aluminum windows-doors, 🧱 gypsum, ⚡ electrical, " +
-    "🚿 plumbing, 🎨 painting, ☀️ solar water heater/geyser, 🔨 renovation, 🚚 materials) followed by the " +
-    "name and one short benefit. Keep each line short — easy to scan on a phone. " +
-    "Never invent prices, warranty terms, discounts/promotions, or completed-project " +
-    "counts beyond what's given in this context — if unsure, say the exact figure needs " +
-    "a quick call/WhatsApp rather than guessing. " +
-    greetingFor(lang, isFirstTurn) +
-    (context ? ("\n\nAdditional context (facts only — its language does NOT decide your reply language):\n" + context) : "") +
-    (contentMode ? "" : "\n\n" + LANG_TURN[lang])
-  );
+  const ctx = context ? ("\n\nAdditional context (facts only — its language does NOT decide your reply language):\n" + context) : "";
+  if (contentMode) {
+    return "You write marketing content for Prerak Multipurpose Pvt. Ltd., Hetauda, Nepal. " +
+      "Write the output in exactly the language and script the instruction asks for. " +
+      "Do not use Markdown formatting.\n\n" + BUSINESS_FACTS + ctx;
+  }
+  return SYSTEM_PROMPT + "\n\n" + BUSINESS_FACTS + greetingFor(lang, isFirstTurn) + ctx + "\n\n" + LANG_TURN[lang];
+}
+
+/** Conversation turns for Gemini: user/model only, must start with "user", no two same roles in a row. */
+function toContents(messages, reminder) {
+  const out = [];
+  for (const m of messages.slice(-12)) {
+    const role = m && m.role === "assistant" ? "model" : "user";
+    const text = String((m && m.content) || "").slice(0, 4000);
+    if (!text) continue;
+    if (!out.length && role === "model") continue;
+    const prev = out[out.length - 1];
+    if (prev && prev.role === role) prev.parts[0].text += "\n\n" + text;
+    else out.push({ role, parts: [{ text }] });
+  }
+  const last = out[out.length - 1];
+  if (reminder && last && last.role === "user") last.parts[0].text += "\n\n[" + reminder + "]";
+  return out;
 }
 
 export default {
@@ -178,19 +186,13 @@ export default {
     const isFirstTurn = !contentMode && !messages.some(m => m && m.role === "assistant");
     const sys = buildSystemPrompt(lang, contentMode, isFirstTurn, context);
 
-    // Gemini expects its own turn shape; fold system + prior turns into one contents array.
-    const contents = [];
-    contents.push({ role: "user", parts: [{ text: sys }] });
-    contents.push({ role: "model", parts: [{ text: contentMode ? "Understood." : LANG_ACK[lang] }] });
-    for (const m of messages.slice(-12)) {
-      const role = m.role === "assistant" ? "model" : "user";
-      const text = String(m.content || "").slice(0, 4000);
-      if (text) contents.push({ role, parts: [{ text }] });
+    // System prompt goes in Gemini's dedicated systemInstruction field; contents = the chat only.
+    const contents = toContents(messages, contentMode ? "" : LANG_TURN[lang]);
+    if (!contents.length) {
+      return new Response(JSON.stringify({ error: "messages चाहिन्छ" }), {
+        status: 400, headers: { "Content-Type": "application/json", ...cors }
+      });
     }
-    // Re-state the language rule right on the latest user turn: earlier turns may be in a
-    // different language, and the model otherwise tends to continue the previous one.
-    const last = contents[contents.length - 1];
-    if (!contentMode && last && last.role === "user") last.parts[0].text += "\n\n[" + LANG_TURN[lang] + "]";
 
     // 2026-08 नोट: gemini-2.0-flash जुन १, २०२६ मा बन्द भयो; यसको आधिकारिक
     // migration-target 3.1 Flash-Lite प्रयोग गरिएको — free-tier मै, उदार rate-limit।
@@ -202,8 +204,9 @@ export default {
         method: "POST",
         headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
         body: JSON.stringify({
+          systemInstruction: { parts: [{ text: sys }] },
           contents,
-          generationConfig: { temperature: 0.75, maxOutputTokens: 900 }
+          generationConfig: { temperature: 0.6, maxOutputTokens: 900 }
         })
       });
 

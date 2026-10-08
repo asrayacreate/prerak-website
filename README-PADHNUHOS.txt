@@ -1,7 +1,11 @@
 ── 🤖 नयाँ (2026-10): PRERAK ASSISTANT — भाषा नियम + SOLAR ──
 🗣️ Assistant ले अब प्रयोगकर्ताकै भाषा र लिपिमा जवाफ दिन्छ:
-   नेपाली (देवनागरी) → नेपाली · Roman नेपाली ("kati lagcha?") →
-   Roman नेपाली · English → English (site को EN/NE बटनले होइन)।
+   नेपाली (देवनागरी) → नेपाली · Roman नेपाली ("K chha khabar") →
+   Roman नेपाली · English → English · हिन्दी → हिन्दी
+   (site को EN/NE बटनले होइन)।
+📜 स्थायी System Prompt: prerak-ai-worker.js को SYSTEM_PROMPT —
+   Gemini को systemInstruction मा पठाइन्छ। बदल्नुपरे त्यही text
+   मात्र फेर्नुहोस् र Cloudflare मा फेरि paste + Deploy गर्नुहोस्।
 ☀️ Solar सेवा = सोलार वाटर हिटर र गिजर जडान मात्र (सोलार panel,
    battery वा inverter होइन) — site, FAQ, team card सबैतिर।
 ⚠️ अनिवार्य: नयाँ prerak-ai-worker.js लाई Cloudflare → Workers →
