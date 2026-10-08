@@ -992,6 +992,9 @@ html body #prkAiPanel .prkai-in input{font-size:16px!important}
 }
 </style>
 <style id="prkPerfAnimCss">
+/* hero slider dots: "body:not(.admin-mode) .hero > *{position:relative}" made them a flex item,
+   pushed off-screen to the right (and it shifted the hero copy 69px left). Pin them where the design puts them. */
+body:not(.admin-mode) .hero > .hdots{position:absolute}
 /* a11y: eyebrow on the light before/after section needs ≥4.5:1 (was 1.8:1) */
 html[data-t="corporate"] #before-after .sh .sey{color:#6e4a0c!important;-webkit-text-fill-color:#6e4a0c!important}
 /* ═══ PERF: animate with transform/opacity only (compositor), not layout properties ═══
