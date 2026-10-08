@@ -1,3 +1,31 @@
+── 🔐 नयाँ (2026-10): ADMIN PASSWORD सुरक्षा — एकपटक गर्नैपर्ने ──
+⚠️ पहिले admin/super-admin password को hash (SHA-256) website को
+   HTML र सार्वजनिक Firestore (siteSettings/main) मा खुला थियो —
+   जो कोहीले copy गरेर कमजोर password अनुमान गर्न सक्थ्यो।
+   अब हटाइयो: HTML मा छैन, Firestore मा लेखिँदैन/पढिँदैन, र admin
+   ले अर्को पटक Save गर्दा Firestore बाट पनि मेटिन्छ।
+🔑 Login: यो device मा save भएको password, नत्र Firebase Auth
+   (admin email + password) बाट जाँचिन्छ। Password बिर्से login
+   box मा "Forgot password? Send reset email" थिच्नुहोस् — Firebase
+   ले admin email मा reset link पठाउँछ।
+✅ अनिवार्य (एकपटक): पुरानो password सार्वजनिक भइसकेकोले
+   Admin → Settings → Change Password बाट नयाँ बलियो password
+   राख्नुहोस् (अब यसले Firebase Auth को password पनि सँगै बदल्छ)।
+🛡️ Firestore Rules (सिफारिस): siteSettings मा admin ले मात्र लेख्न
+   पाओस् — आफ्नो rules भित्र यो पनि थप्नुहोस्/मिलाउनुहोस्:
+
+    match /siteSettings/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.auth.token.email == 'asrayacreate.ac@gmail.com';
+    }
+    match /stats/{doc} {
+      allow read: if request.auth != null
+        && request.auth.token.email == 'asrayacreate.ac@gmail.com';
+      allow create, update: if request.resource.data.keys().hasOnly(['wa','call','mail']);
+    }
+
+
 ── 🤖 नयाँ (2026-10): PRERAK ASSISTANT — भाषा नियम + SOLAR ──
 🗣️ Assistant ले अब प्रयोगकर्ताकै भाषा र लिपिमा जवाफ दिन्छ:
    नेपाली (देवनागरी) → नेपाली · Roman नेपाली ("K chha khabar") →
