@@ -35,10 +35,13 @@
    • Ends by itself after FEST_END (above).
    • Turn off: Admin → Components → "Festive Theme", or here: on:false.
    • Parts: petals / kite / crackers / music:false switches one part off.
-   • musicUrl: "music/dashain.mp3" plays that file instead of the built-in tune.
+   • Music: youtube = the video played on click (Sur Sudha — Dashain Mangal Dhun). YouTube's rules
+     need its player visible (≥200×200 px) while it plays, so a small card shows the player only
+     while the music is on. musicUrl: "music/dashain.mp3" (your own licensed file) plays without a
+     player and takes priority. With neither, or if YouTube can't play here: the built-in tune.
    The effects live in festive.js, loaded only after the page has fully loaded and the
    browser is idle, so they never slow down the first view. */
-window.PRK_FESTIVE={on:true,petals:true,kite:true,crackers:true,music:true,musicUrl:""};
+window.PRK_FESTIVE={on:true,petals:true,kite:true,crackers:true,music:true,youtube:"Adhpa0b-DZg",musicUrl:""};
 (function(){
   var ready=false,last=null;
   window.prkFestiveOn=function(){
@@ -54,7 +57,7 @@ window.PRK_FESTIVE={on:true,petals:true,kite:true,crackers:true,music:true,music
     if(!ready)return;
     if(on){
       if(window.prkFestive)window.prkFestive.start();
-      else if(!document.getElementById("prkFestiveJs")){var sc=document.createElement("script");sc.id="prkFestiveJs";sc.src="festive.js?v=1";sc.async=true;document.head.appendChild(sc)}
+      else if(!document.getElementById("prkFestiveJs")){var sc=document.createElement("script");sc.id="prkFestiveJs";sc.src="festive.js?v=2";sc.async=true;document.head.appendChild(sc)}
     }else if(window.prkFestive)window.prkFestive.stop();
   };
   if(window.prkFestiveOn())document.documentElement.classList.add("prk-festive");

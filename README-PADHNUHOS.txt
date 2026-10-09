@@ -7,10 +7,15 @@
 ⚡ Performance: एनिमेशन/धुन festive.js मा छन् — page पूरै load
    भएपछि मात्र आउँछ (~7 KB)। "Reduce motion" रोज्नेलाई झर्ने/पड्कने
    एनिमेशन देखिँदैन; admin mode मा केही देखिँदैन।
-🎵 धुन: browser आफैंले बजाउने मौलिक धुन (बाँसुरी, मादल, घण्टी) —
-   कुनै file download छैन। आफ्नै mp3 (जस्तै Malshree, अनुमति
-   भएको) बजाउन index.html मा PRK_FESTIVE को musicUrl मा file को
-   नाम लेख्नुहोस्, जस्तै musicUrl:"music/dashain.mp3"।
+🎵 धुन: 🎵 बटन थिचेपछि YouTube को "Dashain Mangal Dhun — Sur Sudha"
+   (video Adhpa0b-DZg) बज्छ। YouTube को नियमअनुसार बज्दै गर्दा
+   सानो festive card मा player देखिन्छ (कम्तीमा 200×200px, audio
+   मात्र लुकाएर बजाउन पाइँदैन); Pause/✕ गरेपछि card लुक्छ।
+   YouTube को code बटन थिचेपछि मात्र load हुन्छ (PageSpeed मा असर
+   छैन)। अर्को video चाहिए index.html मा PRK_FESTIVE को youtube मा
+   video ID फेर्नुहोस्। आफ्नै अनुमति भएको mp3 राखे (musicUrl:
+   "music/dashain.mp3") player नदेखाई त्यही बज्छ। YouTube ले
+   बजाउन नदिए (embed बन्द/network) browser को मौलिक धुन बज्छ।
 ⏹️ बन्द गर्ने: (१) Admin → Components → "🪔 Festive Theme" off गर्नुहोस्
    (सबै visitor का लागि), वा (२) index.html मा PRK_FESTIVE को
    on:true लाई on:false बनाउनुहोस्। एउटा भाग मात्र बन्द गर्न
