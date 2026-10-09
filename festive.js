@@ -72,6 +72,20 @@
       "#prkMusic .ic-pause{display:none}#prkMusic[aria-pressed=true] .ic-pause{display:block}#prkMusic[aria-pressed=true] .ic-play{display:none}" +
       "#prkMusic[aria-pressed=true]{box-shadow:0 0 0 4px rgba(251,191,36,.35),0 6px 18px rgba(180,83,9,.35)}" +
       "html[data-t] body:not(.admin-mode) #prkMusic{color:#1a1208!important}" +
+      /* YouTube player card (visible while the YouTube tune plays; the player itself is 200 px tall) */
+      "#prkYt{position:fixed;left:16px;bottom:150px;z-index:9060;width:min(372px,calc(100vw - 32px));padding:8px;border-radius:16px;" +
+      "background:linear-gradient(160deg,#13254a,#1a1208);border:1px solid rgba(251,191,36,.6);box-shadow:0 14px 34px rgba(0,0,0,.38),0 0 0 3px rgba(251,191,36,.14);" +
+      "opacity:0;visibility:hidden;transform:translate3d(0,12px,0);transition:opacity .3s,transform .3s,visibility 0s .3s}" +
+      "#prkYt.on{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .3s}" +
+      "body.admin-mode #prkYt{display:none!important}" +
+      "#prkYt .yt-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 8px 4px;font-weight:800;font-size:.76rem;letter-spacing:.2px}" +
+      "#prkYt .yt-t{display:flex;align-items:center;gap:7px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}" +
+      "#prkYt .yt-t .prk-diya{display:inline-block;position:relative;width:16px;height:16px;flex:none}" +
+      "html body #prkYt .yt-h span{color:#fde68a!important;-webkit-text-fill-color:#fde68a!important}" +
+      "#prkYt .yt-x{flex:none;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:.85rem;cursor:pointer}" +
+      "#prkYt .yt-x:hover{background:rgba(255,255,255,.24)}#prkYt .yt-x:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}" +
+      "#prkYt .yt-v{position:relative;width:100%;height:200px;border-radius:10px;overflow:hidden;background:#000}" +
+      "#prkYt .yt-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}" +
       "@media(max-width:768px){#prkFx .kite{width:30px;right:12px}#prkMusic{bottom:150px}}" +
       "@media (prefers-reduced-motion:reduce){#prkFx .kite,#prkMusic[aria-pressed=true]::after{animation:none}}";
     doc.head.appendChild(css);
@@ -232,9 +246,99 @@
     };
   }
 
+  /* ── music player ──
+     1) PRK_FESTIVE.musicUrl: your own licensed mp3, played without any visible player.
+     2) PRK_FESTIVE.youtube: a YouTube video (Sur Sudha — Dashain Mangal Dhun). YouTube's rules need
+        the player to be visible (at least 200×200 px) while it plays and forbid audio-only
+        playback, so a small festive card with the player shows while the music plays and hides
+        when it is paused. The YouTube IFrame API is loaded only on the first click.
+     3) Otherwise (or if YouTube can't play the video here) the built-in festive dhun. */
   var Music = (function () {
     var ctx = null, out = null, eng = null, tick = null, el = null, on = false;
+    var yt = { card: null, player: null, ready: false, loading: false, want: false, failed: false, timer: null };
     function set(v) { on = v; if (btn) { btn.setAttribute("aria-pressed", v ? "true" : "false"); btn.setAttribute("aria-label", v ? "Pause festive music" : "Play festive music"); } }
+
+    function synthPlay() {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!ctx) { ctx = new AC(); out = ctx.createGain(); out.gain.value = 0; out.connect(ctx.destination); eng = Engine(ctx, out); eng.start(ctx.currentTime + .08); }
+      var r = ctx.resume && ctx.resume();
+      out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(.55, ctx.currentTime, .25);
+      clearInterval(tick); eng.schedule(ctx.currentTime + .35);
+      tick = setInterval(function () { try { eng.schedule(ctx.currentTime + .35); } catch (e) {} }, 90);
+      set(true);
+      /* started outside a click (YouTube fallback) and the browser said no: show "Play" again */
+      if (r && r.then) r.then(function () { if (ctx && ctx.state !== "running") synthPause(); }, function () { synthPause(); });
+    }
+    function synthPause() {
+      set(false);
+      if (ctx) {
+        clearInterval(tick);
+        out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(0, ctx.currentTime, .08);
+        setTimeout(function () { if (!on && ctx && ctx.suspend) ctx.suspend(); }, 400);
+      }
+    }
+
+    function ytCard() {
+      if (yt.card) return;
+      var c = yt.card = doc.createElement("div");
+      c.id = "prkYt"; c.setAttribute("role", "region"); c.setAttribute("aria-label", "Festive music player");
+      c.innerHTML = '<div class="yt-h"><span class="yt-t"><span class="prk-diya" aria-hidden="true"></span>' +
+        '<span class="en">Dashain Mangal Dhun</span><span class="ne np">दशैं मंगल धुन</span> · Sur Sudha</span>' +
+        '<button type="button" class="yt-x" aria-label="Close music player">✕</button></div>' +
+        '<div class="yt-v"><div id="prkYtPlayer"></div></div>';
+      doc.body.appendChild(c);
+      c.querySelector(".yt-x").addEventListener("click", function () { pause(); if (btn) btn.focus(); });
+    }
+    function ytShow(v) {
+      if (!yt.card) return;
+      if (v && btn) { var r = btn.getBoundingClientRect(); yt.card.style.bottom = Math.round(innerHeight - r.top + 10) + "px"; }
+      yt.card.classList.toggle("on", v);
+    }
+    function ytFail() {
+      if (yt.failed) return;
+      yt.failed = true; clearTimeout(yt.timer);
+      try { if (yt.player && yt.player.destroy) yt.player.destroy(); } catch (e) {}
+      yt.player = null; ytShow(false);
+      if (yt.want) { yt.want = false; synthPlay(); } else set(false);
+    }
+    function ytApi(cb) {
+      if (window.YT && window.YT.Player) { cb(); return; }
+      var prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function () { if (prev) { try { prev(); } catch (e) {} } cb(); };
+      if (!doc.getElementById("prkYtApi")) {
+        var s = doc.createElement("script"); s.id = "prkYtApi"; s.async = true; s.src = "https://www.youtube.com/iframe_api";
+        s.onerror = ytFail; doc.head.appendChild(s);
+      }
+    }
+    function ytPlay() {
+      yt.want = true; ytCard(); ytShow(true); set(true);
+      if (yt.player && yt.ready) { yt.player.playVideo(); return; }
+      if (yt.loading) return;
+      yt.loading = true;
+      yt.timer = setTimeout(function () { if (!yt.ready) ytFail(); }, 15000);
+      var id = String(cfg.youtube);
+      ytApi(function () {
+        if (yt.failed || !yt.card) return;
+        try {
+          yt.player = new YT.Player("prkYtPlayer", {
+            host: "https://www.youtube-nocookie.com", videoId: id, width: "100%", height: "100%",
+            playerVars: { autoplay: 0, controls: 0, disablekb: 1, fs: 0, loop: 1, playlist: id, playsinline: 1, rel: 0, iv_load_policy: 3 },
+            events: {
+              onReady: function () { yt.ready = true; clearTimeout(yt.timer); try { yt.player.setVolume(70); } catch (e) {} if (yt.want) yt.player.playVideo(); },
+              onStateChange: function (e) {
+                if (e.data === 1) { set(true); ytShow(true); }
+                else if (e.data === 2 || e.data === 0) { yt.want = false; set(false); ytShow(false); }
+              },
+              onError: ytFail
+            }
+          });
+        } catch (e) { ytFail(); }
+      });
+    }
+    function ytPause() { yt.want = false; set(false); try { if (yt.player && yt.ready) yt.player.pauseVideo(); } catch (e) {} ytShow(false); }
+
+    function useYt() { return !!cfg.youtube && !cfg.musicUrl && !yt.failed; }
     function play() {
       if (cfg.musicUrl) {
         if (!el) { el = new Audio(cfg.musicUrl); el.loop = true; el.volume = .6; }
@@ -242,28 +346,24 @@
         if (pr && pr.catch) pr.catch(function () { set(false); });
         return;
       }
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      if (!ctx) { ctx = new AC(); out = ctx.createGain(); out.gain.value = 0; out.connect(ctx.destination); eng = Engine(ctx, out); eng.start(ctx.currentTime + .08); }
-      if (ctx.resume) ctx.resume();
-      out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(.55, ctx.currentTime, .25);
-      clearInterval(tick); eng.schedule(ctx.currentTime + .35);
-      tick = setInterval(function () { try { eng.schedule(ctx.currentTime + .35); } catch (e) {} }, 90);
-      set(true);
+      if (useYt()) ytPlay(); else synthPlay();
     }
     function pause() {
-      set(false);
-      if (el) el.pause();
-      if (ctx) {
-        clearInterval(tick);
-        out.gain.cancelScheduledValues(ctx.currentTime); out.gain.setTargetAtTime(0, ctx.currentTime, .08);
-        setTimeout(function () { if (!on && ctx && ctx.suspend) ctx.suspend(); }, 400);
-      }
+      if (el) { el.pause(); set(false); }
+      if (yt.card) ytPause();
+      synthPause();
     }
     return {
       toggle: function () { try { on ? pause() : play(); } catch (e) { set(false); } },
-      pause: function () { if (on) pause(); },
-      stop: function () { pause(); if (ctx && ctx.close) { try { ctx.close(); } catch (e) {} } ctx = out = eng = null; if (el) { el.removeAttribute("src"); el = null; } },
+      pause: function () { if (on || yt.want) pause(); },
+      stop: function () {
+        pause();
+        if (ctx && ctx.close) { try { ctx.close(); } catch (e) {} } ctx = out = eng = null;
+        if (el) { el.removeAttribute("src"); el = null; }
+        clearTimeout(yt.timer);
+        try { if (yt.player && yt.player.destroy) yt.player.destroy(); } catch (e) {}
+        rm(yt.card); yt = { card: null, player: null, ready: false, loading: false, want: false, failed: yt.failed, timer: null };
+      },
       playing: function () { return on; }
     };
   })();
