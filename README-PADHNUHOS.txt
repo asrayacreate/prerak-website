@@ -1,3 +1,25 @@
+── 🪔 नयाँ (2026-10): दशैं–तिहार FESTIVE THEME (अस्थायी) ──
+✨ के छ: सबैभन्दा माथिको notice bar मा पहिलो "🪔 दशैं–तिहार विशेष:
+   सम्पूर्ण निर्माण तथा इन्टेरियर सेवामा १०% सम्म छुट" (सुनौलो) र
+   "🏠 नि:शुल्क साइट भिजिट" (हरियो), notice को छेउमा बलेको दियो;
+   बिस्तारै झर्ने सयपत्री, hero माथि उड्ने सानो चंगा, हल्का पटका,
+   र बायाँ तल 🎵 बटन — थिचेपछि मात्र धुन बज्छ (आफैं बज्दैन)।
+⚡ Performance: एनिमेशन/धुन festive.js मा छन् — page पूरै load
+   भएपछि मात्र आउँछ (~7 KB)। "Reduce motion" रोज्नेलाई झर्ने/पड्कने
+   एनिमेशन देखिँदैन; admin mode मा केही देखिँदैन।
+🎵 धुन: browser आफैंले बजाउने मौलिक धुन (बाँसुरी, मादल, घण्टी) —
+   कुनै file download छैन। आफ्नै mp3 (जस्तै Malshree, अनुमति
+   भएको) बजाउन index.html मा PRK_FESTIVE को musicUrl मा file को
+   नाम लेख्नुहोस्, जस्तै musicUrl:"music/dashain.mp3"।
+⏹️ बन्द गर्ने: (१) Admin → Components → "🪔 Festive Theme" off गर्नुहोस्
+   (सबै visitor का लागि), वा (२) index.html मा PRK_FESTIVE को
+   on:true लाई on:false बनाउनुहोस्। एउटा भाग मात्र बन्द गर्न
+   petals / kite / crackers / music:false। FEST_END (छठ, 2026-11-16)
+   पछि आफैं बन्द हुन्छ।
+🗑️ पूरै हटाउने (चाडपर्वपछि, चाहे): festive.js file मेटाउनुहोस् र
+   index.html मा "FESTIVE THEME" लेखिएको <script> हटाउनुहोस्।
+
+
 ── ✅ नयाँ (2026-10): विश्वास र पारदर्शिता ──
 🚫 नक्कली "Rajan K. from Hetauda requested a site visit…" जस्ता
    activity popup पूरै हटाइए।
