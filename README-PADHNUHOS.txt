@@ -1,3 +1,26 @@
+── ✅ नयाँ (2026-10): विश्वास र पारदर्शिता ──
+🚫 नक्कली "Rajan K. from Hetauda requested a site visit…" जस्ता
+   activity popup पूरै हटाइए।
+🪔 दशैं–तिहार offer र चाडपर्वका सूचना index.html को FEST_END
+   मिति (अहिले "2026-11-16", छठ) सम्म मात्र देखिन्छन्, त्यसपछि
+   आफैं हट्छन्। अर्को वर्ष फेरि चलाउन index.html मा FEST_END
+   खोजेर नयाँ मिति राख्नुहोस्। Admin notice को From/To मिति पनि
+   अब लागू हुन्छ।
+🎁 Exit popup (page छोड्न लाग्दा): FEST_END सम्म "दशैं–तिहार
+   अफर · छठसम्म — १०% सम्म छुट", त्यसपछि "नि:शुल्क साइट भिजिट"
+   (छुट बिना)। "Limited Offer" भन्ने सधैंभरिको अफर हटाइयो।
+⭐ "4.9/5 Happy Clients" (प्रमाण नभएको rating) को सट्टा
+   "10 सेवा एउटै छानामुनि"। साँचो Google rating राख्न
+   Admin → Hero → Stats को तेस्रो box मा rating र label लेख्नुहोस्।
+🖼️ Projects मा इन्टरनेटको stock फोटो (images.unsplash.com) भएका
+   card देखिँदैनन् — Admin → Projects मा आफ्नो वास्तविक फोटो
+   हालेपछि आफैं देखिन्छन्।
+🔒 privacy-policy.html = website को गोपनीयता नीति (contact form र
+   footer को link)। privacy.html चाहिँ Ganak app को हो — नछुनुहोस्।
+❓ 404.html = गलत/पुरानो link खोल्दा देखिने page (Home, फोन,
+   WhatsApp बटनसहित)।
+
+
 ── 🔐 नयाँ (2026-10): ADMIN PASSWORD सुरक्षा — एकपटक गर्नैपर्ने ──
 ⚠️ पहिले admin/super-admin password को hash (SHA-256) website को
    HTML र सार्वजनिक Firestore (siteSettings/main) मा खुला थियो —

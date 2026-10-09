@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://prerakmultipurpose.com/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -15,5 +15,11 @@
     <image:image>
       <image:loc>https://prerakmultipurpose.com/img/5544329e456f.webp</image:loc>
     </image:image>
+  </url>
+  <url>
+    <loc>https://prerakmultipurpose.com/privacy-policy.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
