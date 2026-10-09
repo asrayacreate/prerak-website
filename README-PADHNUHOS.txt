@@ -15,6 +15,12 @@
 🖼️ Projects मा इन्टरनेटको stock फोटो (images.unsplash.com) भएका
    card देखिँदैनन् — Admin → Projects मा आफ्नो वास्तविक फोटो
    हालेपछि आफैं देखिन्छन्।
+💬 Testimonials: पहिलेका सबै review (Ram Bahadur Thapa, Sumitra Devi
+   Shrestha आदि) र "127+ verified reviews" भन्ने दाबी नक्कली भएकाले
+   हटाइए। एउटा पनि साँचो review नभएसम्म website मा Testimonials
+   section र footer को "Reviews" link लुक्छन्। साँचो ग्राहकको
+   review (अनुमति लिएर) Admin → Testimonials → Save Testimonial बाट
+   थप्नुहोस् — section आफैं देखिन्छ; त्यहीँबाट Delete पनि गर्न सकिन्छ।
 🔒 privacy-policy.html = website को गोपनीयता नीति (contact form र
    footer को link)। privacy.html चाहिँ Ganak app को हो — नछुनुहोस्।
 ❓ 404.html = गलत/पुरानो link खोल्दा देखिने page (Home, फोन,
