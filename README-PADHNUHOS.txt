@@ -1,3 +1,16 @@
+── 🛠️ नयाँ (2026-10): DEVELOPER / ADMIN पट्टी — live site मा नदेखिने ──
+✅ "PRERAK build PRK-PERF …" सूचना र footer को build नम्बर अब live site
+   (prerakmultipurpose.com) मा कहिल्यै देखिँदैन — admin लाई पनि होइन।
+   File आफ्नै computer मा खोल्दा (file://) वा localhost मा मात्र
+   देखिन्छ। Build नाम बदल्न index.html मा PRK_BUILD खोज्नुहोस्।
+🔐 "⚙️ Admin Mode Active · Dashboard · Exit" पट्टी: login गरेका admin
+   लाई मात्र। Page फेरि खोल्दा पुरानो login (२४ घण्टा) Firebase ले
+   admin account नै sign-in छ भनी पुष्टि गरेपछि मात्र फर्किन्छ।
+   Browser मा नक्कली flag राखेर कसैले admin पट्टी खोल्न सक्दैन।
+🚪 काम सकेपछि "🚪 Exit" थिच्नुहोस् — यसले Firebase बाट पनि sign out
+   गर्छ (अरूको/साझा computer मा विशेष गरी)।
+
+
 ── 🪔 नयाँ (2026-10): दशैं–तिहार FESTIVE THEME (अस्थायी) ──
 📢 माथिको सूचना पट्टी (दायाँबाट बायाँ सर्ने): सबैभन्दा अगाडि
    "🪔 दशैं-तिहार विशेष अफर: सम्पूर्ण निर्माण तथा इन्टेरियर सेवामा १०%
